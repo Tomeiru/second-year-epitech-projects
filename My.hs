@@ -47,3 +47,12 @@ myTail (x:y) = y
 myLength :: [a] -> Int
 myLength [] = 0
 myLength (x:y) = myLength y + 1
+
+myNth :: [a] -> Int -> a
+myNth [] z = error("List is Empty or your N is to high")
+myNth (x:y) z
+ | z < 0 = error("N is negative")
+ | z == 0 = x
+ | z > 0 = myNth y (z - 1)
+
+ 
