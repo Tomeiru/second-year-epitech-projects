@@ -89,3 +89,9 @@ myLast [] = error "List is Empty"
 myLast (a:b)
  | myLength(a:b) > 1 = (myLast(b))
  | otherwise = a
+
+myZip :: [a] -> [b] -> [(a, b)]
+myZip [a] [] = []
+myZip [] [b] = []
+myZip [] [] = []
+myZip (w:x) (y:z) = ((myTuple w y):(myZip x z))
