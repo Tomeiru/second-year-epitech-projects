@@ -115,9 +115,6 @@ myFoldl function z (a:b)
  | myLength(a:b) > 1 = myFoldl function (function z a) (b)
  | otherwise = function z a
 
-myFoldr :: (b -> a -> b) -> b -> [a] -> b
-myFoldr function z a = myFoldl function z (myReverse a)
-
 myPartition :: (a -> Bool) -> [a] -> ([a], [a])
 myPartition function [] = ([],[])
 myPartition function (a:b)
