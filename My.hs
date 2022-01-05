@@ -20,3 +20,18 @@ myMax :: Int -> Int -> Int
 myMax x y
  | x >= y = x
  | otherwise = y
+
+myTuple :: a -> b -> (a, b)
+myTuple x y = (x, y)
+
+myTruple :: a -> b -> c -> (a, b, c)
+myTruple x y z = (x, y, z)
+
+myFst :: (a, b) -> a
+myFst (a, b) = a
+
+mySnd :: (a, b) -> b
+mySnd (a, b) = b
+
+mySwap :: (a, b) -> (b, a)
+mySwap (a, b) = (b, a)
