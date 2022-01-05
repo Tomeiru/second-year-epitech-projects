@@ -72,6 +72,7 @@ myDrop z (x:y)
 myAppend :: [a] -> [a] -> [a]
 myAppend (x:y) [] = (x:y)
 myAppend [] (x:y) = (x:y)
+myAppend [] [] = []
 myAppend (a:b) (x:y)
  | myLength (a:b) > 1 = (a:myAppend (b) (x:y))
  | otherwise = (a:x:y)
@@ -113,5 +114,7 @@ myFilter function (a:b)
 myPartition :: (a -> Bool) -> [a] -> ([a], [a])
 myPartition function [] = ([],[])
 myPartition function (a:b)
- | function a == True = ((a:myFst(myPartition function b)), (mySnd(myPartition function b)))
- | otherwise = ((myFst(myPartition function b)), (a:mySnd(myPartition function b)))
+ | function a == True = ((a:myFst(myPartition function b)),
+ (mySnd(myPartition function b)))
+ | otherwise = ((myFst(myPartition function b)),
+ (a:mySnd(myPartition function b)))
