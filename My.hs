@@ -125,3 +125,17 @@ myPartition function (a:b)
  (mySnd(myPartition function b)))
  | otherwise = ((myFst(myPartition function b)),
  (a:mySnd(myPartition function b)))
+
+myPartQuickSort :: (a -> a -> Bool) -> a -> [a] -> ([a], [a])
+myPartQuickSort function a [] = ([],[])
+myPartQuickSort function x (a:b)
+ | function x a == True = ((a:myFst(myPartQuickSort function x b)),
+ (mySnd(myPartQuickSort function x b)))
+ | otherwise = ((myFst(myPartQuickSort function x b)),
+ (a:mySnd(myPartQuickSort function x b)))
+
+myQuickSort :: (a -> a -> Bool) -> [a] -> [a]
+myQuickSort function [] = []
+myQuickSort function (a:b) = myAppend (myAppend(myQuickSort function (
+    mySnd(myPartQuickSort function a b)))
+    [a]) (myQuickSort function (myFst(myPartQuickSort function a b)))
