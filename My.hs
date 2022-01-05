@@ -103,3 +103,9 @@ myUnzip ((w,x):b) = ((w:myFst(myUnzip(b))), (x:mySnd(myUnzip(b))))
 myMap :: (a -> b) -> [a] -> [b]
 myMap function [] = []
 myMap function (a:b) = function a:myMap function b
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter function [] = []
+myFilter function (a:b)
+ | function a == True = a:myFilter function b
+ | otherwise = myFilter function b
