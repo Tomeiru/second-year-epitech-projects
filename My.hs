@@ -68,3 +68,10 @@ myDrop z (x:y)
  | z >= myLength (x:y) = []
  | z == 0 = (x:y)
  | otherwise = myDrop (z - 1) (y)
+
+myAppend :: [a] -> [a] -> [a]
+myAppend (x:y) [] = (x:y)
+myAppend [] (x:y) = (x:y)
+myAppend (a:b) (x:y)
+ | myLength (a:b) > 1 = (a:myAppend (b) (x:y))
+ | otherwise = (a:x:y)
