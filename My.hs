@@ -76,6 +76,10 @@ myAppend (a:b) (x:y)
  | myLength (a:b) > 1 = (a:myAppend (b) (x:y))
  | otherwise = (a:x:y)
 
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (a:b) = myAppend (myReverse(b)) (a:[])
+
 myInit :: [a] -> [a]
 myInit [] = error "List is Empty"
 myInit (x:y) = myTake (myLength(x:y) - 1) (x:y)
