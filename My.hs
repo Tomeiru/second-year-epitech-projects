@@ -57,9 +57,10 @@ myNth (x:y) z
 
 myTake :: Int -> [a] -> [a]
 myTake z (x:y)
+ | z < 0 = error("Z can't be inferior to 0")
  | z >= myLength (x:y) = (x:y)
- | z == 0 = [x]
- | otherwise = myTake (z - 1) (x:y)
+ | z > 0 = (x:(myTake (z - 1) (y)))
+ | z == 0 = []
 
 myDrop :: Int -> [a] -> [a]
 myDrop z [] = []
