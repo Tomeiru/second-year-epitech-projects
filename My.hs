@@ -75,3 +75,13 @@ myAppend [] (x:y) = (x:y)
 myAppend (a:b) (x:y)
  | myLength (a:b) > 1 = (a:myAppend (b) (x:y))
  | otherwise = (a:x:y)
+
+myInit :: [a] -> [a]
+myInit [] = error "List is Empty"
+myInit (x:y) = myTake (myLength(x:y) - 1) (x:y)
+
+myLast :: [a] -> a
+myLast [] = error "List is Empty"
+myLast (a:b)
+ | myLength(a:b) > 1 = (myLast(b))
+ | otherwise = a
