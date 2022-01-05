@@ -35,3 +35,15 @@ mySnd (a, b) = b
 
 mySwap :: (a, b) -> (b, a)
 mySwap (a, b) = (b, a)
+
+myHead :: [a] -> a
+myHead [] = error "List is Empty"
+myHead (x:y) = x
+
+myTail :: [a] -> [a]
+myTail [] = error "List is Empty"
+myTail (x:y) = y
+
+myLength :: [a] -> Int
+myLength [] = 0
+myLength (x:y) = myLength y + 1
