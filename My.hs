@@ -110,6 +110,11 @@ myFilter function (a:b)
  | function a == True = a:myFilter function b
  | otherwise = myFilter function b
 
+myFoldl :: (b -> a -> b) -> b -> [a] -> b
+myFoldl function z (a:b)
+ | myLength(a:b) > 1 = myFoldl function (function z a) (b)
+ | otherwise = function z a
+
 myPartition :: (a -> Bool) -> [a] -> ([a], [a])
 myPartition function [] = ([],[])
 myPartition function (a:b)
