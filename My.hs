@@ -50,23 +50,23 @@ myLength (x:y) = myLength y + 1
 
 myNth :: [a] -> Int -> a
 myNth [] z = error("List is Empty or your N is to high")
+myNth (x:y) 0 = x
 myNth (x:y) z
  | z < 0 = error("N is negative")
- | z == 0 = x
  | z > 0 = myNth y (z - 1)
 
 myTake :: Int -> [a] -> [a]
+myTake 0 (x:y) = []
 myTake z (x:y)
  | z < 0 = error("Z can't be inferior to 0")
  | z >= myLength (x:y) = (x:y)
  | z > 0 = (x:(myTake (z - 1) (y)))
- | z == 0 = []
 
 myDrop :: Int -> [a] -> [a]
 myDrop z [] = []
+myDrop 0 (x:y) = (x:y)
 myDrop z (x:y)
  | z >= myLength (x:y) = []
- | z == 0 = (x:y)
  | otherwise = myDrop (z - 1) (y)
 
 myAppend :: [a] -> [a] -> [a]
