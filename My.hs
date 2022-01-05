@@ -109,3 +109,9 @@ myFilter function [] = []
 myFilter function (a:b)
  | function a == True = a:myFilter function b
  | otherwise = myFilter function b
+
+myPartition :: (a -> Bool) -> [a] -> ([a], [a])
+myPartition function [] = ([],[])
+myPartition function (a:b)
+ | function a == True = ((a:myFst(myPartition function b)), (mySnd(myPartition function b)))
+ | otherwise = ((myFst(myPartition function b)), (a:mySnd(myPartition function b)))
