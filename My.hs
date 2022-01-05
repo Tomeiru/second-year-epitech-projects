@@ -55,4 +55,15 @@ myNth (x:y) z
  | z == 0 = x
  | z > 0 = myNth y (z - 1)
 
- 
+myTake :: Int -> [a] -> [a]
+myTake z (x:y)
+ | z >= myLength (x:y) = (x:y)
+ | z == 0 = [x]
+ | otherwise = myTake (z - 1) (x:y)
+
+myDrop :: Int -> [a] -> [a]
+myDrop z [] = []
+myDrop z (x:y)
+ | z >= myLength (x:y) = []
+ | z == 0 = (x:y)
+ | otherwise = myDrop (z - 1) (y)
