@@ -1,4 +1,5 @@
 import Data.Maybe
+import Data.Char
 
 myElem :: Eq a => a -> [a] -> Bool
 myElem argument [] = False
@@ -67,3 +68,64 @@ printAndGetLength :: String -> IO Int
 printAndGetLength string = do
     putStrLn string
     return $ length string
+
+printCorner :: Int -> IO ()
+printCorner _ = do
+    putChar '+'
+    return ()
+
+printHorizLine :: Int -> IO ()
+printHorizLine 0 = return ()
+printHorizLine size = do
+    putChar '-'
+    putChar '-'
+    printHorizLine (size - 1)
+
+printHorizontal :: Int -> IO ()
+printHorizontal size = do
+    printCorner 1
+    printHorizLine (size - 1)
+    printCorner 1
+    putChar '\n'
+    return ()
+
+
+printVerticalSide :: Int -> IO ()
+printVerticalSide _ = do
+    putChar '|'
+    return ()
+
+printVerticalSpace :: Int -> IO ()
+printVerticalSpace 0 = return ()
+printVerticalSpace size = do
+    putChar ' '
+    putChar ' '
+    printVerticalSpace (size - 1)
+
+printVerticalLines :: Int -> Int -> IO ()
+printVerticalLines size 0 = return ()
+printVerticalLines size (-1) = return ()
+printVerticalLines size remaining = do
+    printVerticalSide 1
+    printVerticalSpace (size - 1)
+    printVerticalSide 1
+    putChar '\n'
+    printVerticalLines size (remaining - 1)
+
+printVertical :: Int -> IO ()
+printVertical size = printVerticalLines size (size - 2)
+
+realPrintBox :: Int -> IO ()
+realPrintBox size = do
+    printHorizontal size
+    printVertical size
+    printHorizontal size
+    return ()
+
+printBox :: Int -> IO ()
+printBox 1 = putStrLn "++"
+printBox size
+ | size <= 0 = return ()
+ | otherwise = do
+    realPrintBox size
+    return ()
