@@ -197,15 +197,18 @@ whichOperation "/" = 3
 whichOperation "%" = 4
 
 doAddition :: [String] -> IO ()
-doAddition (first:sign:second:rest) = print ((read first :: Int) + (read second :: Int)) >>
+doAddition (first:sign:second:rest) = print
+    ((read first :: Int) + (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doSubstraction :: [String] -> IO ()
-doSubstraction (first:sign:second:rest) = print ((read first :: Int) - (read second :: Int)) >>
+doSubstraction (first:sign:second:rest) = print
+    ((read first :: Int) - (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doMultiplication :: [String] -> IO ()
-doMultiplication (first:sign:second:rest) = print ((read first :: Int) * (read second :: Int)) >>
+doMultiplication (first:sign:second:rest) = print
+    ((read first :: Int) * (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doDivision :: [String] -> IO ()
