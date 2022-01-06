@@ -57,4 +57,13 @@ readInt "" = Nothing
 readInt string
  | myCheckNumber string == False = Nothing
  | otherwise = Just (read string :: Int)
- 
+
+getLineLength :: IO Int
+getLineLength = do
+    line <- getLine
+    return $ length line
+
+printAndGetLength :: String -> IO Int
+printAndGetLength string = do
+    putStrLn string
+    return $ length string
