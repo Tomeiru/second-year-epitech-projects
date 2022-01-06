@@ -20,3 +20,14 @@ safeNth (x:y) z
 safeSucc :: Maybe Int -> Maybe Int
 safeSucc Nothing = Nothing
 safeSucc (Just x) = Just (x + 1)
+
+myLookup :: Eq a => a -> [(a,b)] -> Maybe b
+myLookup _ [] = Nothing
+myLookup argument (element:list)
+ | argument == fst(element) = Just (snd(element))
+ | otherwise = myLookup argument list
+
+maybeDo :: (a -> b -> c) -> Maybe a -> Maybe b -> Maybe c
+maybeDo _ _ Nothing = Nothing
+maybeDo _ Nothing _ = Nothing
+maybeDo function (Just a) (Just b) = Just (function a b)
