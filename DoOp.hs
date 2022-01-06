@@ -81,64 +81,56 @@ printAndGetLength string = do
     return $ length string
 
 printCorner :: Int -> IO ()
-printCorner _ = do
-    putChar '+'
+printCorner _ = putChar '+' >>
     return ()
 
 printHorizLine :: Int -> IO ()
 printHorizLine 0 = return ()
-printHorizLine size = do
-    putChar '-'
-    putChar '-'
+printHorizLine size = putChar '-' >>
+    putChar '-' >>
     printHorizLine (size - 1)
 
 printHorizontal :: Int -> IO ()
-printHorizontal size = do
-    printCorner 1
-    printHorizLine (size - 1)
-    printCorner 1
-    putChar '\n'
+printHorizontal size = printCorner 1 >>
+    printHorizLine (size - 1) >>
+    printCorner 1 >>
+    putChar '\n' >>
     return ()
 
 
 printVerticalSide :: Int -> IO ()
-printVerticalSide _ = do
-    putChar '|'
+printVerticalSide _ = putChar '|' >>
     return ()
 
 printVerticalSpace :: Int -> IO ()
 printVerticalSpace 0 = return ()
-printVerticalSpace size = do
-    putChar ' '
-    putChar ' '
+printVerticalSpace size = putChar ' ' >>
+    putChar ' ' >>
     printVerticalSpace (size - 1)
 
 printVerticalLines :: Int -> Int -> IO ()
 printVerticalLines size 0 = return ()
 printVerticalLines size (-1) = return ()
-printVerticalLines size remaining = do
-    printVerticalSide 1
-    printVerticalSpace (size - 1)
-    printVerticalSide 1
-    putChar '\n'
+printVerticalLines size remaining = printVerticalSide 1 >>
+    printVerticalSpace (size - 1) >>
+    printVerticalSide 1 >>
+    putChar '\n' >>
     printVerticalLines size (remaining - 1)
 
 printVertical :: Int -> IO ()
 printVertical size = printVerticalLines size (size - 2)
 
 realPrintBox :: Int -> IO ()
-realPrintBox size = do
-    printHorizontal size
-    printVertical size
-    printHorizontal size
+realPrintBox size = printHorizontal size >>
+    printVertical size >>
+    printHorizontal size >>
     return ()
 
 printBox :: Int -> IO ()
 printBox 1 = putStrLn "++"
 printBox size
  | size <= 0 = return ()
- | otherwise = do
-    realPrintBox size
+ | otherwise = realPrintBox size >>
     return ()
 
 myLength :: [a] -> Int
@@ -205,32 +197,29 @@ whichOperation "/" = 3
 whichOperation "%" = 4
 
 doAddition :: [String] -> IO ()
-doAddition (first:sign:second:rest) = do
-    print ((read first :: Int) + (read second :: Int))
+doAddition (first:sign:second:rest) = print ((read first :: Int) + (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doSubstraction :: [String] -> IO ()
-doSubstraction (first:sign:second:rest) = do
-    print ((read first :: Int) - (read second :: Int))
+doSubstraction (first:sign:second:rest) = print ((read first :: Int) - (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doMultiplication :: [String] -> IO ()
-doMultiplication (first:sign:second:rest) = do
-    print ((read first :: Int) * (read second :: Int))
+doMultiplication (first:sign:second:rest) = print ((read first :: Int) * (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doDivision :: [String] -> IO ()
 doDivision (first:sign:second:rest)
  | second == "0" = exitWith(ExitFailure 84)
-doDivision (first:sign:second:rest) = do
-    print ((read first :: Int) `div` (read second :: Int))
+doDivision (first:sign:second:rest) = print
+    ((read first :: Int) `div` (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doModulo :: [String] -> IO ()
 doModulo (first:sign:second:rest)
  | second == "0" = exitWith(ExitFailure 84)
-doModulo (first:sign:second:rest) = do
-    print ((read first :: Int) `mod` (read second :: Int))
+doModulo (first:sign:second:rest) = print
+    ((read first :: Int) `mod` (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doOperation :: [String] -> IO ()
