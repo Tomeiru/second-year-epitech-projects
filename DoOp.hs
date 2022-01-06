@@ -158,7 +158,7 @@ concatLines lines
 getInt :: IO (Maybe Int)
 getInt = do
     line <- getLine
-    return (Just (read line :: Int))
+    return (readInt line)
 
 isOperand :: Char -> Bool
 isOperand '+' = True
