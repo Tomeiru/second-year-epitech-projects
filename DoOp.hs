@@ -75,7 +75,8 @@ getLineLength = do
     return $ length line
 
 printAndGetLength :: String -> IO Int
-printAndGetLength string = putStrLn string >>
+printAndGetLength string = do
+    putStrLn string
     return $ length string
 
 printCorner :: Int -> IO ()
