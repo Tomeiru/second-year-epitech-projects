@@ -47,17 +47,26 @@ myIsDigit '8' = True
 myIsDigit '9' = True
 myIsDigit x = False
 
+myCheckNeg :: Char -> Bool
+myCheckNeg '-' = True
+myCheckNeg _ = False
+
 myCheckNumber :: [Char] -> Bool
 myCheckNumber "" = True
 myCheckNumber (chara:string)
  | myIsDigit chara == True = myCheckNumber(string)
  | otherwise = False
 
+myFinalCheck :: [Char] -> Bool -> Bool
+myFinalCheck (chara:string) neg
+ | neg == True = myCheckNumber(string)
+ | otherwise = myCheckNumber(chara:string)
+
 readInt :: [Char] -> Maybe Int
 readInt "" = Nothing
-readInt string
- | myCheckNumber string == False = Nothing
- | otherwise = Just (read string :: Int)
+readInt (chara:string)
+ | myFinalCheck (chara:string) (myCheckNeg chara) == False = Nothing
+ | otherwise = Just (read (chara:string) :: Int)
 
 getLineLength :: IO Int
 getLineLength = do
