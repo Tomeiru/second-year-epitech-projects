@@ -209,15 +209,13 @@ doMultiplication (first:sign:second:rest) = print ((read first :: Int) * (read s
     exitWith(ExitSuccess)
 
 doDivision :: [String] -> IO ()
-doDivision (first:sign:second:rest)
- | second == "0" = exitWith(ExitFailure 84)
+doDivision (first:sign:"0":rest) = exitWith(ExitFailure 84)
 doDivision (first:sign:second:rest) = print
     ((read first :: Int) `div` (read second :: Int)) >>
     exitWith(ExitSuccess)
 
 doModulo :: [String] -> IO ()
-doModulo (first:sign:second:rest)
- | second == "0" = exitWith(ExitFailure 84)
+doModulo (first:sign:"0":rest) = exitWith(ExitFailure 84)
 doModulo (first:sign:second:rest) = print
     ((read first :: Int) `mod` (read second :: Int)) >>
     exitWith(ExitSuccess)
