@@ -152,3 +152,8 @@ concatLines :: Int -> IO String
 concatLines lines
  | lines <= 0 = return("")
  | otherwise = createConcatString lines ""
+
+getInt :: IO (Maybe Int)
+getInt = do
+    line <- getLine
+    return (Just (read line :: Int))
