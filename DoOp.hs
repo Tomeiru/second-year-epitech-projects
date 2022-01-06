@@ -168,3 +168,86 @@ getInt :: IO (Maybe Int)
 getInt = do
     line <- getLine
     return (Just (read line :: Int))
+
+isOperand :: Char -> Bool
+isOperand '+' = True
+isOperand '-' = True
+isOperand '*' = True
+isOperand '/' = True
+isOperand '%' = True
+isOperand _ = False
+
+checkOperand :: String -> Bool
+checkOperand (chara:string)
+ | isOperand chara == True = True
+ | otherwise = False
+
+checkDoOpThirdArg :: [String] -> Bool
+checkDoOpThirdArg ((sign:arg):args)
+ | myFinalCheck (sign:arg) (myCheckNeg sign) == False = False
+ | otherwise = True
+
+checkDoOpSecondArg :: [String] -> Bool
+checkDoOpSecondArg (arg:args)
+ | checkOperand arg == False = False
+ | otherwise = checkDoOpThirdArg args
+
+checkDoOpFirstArg :: [String] -> Bool
+checkDoOpFirstArg ((sign:arg):args)
+ | myFinalCheck (sign:arg) (myCheckNeg sign) == False = False
+ | otherwise = checkDoOpSecondArg args
+
+whichOperation :: [Char] -> Int
+whichOperation "+" = 0
+whichOperation "-" = 1
+whichOperation "*" = 2
+whichOperation "/" = 3
+whichOperation "%" = 4
+
+doAddition :: [String] -> IO ()
+doAddition (first:sign:second:rest) = do
+    print ((read first :: Int) + (read second :: Int))
+    exitWith(ExitSuccess)
+
+doSubstraction :: [String] -> IO ()
+doSubstraction (first:sign:second:rest) = do
+    print ((read first :: Int) - (read second :: Int))
+    exitWith(ExitSuccess)
+
+doMultiplication :: [String] -> IO ()
+doMultiplication (first:sign:second:rest) = do
+    print ((read first :: Int) * (read second :: Int))
+    exitWith(ExitSuccess)
+
+doDivision :: [String] -> IO ()
+doDivision (first:sign:second:rest)
+ | second == "0" = exitWith(ExitFailure 84)
+doDivision (first:sign:second:rest) = do
+    print ((read first :: Int) `div` (read second :: Int))
+    exitWith(ExitSuccess)
+
+doModulo :: [String] -> IO ()
+doModulo (first:sign:second:rest)
+ | second == "0" = exitWith(ExitFailure 84)
+doModulo (first:sign:second:rest) = do
+    print ((read first :: Int) `mod` (read second :: Int))
+    exitWith(ExitSuccess)
+
+doOperation :: [String] -> IO ()
+doOperation (first:sign:second)
+ | whichOperation(sign) == 0 = doAddition(first:sign:second)
+ | whichOperation(sign) == 1 = doSubstraction(first:sign:second)
+ | whichOperation(sign) == 2 = doMultiplication(first:sign:second)
+ | whichOperation(sign) == 3 = doDivision(first:sign:second)
+ | otherwise = doModulo(first:sign:second)
+
+doOp :: [String] -> IO ()
+doOp (arg:args)
+ | length (arg:args) /= 3 = exitWith(ExitFailure 84)
+ | checkDoOpFirstArg (arg:args) == False = exitWith(ExitFailure 84)
+ | otherwise = doOperation (arg:args)
+
+main :: IO()
+main = do
+    args <- getArgs
+    doOp args
