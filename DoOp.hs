@@ -1,5 +1,7 @@
 import Data.Maybe
 import Data.Char
+import System.Exit
+import System.Environment
 
 myElem :: Eq a => a -> [a] -> Bool
 myElem argument [] = False
@@ -33,7 +35,6 @@ maybeDo _ _ Nothing = Nothing
 maybeDo _ Nothing _ = Nothing
 maybeDo function (Just a) (Just b) = Just (function a b)
 
-
 myIsDigit :: Char -> Bool
 myIsDigit '0' = True
 myIsDigit '1' = True
@@ -64,6 +65,7 @@ myFinalCheck (chara:string) neg
 
 readInt :: [Char] -> Maybe Int
 readInt "" = Nothing
+readInt "-" = Nothing
 readInt (chara:string)
  | myFinalCheck (chara:string) (myCheckNeg chara) == False = Nothing
  | otherwise = Just (read (chara:string) :: Int)
