@@ -129,3 +129,26 @@ printBox size
  | otherwise = do
     realPrintBox size
     return ()
+
+myLength :: [a] -> Int
+myLength [] = 0
+myLength (x:y) = myLength y + 1
+
+myAppend :: [a] -> [a] -> [a]
+myAppend (x:y) [] = (x:y)
+myAppend [] (x:y) = (x:y)
+myAppend [] [] = []
+myAppend (a:b) (x:y)
+ | myLength (a:b) > 1 = (a:myAppend (b) (x:y))
+ | otherwise = (a:x:y)
+
+createConcatString :: Int -> String -> IO String
+createConcatString 0 string = return (string)
+createConcatString lines string = do
+    line <- getLine
+    createConcatString (lines - 1) (myAppend string line)
+
+concatLines :: Int -> IO String
+concatLines lines
+ | lines <= 0 = return("")
+ | otherwise = createConcatString lines ""
