@@ -59,9 +59,8 @@ myCheckNumber (chara:string)
  | otherwise = False
 
 myFinalCheck :: [Char] -> Bool -> Bool
-myFinalCheck (chara:string) neg
- | neg == True = myCheckNumber(string)
- | otherwise = myCheckNumber(chara:string)
+myFinalCheck (chara:string) True = myCheckNumber(string)
+myFinalCheck (chara:string) False = myCheckNumber(chara:string)
 
 readInt :: [Char] -> Maybe Int
 readInt "" = Nothing
