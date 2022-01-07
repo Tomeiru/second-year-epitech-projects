@@ -28,7 +28,7 @@ showMob Mummy = "mummy"
 showMob (Skeleton Bow) = "doomed archer"
 showMob (Skeleton Sword) = "dead knight"
 showMob (Skeleton x) = "skeleton holding a " ++ (show x)
-showMob (Witch Nothing) = "which"
+showMob (Witch Nothing) = "witch"
 showMob (Witch (Just MagicWand)) = "sorceress"
 showMob (Witch (Just x)) = "witch holding a " ++ (show x)
 
