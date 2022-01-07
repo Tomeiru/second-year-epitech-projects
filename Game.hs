@@ -15,22 +15,32 @@ showItem MagicWand = "magic wand"
 
 -- Task 04
 
-data Mob a = Mummy | Skeleton Item | Witch (Maybe Item)
+data Mob = Mummy | Skeleton Item | Witch (Maybe Item)
     deriving (Eq, Show)
 
 -- Task 05
 
-createMummy :: Mob a
+createMummy :: Mob
 createMummy = Mummy
 
-createArcher :: Mob a
+createArcher :: Mob
 createArcher = Skeleton Bow
 
-createKnight :: Mob a
+createKnight :: Mob
 createKnight = Skeleton Sword
 
-createWitch :: Mob a
+createWitch :: Mob
 createWitch = Witch Nothing
 
-createSorceress :: Mob a
+createSorceress :: Mob
 createSorceress = Witch (Just MagicWand)
+
+-- Task 06
+
+create :: String -> Maybe Mob
+create "mummy" = Just (createMummy)
+create "doomed archer" = Just (createArcher)
+create "dead knight" = Just (createKnight)
+create "witch" = Just (createWitch)
+create "sorceress" = Just (createSorceress)
+create x = Nothing
