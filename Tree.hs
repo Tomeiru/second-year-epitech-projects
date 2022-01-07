@@ -5,7 +5,7 @@ data Tree a = Empty | Node (Tree a) a (Tree a)
 
 instance Functor Tree where
     fmap f Empty = Empty
-    fmap f (Node tree x tree') = Node (fmap f tree) (f x) (fmap f tree') 
+    fmap f (Node tree x tree') = Node (fmap f tree) (f x) (fmap f tree')
 
 -- Task 12
 
@@ -26,3 +26,7 @@ listToTree (element:list) = addInTree element (listToTree list)
 treeToList :: Ord a => Tree a -> [a]
 treeToList Empty = []
 treeToList (Node tree y tree') = (treeToList(tree) ++ y:treeToList(tree'))
+
+-- Task 16
+treeSort :: Ord a => [a] -> [a]
+treeSort list = treeToList(listToTree list)
