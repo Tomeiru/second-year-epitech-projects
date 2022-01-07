@@ -16,7 +16,21 @@ showItem MagicWand = "magic wand"
 -- Task 04
 
 data Mob = Mummy | Skeleton Item | Witch (Maybe Item)
-    deriving (Eq, Show)
+    deriving (Eq)
+
+-- Task 08
+
+instance Show Mob where
+    show = showMob
+
+showMob :: Mob -> String
+showMob Mummy = "mummy"
+showMob (Skeleton Bow) = "doomed archer"
+showMob (Skeleton Sword) = "dead knight"
+showMob (Skeleton x) = "skeleton holding a " ++ (show x)
+showMob (Witch Nothing) = "which"
+showMob (Witch (Just MagicWand)) = "sorceress"
+showMob (Witch (Just x)) = "witch holding a " ++ (show x)
 
 -- Task 05
 
