@@ -16,7 +16,7 @@ showItem MagicWand = "magic wand"
 -- Task 04
 
 data Mob a = Mummy | Skeleton Item | Witch (Maybe Item)
-    deriving (Eq)
+    deriving (Eq, Show)
 
 -- Task 05
 
