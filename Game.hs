@@ -44,3 +44,14 @@ create "dead knight" = Just (createKnight)
 create "witch" = Just (createWitch)
 create "sorceress" = Just (createSorceress)
 create x = Nothing
+
+-- Task 07
+
+equip :: Item -> Mob -> Maybe Mob
+equip _ (Mummy) = Nothing
+equip Sword (Skeleton _) = Just (createKnight)
+equip Sword (Witch _) = Just (Witch (Just Sword))
+equip Bow (Skeleton _) = Just (createArcher)
+equip Bow (Witch _) = Just (Witch (Just Bow))
+equip MagicWand (Skeleton _) = Just (Skeleton MagicWand)
+equip MagicWand (Witch _) = Just (createSorceress)
