@@ -7,6 +7,11 @@ instance Functor Tree where
     fmap f Empty = Empty
     fmap f (Node tree x tree') = Node (fmap f tree) (f x) (fmap f tree')
 
+instance Foldable Tree where
+    foldMap f Empty = mempty
+    foldMap f (Node tree x tree') = ((foldMap f tree) `mappend` (f x)
+     `mappend` (foldMap f tree'))
+
 -- Task 12
 
 addInTree :: Ord a => a -> Tree a -> Tree a
