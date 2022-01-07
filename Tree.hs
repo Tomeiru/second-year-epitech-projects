@@ -3,6 +3,10 @@
 data Tree a = Empty | Node (Tree a) a (Tree a) 
     deriving (Show)
 
+instance Functor Tree where
+    fmap f Empty = Empty
+    fmap f (Node tree x tree') = Node (fmap f tree) (f x) (fmap f tree') 
+
 -- Task 12
 
 addInTree :: Ord a => a -> Tree a -> Tree a
