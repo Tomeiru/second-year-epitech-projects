@@ -3,7 +3,6 @@ import Data.Maybe
 import System.Exit
 import System.Environment
 import Text.Read
-import Debug.Trace
 
 -- functions for error handling
 checkArgsAreNum :: [String] -> Bool
