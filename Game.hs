@@ -69,3 +69,22 @@ equip Bow (Skeleton _) = Just (createArcher)
 equip Bow (Witch _) = Just (Witch (Just Bow))
 equip MagicWand (Skeleton _) = Just (Skeleton MagicWand)
 equip MagicWand (Witch _) = Just (createSorceress)
+
+-- Task 09 and 10
+
+class HasItem a where
+    getItem :: a -> Maybe Item
+    hasItem :: a -> Bool
+    hasItem a = case getItem a of
+        Nothing -> False
+        _ -> True
+ 
+instance HasItem Mob where
+    hasItem Mummy = False
+    hasItem (Witch Nothing) = False
+    hasItem (Skeleton _) = True
+    hasItem (Witch _) = True
+    getItem Mummy = Nothing
+    getItem (Witch Nothing) = Nothing
+    getItem (Skeleton x) = Just x
+    getItem (Witch (Just x)) = Just x
