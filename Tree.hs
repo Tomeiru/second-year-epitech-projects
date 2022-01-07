@@ -14,3 +14,9 @@ addInTree value Empty = Node Empty value Empty
 addInTree value (Node tree y tree')
  | value < y = (Node (addInTree value tree) y tree')
  | otherwise = (Node tree y (addInTree value tree'))
+
+-- Task 14
+
+listToTree :: Ord a => [a] -> Tree a
+listToTree [] = Empty
+listToTree (element:list) = addInTree element (listToTree list)
