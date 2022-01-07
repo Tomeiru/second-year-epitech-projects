@@ -20,3 +20,9 @@ addInTree value (Node tree y tree')
 listToTree :: Ord a => [a] -> Tree a
 listToTree [] = Empty
 listToTree (element:list) = addInTree element (listToTree list)
+
+-- Task 15
+
+treeToList :: Ord a => Tree a -> [a]
+treeToList Empty = []
+treeToList (Node tree y tree') = (treeToList(tree) ++ y:treeToList(tree'))
