@@ -1,13 +1,13 @@
 ##
-## EPITECH PROJECT, 2022
+## EPITECH PROJECT, 2020
 ## Makefile
 ## File description:
 ## Makefile
 ##
 
-SRC =	pushSwapChecker.hs
+SRC =	pushSwapCheckerColor.hs
 
-NAME =	pushswap_checker
+NAME =	pushswap_checker_color
 
 $(NAME):	$(SRC)
 		@ghc $(SRC) -o $(NAME)
@@ -22,6 +22,3 @@ fclean:	clean
 		rm -fr $(NAME)
 
 re:	fclean all
-
-test: re
-		./bonus/tests.sh
