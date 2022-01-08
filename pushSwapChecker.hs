@@ -29,7 +29,7 @@ checkOpsAreCorrect (op:op_next)
  | otherwise = False
 
 checkOps :: String -> Bool
-checkOps [] = False
+checkOps [] = True
 checkOps ops = checkOpsAreCorrect (words ops)
 -- end of functions for error handling
 

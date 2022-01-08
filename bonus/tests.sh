@@ -17,6 +17,10 @@ try "Test Epi 2"
 
 assert "`echo \"sa pb pb pb\" | ./pushswap_checker 2 1 3 6 5 8`" "KO:([6,5,8],[3,2,1])"
 
+try "Test Empty Echo with Sorted List"
+
+assert "`echo \"\" | ./pushswap_checker 1 2 3 4 5`" "OK"
+
 try "Test Error Handling 1"
 
 assert "`echo \"aaa\" | ./pushswap_checker 2 1 3 6 5 8 ; echo $?`" "84"
@@ -28,9 +32,5 @@ assert "`echo \"sa pa pb\" | ./pushswap_checker a b c d e f ; echo $?`" "84"
 try "Test Error Handling 3"
 
 assert "`echo \"sa pa pb\" | ./pushswap_checker ; echo $?`" "84"
-
-try "Test Error Handling 4"
-
-assert "`echo \"\" | ./pushswap_checker 2 1 3 6 5 8 ; echo $?`" "84"
 
 echo; echo "PASS: $tests_run tests"
