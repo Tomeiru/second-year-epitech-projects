@@ -56,5 +56,6 @@ void do_action(action_t action, const char *str)
     void (* print_func[4])(const char *) = {
         print_normal, print_reverse, print_upper, print_42
     };
+
     print_func[action](str);
 }
