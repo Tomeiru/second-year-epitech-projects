@@ -14,7 +14,7 @@ void disp_int_array(const int *array, size_t nmemb)
 }
 
 void disp_array(const void *array, size_t nmemb, size_t size,
-void(*print)(const void *))
+void (*print)(const void *))
 {
     for (int i = 0; i < nmemb; i++) {
         print(array);
