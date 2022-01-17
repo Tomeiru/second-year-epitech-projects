@@ -19,7 +19,7 @@ void concat_strings(const char *str1, const char *str2, char **res)
 
     for (int i = 0; i < fst_length; i++)
         temp[a++] = str1[i];
-    for (int i = 0; i < scd_length - 1; i++)
+    for (int i = 0; i < scd_length; i++)
         temp[a++] = str2[i];
     temp[a] = '\0';
     *res = temp;
