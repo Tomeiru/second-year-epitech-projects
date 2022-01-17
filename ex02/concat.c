@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "concat.h"
 
 void concat_strings(const char *str1, const char *str2, char **res)
 {
