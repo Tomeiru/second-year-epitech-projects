@@ -10,7 +10,8 @@ SRC =	string_init_destroy.c	\
 		string_append.c	\
 		string_info.c	\
 		string_clear.c	\
-		string_compare.c
+		string_compare.c	\
+		string_copy.c
 
 OBJ = 	$(SRC:.c=.o)
 
