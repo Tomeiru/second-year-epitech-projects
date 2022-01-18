@@ -11,7 +11,7 @@ void append_s(string_t *this, const string_t *ap)
 {
     char *temp;
 
-    if (ap == NULL)
+    if (this == NULL || ap == NULL)
         return;
     temp = malloc(sizeof(char) * (strlen(this->str) + strlen(ap->str) + 1));
     temp[0] = '\0';
@@ -23,8 +23,11 @@ void append_s(string_t *this, const string_t *ap)
 
 void append_c(string_t *this, const char *ap)
 {
-    char *temp = malloc(sizeof(char) * (strlen(this->str) + strlen(ap) + 1));
+    char *temp;
 
+    if (this == NULL || ap == NULL)
+        return;
+    temp = malloc(sizeof(char) * (strlen(this->str) + strlen(ap) + 1));
     temp[0] = '\0';
     temp = strcat(temp, this->str);
     free(this->str);

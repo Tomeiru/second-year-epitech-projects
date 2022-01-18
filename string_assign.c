@@ -9,7 +9,7 @@
 
 void assign_s(string_t *this, const string_t *str)
 {
-    if (str == NULL)
+    if (this == NULL || str == NULL)
         return;
     free(this->str);
     this->str = strdup(str->str);
@@ -17,6 +17,8 @@ void assign_s(string_t *this, const string_t *str)
 
 void assign_c (string_t *this, const char *s)
 {
+    if (this == NULL || s == NULL)
+        return;
     free(this->str);
     this->str = strdup(s);
 }
