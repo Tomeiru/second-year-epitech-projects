@@ -26,10 +26,9 @@ tests_run:	$(OBJ)
 		gcc -o $(NAME) $(OBJ) $(CFLAGS) -lcriterion
 		./unit_tests
 
-
 clean:
 		rm -f $(OBJ)
-		rm -f *.gc*
+		rm -f */*.gc*
 
 fclean:	clean
 		rm -fr $(NAME)
