@@ -20,11 +20,12 @@ NAME =	unit_tests
 
 OBJ = 	$(SRC:.c=.o)
 
-CFLAGS = -I. -I$(INC_PATH)
+CFLAGS = -I. -I$(INC_PATH) --coverage
 
 tests_run:	$(OBJ)
-		@gcc -o $(NAME) $(OBJ) $(CFLAGS) --coverage -lcriterion
-		@./unit_tests
+		gcc -o $(NAME) $(OBJ) $(CFLAGS) -lcriterion
+		./unit_tests
+
 
 clean:
 		rm -f $(OBJ)
