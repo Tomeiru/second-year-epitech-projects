@@ -53,9 +53,10 @@ unsigned int position)
         if (actual_pos == position)
             break;
         actual_pos++;
-    }if (actual_pos != position)
+    }if (actual_pos != position) {
+        free(node);
         return (false);
-    node->value = elem;
+    }node->value = elem;
     node->next = temp->next;
     temp->next = node;
     return (true);

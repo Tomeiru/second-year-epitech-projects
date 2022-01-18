@@ -40,16 +40,18 @@ bool int_list_del_elem_at_position(int_list_t *front_ptr, unsigned int position)
 {
     int_node_t *temp = *(front_ptr);
     int_node_t *temp_sec = NULL;
-    unsigned int actual_pos = 1;
+    unsigned int actual_pos = 0;
 
     if (position == 0)
         return (int_list_del_elem_at_front(front_ptr));
+    if (position + 1 == int_list_get_size((*front_ptr)))
+        return (int_list_del_elem_at_back(front_ptr));
     if ((*front_ptr) == NULL || temp->next == NULL)
         return (false);
     for ( ; temp->next != NULL; temp = temp->next) {
+        actual_pos++;
         if (actual_pos == position)
             break;
-        actual_pos++;
     }if (actual_pos != position)
         return (false);
     temp_sec = temp->next->next;
