@@ -41,7 +41,7 @@ void *list_get_elem_at_back(list_t list)
     return (list->value);
 }
 
-int list_get_elem_at_position(list_t list, unsigned int position)
+void *list_get_elem_at_position(list_t list, unsigned int position)
 {
     unsigned int act_pos = 0;
 
