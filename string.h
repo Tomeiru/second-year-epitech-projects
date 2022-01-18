@@ -23,6 +23,7 @@ typedef struct string_s {
     int (*compare_s)(const struct string_s *this, const struct string_s *str);
     int (*compare_c)(const struct string_s *this, const char *str);
     size_t (*copy)(const struct string_s *this, char *s, size_t n, size_t pos);
+    const char *(*c_str)(const struct string_s *this);
 } string_t;
 
 
@@ -38,5 +39,6 @@ int length(const string_t *this);
 int compare_s(const string_t *this, const string_t *str);
 int compare_c(const string_t *this, const char *str);
 size_t copy(const string_t *this, char *s, size_t n, size_t pos);
+const char *c_str(const string_t *this);
 
 #endif /* !STRING_H_ */

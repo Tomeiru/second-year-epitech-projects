@@ -25,3 +25,10 @@ int length(const string_t *this)
         return (-1);
     return (strlen(this->str));
 }
+
+const char *c_str(const string_t *this)
+{
+    if (this == NULL)
+        return (NULL);
+    return (this->str);
+}

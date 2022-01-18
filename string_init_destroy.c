@@ -20,6 +20,7 @@ void string_init(string_t *this, const char *s)
     this->compare_s = &compare_s;
     this->compare_c = &compare_c;
     this->copy = &copy;
+    this->c_str = &c_str;
 }
 
 void string_destroy(string_t *this)
