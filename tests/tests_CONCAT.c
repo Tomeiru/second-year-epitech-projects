@@ -30,6 +30,7 @@ Test (conca_struct, basic)
     str->res = NULL;
 
     concat_struct(str);
-    cr_assert_str_eq(str->res, "Je suis de retour! Pour vous jouer de mauvais tours!");
+    cr_assert_str_eq(str->res,
+    "Je suis de retour! Pour vous jouer de mauvais tours!");
     free(str);
 }
