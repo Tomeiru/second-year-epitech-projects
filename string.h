@@ -17,6 +17,7 @@ typedef struct string_s {
     void (*assign_c)(struct string_s *this, const char *s);
     void (*append_s)(struct string_s *this, const struct string_s *ap);
     void (*append_c)(struct string_s *this, const char *ap);
+    char (*at)(const struct string_s *this, size_t pos);
 } string_t;
 
 
@@ -26,5 +27,6 @@ void assign_s(string_t *this, const string_t *str);
 void assign_c(string_t *this, const char *s);
 void append_s(string_t *this, const string_t *ap);
 void append_c(string_t *this, const char *ap);
+char at(const string_t *this, size_t pos);
 
 #endif /* !STRING_H_ */

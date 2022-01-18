@@ -7,7 +7,8 @@
 
 SRC =	string_init_destroy.c	\
 		assign_function.c	\
-		append_function.c
+		append_function.c	\
+		string_info.c
 
 OBJ = 	$(SRC:.c=.o)
 
