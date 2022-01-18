@@ -9,7 +9,7 @@
 
 int comparator(const void *first, const void *second)
 {
-    return (*(int *) first - *(int *) second);
+    return (*(int *)first - *(int *)second);
 }
 
 void sort_int_array(int *array, size_t nmemb)

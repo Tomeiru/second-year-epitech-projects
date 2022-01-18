@@ -32,6 +32,7 @@ size_t uniq_array(void *array, size_t nmenb, size_t size, int (*compar)
 {
     size_t back_up = nmenb;
     char buffer[size];
+
     for (int i = 0; i < nmenb; i++) {
         for (int j = i + 1; j < nmenb; j++) {
             if (compar(array + (i * size), array + (j * size)) == 0) {
