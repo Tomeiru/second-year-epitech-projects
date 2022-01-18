@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2022
 ** PM
 ** File description:
-** int_list_add
+** list_add
 */
 
 #include "list.h"
 #include "stdlib.h"
 
-bool int_list_add_elem_at_front(list_t *front_ptr, void *elem)
+bool list_add_elem_at_front(list_t *front_ptr, void *elem)
 {
     node_t *node = malloc(sizeof(node_t));
 
@@ -20,13 +20,13 @@ bool int_list_add_elem_at_front(list_t *front_ptr, void *elem)
     return (true);
 }
 
-bool int_list_add_elem_at_back(list_t *front_ptr, void *elem)
+bool list_add_elem_at_back(list_t *front_ptr, void *elem)
 {
     node_t *node;
     node_t *temp = *(front_ptr);
 
     if (temp == NULL)
-        return (int_list_add_elem_at_front(front_ptr, elem));
+        return (list_add_elem_at_front(front_ptr, elem));
     node = malloc(sizeof(node_t));
     if (node == NULL)
         return (false);
@@ -37,7 +37,7 @@ bool int_list_add_elem_at_back(list_t *front_ptr, void *elem)
     return (true);
 }
 
-bool int_list_add_elem_at_position(list_t *front_ptr, void *elem,
+bool list_add_elem_at_position(list_t *front_ptr, void *elem,
 unsigned int position)
 {
     node_t *node;
@@ -45,7 +45,7 @@ unsigned int position)
     unsigned int actual_pos = 1;
 
     if (position == 0)
-        return (int_list_add_elem_at_front(front_ptr, elem));
+        return (list_add_elem_at_front(front_ptr, elem));
     node = malloc(sizeof(node_t));
     if (node == NULL)
         return (false);
