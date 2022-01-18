@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2022
 ** PM
 ** File description:
-** int_list_get_info
+** list_get_info
 */
 
 #include "list.h"
 #include "stdlib.h"
 
-bool int_list_is_empty(list_t list)
+bool list_is_empty(list_t list)
 {
     if (list == NULL)
         return (true);
@@ -26,14 +26,14 @@ unsigned int list_get_size(list_t list)
     return (++ret);
 }
 
-void *int_list_get_elem_at_front(list_t list)
+void *list_get_elem_at_front(list_t list)
 {
     if (list == NULL)
         return (NULL);
     return (list->value);
 }
 
-void *int_list_get_elem_at_back(list_t list)
+void *list_get_elem_at_back(list_t list)
 {
     if (list == NULL)
         return (NULL);
@@ -41,7 +41,7 @@ void *int_list_get_elem_at_back(list_t list)
     return (list->value);
 }
 
-int int_list_get_elem_at_position(list_t list, unsigned int position)
+int list_get_elem_at_position(list_t list, unsigned int position)
 {
     unsigned int act_pos = 0;
 
