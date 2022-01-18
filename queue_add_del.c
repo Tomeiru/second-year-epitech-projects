@@ -21,4 +21,3 @@ void queue_clear(queue_t *queue_ptr)
 {
     list_clear(queue_ptr);
 }
-

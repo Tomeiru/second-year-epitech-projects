@@ -21,4 +21,3 @@ void stack_clear(stack_t *stack_ptr)
 {
     list_clear(stack_ptr);
 }
-
