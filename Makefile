@@ -6,8 +6,8 @@
 ##
 
 SRC =	string_init_destroy.c	\
-		assign_function.c	\
-		append_function.c	\
+		string_assign.c	\
+		string_append.c	\
 		string_info.c	\
 		string_clear.c
 
