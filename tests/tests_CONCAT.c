@@ -11,7 +11,7 @@
 void concat_strings(const char *str1, const char *str2, char **res);
 void concat_struct(concat_t *str);
 
-Test (concat_strings, basic)
+Test(concat_strings, basic)
 {
     char *str1 = "Je suis la première partie,";
     char *str2 = " suivie de la deuxième";
@@ -21,7 +21,7 @@ Test (concat_strings, basic)
     cr_assert_str_eq(res, "Je suis la première partie, suivie de la deuxième");
 }
 
-Test (conca_struct, basic)
+Test(conca_struct, basic)
 {
     concat_t *str = malloc(sizeof(concat_t));
 

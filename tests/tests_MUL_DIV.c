@@ -9,7 +9,7 @@
 void mul_div_long(int a, int b, int *mul, int *div);
 void mul_div_short(int *a, int *b);
 
-Test (mul_div_long, basic_test)
+Test(mul_div_long, basic_test)
 {
     int a = 16;
     int b = 2;
@@ -21,7 +21,7 @@ Test (mul_div_long, basic_test)
     cr_assert_eq(div, 8);
 }
 
-Test (mul_div_long, test_divide_by_zero)
+Test(mul_div_long, test_divide_by_zero)
 {
     int a = 16;
     int b = 0;
@@ -33,7 +33,7 @@ Test (mul_div_long, test_divide_by_zero)
     cr_assert_eq(div, 42);
 }
 
-Test (mul_div_short, basic_test)
+Test(mul_div_short, basic_test)
 {
     int a = 32;
     int b = 4;
@@ -43,7 +43,7 @@ Test (mul_div_short, basic_test)
     cr_assert_eq(b, 8);
 }
 
-Test (mul_div_short, test_divide_by_zero)
+Test(mul_div_short, test_divide_by_zero)
 {
     int a = 32;
     int b = 0;

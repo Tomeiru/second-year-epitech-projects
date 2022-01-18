@@ -15,7 +15,7 @@ static void redirect_all_stdout(void)
     cr_redirect_stdout();
 }
 
-Test (do_action, print_normal, .init=redirect_all_stdout)
+Test(do_action, print_normal, .init=redirect_all_stdout)
 {
     action_t action;
     const char *str = "Bonjour";
@@ -25,7 +25,7 @@ Test (do_action, print_normal, .init=redirect_all_stdout)
     cr_assert_stdout_eq_str("Bonjour\n", "");
 }
 
-Test (do_action, print_reverse, .init=redirect_all_stdout)
+Test(do_action, print_reverse, .init=redirect_all_stdout)
 {
     action_t action;
     const char *str = "Bonsoir";
@@ -35,7 +35,7 @@ Test (do_action, print_reverse, .init=redirect_all_stdout)
     cr_assert_stdout_eq_str("riosnoB\n", "");
 }
 
-Test (do_action, print_upper, .init=redirect_all_stdout)
+Test(do_action, print_upper, .init=redirect_all_stdout)
 {
     action_t action;
     const char *str = "minuSCULE0az";
@@ -45,7 +45,7 @@ Test (do_action, print_upper, .init=redirect_all_stdout)
     cr_assert_stdout_eq_str("MINUSCULE0AZ\n", "");
 }
 
-Test (do_action, print_42, .init=redirect_all_stdout)
+Test(do_action, print_42, .init=redirect_all_stdout)
 {
     action_t action;
     const char *str = "KEKW";
