@@ -18,11 +18,11 @@ size_t get_path_numb(unsigned int size)
 
 char *set_up_binary_str(unsigned int size)
 {
-    char *binary_str = malloc(sizeof(size + 1));
+    char *binary_str = malloc(sizeof(char) * (size + 1));
 
     for (int i = 0; i < size; i++)
         binary_str[i] = '0';
-    binary_str[size - 1] = '\0';
+    binary_str[size] = '\0';
     return (binary_str);
 }
 
