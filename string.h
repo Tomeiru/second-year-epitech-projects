@@ -6,10 +6,10 @@
 */
 
 #ifndef STRING_H_
-#define STRING_H_
+    #define STRING_H_
 
-#include <stdlib.h>
-#include <string.h>
+    #include <stdlib.h>
+    #include <string.h>
 
 typedef struct string_s {
     char *str;
