@@ -62,7 +62,7 @@ static IntClass *int_div(IntClass *a, IntClass *b)
 {
     if (b->x == 0)
         raise("Division by 0");
-    return (new(Int, a->x * b->x));
+    return (new(Int, a->x / b->x));
 }
 
 static bool int_eq(IntClass *a, IntClass *b)

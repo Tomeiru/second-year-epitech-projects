@@ -54,7 +54,7 @@ static CharClass *char_div(CharClass *a, CharClass *b)
 {
     if (b->x == 0)
         raise("Division by 0");
-    return (new(Char, a->x * b->x));
+    return (new(Char, a->x / b->x));
 }
 
 static bool char_eq(CharClass *a, CharClass *b)

@@ -62,7 +62,7 @@ static FloatClass *float_div(FloatClass *a, FloatClass *b)
 {
     if (b->x == 0)
         raise("Division by 0");
-    return (new(Float, a->x * b->x));
+    return (new(Float, a->x / b->x));
 }
 
 static bool float_eq(FloatClass *a, FloatClass *b)
