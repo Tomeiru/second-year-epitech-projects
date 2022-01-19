@@ -102,10 +102,10 @@ static void array_ctor(ArrayClass *this, va_list *args)
 {
     va_list *temp = malloc(sizeof(va_list));
 
-    va_copy(*temp, *args);
     this->_size = va_arg(*args, size_t);
     this->_type = va_arg(*args, Class *);
     this->_tab = malloc(sizeof(Object *) * this->_size);
+    va_copy(*temp, *args);
     for (int i = 0; i < this->_size; i++) {
         va_copy(*args, *temp);
         this->_tab[i] = va_new(this->_type, args);
