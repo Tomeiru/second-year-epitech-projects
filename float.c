@@ -31,7 +31,7 @@ static char *float_print(FloatClass *this)
     int len_num = 7;
     char *buff;
 
-    if (num < 0)
+    if (num <= 0)
         len_num++;
     for ( ; num != 0; num /= 10)
         len_num++;

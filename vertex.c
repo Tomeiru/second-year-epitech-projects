@@ -38,7 +38,7 @@ static char *vertex_print(VertexClass *this)
     char *buff;
 
     for (int i = 0; i < 3; i++) {
-        if (arr[i] < 0)
+        if (arr[i] <= 0)
             len_num++;
         for ( ; arr[i] != 0; arr[i] /= 10)
             len_num++;

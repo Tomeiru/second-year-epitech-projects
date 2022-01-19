@@ -31,7 +31,7 @@ static char *int_print(IntClass *this)
     int len_num = 0;
     char *buff;
 
-    if (num < 0)
+    if (num <= 0)
         len_num++;
     for ( ; num != 0; num /= 10)
         len_num++;

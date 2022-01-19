@@ -36,7 +36,7 @@ static char *point_print(PointClass *this)
     char *buff;
 
     for (int i = 0; i < 2; i++) {
-        if (arr[i] < 0)
+        if (arr[i] <= 0)
             len_num++;
         for ( ; arr[i] != 0; arr[i] /= 10)
             len_num++;
