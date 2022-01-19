@@ -19,12 +19,11 @@ static void point_ctor(PointClass *this, va_list *args)
 {
     this->x = va_arg(*args, int);
     this->y = va_arg(*args, int);
-    /* Fill this function for exercice 02 */
 }
 
 static void point_dtor(PointClass *this)
 {
-    /* Fill this function for exercice 02 */
+    return;
 }
 
 static char *point_print(PointClass *this)
