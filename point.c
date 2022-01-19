@@ -60,7 +60,7 @@ static PointClass *point_sub(PointClass *a, PointClass *b)
 }
 
 static const PointClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(PointClass),
         .__name__ = "Point",
         .__ctor__ = (ctor_t)&point_ctor,
