@@ -21,7 +21,7 @@ int main(int ac, char **av)
         if (file.is_open())
             std::cout << file.rdbuf();
         else
-            std::cout << "my_cat: " << name <<
+            std::cerr << "my_cat: " << name <<
             ": No such file or directory" << std::endl;
     }
     return (0);
