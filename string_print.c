@@ -11,5 +11,5 @@ void print(const string_t *this)
 {
     if (this == NULL || this->str == NULL)
         return;
-    write(1, this->str, strlen(this->str));
+    printf("%s\r", this->str);
 }
