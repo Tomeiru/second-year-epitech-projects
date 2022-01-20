@@ -10,6 +10,7 @@
 
     #include <stdlib.h>
     #include <string.h>
+    #include <stdio.h>
 
 typedef struct string_s {
     char *str;
@@ -35,6 +36,7 @@ typedef struct string_s {
     int (*to_int)(const struct string_s *this);
     struct string_s **(*split_s)(const struct string_s *this, char separator);
     char **(*split_c)(const struct string_s *this, char separator);
+    void (*print)(const struct string_s *this);
 } string_t;
 
 
@@ -59,5 +61,6 @@ void insert_c(string_t *this, size_t pos, const char *str);
 int to_int(const string_t *this);
 string_t **split_s(const string_t *this, char separator);
 char **split_c(const string_t *this, char separator);
+void print(const string_t *this);
 
 #endif /* !STRING_H_ */

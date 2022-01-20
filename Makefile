@@ -14,7 +14,8 @@ SRC =	string_init_destroy.c	\
 		string_copy.c	\
 		string_find.c	\
 		string_insert.c	\
-		string_split.c
+		string_split.c	\
+		string_print.c
 
 OBJ = 	$(SRC:.c=.o)
 
