@@ -24,6 +24,8 @@ void string_init(string_t *this, const char *s)
     this->empty = &empty;
     this->find_s = &find_s;
     this->find_c = &find_c;
+    this->insert_s = &insert_s;
+    this->insert_c = &insert_c;
 }
 
 void string_destroy(string_t *this)

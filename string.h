@@ -28,6 +28,10 @@ typedef struct string_s {
     int (*find_s)(const struct string_s *this,
     const struct string_s *str, size_t pos);
     int (*find_c)(const struct string_s *this, const char *str, size_t pos);
+    void (*insert_s)(struct string_s *this, size_t pos,
+    const struct string_s *str);
+    void (*insert_c)(struct string_s *this, size_t pos,
+    const char *str);
 } string_t;
 
 
@@ -47,5 +51,7 @@ const char *c_str(const string_t *this);
 int empty(const string_t *this);
 int find_s(const string_t *this, const string_t *str, size_t pos);
 int find_c(const string_t *this, const char *str, size_t pos);
+void insert_s(string_t *this, size_t pos, const string_t *str);
+void insert_c(string_t *this, size_t pos, const char *str);
 
 #endif /* !STRING_H_ */
