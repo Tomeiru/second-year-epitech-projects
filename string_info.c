@@ -41,3 +41,8 @@ int empty(const string_t *this)
         return (1);
     return (0);
 }
+
+int to_int(const string_t *this)
+{
+    return (atoi(this->str));
+}
