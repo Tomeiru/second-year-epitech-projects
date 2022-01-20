@@ -7,7 +7,7 @@
 
 #include "string.h"
 
-char at(const string_t *this, size_t pos)
+char get_char_at_pos(const string_t *this, size_t pos)
 {
     size_t len;
 

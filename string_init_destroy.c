@@ -14,7 +14,7 @@ void string_init(string_t *this, const char *s)
     this->assign_c = &assign_c;
     this->append_s = &append_s;
     this->append_c = &append_c;
-    this->at = &at;
+    this->at = &get_char_at_pos;
     this->clear = &clear;
     this->length = &length;
     this->compare_s = &compare_s;
