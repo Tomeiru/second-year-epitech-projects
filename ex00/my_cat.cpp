@@ -24,4 +24,5 @@ int main(int ac, char **av)
             std::cout << "my_cat: " << name <<
             ": No such file or directory" << std::endl;
     }
+    return (0);
 }
