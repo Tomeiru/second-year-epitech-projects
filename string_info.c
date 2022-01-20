@@ -35,7 +35,7 @@ const char *c_str(const string_t *this)
 
 int empty(const string_t *this)
 {
-    if (this == NULL || this->str == NULL);
+    if (this == NULL || this->str == NULL)
         return (-1);
     if (strcmp(this->str, "") == 0)
         return (1);
