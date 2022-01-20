@@ -32,7 +32,9 @@ typedef struct string_s {
     const struct string_s *str);
     void (*insert_c)(struct string_s *this, size_t pos,
     const char *str);
-    int (*to_int)(const struct string_t *this);
+    int (*to_int)(const struct string_s *this);
+    struct string_s **(*split_s)(const struct string_s *this, char separator);
+    char **(*split_c)(const struct string_s *this, char separator);
 } string_t;
 
 
@@ -55,5 +57,7 @@ int find_c(const string_t *this, const char *str, size_t pos);
 void insert_s(string_t *this, size_t pos, const string_t *str);
 void insert_c(string_t *this, size_t pos, const char *str);
 int to_int(const string_t *this);
+string_t **split_s(const string_t *this, char separator);
+char **split_c(const string_t *this, char separator);
 
 #endif /* !STRING_H_ */
