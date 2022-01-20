@@ -25,4 +25,5 @@ int main(void)
     }
     std::cout << std::setw(16) << std::fixed <<
     std::setprecision(3) << temp << std::setw(16) << unit << std::endl;
+    return (0);
 }
