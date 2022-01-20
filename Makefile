@@ -34,6 +34,8 @@ tests_run:	$(OBJ)
 clean:
 		rm -f $(OBJ)
 		rm -f */*.gc*
+		rm -f *.gc*
+
 
 fclean:	clean
 		rm -fr $(NAME)
