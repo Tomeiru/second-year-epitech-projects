@@ -39,6 +39,6 @@ void SickKoala::overDrive(std::string sentence)
     std::string kreog = "Kreog!";
 
     while (sentence.find(kreog) != std::string::npos)
-        sentence.replace(sentence.find(kreog), kreog.length(), "1337");
+        sentence.replace(sentence.find(kreog), kreog.length(), "1337!");
     std::cout << "Mr." << name << ": " << sentence << std::endl;
 }
