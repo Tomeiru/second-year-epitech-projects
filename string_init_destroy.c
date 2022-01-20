@@ -7,6 +7,13 @@
 
 #include "string.h"
 
+static void string_init_follow_up(string_t *this)
+{
+    this->split_c = &split_c;
+    this->join_s = &join_s;
+    this->join_c = &join_c;
+}
+
 void string_init(string_t *this, const char *s)
 {
     this->str = strdup(s);
@@ -27,6 +34,8 @@ void string_init(string_t *this, const char *s)
     this->insert_s = &insert_s;
     this->insert_c = &insert_c;
     this->to_int = &to_int;
+    this->split_s = &split_s;
+    string_init_follow_up(this);
 }
 
 void string_destroy(string_t *this)

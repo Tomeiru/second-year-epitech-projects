@@ -11,6 +11,7 @@
     #include <stdlib.h>
     #include <string.h>
     #include <stdio.h>
+    #include <unistd.h>
 
 typedef struct string_s {
     char *str;
@@ -37,6 +38,10 @@ typedef struct string_s {
     struct string_s **(*split_s)(const struct string_s *this, char separator);
     char **(*split_c)(const struct string_s *this, char separator);
     void (*print)(const struct string_s *this);
+    void (*join_s)(struct string_s *this, char delim, const struct
+    string_s *const *array);
+    void (*join_c)(struct string_s *this, char delim, const char *const
+    *array);
 } string_t;
 
 
@@ -62,5 +67,7 @@ int to_int(const string_t *this);
 string_t **split_s(const string_t *this, char separator);
 char **split_c(const string_t *this, char separator);
 void print(const string_t *this);
+void join_s(string_t *this, char delim, const string_t *const *array);
+void join_c(string_t *this, char delim, const char *const *array);
 
 #endif /* !STRING_H_ */
