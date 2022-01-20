@@ -19,7 +19,7 @@ int main(int ac, char **av)
         name = av[i];
         std::ifstream file(name);
         if (file.is_open())
-            std::cout << file.rdbuf() << std::endl;
+            std::cout << file.rdbuf();
         else
             std::cout << "my_cat: " << name <<
             ": No such file or directory" << std::endl;
