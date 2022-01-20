@@ -12,7 +12,6 @@ static size_t det_len_s(const char *str, size_t n, size_t pos)
     int i = 0;
 
     for (; str[pos + i] != '\0' && i < n; i++);
-    printf("%i\n", i);
     if (str[pos + i] == '\0' && n > i)
         return (i + 1);
     return (i);
