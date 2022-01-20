@@ -10,6 +10,7 @@
 static void string_init_follow_up(string_t *this)
 {
     this->split_c = &split_c;
+    this->print = &print;
     this->join_s = &join_s;
     this->join_c = &join_c;
 }
