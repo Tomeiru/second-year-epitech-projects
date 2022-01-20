@@ -14,7 +14,7 @@ SickKoala::SickKoala(std::string new_name)
 
 SickKoala::~SickKoala()
 {
-    std::cout << "Mr." << name << ": Kreooog!! I'm cuuuured!" << std::endl;
+    std::cout << "Mr." << name << ": Kreooogg!! I'm cuuuured!" << std::endl;
 }
 
 void SickKoala::poke()
