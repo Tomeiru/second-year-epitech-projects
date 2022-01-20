@@ -9,5 +9,7 @@
 
 void print(const string_t *this)
 {
-    printf("%s", this->str);
+    if (this == NULL || this->str == NULL)
+        return;
+    write(1, this->str, strlen(this->str));
 }
