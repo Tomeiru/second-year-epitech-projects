@@ -133,29 +133,3 @@ void SickKoalaList::dump(void)
         std::cout << temp->patient->getName();
     std::cout << "." << std::endl;
 }
-
-int main(void)
-{
-    SickKoala Josh("Josh");
-    SickKoala shoJ("hsoJ");
-    SickKoala a("a");
-    SickKoala b("b");
-    SickKoala c("c");
-    SickKoala d("d");
-
-    SickKoalaList list(&Josh);
-    SickKoalaList node(&shoJ);
-    SickKoalaList B(nullptr);
-    SickKoalaList A(&b);
-    SickKoalaList C(&c);
-    SickKoalaList D(&d);
-    SickKoalaList *listo;
-    list.append(&node);
-    list.append(&A);
-    list.append(&B);
-    list.append(&C);
-    list.append(&D);
-    listo = list.remove(&A);
-
-    listo->dump();
-}
