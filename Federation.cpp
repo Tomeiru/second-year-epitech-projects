@@ -7,7 +7,7 @@
 
 #include "Federation.hpp"
 
-// Functions from Starfleet Ship 
+// Functions from Starfleet Ship
 
 Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short maxWarp)
 {
@@ -15,6 +15,8 @@ Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short
     _width = width;
     _name = name;
     _maxWarp = maxWarp;
+    _location = EARTH;
+    _home = EARTH;
     std::cout << "The ship USS " << _name << " has been finished." << std::endl;
     std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
     std::cout << "It can go to Warp " << _maxWarp << "!" << std::endl;
@@ -47,6 +49,39 @@ void Federation::Starfleet::Ship::promote(Captain *captain)
     std::cout << _captain->getName() << ": I'm glad to be the captain of the USS " << _name << std::endl;
 }
 
+bool Federation::Starfleet::Ship::move(int warp, Destination d)
+{
+    if (_location == d && _core->checkReactor()->isStable() != true && warp > _maxWarp)
+        return (false);
+    _location = d;
+    return (true);
+}
+
+bool Federation::Starfleet::Ship::move(int warp)
+{
+    if (_location == _home && _core->checkReactor()->isStable() != true && warp > _maxWarp)
+        return (false);
+    _location = _home;
+    return (true);
+
+}
+
+bool Federation::Starfleet::Ship::move(Destination d)
+{
+    if (_location == d && _core->checkReactor()->isStable() != true)
+        return (false);
+    _location = d;
+    return (true);
+}
+
+bool Federation::Starfleet::Ship::move()
+{
+    if (_location == _home && _core->checkReactor()->isStable() != true)
+        return (false);
+    _location = _home;
+    return (true);
+}
+
 // Functions from Federation Ship
 
 Federation::Ship::Ship(int length, int width, std::string name)
@@ -54,6 +89,9 @@ Federation::Ship::Ship(int length, int width, std::string name)
     _length = length;
     _width = width;
     _name = name;
+    _maxWarp = 1;
+    _location = VULCAN;
+    _home = VULCAN;
     std::cout << "The independent ship " << _name << " just finished its construction." << std::endl;
     std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
 }
@@ -78,6 +116,39 @@ void Federation::Ship::checkCore()
     else
         stability = "unstable";
     std::cout << _name << ": The core is " << stability << " at the time." << std::endl;
+}
+
+bool Federation::Ship::move(int warp, Destination d)
+{
+    if (_location == d && _core->checkReactor()->isStable() != true && warp > _maxWarp)
+        return (false);
+    _location = d;
+    return (true);
+}
+
+bool Federation::Ship::move(int warp)
+{
+    if (_location == _home && _core->checkReactor()->isStable() != true && warp > _maxWarp)
+        return (false);
+    _location = _home;
+    return (true);
+
+}
+
+bool Federation::Ship::move(Destination d)
+{
+    if (_location == d && _core->checkReactor()->isStable() != true)
+        return (false);
+    _location = d;
+    return (true);
+}
+
+bool Federation::Ship::move()
+{
+    if (_location == _home && _core->checkReactor()->isStable() != true)
+        return (false);
+    _location = _home;
+    return (true);
 }
 
 // Functions from Captain Class

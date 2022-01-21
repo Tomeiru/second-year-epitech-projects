@@ -33,6 +33,10 @@ namespace Federation
                 void setupCore(WarpSystem::Core *);
                 void checkCore();
                 void promote(Captain *);
+                bool move(int, Destination);
+                bool move(int);
+                bool move(Destination);
+                bool move();
             private:
                 int _length;
                 int _width;
@@ -40,6 +44,8 @@ namespace Federation
                 short _maxWarp;
                 WarpSystem::Core *_core;
                 Captain *_captain;
+                Destination _location;
+                Destination _home;
         };
         class Ensign {
             public:
@@ -55,11 +61,18 @@ namespace Federation
             ~Ship();
             void setupCore(WarpSystem::Core*);
             void checkCore();
+            bool move(int, Destination);
+            bool move(int);
+            bool move(Destination);
+            bool move();
         private:
             int _length;
             int _width;
             std::string _name;
+            short _maxWarp;
             WarpSystem::Core *_core;
+            Destination _location;
+            Destination _home;
     };
 }
 

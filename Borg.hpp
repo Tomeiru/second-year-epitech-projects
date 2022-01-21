@@ -19,10 +19,16 @@ namespace Borg
             ~Ship();
             void setupCore(WarpSystem::Core *);
             void checkCore();
+            bool move(int, Destination);
+            bool move(int);
+            bool move(Destination);
+            bool move();
         private:
             int _side;
             short _maxWarp;
             WarpSystem::Core *_core;
+            Destination _location;
+            Destination _home;
     };
 }
 

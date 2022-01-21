@@ -9,6 +9,7 @@
 #define WARPSYSTEM_HPP_
 
 #include <iostream>
+#include "Destination.hpp"
 
 namespace WarpSystem
 {
