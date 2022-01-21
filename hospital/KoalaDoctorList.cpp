@@ -121,29 +121,3 @@ void KoalaDoctorList::dump(void)
         std::cout << temp->patient->getName();
     std::cout << "." << std::endl;
 }
-
-int main(void)
-{
-    KoalaDoctor Josh("Josh");
-    KoalaDoctor shoJ("hsoJ");
-    KoalaDoctor a("a");
-    KoalaDoctor b("b");
-    KoalaDoctor c("c");
-    KoalaDoctor d("d");
-
-    KoalaDoctorList list(&Josh);
-    KoalaDoctorList node(&shoJ);
-    KoalaDoctorList A(&a);
-    KoalaDoctorList B(&b);
-    KoalaDoctorList C(&c);
-    KoalaDoctorList D(&d);
-    KoalaDoctorList *listo;
-    list.append(&node);
-    list.append(&A);
-    list.append(&B);
-    list.append(&C);
-    list.append(&D);
-    listo = list.remove(&A);
-
-    listo->dump();
-}
