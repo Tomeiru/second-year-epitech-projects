@@ -18,6 +18,7 @@ class KoalaDoctor {
         ~KoalaDoctor();
         void diagnose(SickKoala*);
         void timeCheck();
+        std::string getName();
     private:
         std::string doc_name;
         bool working;

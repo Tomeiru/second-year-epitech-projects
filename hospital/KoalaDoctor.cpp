@@ -45,3 +45,8 @@ void KoalaDoctor::timeCheck(void)
     working = false;
     std::cout << "Dr." << doc_name << ": Time to go home to my eucalyptus forest!" << std::endl;
 }
+
+std::string KoalaDoctor::getName(void)
+{
+    return (doc_name);
+}

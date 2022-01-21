@@ -20,6 +20,7 @@ class KoalaNurse {
         void giveDrug(std::string, SickKoala*);
         std::string readReport(std::string);
         void timeCheck();
+        int getID();
     protected:
         int id;
         bool working;

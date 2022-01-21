@@ -48,3 +48,7 @@ void KoalaNurse::timeCheck(void)
     std::cout << "Nurse " << id << ": Time to go home to my eucalyptus forest!" << std::endl;
 }
 
+int KoalaNurse::getID(void)
+{
+    return (id);
+}
