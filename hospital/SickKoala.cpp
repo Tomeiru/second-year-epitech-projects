@@ -30,7 +30,7 @@ bool SickKoala::takeDrug(std::string drug)
     }if (drug == "Kinder") {
         std::cout << "Mr." << name << ": There is a toy inside!" << std::endl;
         return (true);
-    }std::cout << "Mr." << name << ": Goerkreog" << std::endl;
+    }std::cout << "Mr." << name << ": Goerkreog!" << std::endl;
     return (false);
 }
 
