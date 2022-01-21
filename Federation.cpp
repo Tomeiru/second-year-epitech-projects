@@ -7,6 +7,8 @@
 
 #include "Federation.hpp"
 
+// Functions from Starfleet Ship 
+
 Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short maxWarp)
 {
     _length = length;
@@ -39,6 +41,14 @@ void Federation::Starfleet::Ship::checkCore()
     std::cout << "USS " << _name << ": The core is " << stability << " at the time." << std::endl;
 }
 
+void Federation::Starfleet::Ship::promote(Captain *captain)
+{
+    _captain = captain;
+    std::cout << _captain->getName() << ": I'm glad to be the captain of the USS " << _name << std::endl;
+}
+
+// Functions from Federation Ship
+
 Federation::Ship::Ship(int length, int width, std::string name)
 {
     _length = length;
@@ -68,4 +78,43 @@ void Federation::Ship::checkCore()
     else
         stability = "unstable";
     std::cout << _name << ": The core is " << stability << " at the time." << std::endl;
+}
+
+// Functions from Captain Class
+
+Federation::Starfleet::Captain::Captain(std::string name)
+{
+    _name = name;
+    _age = 30;
+}
+
+Federation::Starfleet::Captain::~Captain()
+{
+}
+
+std::string Federation::Starfleet::Captain::getName()
+{
+    return (_name);
+}
+
+int Federation::Starfleet::Captain::getAge()
+{
+    return (_age);
+}
+
+void Federation::Starfleet::Captain::setAge(int age)
+{
+    _age = age;
+}
+
+// Functions from Ensign Class
+
+Federation::Starfleet::Ensign::Ensign(std::string name)
+{
+    _name = name;
+    std::cout << "Ensign " << _name << ", awaiting orders." << std::endl;
+}
+
+Federation::Starfleet::Ensign::~Ensign()
+{
 }
