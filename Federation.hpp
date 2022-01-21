@@ -21,6 +21,7 @@ namespace Federation
                 ~Ship();
                 void setupCore(WarpSystem::Core *);
                 void checkCore();
+            private:
                 int _length;
                 int _width;
                 std::string _name;
@@ -34,6 +35,7 @@ namespace Federation
             ~Ship();
             void setupCore(WarpSystem::Core*);
             void checkCore();
+        private:
             int _length;
             int _width;
             std::string _name;

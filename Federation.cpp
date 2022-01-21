@@ -32,7 +32,7 @@ void Federation::Starfleet::Ship::checkCore()
 {
     std::string stability;
 
-    if (_core->_coreReactor->isStable() == true)
+    if (_core->checkReactor()->isStable() == true)
         stability = "stable";
     else
         stability = "unstable";
@@ -63,7 +63,7 @@ void Federation::Ship::checkCore()
 {
     std::string stability;
 
-    if (_core->_coreReactor->isStable() == true)
+    if (_core->checkReactor()->isStable() == true)
         stability = "stable";
     else
         stability = "unstable";
