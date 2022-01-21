@@ -17,8 +17,9 @@ class SickKoala {
         void poke();
         bool takeDrug(std::string);
         void overDrive(std::string);
-
-    std::string name;
+        std::string getName();
+    private:
+        std::string name;
 };
 
 #endif /* !SICKKOALA_HPP_ */
