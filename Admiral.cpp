@@ -10,7 +10,7 @@
 Federation::Starfleet::Admiral::Admiral(std::string name)
 {
     _name = name;
-    std::cout << "Admiral " << name << " ready for action.";
+    std::cout << "Admiral " << name << " ready for action." << std::endl;
     movePtr = &Federation::Starfleet::Ship::move;
     firePtr = &Federation::Starfleet::Ship::fire;
 }
@@ -28,6 +28,5 @@ void Federation::Starfleet::Admiral::fire(Federation::Starfleet::Ship *ship, Bor
 
 bool Federation::Starfleet::Admiral::move(Federation::Starfleet::Ship *ship, Destination dest)
 {
-    std::cout << "On order from Admiral " << _name << ":" << std::endl;
     return ((ship->*movePtr)(dest));
 }
