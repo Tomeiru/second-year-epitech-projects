@@ -7,7 +7,7 @@
 
 #include "Borg.hpp"
 
-Borg::Ship::Ship(int weaponFrequency, short repair)
+Borg::Ship::Ship(int weaponFrequency = 20, short repair = 3)
 {
     _side = 300;
     _maxWarp = 9;
@@ -29,6 +29,20 @@ Borg::Ship::Ship(int weaponFrequency)
     _home = UNICOMPLEX;
     _shield = 100;
     _weaponFrequency = weaponFrequency;
+    _repair = 3;
+    std::cout << "We are the Borgs. Lower your shields and surrender yourselves unconditionally." << std::endl;
+    std::cout << "Your biological characteristics and technologies will be assimilated." << std::endl;
+    std::cout << "Resistance is futile." << std::endl;
+}
+
+Borg::Ship::Ship()
+{
+    _side = 300;
+    _maxWarp = 9;
+    _location = UNICOMPLEX;
+    _home = UNICOMPLEX;
+    _shield = 100;
+    _weaponFrequency = 20;
     _repair = 3;
     std::cout << "We are the Borgs. Lower your shields and surrender yourselves unconditionally." << std::endl;
     std::cout << "Your biological characteristics and technologies will be assimilated." << std::endl;

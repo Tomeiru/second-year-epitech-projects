@@ -33,6 +33,7 @@ namespace Borg
         public:
             Ship(int, short);
             Ship(int);
+            Ship();
             ~Ship();
             void setupCore(WarpSystem::Core *);
             void checkCore();
