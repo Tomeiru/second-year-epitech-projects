@@ -13,6 +13,8 @@
 class Skat {
     public:
         Skat(const std::string &name, int stimPaks);
+        Skat(const std::string &name);
+        Skat(int stimPaks);
         Skat();
         ~Skat();
         int &stimPaks();
