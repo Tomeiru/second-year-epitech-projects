@@ -7,9 +7,21 @@
 
 #include "Skat.hpp"
 
-Skat::Skat(const std::string &name = "bob", int stimPaks = 15)
+Skat::Skat(const std::string &name, int stimPaks)
 {
     _name = name;
+    _stimPaks = stimPaks;
+}
+
+Skat::Skat(const std::string &name)
+{
+    _name = name;
+    _stimPaks = 15;
+}
+
+Skat::Skat(int stimPaks)
+{
+    _name = "bob";
     _stimPaks = stimPaks;
 }
 
