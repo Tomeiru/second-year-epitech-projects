@@ -82,7 +82,7 @@ void Federation::Starfleet::Ship::checkCore()
 void Federation::Starfleet::Ship::promote(Captain *captain)
 {
     _captain = captain;
-    std::cout << _captain->getName() << ": I'm glad to be the captain of the USS " << _name << std::endl;
+    std::cout << _captain->getName() << ": I'm glad to be the captain of the USS " << _name << "." <<std::endl;
 }
 
 bool Federation::Starfleet::Ship::move(int warp, Destination d)
