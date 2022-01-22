@@ -59,14 +59,3 @@ void Skat::status(void) const
 {
     std::cout << "Soldier " << _name << " reporting " << _stimPaks << " stimpacks remaining sir!" << std::endl;
 }
-
-int main()
-{
-    Skat s("Junior", 0);
-
-    std::cout << "Soldier " << s.name() << std::endl;
-    s.addStimPaks(1);
-    s.status();
-    s.useStimPaks();
-    s.status();
-}
