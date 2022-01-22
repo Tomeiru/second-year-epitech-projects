@@ -35,17 +35,17 @@ Arms::~Arms()
 {
 }
 
-bool Arms::isFunctional(void)
+bool Arms::isFunctional(void) const
 {
     return (_functional);
 }
 
-std::string Arms::serial(void)
+std::string Arms::serial(void) const
 {
     return (_serial);
 }
 
-void Arms::informations(void)
+void Arms::informations(void) const
 {
     std::cout << "    [Parts] Arms " << _serial << " status: " << (_functional == true ? "OK" : "KO") << std::endl;
 }
@@ -78,17 +78,17 @@ Legs::~Legs()
 {
 }
 
-bool Legs::isFunctional(void)
+bool Legs::isFunctional(void) const
 {
     return (_functional);
 }
 
-std::string Legs::serial(void)
+std::string Legs::serial(void) const
 {
     return (_serial);
 }
 
-void Legs::informations(void)
+void Legs::informations(void) const
 {
     std::cout << "    [Parts] Legs " << _serial << " status: " << (_functional == true ? "OK" : "KO") << std::endl;
 }
@@ -121,17 +121,17 @@ Head::~Head()
 {
 }
 
-bool Head::isFunctional(void)
+bool Head::isFunctional(void) const
 {
     return (_functional);
 }
 
-std::string Head::serial(void)
+std::string Head::serial(void) const
 {
     return (_serial);
 }
 
-void Head::informations(void)
+void Head::informations(void) const
 {
     std::cout << "    [Parts] Head " << _serial << " status: " << (_functional == true ? "OK" : "KO") << std::endl;
 }

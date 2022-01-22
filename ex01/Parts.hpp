@@ -17,9 +17,9 @@ class Arms {
         Arms(bool functional);
         Arms();
         ~Arms();
-        bool isFunctional();
-        std::string serial();
-        void informations();
+        bool isFunctional() const;
+        std::string serial() const;
+        void informations() const;
     private:
         std::string _serial;
         bool _functional;
@@ -32,9 +32,9 @@ class Legs {
         Legs(bool functional);
         Legs();
         ~Legs();
-        bool isFunctional();
-        std::string serial();
-        void informations();
+        bool isFunctional() const;
+        std::string serial() const;
+        void informations() const;
     private:
         std::string _serial;
         bool _functional;
@@ -47,9 +47,9 @@ class Head {
         Head(bool functional);
         Head();
         ~Head();
-        bool isFunctional();
-        std::string serial();
-        void informations();
+        bool isFunctional() const;
+        std::string serial() const;
+        void informations() const;
     private:
         std::string _serial;
         bool _functional;
