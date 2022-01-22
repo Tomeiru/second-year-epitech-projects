@@ -55,17 +55,17 @@ void KreogCom::removeCom(void)
     delete(temp);
 }
 
-KreogCom *KreogCom::getCom()
+KreogCom *KreogCom::getCom() const
 {
     return (this->next);
 }
 
-void KreogCom::ping(void)
+void KreogCom::ping(void) const
 {
     std::cout << "KreogCom " << m_serial << " currently at " << m_x << " " << m_y << std::endl;
 }
 
-void KreogCom::locateSquad(void)
+void KreogCom::locateSquad(void) const
 {
     if (first != true)
             this->ping();
