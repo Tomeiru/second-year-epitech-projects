@@ -135,6 +135,7 @@ void Borg::Ship::repair()
         std::cout << "Energy cells depleted, shield weakening." << std::endl;
         return;
     }
+    _shield = 100;
     std::cout << "Begin shield re-initialisation... Done. Awaiting further instructions." << std::endl;
 
 }
