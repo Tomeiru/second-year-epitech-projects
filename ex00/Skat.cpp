@@ -13,6 +13,12 @@ Skat::Skat(const std::string &name = "bob", int stimPaks = 15)
     _stimPaks = stimPaks;
 }
 
+Skat::Skat()
+{
+    _name = "bob";
+    _stimPaks = 15;
+}
+
 Skat::~Skat()
 {
 }
