@@ -8,6 +8,8 @@
 #ifndef WARPSYSTEM_HPP_
 #define WARPSYSTEM_HPP_
 
+#pragma once
+
 #include <iostream>
 #include "Destination.hpp"
 

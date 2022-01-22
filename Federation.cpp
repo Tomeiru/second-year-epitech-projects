@@ -9,6 +9,25 @@
 
 // Functions from Starfleet Ship
 
+Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short maxWarp, int torpedo = 0)
+{
+    _length = length;
+    _width = width;
+    _name = name;
+    _maxWarp = maxWarp;
+    _location = EARTH;
+    _home = EARTH;
+    _shield = 100;
+    _photonTorpedo = torpedo;
+    if (torpedo < 0)
+        _photonTorpedo = 0;
+    std::cout << "The ship USS " << _name << " has been finished." << std::endl;
+    std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
+    std::cout << "It can go to Warp " << _maxWarp << "!" << std::endl;
+    if (torpedo != 0)
+        std::cout << "Weapons are set: " << _photonTorpedo << " torpedoes ready.";
+}
+
 Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short maxWarp)
 {
     _length = length;
@@ -17,6 +36,23 @@ Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short
     _maxWarp = maxWarp;
     _location = EARTH;
     _home = EARTH;
+    _shield = 100;
+    _photonTorpedo = 0;
+    std::cout << "The ship USS " << _name << " has been finished." << std::endl;
+    std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
+    std::cout << "It can go to Warp " << _maxWarp << "!" << std::endl;
+}
+
+Federation::Starfleet::Ship::Ship()
+{
+    _length = 289;
+    _width = 132;
+    _name = "Entreprise";
+    _maxWarp = 6;
+    _location = EARTH;
+    _home = EARTH;
+    _shield = 100;
+    _photonTorpedo = 0;
     std::cout << "The ship USS " << _name << " has been finished." << std::endl;
     std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
     std::cout << "It can go to Warp " << _maxWarp << "!" << std::endl;
@@ -80,6 +116,52 @@ bool Federation::Starfleet::Ship::move()
         return (false);
     _location = _home;
     return (true);
+}
+
+int Federation::Starfleet::Ship::getShield()
+{
+    return (_shield);
+}
+
+void Federation::Starfleet::Ship::setShield(int shield)
+{
+    _shield = shield;
+}
+
+int Federation::Starfleet::Ship::getTorpedo()
+{
+    return (_photonTorpedo);
+}
+
+void Federation::Starfleet::Ship::setTorpedo(int torpedo)
+{
+    _photonTorpedo = torpedo;
+}
+
+void Federation::Starfleet::Ship::fire(Borg::Ship *target)
+{
+    if (_photonTorpedo == 0) {
+        std::cout << _name << ": No enough torpedoes to fire," << _captain->getName() << "!" << std::endl;
+        return;
+    }
+    target->setShield(target->getShield() - 50);
+    _photonTorpedo = getTorpedo() - 1;
+    std::cout << _name << ": Firing on target. " << _photonTorpedo << "torpedoes remaining." << std::endl;
+    if (_photonTorpedo == 0)
+        std::cout << _name << ": No more torpedo to fire," << _captain->getName() << "!" << std::endl;
+}
+
+void Federation::Starfleet::Ship::fire(int torpedoes, Borg::Ship *target)
+{
+    if (torpedoes > _photonTorpedo) {
+        std::cout << _name << ": No enough torpedoes to fire," << _captain->getName() << "!" << std::endl;
+        return;
+    }
+    target->setShield(target->getShield() - (50 * torpedoes));
+    _photonTorpedo = getTorpedo() - torpedoes;
+    std::cout << _name << ": Firing on target. " << _photonTorpedo << "torpedoes remaining." << std::endl;
+    if (_photonTorpedo == 0)
+        std::cout << _name << ": No more torpedo to fire," << _captain->getName() << "!" << std::endl;
 }
 
 // Functions from Federation Ship
