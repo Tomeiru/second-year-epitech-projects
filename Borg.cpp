@@ -136,6 +136,7 @@ void Borg::Ship::repair()
         return;
     }
     _shield = 100;
+    _repair = _repair - 1;
     std::cout << "Begin shield re-initialisation... Done. Awaiting further instructions." << std::endl;
 
 }
