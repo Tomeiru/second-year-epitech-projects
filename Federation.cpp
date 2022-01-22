@@ -161,7 +161,7 @@ void Federation::Starfleet::Ship::fire(int torpedoes, Borg::Ship *target)
     _photonTorpedo = getTorpedo() - torpedoes;
     std::cout << _name << ": Firing on target. " << _photonTorpedo << " torpedoes remaining." << std::endl;
     if (_photonTorpedo == 0)
-        std::cout << _name << ": No more torpedo to fire," << _captain->getName() << "!" << std::endl;
+        std::cout << _name << ": No more torpedo to fire, " << _captain->getName() << "!" << std::endl;
 }
 
 // Functions from Federation Ship
