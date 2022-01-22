@@ -25,7 +25,7 @@ Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short
     std::cout << "It is " << _length << " m in length and " << _width << " m in width." << std::endl;
     std::cout << "It can go to Warp " << _maxWarp << "!" << std::endl;
     if (torpedo != 0)
-        std::cout << "Weapons are set: " << _photonTorpedo << " torpedoes ready.";
+        std::cout << "Weapons are set: " << _photonTorpedo << " torpedoes ready." << std::endl;
 }
 
 Federation::Starfleet::Ship::Ship(int length, int width, std::string name, short maxWarp)
