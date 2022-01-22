@@ -19,7 +19,7 @@ class Skat {
         void shareStimPaks(int number, int &stock);
         void addStimPaks(unsigned int number);
         void useStimPaks();
-        void status();
+        void status() const;
     private:
         std::string _name;
         int _stimPaks;
