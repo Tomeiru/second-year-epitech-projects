@@ -75,5 +75,5 @@ void Skat::useStimPaks(void)
 
 void Skat::status(void) const
 {
-    std::cout << "Soldier " << _name << " reporting " << _stimPaks << " stimpacks remaining sir!" << std::endl;
+    std::cout << "Soldier " << _name << " reporting " << _stimPaks << " stimpaks remaining sir!" << std::endl;
 }
