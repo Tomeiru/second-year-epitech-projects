@@ -58,6 +58,11 @@ std::string Droid::getStatus() const
     return (*Status);
 }
 
+DroidMemory Droid::getBattleData() const
+{
+    return (*BattleData);
+}
+
 void Droid::setId(std::string newId)
 {
     Id = newId;
@@ -72,6 +77,12 @@ void Droid::setStatus(std::string *newStatus)
 {
     delete Status;
     Status = newStatus;
+}
+
+void Droid::setBattleData(DroidMemory *newBattleData)
+{
+    delete BattleData;
+    BattleData = newBattleData;
 }
 
 bool Droid::operator==(const Droid &other) const

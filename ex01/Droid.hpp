@@ -21,9 +21,11 @@ class Droid {
         size_t getAttack() const;
         size_t getToughness() const;
         std::string getStatus() const;
+        DroidMemory getBattleData() const;
         void setId(std::string);
         void setEnergy(size_t);
         void setStatus(std::string *);
+        void setBattleData(DroidMemory *);
         bool operator==(const Droid &other) const;
         bool operator!=(const Droid &other) const;
         void operator=(const Droid &other);
