@@ -9,12 +9,12 @@
 #define DROID_HPP_
 
 #include <iostream>
+#include "DroidMemory.hpp"
 
 class Droid {
     public:
         Droid(std::string);
         Droid(const Droid &other);
-        Droid();
         ~Droid();
         std::string getId() const;
         size_t getEnergy() const;
@@ -34,6 +34,7 @@ class Droid {
         const size_t Attack;
         const size_t Toughness;
         std::string *Status;
+        DroidMemory *BattleData;
 };
 
 std::ostream &operator<<(std::ostream &os, const Droid &other);

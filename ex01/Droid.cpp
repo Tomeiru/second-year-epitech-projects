@@ -12,6 +12,7 @@ Droid::Droid(std::string serial) : Attack(25), Toughness(15)
     Id = serial;
     Status = new std::string("Standing by");
     Energy = 50;
+    BattleData = new DroidMemory;
     std::cout << "Droid '" << serial << "' Activated" << std::endl;
 }
 
@@ -20,21 +21,15 @@ Droid::Droid(const Droid &other) : Attack(other.Attack), Toughness(other.Toughne
     Id = other.Id;
     Status = new std::string(*other.Status);
     Energy = 50;
+    BattleData = new DroidMemory;
     std::cout << "Droid '" << other.Id << "' Activated, Memory Dumped" << std::endl;
-}
-
-Droid::Droid() : Attack(25), Toughness(15)
-{
-    Id = "";
-    Status = new std::string ("Standing by");
-    Energy = 50;
-    std::cout << "Droid '' Activated" << std::endl;
 }
 
 Droid::~Droid()
 {
     std::cout << "Droid '" << this->Id << "' Destroyed" << std::endl;
     delete Status;
+    delete BattleData;
 }
 
 
@@ -81,7 +76,7 @@ void Droid::setStatus(std::string *newStatus)
 
 bool Droid::operator==(const Droid &other) const
 {
-    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Toughness == other.Toughness && this->Status == other.Status)
+    if (this->Status == other.Status)
         return (true);
     return (false);
 }
