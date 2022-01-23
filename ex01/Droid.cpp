@@ -76,14 +76,14 @@ void Droid::setStatus(std::string *newStatus)
 
 bool Droid::operator==(const Droid &other) const
 {
-    if (this->Status == other.Status)
+    if (this->getStatus().compare(other.getStatus()) == 0)
         return (true);
     return (false);
 }
 
 bool Droid::operator!=(const Droid &other) const
 {
-    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Toughness == other.Toughness && this->Status == other.Status)
+    if (this->getStatus().compare(other.getStatus()) == 0)
         return (false);
     return (true);
 }
