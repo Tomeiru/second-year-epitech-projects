@@ -7,7 +7,7 @@
 
 #include "Droid.hpp"
 
-Droid::Droid(std::string serial) : Attack(25), Thoughness(15)
+Droid::Droid(std::string serial) : Attack(25), Toughness(15)
 {
     Id = serial;
     Status = new std::string("Standing by");
@@ -15,7 +15,7 @@ Droid::Droid(std::string serial) : Attack(25), Thoughness(15)
     std::cout << "Droid '" << serial << "' Activated" << std::endl;
 }
 
-Droid::Droid(const Droid &other) : Attack(other.Attack), Thoughness(other.Thoughness)
+Droid::Droid(const Droid &other) : Attack(other.Attack), Toughness(other.Toughness)
 {
     Id = other.Id;
     Status = new std::string(*other.Status);
@@ -23,7 +23,7 @@ Droid::Droid(const Droid &other) : Attack(other.Attack), Thoughness(other.Though
     std::cout << "Droid '" << other.Id << "' Activated, Memory Dumped" << std::endl;
 }
 
-Droid::Droid() : Attack(25), Thoughness(15)
+Droid::Droid() : Attack(25), Toughness(15)
 {
     Id = "";
     Status = new std::string ("Standing by");
@@ -53,9 +53,9 @@ size_t Droid::getAttack() const
     return (Attack);
 }
 
-size_t Droid::getThoughness() const
+size_t Droid::getToughness() const
 {
-    return (Thoughness);
+    return (Toughness);
 }
 
 std::string Droid::getStatus() const
@@ -81,14 +81,14 @@ void Droid::setStatus(std::string *newStatus)
 
 bool Droid::operator==(const Droid &other) const
 {
-    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Thoughness == other.Thoughness && this->Status == other.Status)
+    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Toughness == other.Toughness && this->Status == other.Status)
         return (true);
     return (false);
 }
 
 bool Droid::operator!=(const Droid &other) const
 {
-    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Thoughness == other.Thoughness && this->Status == other.Status)
+    if (this->Id == other.Id && this->Energy == other.Energy && this->Attack == other.Attack && this->Toughness == other.Toughness && this->Status == other.Status)
         return (false);
     return (true);
 }

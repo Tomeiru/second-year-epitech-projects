@@ -19,7 +19,7 @@ class Droid {
         std::string getId() const;
         size_t getEnergy() const;
         size_t getAttack() const;
-        size_t getThoughness() const;
+        size_t getToughness() const;
         std::string getStatus() const;
         void setId(std::string);
         void setEnergy(size_t);
@@ -32,7 +32,7 @@ class Droid {
         std::string Id;
         size_t Energy;
         const size_t Attack;
-        const size_t Thoughness;
+        const size_t Toughness;
         std::string *Status;
 };
 
