@@ -70,6 +70,10 @@ void Droid::setId(std::string newId)
 
 void Droid::setEnergy(size_t newEnergy)
 {
+    if (newEnergy > 100) {
+        Energy = 100;
+        return;
+    }
     Energy = newEnergy;
 }
 
