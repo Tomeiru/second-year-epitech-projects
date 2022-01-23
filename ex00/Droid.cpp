@@ -93,17 +93,16 @@ bool Droid::operator!=(const Droid &other) const
     return (true);
 }
 
-Droid Droid::operator=(const Droid &other)
+void Droid::operator=(const Droid &other)
 {
     if (Status)
         delete Status;
     this->Id = other.Id;
     this->Energy = other.Energy;
     this->Status = new std::string(*other.Status);
-    return (*this);
 }
 
-Droid Droid::operator<<(size_t &value)
+Droid &Droid::operator<<(size_t &value)
 {
     if (this->Energy + value > 100) {
         value = value - (100 - this->Energy);
