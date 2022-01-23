@@ -19,7 +19,7 @@ Droid::Droid(const Droid &other) : Attack(other.Attack), Toughness(other.Toughne
 {
     Id = other.Id;
     Status = new std::string(*other.Status);
-    Energy = 50;
+    this->setEnergy(other.Energy);
     std::cout << "Droid '" << other.Id << "' Activated, Memory Dumped" << std::endl;
 }
 
@@ -70,6 +70,10 @@ void Droid::setId(std::string newId)
 
 void Droid::setEnergy(size_t newEnergy)
 {
+    if (newEnergy > 100) {
+        Energy = 100;
+        return;
+    }
     Energy = newEnergy;
 }
 
@@ -98,7 +102,7 @@ void Droid::operator=(const Droid &other)
     if (Status)
         delete Status;
     this->Id = other.Id;
-    this->Energy = other.Energy;
+    this->setEnergy(other.Energy);
     this->Status = new std::string(*other.Status);
 }
 
@@ -115,6 +119,7 @@ Droid &Droid::operator<<(size_t &value)
         return (*this);
     }
     this->Energy = this->Energy + value;
+    value = 0;
     return (*this);
 }
 
