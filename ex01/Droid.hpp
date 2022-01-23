@@ -26,8 +26,8 @@ class Droid {
         void setStatus(std::string *);
         bool operator==(const Droid &other) const;
         bool operator!=(const Droid &other) const;
-        Droid operator=(const Droid &other);
-        Droid operator<<(size_t &value);
+        void operator=(const Droid &other);
+        Droid &operator<<(size_t &value);
     private:
         std::string Id;
         size_t Energy;
