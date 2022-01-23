@@ -37,28 +37,28 @@ void DroidMemory::setExp(size_t newExp)
     Exp = newExp;
 }
 
-DroidMemory DroidMemory::operator<<(const DroidMemory &other)
+DroidMemory &DroidMemory::operator<<(const DroidMemory &other)
 {
     Exp = Exp + other.getExp();
     Fingerprint = Fingerprint ^ other.getFingerprint();
     return (*this);
 }
 
-DroidMemory DroidMemory::operator>>(DroidMemory &other) const
+DroidMemory &DroidMemory::operator>>(DroidMemory &other) const
 {
     other.setExp(other.getExp() + Exp);
     other.setFingerprint(other.getFingerprint() ^ Fingerprint);
     return (other);
 }
 
-DroidMemory DroidMemory::operator+=(const DroidMemory &other)
+DroidMemory &DroidMemory::operator+=(const DroidMemory &other)
 {
     Exp = Exp + other.getExp();
     Fingerprint = Fingerprint ^ other.getFingerprint();
     return (*this);
 }
 
-DroidMemory DroidMemory::operator+=(const size_t value)
+DroidMemory &DroidMemory::operator+=(const size_t value)
 {
     Exp = Exp + value;
     Fingerprint = Fingerprint ^ value;
