@@ -9,8 +9,9 @@
 #define PEASANT_HPP_
 
 #include <iostream>
+#include "ICharacter.hpp"
 
-class Peasant {
+class Peasant : public ICharacter {
     public:
         Peasant(const std::string &, int);
         ~Peasant();
