@@ -95,5 +95,7 @@ void Peasant::damage(int damage)
         std::cout << _Name << " takes " << damage << " damage." << std::endl;
         return;
     }
+    if (_Hp < 0)
+        _Hp = 0;
     std::cout << _Name << " is out of combat." << std::endl;
 }
