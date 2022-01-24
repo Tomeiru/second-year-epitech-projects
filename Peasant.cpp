@@ -92,6 +92,4 @@ void Peasant::damage(int damage)
         return;
     }
     std::cout << _Name << " is out of combat." << std::endl;
-
-
 }
