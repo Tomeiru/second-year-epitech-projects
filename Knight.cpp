@@ -42,6 +42,7 @@ int Knight::special()
         std::cout << _Name << " is out of power." << std::endl;
         return (0);
     }
+    this->_Power -= 30;
     std::cout << _Name << " impales his enemy." << std::endl;
     return (50);
 }

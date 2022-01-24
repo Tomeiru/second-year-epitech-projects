@@ -42,6 +42,7 @@ int Enchanter::special()
         std::cout << _Name << " is out of power." << std::endl;
         return (0);
     }
+    this->_Power -= 50;
     std::cout << _Name << " casts a fireball." << std::endl;
     return (99);
 }
