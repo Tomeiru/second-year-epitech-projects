@@ -57,6 +57,6 @@ void Knight::rest()
         return;
     }
     _Power += 30;
-    std::cout << _Name << " takes eats." << std::endl;
+    std::cout << _Name << " eats." << std::endl;
     return;
 }
