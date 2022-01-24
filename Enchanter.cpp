@@ -2,22 +2,22 @@
 ** EPITECH PROJECT, 2022
 ** Day9
 ** File description:
-** Knight
+** Enchanter
 */
 
-#include "Knight.hpp"
+#include "Enchanter.hpp"
 
-Knight::Knight(const std::string &name, int power) : Peasant::Peasant(name, power)
+Enchanter::Enchanter(const std::string &name, int power) : Peasant::Peasant(name, power)
 {
-    std::cout << _Name << " vows to protect the kingdom." << std::endl;
+    std::cout << _Name << " learns magic from his spellbook." << std::endl;
 }
 
-Knight::~Knight()
+Enchanter::~Enchanter()
 {
-    std::cout << _Name << " takes off his armor." << std::endl;
+    std::cout << _Name << " closes his spellbook." << std::endl;
 }
 
-int Knight::attack()
+int Enchanter::attack()
 {
     if (this->getHp() <= 0) {
         std::cout << _Name << " is out of combat." << std::endl;
@@ -28,25 +28,25 @@ int Knight::attack()
         return (0);
     }
     this->_Power -= 10;
-    std::cout << _Name << " strikes with his sword." << std::endl;
-    return (20);
+    std::cout << _Name << " doesn't know how to fight." << std::endl;
+    return (0);
 }
 
-int Knight::special()
+int Enchanter::special()
 {
     if (this->getHp() <= 0) {
         std::cout << _Name << " is out of combat." << std::endl;
         return (0);
     }
-    if (this->getPower() < 30) {
+    if (this->getPower() < 50) {
         std::cout << _Name << " is out of power." << std::endl;
         return (0);
     }
-    std::cout << _Name << " impales his enemy." << std::endl;
-    return (50);
+    std::cout << _Name << " casts a fireball." << std::endl;
+    return (99);
 }
 
-void Knight::rest()
+void Enchanter::rest()
 {
     if (this->getHp() <= 0) {
         std::cout << _Name << " is out of combat." << std::endl;
@@ -59,6 +59,6 @@ void Knight::rest()
     _Power += 50;
     if (_Power > 100)
         _Power = 100;
-    std::cout << _Name << " eats." << std::endl;
+    std::cout << _Name << " meditates." << std::endl;
     return;
 }

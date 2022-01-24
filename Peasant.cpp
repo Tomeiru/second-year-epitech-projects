@@ -11,6 +11,8 @@ Peasant::Peasant(const std::string &name, int power)
 {
     _Name = name;
     _Power = power;
+    if (_Power > 100)
+        _Power = 100;
     _Hp = 100;
 
     std::cout << _Name << " goes for an adventure." << std::endl;
@@ -76,6 +78,8 @@ void Peasant::rest()
         return;
     }
     _Power += 30;
+    if (_Power > 100)
+        _Power = 100;
     std::cout << _Name << " takes a nap." << std::endl;
     return;
 }
