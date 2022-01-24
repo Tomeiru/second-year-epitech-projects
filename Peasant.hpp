@@ -21,7 +21,7 @@ class Peasant {
         int special();
         void rest();
         void damage(int damage);
-    private:
+    protected:
         std::string _Name;
         int _Power;
         int _Hp;
