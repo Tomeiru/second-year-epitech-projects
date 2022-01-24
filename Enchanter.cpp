@@ -23,11 +23,11 @@ int Enchanter::attack()
         std::cout << _Name << " is out of combat." << std::endl;
         return (0);
     }
-    if (this->getPower() < 10) {
+    if (this->getPower() < 0) {
         std::cout << _Name << " is out of power." << std::endl;
         return (0);
     }
-    this->_Power -= 10;
+    this->_Power -= 0;
     std::cout << _Name << " doesn't know how to fight." << std::endl;
     return (0);
 }
@@ -57,7 +57,7 @@ void Enchanter::rest()
         std::cout << _Name << " is out of power." << std::endl;
         return;
     }
-    _Power += 50;
+    _Power += 100;
     if (_Power > 100)
         _Power = 100;
     std::cout << _Name << " meditates." << std::endl;
