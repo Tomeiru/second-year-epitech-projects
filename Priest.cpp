@@ -7,7 +7,7 @@
 
 #include "Priest.hpp"
 
-Priest::Priest(const std::string &name, int power) : Enchanter::Enchanter(name, power)
+Priest::Priest(const std::string &name, int power) : Peasant::Peasant(name, power), Enchanter(name, power)
 {
     std::cout << _Name << " enters in the order." << std::endl;
 }

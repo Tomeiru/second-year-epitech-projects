@@ -10,7 +10,7 @@
 
 #include "Peasant.hpp"
 
-class Enchanter : public Peasant {
+class Enchanter : virtual public Peasant {
     public:
         Enchanter(const std::string &, int);
         ~Enchanter();
