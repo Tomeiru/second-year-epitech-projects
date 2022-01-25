@@ -9,7 +9,6 @@
 #define ICHARACTER_HPP_
 
 #include <iostream>
-#include "Peasant.hpp"
 
 class ICharacter {
     public:
