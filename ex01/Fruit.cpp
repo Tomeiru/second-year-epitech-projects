@@ -21,8 +21,11 @@ Fruit::~Fruit()
 {
 }
 
+
 std::string Fruit::getName() const
 {
+    if (this == nullptr)
+        return (nullptr);
     return (_name);
 }
 
