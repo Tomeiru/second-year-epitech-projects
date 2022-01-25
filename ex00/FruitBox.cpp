@@ -58,7 +58,7 @@ bool FruitBox::putFruit(Fruit *f)
 {
     FruitNode *temp = _head;
 
-    if (_full == true)
+    if (_full == true || _size == 0)
         return (false);
     if (_empty == true) {
         _head->fruit = f;
@@ -85,7 +85,7 @@ Fruit *FruitBox::pickFruit()
     FruitNode *temp;
     FruitNode *temp_second;
 
-    if (_empty == true)
+    if (_empty == true || _head == nullptr || _size == 0)
         return (nullptr);
     if (_nbFruits == 1) {
         _head->next = createNode();
