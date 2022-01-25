@@ -47,21 +47,6 @@ FruitBox::FruitBox(int size)
 
 FruitBox::~FruitBox()
 {
-    FruitNode *temp;
-
-    if (_size == 0)
-        return;
-    if (_size == 1) {
-        delete _head;
-        return;
-    }
-    if (_head->next == nullptr)
-    for (int i = 1; i < _size; i++) {
-        temp = _head;
-        _head = _head->next;
-        delete temp;
-    }
-    delete _head;
 }
 
 int FruitBox::nbFruits() const
@@ -116,7 +101,6 @@ Fruit *FruitBox::pickFruit()
     temp = _head;
     ret = _head->fruit;
     _head = _head->next;
-    delete temp;
     _nbFruits -= 1;
     temp_second = _head;
     for ( ; temp_second->next != nullptr; temp_second = temp_second->next);
