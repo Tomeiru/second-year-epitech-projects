@@ -16,3 +16,17 @@ Coconut::Coconut()
 Coconut::~Coconut()
 {
 }
+
+std::string Coconut::getName() const
+{
+    if (this == nullptr)
+        return (nullptr);
+    return (_name);
+}
+
+int Coconut::getVitamins() const
+{
+    if (this == nullptr)
+        return (0);
+    return (_vitamins);
+}
