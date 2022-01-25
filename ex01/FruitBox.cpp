@@ -14,6 +14,8 @@ FruitNode *FruitBox::createNode()
 
     returnNode->fruit = nullptr;
     returnNode->next = nullptr;
+    returnNode->_name = "";
+    returnNode->_vitamines = 0;
     return (returnNode);
 }
 
@@ -62,6 +64,8 @@ bool FruitBox::putFruit(Fruit *f)
         return (false);
     if (_empty == true) {
         _head->fruit = f;
+        _head->_vitamines = f->getVitamins();
+        _head->_name = f->getName();
         _nbFruits += 1;
         _empty = false;
         if (_size == 1)
@@ -73,6 +77,8 @@ bool FruitBox::putFruit(Fruit *f)
             return (false);
     }
     temp->fruit = f;
+    temp->_vitamines = f->getVitamins();
+    temp->_name = f->getName();
     _nbFruits += 1;
     if (_nbFruits == _size)
         _full = true;
@@ -103,6 +109,7 @@ Fruit *FruitBox::pickFruit()
     _head = _head->next;
     _nbFruits -= 1;
     temp_second = _head;
+    _full = false;
     for ( ; temp_second->next != nullptr; temp_second = temp_second->next);
     temp_second->next = createNode();
     return (ret);
