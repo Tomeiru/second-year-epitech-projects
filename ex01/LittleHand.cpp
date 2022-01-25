@@ -18,7 +18,6 @@ LittleHand::~LittleHand()
 void LittleHand::sortFruitBox(FruitBox &unsorted, FruitBox &lemons, FruitBox &bananas, FruitBox &limes)
 {
     int nbFruit = unsorted.nbFruits();
-    printf("%i\n", nbFruit);
 
     for (int i = 0; i < nbFruit; i++) {
         if (unsorted.head()->fruit->getVitamins() == 3 && unsorted.head()->fruit->getName() == "lemon") {
