@@ -64,7 +64,7 @@ FruitBox::~FruitBox()
     delete _head;
 }
 
-int FruitBox::nbFruits()
+int FruitBox::nbFruits() const
 {
     return (_nbFruits);
 }
@@ -124,7 +124,7 @@ Fruit *FruitBox::pickFruit()
     return (ret);
 }
 
-FruitNode *FruitBox::head()
+FruitNode *FruitBox::head() const
 {
     return (_head);
 }
