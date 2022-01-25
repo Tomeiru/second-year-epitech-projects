@@ -16,3 +16,17 @@ Banana::Banana()
 Banana::~Banana()
 {
 }
+
+std::string Banana::getName() const
+{
+    if (this == nullptr)
+        return (nullptr);
+    return (_name);
+}
+
+int Banana::getVitamins() const
+{
+    if (this == nullptr)
+        return (0);
+    return (_vitamins);
+}

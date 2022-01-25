@@ -14,8 +14,11 @@ class Banana : public Fruit {
     public:
         Banana();
         ~Banana();
-
+        std::string getName() const;
+        int getVitamins() const;
     protected:
+        std::string _name;
+        int _vitamins;
     private:
 };
 
