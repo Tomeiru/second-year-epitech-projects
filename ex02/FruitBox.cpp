@@ -17,23 +17,6 @@ FruitNode *FruitBox::createNode()
     return (returnNode);
 }
 
-void FruitBox::createList(int size, FruitNode **_ptr)
-{
-    FruitNode *temp;
-    FruitNode *temp_second;
-
-    if (size == 0) {
-        *_ptr = nullptr;
-        return;
-    }
-    temp = createNode();
-    *_ptr = temp;
-    for (int i = 1; i < size; i++) {
-        temp->next = createNode();
-        temp = temp->next;
-    }
-}
-
 FruitBox::FruitBox(int size)
 {
     _size = size;
@@ -41,8 +24,8 @@ FruitBox::FruitBox(int size)
     _full = false;
     _empty = true;
     _head = nullptr;
-
-    createList(size, &_head);
+    if (_size == 0)
+        return;
 }
 
 FruitBox::~FruitBox()
@@ -61,6 +44,7 @@ bool FruitBox::putFruit(Fruit *f)
     if (_full == true || _size == 0)
         return (false);
     if (_empty == true) {
+        _head = createNode();
         _head->fruit = f;
         _nbFruits += 1;
         _empty = false;
@@ -68,11 +52,12 @@ bool FruitBox::putFruit(Fruit *f)
             _full = true;
         return (true);
     }
-    for ( ; temp->fruit != nullptr ; temp = temp->next) {
+    for ( ; temp->next != nullptr ; temp = temp->next) {
         if (temp->fruit == f)
             return (false);
     }
-    temp->fruit = f;
+    temp->next = createNode();
+    temp->next->fruit = f;
     _nbFruits += 1;
     if (_nbFruits == _size)
         _full = true;
@@ -85,26 +70,22 @@ Fruit *FruitBox::pickFruit()
     FruitNode *temp;
     FruitNode *temp_second;
 
-    if (_empty == true || _head == nullptr || _size == 0)
+    if (_empty == true || _nbFruits == 0 || _head == nullptr || _size == 0)
         return (nullptr);
     if (_nbFruits == 1) {
-        _head->next = createNode();
         ret = _head->fruit;
         temp = _head;
-        _head = _head->next;
+        _head = nullptr;
         delete temp;
         _nbFruits -= 1;
         _empty = true;
         _full = false;
         return (ret);
     }
-    temp = _head;
     ret = _head->fruit;
     _head = _head->next;
     _nbFruits -= 1;
-    temp_second = _head;
-    for ( ; temp_second->next != nullptr; temp_second = temp_second->next);
-    temp_second->next = createNode();
+    _full = false;
     return (ret);
 }
 
