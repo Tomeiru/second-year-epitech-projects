@@ -73,6 +73,6 @@ void    CommunicationDevice::receive(std::string const &user, std::string &messa
     }
     catch (std::exception const &error) {
         std::cerr << error.what() << std::endl;
-        std::cerr << "INVALID MESSAGE" << std::endl;
+        std::cerr << "INVALID MESSAGE";
     }
 }
