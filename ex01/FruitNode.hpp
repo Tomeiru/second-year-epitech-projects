@@ -12,8 +12,6 @@
 
 typedef struct FruitNode_s {
     Fruit *fruit;
-    std::string _name;
-    int _vitamines;
     struct FruitNode_s *next;
 } FruitNode;
 

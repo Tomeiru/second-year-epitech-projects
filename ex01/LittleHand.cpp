@@ -6,6 +6,8 @@
 */
 
 #include "LittleHand.hpp"
+#include "Lime.hpp"
+#include "Banana.hpp"
 
 LittleHand::LittleHand()
 {
@@ -15,12 +17,13 @@ LittleHand::~LittleHand()
 {
 }
 
+
 void LittleHand::sortFruitBox(FruitBox &unsorted, FruitBox &lemons, FruitBox &bananas, FruitBox &limes)
 {
     int nbFruit = unsorted.nbFruits();
 
-    for (int i = 0; i < nbFruit - 1; i++) {
-        if (unsorted.head()->_vitamines == 3 && unsorted.head()->_name == "lemon") {
+    for (int i = 0; i < nbFruit; i++) {
+        if (typeid(*(unsorted.head()->fruit)) == typeid(Lemon)) {
             if (lemons.isFull() == true)
                 unsorted.putFruit(unsorted.pickFruit());
             else {
@@ -28,16 +31,15 @@ void LittleHand::sortFruitBox(FruitBox &unsorted, FruitBox &lemons, FruitBox &ba
                 continue;
             }
         }
-        if (unsorted.head()->_vitamines == 5 && unsorted.head()->_name == "banana") {
-            if (bananas.isFull() == true) {
+        if (typeid(*(unsorted.head()->fruit)) == typeid(Banana)) {
+            if (bananas.isFull() == true)
                 unsorted.putFruit(unsorted.pickFruit());
-            }
             else {
                 bananas.putFruit(unsorted.pickFruit());
                 continue;
             }
         }
-        if (unsorted.head()->_vitamines == 2 && unsorted.head()->_name == "lime") {
+        if (typeid(*(unsorted.head()->fruit)) == typeid(Lime)) {
             if (limes.isFull() == true)
                 unsorted.putFruit(unsorted.pickFruit());
             else {
