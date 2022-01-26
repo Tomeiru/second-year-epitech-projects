@@ -5,7 +5,7 @@
 
 CommunicationDevice::CommunicationDevice(std::istream &input, std::ostream &output) try : _api(input, output) {}
     catch (std::exception const &error) {
-        std::string err_str = "Error :";
+        std::string err_str = "Error: ";
         err_str.append(error.what());
         throw CommunicationError(err_str);
     }
@@ -21,26 +21,38 @@ void    CommunicationDevice::startMission(std::string const &missionName, std::s
             _api.addUser(users[i]);
         }
         catch (std::logic_error const &error) {
-            std::cerr << error.what() << std::endl;
+            std::string err_str = "LogicError: ";
+            err_str.append(error.what());
+            throw CommunicationError(err_str);
         }
         catch (std::runtime_error const &error) {
-            std::cerr << error.what() << std::endl;
+            std::string err_str = "RuntimeError: ";
+            err_str.append(error.what());
+            throw CommunicationError(err_str);
         }
         catch (std::exception const &error) {
-            std::cerr << error.what() << std::endl;
+            std::string err_str = "Error: ";
+            err_str.append(error.what());
+            throw CommunicationError(err_str);
         }
     }
     try {
         _api.startMission(missionName);
     }
     catch (std::logic_error const &error) {
-        std::cerr << error.what() << std::endl;
+        std::string err_str = "LogicError: ";
+        err_str.append(error.what());
+        throw CommunicationError(err_str);
     }
     catch (std::runtime_error const &error) {
-        std::cerr << error.what() << std::endl;
+        std::string err_str = "RuntimeError: ";
+        err_str.append(error.what());
+        throw CommunicationError(err_str);
     }
     catch (std::exception const &error) {
-        std::cerr << error.what() << std::endl;
+        std::string err_str = "Error: ";
+        err_str.append(error.what());
+        throw CommunicationError(err_str);
     }
 }
 
@@ -60,6 +72,7 @@ void    CommunicationDevice::receive(std::string const &user, std::string &messa
         _api.receiveMessage(user, message);
     }
     catch (std::exception const &error) {
+        std::cerr << error.what() << std::endl;
         std::cerr << "INVALID MESSAGE" << std::endl;
     }
 }
