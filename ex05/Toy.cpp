@@ -47,18 +47,9 @@ std::string Toy::getAscii() const
     return (_ascii._data);
 }
 
-bool Toy::setAscii(const std::string &filename)
+void Toy::setAscii(const std::string &filename)
 {
-    std::ifstream content(filename);
-    std::stringstream contentStream;
-
-    if (content.is_open()) {
-        contentStream << content.rdbuf();
-        _ascii._data = contentStream.str();
-        return (true);
-    }
-    _ascii._data = "ERROR";
-    return (false);
+    _ascii = Picture(filename);
 }
 
 void Toy::setName(const std::string &name)
@@ -76,4 +67,48 @@ void Toy::operator=(const Toy &other)
 void Toy::speak(const std::string &statement)
 {
     std::cout << _name << " \"" << statement << "\"" << std::endl;
+}
+
+bool Toy::speak_es(const std::string &statement)
+{
+    Error err(Error::SPEAK, "wrong mode", "speak_es");
+    _error = err;
+    return (false);
+}
+
+std::ostream &operator<<(std::ostream &os, const Toy &other)
+{
+    os << other.getName() << std::endl << other.getAscii() << std::endl;
+    return (os);
+}
+
+void Toy::operator<<(const std::string &string)
+{
+    _ascii = string;
+}
+
+Toy::Error Toy::getLastError() const
+{
+    return (_error);
+}
+
+Toy::Error::Error(const ErrorType &err_type, std::string err_msg, std::string err_where)
+{
+    type = err_type;
+    error_msg = err_msg;
+    where_str = err_where;
+}
+
+Toy::Error::Error()
+{
+    type = UNKNOWN;
+    error_msg = "";
+    where_str = "";
+}
+
+void Toy::Error::operator=(const Toy::Error &other)
+{
+    type = other.type;
+    error_msg = other.error_msg;
+    where_str = other.where_str;
 }
