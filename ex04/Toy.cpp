@@ -85,7 +85,8 @@ std::ostream &operator<<(std::ostream &os, const Toy &other)
     return (os);
 }
 
-void Toy::operator<<(const std::string &string)
+const Toy &Toy::operator<<(const std::string &string)
 {
     _ascii = string;
+    return (*this);
 }

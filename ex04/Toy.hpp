@@ -29,7 +29,7 @@ class Toy {
         void setName(const std::string &);
         const Toy &operator=(const Toy &);
         virtual void speak(const std::string &);
-        void operator<<(const std::string &);
+        const Toy &operator<<(const std::string &);
     protected:
         ToyType _type;
         std::string _name;
