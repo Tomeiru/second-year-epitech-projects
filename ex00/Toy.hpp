@@ -16,14 +16,14 @@ class Toy {
         BASIC_TOY,
         ALIEN,
         };
-        Toy(ToyType, std::string, std::string);
+        Toy(const ToyType, const std::string &, const std::string &);
         Toy();
         ~Toy();
         ToyType getType() const;
         std::string getName() const;
         std::string getAscii() const;
-        void setAscii(std::string);
-        void setName(std::string);
+        void setAscii(const std::string &);
+        void setName(const std::string &);
     protected:
     private:
         ToyType _type;

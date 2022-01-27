@@ -14,7 +14,7 @@
 
 class Picture {
     public:
-        Picture(std::string &);
+        Picture(const std::string &);
         Picture();
         ~Picture();
         std::string _data;

@@ -7,7 +7,7 @@
 
 #include "Picture.hpp"
 
-Picture::Picture(std::string &file)
+Picture::Picture(const std::string &file)
 {
     std::ifstream content(file);
     std::stringstream contentStream;

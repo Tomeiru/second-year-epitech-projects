@@ -7,7 +7,7 @@
 
 #include "Toy.hpp"
 
-Toy::Toy(ToyType type, std::string name, std::string filename)
+Toy::Toy(const ToyType type, const std::string &name, const std::string &filename)
 {
     _type = type;
     _name = name;
@@ -40,12 +40,12 @@ std::string Toy::getAscii() const
     return (_ascii._data);
 }
 
-void Toy::setAscii(std::string filename)
+void Toy::setAscii(const std::string &filename)
 {
     _ascii = Picture(filename);
 }
 
-void Toy::setName(std::string name)
+void Toy::setName(const std::string &name)
 {
     _name = name;
 }
