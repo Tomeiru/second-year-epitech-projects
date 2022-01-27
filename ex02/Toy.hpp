@@ -27,7 +27,7 @@ class Toy {
         std::string getAscii() const;
         bool setAscii(const std::string &);
         void setName(const std::string &);
-        void operator=(const Toy &);
+        const Toy &operator=(const Toy &);
     protected:
         ToyType _type;
         std::string _name;

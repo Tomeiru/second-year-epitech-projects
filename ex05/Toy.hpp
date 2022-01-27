@@ -45,7 +45,7 @@ class Toy {
         std::string getAscii() const;
         bool setAscii(const std::string &);
         void setName(const std::string &);
-        void operator=(const Toy &);
+        const Toy &operator=(const Toy &);
         virtual void speak(const std::string &);
         virtual bool speak_es(const std::string &);
         void operator<<(const std::string &);

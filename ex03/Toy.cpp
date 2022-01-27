@@ -66,11 +66,12 @@ void Toy::setName(const std::string &name)
     _name = name;
 }
 
-void Toy::operator=(const Toy &other)
+const Toy &Toy::operator=(const Toy &other)
 {
     _type = other._type;
     _name = other._name;
     _ascii = other._ascii;
+    return (*this);
 }
 
 void Toy::speak(const std::string &statement)
