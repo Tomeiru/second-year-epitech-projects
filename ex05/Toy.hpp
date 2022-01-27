@@ -48,7 +48,7 @@ class Toy {
         const Toy &operator=(const Toy &);
         virtual void speak(const std::string &);
         virtual bool speak_es(const std::string &);
-        void operator<<(const std::string &);
+        const Toy &operator<<(const std::string &string);
         Error getLastError() const;
     protected:
         ToyType _type;

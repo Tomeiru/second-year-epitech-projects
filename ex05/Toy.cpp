@@ -73,11 +73,12 @@ void Toy::setName(const std::string &name)
     _name = name;
 }
 
-void Toy::operator=(const Toy &other)
+const Toy &Toy::operator=(const Toy &other)
 {
     _type = other._type;
     _name = other._name;
     _ascii = other._ascii;
+    return (*this);
 }
 
 void Toy::speak(const std::string &statement)
@@ -108,9 +109,10 @@ std::string const &Toy::Error::where() const
     return (where_str);
 }
 
-void Toy::operator<<(const std::string &string)
+const Toy &Toy::operator<<(const std::string &string)
 {
     _ascii = string;
+    return (*this);
 }
 
 Toy::Error Toy::getLastError() const
