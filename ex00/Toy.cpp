@@ -40,9 +40,18 @@ std::string Toy::getAscii() const
     return (_ascii._data);
 }
 
-void Toy::setAscii(const std::string &filename)
+bool Toy::setAscii(const std::string &filename)
 {
-    _ascii = Picture(filename);
+    std::ifstream content(filename);
+    std::stringstream contentStream;
+
+    if (content.is_open()) {
+        contentStream << content.rdbuf();
+        _ascii._data = contentStream.str();
+        return (true);
+    }
+    _ascii._data = "ERROR";
+    return (false);
 }
 
 void Toy::setName(const std::string &name)
