@@ -12,6 +12,8 @@ Toy::Toy(const ToyType &type, const std::string &name, const std::string &filena
     _type = type;
     _name = name;
     _ascii = Picture(filename);
+    Error err;
+    _error = err;
 }
 
 Toy::Toy(const Toy &other)
@@ -19,6 +21,7 @@ Toy::Toy(const Toy &other)
     _type = other._type;
     _name = other._name;
     _ascii = other._ascii;
+    _error = _error;
 }
 
 Toy::Toy()
@@ -26,6 +29,8 @@ Toy::Toy()
     _type = BASIC_TOY;
     _name = "toy";
     Picture _ascii;
+    Error err;
+    _error = err;
 }
 
 Toy::~Toy()
@@ -47,9 +52,20 @@ std::string Toy::getAscii() const
     return (_ascii._data);
 }
 
-void Toy::setAscii(const std::string &filename)
+bool Toy::setAscii(const std::string &filename)
 {
-    _ascii = Picture(filename);
+    std::ifstream content(filename);
+    std::stringstream contentStream;
+
+    if (content.is_open()) {
+        contentStream << content.rdbuf();
+        _ascii._data = contentStream.str();
+        return (true);
+    }
+    Error err(Error::PICTURE, "bad new illustration", "setAscii");
+    _error = err;
+    _ascii._data = "ERROR";
+    return (false);
 }
 
 void Toy::setName(const std::string &name)
@@ -82,6 +98,16 @@ std::ostream &operator<<(std::ostream &os, const Toy &other)
     return (os);
 }
 
+std::string Toy::Error::what() const
+{
+    return (error_msg);
+}
+
+std::string const &Toy::Error::where() const
+{
+    return (where_str);
+}
+
 void Toy::operator<<(const std::string &string)
 {
     _ascii = string;
@@ -104,6 +130,10 @@ Toy::Error::Error()
     type = UNKNOWN;
     error_msg = "";
     where_str = "";
+}
+
+Toy::Error::~Error()
+{
 }
 
 void Toy::Error::operator=(const Toy::Error &other)
