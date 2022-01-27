@@ -16,7 +16,7 @@ class Toy {
         BASIC_TOY,
         ALIEN,
         };
-        Toy(const ToyType, const std::string &, const std::string &);
+        Toy(const ToyType &, const std::string &, const std::string &);
         Toy();
         ~Toy();
         ToyType getType() const;

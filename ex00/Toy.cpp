@@ -7,7 +7,7 @@
 
 #include "Toy.hpp"
 
-Toy::Toy(const ToyType type, const std::string &name, const std::string &filename)
+Toy::Toy(const ToyType &type, const std::string &name, const std::string &filename)
 {
     _type = type;
     _name = name;
