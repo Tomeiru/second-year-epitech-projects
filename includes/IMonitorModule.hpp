@@ -13,8 +13,7 @@
 enum ModuleType {
     DEFAULT,
     HOSTUSERNAME,
-    OSTYPE,
-    KERNELVERSION,
+    OSKERNELVERSION,
     DATETIME
 };
 

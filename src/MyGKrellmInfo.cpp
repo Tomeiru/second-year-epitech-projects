@@ -19,9 +19,8 @@ ModuleList_t *createNode(IMonitorModule *newModule)
 MyGKrellmInfo::MyGKrellmInfo()
 {
     ModuleList_t *list = createNode(new HostUserNameModule);
-    list->next = createNode(new OSModule);
-    list->next->next = createNode(new KernelVersionModule);
-    list->next->next->next = createNode(new DateTimeModule);
+    list->next = createNode(new OSKernelVersionModule);
+    list->next->next = createNode(new DateTimeModule);
     modules = list;
 }
 
@@ -51,19 +50,11 @@ IMonitorModule *MyGKrellmInfo::getHostUsername(void)
     return (temp->module);
 }
 
-IMonitorModule *MyGKrellmInfo::getOS(void)
+IMonitorModule *MyGKrellmInfo::getOSKernelVersion(void)
 {
     ModuleList_t *temp = modules;
 
-    for ( ; temp->module->getType() != OSTYPE; temp = temp->next);
-    return (temp->module);
-}
-
-IMonitorModule *MyGKrellmInfo::getKernelVersion(void)
-{
-    ModuleList_t *temp = modules;
-
-    for ( ; temp->module->getType() != KERNELVERSION; temp = temp->next);
+    for ( ; temp->module->getType() != OSKERNELVERSION; temp = temp->next);
     return (temp->module);
 }
 
