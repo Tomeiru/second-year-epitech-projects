@@ -12,6 +12,7 @@
 #include <exception>
 #include <cstring>
 #include <sys/utsname.h>
+#include "MyGKrellmInfo.hpp"
 
 void argumentCheck(int ac, char **av);
 

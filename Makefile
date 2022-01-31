@@ -6,7 +6,8 @@
 ##
 
 SRC =	src/main.cpp	\
-		src/argumentCheck.cpp
+		src/argumentCheck.cpp	\
+		src/MyGKrellmInfo.cpp
 
 NAME =	MyGKrellm
 

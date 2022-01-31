@@ -16,4 +16,6 @@ int main(int ac, char **av, char **env)
         std::cerr << error.what() << std::endl;
         return (84);
     }
+    MyGKrellmInfo infos(env);
+    infos.printInfo();
 }
