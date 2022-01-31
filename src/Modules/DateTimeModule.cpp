@@ -16,7 +16,6 @@ DateTimeModule::DateTimeModule() : DefaultModule::DefaultModule()
 
     strftime(buff, sizeof(buff), "%d/%m/%Y : %X", &tstruct);
     Data = buff;
-    Displayed = true;
     Type = DATETIME;
 }
 

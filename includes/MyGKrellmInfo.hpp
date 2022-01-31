@@ -13,10 +13,9 @@
 #include <cstring>
 #include <ncurses.h>
 #include "DateTimeModule.hpp"
-#include "HostnameModule.hpp"
+#include "HostUserNameModule.hpp"
 #include "KernelVersionModule.hpp"
 #include "OSModule.hpp"
-#include "UsernameModule.hpp"
 
 typedef struct ModuleList_s {
     IMonitorModule *module;
@@ -30,8 +29,7 @@ class MyGKrellmInfo {
         MyGKrellmInfo();
         ~MyGKrellmInfo();
         ModuleList_t *getModules();
-        IMonitorModule *getHostname();
-        IMonitorModule *getUsername();
+        IMonitorModule *getHostUsername();
         IMonitorModule *getOS();
         IMonitorModule *getKernelVersion();
         IMonitorModule *getDateTime();

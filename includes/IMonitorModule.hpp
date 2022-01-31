@@ -12,8 +12,7 @@
 
 enum ModuleType {
     DEFAULT,
-    USERNAME,
-    HOSTNAME,
+    HOSTUSERNAME,
     OSTYPE,
     KERNELVERSION,
     DATETIME
