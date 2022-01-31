@@ -10,7 +10,8 @@
 
 #include <iostream>
 #include <exception>
-#include <string.h>
+#include <cstring>
+#include <sys/utsname.h>
 
 void argumentCheck(int ac, char **av);
 
