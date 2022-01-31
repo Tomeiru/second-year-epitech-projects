@@ -11,7 +11,7 @@ int startCurses(MyGKrellmInfo *info)
 {
     int windowWidth = 0;
     int windowHeight = 0;
-    int i = 0;
+    int a = -1;
 
     initscr();
     getmaxyx(stdscr, windowHeight, windowWidth);
@@ -20,9 +20,9 @@ int startCurses(MyGKrellmInfo *info)
     while (1) {
         for (ModuleList_t *temp = info->getModules(); temp != nullptr; temp = temp->next)
             if (temp->module->getDisplayed() == true)
-                mvprintw(i++, 0, "%s", temp->module->getData().c_str());
+                mvprintw(windowHeight / 2 - a++, windowWidth / 2 - temp->module->getData().length() / 2, "%s", temp->module->getData().c_str());
         info->getDateTime()->updateData();
-        i = 0;
+        a = -1;
         refresh();
     }
     /*while (1) {

@@ -18,9 +18,9 @@ ModuleList_t *createNode(IMonitorModule *newModule)
 
 MyGKrellmInfo::MyGKrellmInfo()
 {
-    ModuleList_t *list = createNode(new HostUserNameModule);
+    ModuleList_t *list = createNode(new DateTimeModule);
     list->next = createNode(new OSKernelVersionModule);
-    list->next->next = createNode(new DateTimeModule);
+    list->next->next = createNode(new HostUserNameModule);
     modules = list;
 }
 
