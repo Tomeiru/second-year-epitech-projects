@@ -14,22 +14,31 @@
 #include "OSModule.hpp"
 #include "UsernameModule.hpp"
 
+typedef struct ModuleList_s {
+    IMonitorModule *module;
+    struct ModuleList_s *next;
+} ModuleList_t;
+
+ModuleList_t *createNode(IMonitorModule *newModule);
+
 class MyGKrellmInfo {
     public:
         MyGKrellmInfo();
         ~MyGKrellmInfo();
+        ModuleList_t *getModules();
         IMonitorModule *getHostname();
         IMonitorModule *getUsername();
         IMonitorModule *getOS();
         IMonitorModule *getKernelVersion();
         IMonitorModule *getDateTime();
-        void printInfo();
+        /*void printInfo();*/
     protected:
-        IMonitorModule *hostname;
+        ModuleList_t *modules;
+        /*IMonitorModule *hostname;
         IMonitorModule *username;
         IMonitorModule *OS;
         IMonitorModule *kernelVersion;
-        IMonitorModule *dateTime;
+        IMonitorModule *dateTime;*/
     private:
 };
 

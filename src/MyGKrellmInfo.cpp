@@ -7,54 +7,88 @@
 
 #include "MyGKrellm.hpp"
 
+ModuleList_t *createNode(IMonitorModule *newModule)
+{
+    ModuleList_t *node = new ModuleList_t;
+
+    node->module = newModule;
+    node->next = nullptr;
+    return (node);
+}
+
 MyGKrellmInfo::MyGKrellmInfo()
 {
-    hostname = new HostnameModule;
-    username = new UsernameModule();
-    OS = new OSModule;
-    kernelVersion = new KernelVersionModule;
-    dateTime = new DateTimeModule;
+    ModuleList_t *list = createNode(new UsernameModule);
+    list->next = createNode(new HostnameModule);
+    list->next->next = createNode(new OSModule);
+    list->next->next->next = createNode(new KernelVersionModule);
+    list->next->next->next->next = createNode(new DateTimeModule);
+    modules = list;
 }
 
 MyGKrellmInfo::~MyGKrellmInfo()
 {
-    delete hostname;
-    delete username;
-    delete OS;
-    delete kernelVersion;
-    delete dateTime;
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->next != NULL; delete modules) {
+        delete temp->module;
+        modules = temp;
+        temp = temp->next;
+    }
+    delete temp->module;
+    delete temp;
+}
+
+ModuleList_t *MyGKrellmInfo::getModules(void)
+{
+    return (modules);
 }
 
 IMonitorModule *MyGKrellmInfo::getHostname(void)
 {
-    return (hostname);
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->module->getType() != HOSTNAME; temp = temp->next);
+    return (temp->module);
 }
 
 IMonitorModule *MyGKrellmInfo::getUsername(void)
 {
-    return (username);
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->module->getType() != USERNAME; temp = temp->next);
+    return (temp->module);
 }
 
 IMonitorModule *MyGKrellmInfo::getOS(void)
 {
-    return (OS);
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->module->getType() != OSTYPE; temp = temp->next);
+    return (temp->module);
 }
 
 IMonitorModule *MyGKrellmInfo::getKernelVersion(void)
 {
-    return (kernelVersion);
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->module->getType() != KERNELVERSION; temp = temp->next);
+    return (temp->module);
 }
 
 IMonitorModule *MyGKrellmInfo::getDateTime(void)
 {
-    return (dateTime);
+    ModuleList_t *temp = modules;
+
+    for ( ; temp->module->getType() != DATETIME; temp = temp->next);
+    return (temp->module);
 }
 
-void MyGKrellmInfo::printInfo(void)
+/*void MyGKrellmInfo::printInfo(void)
 {
     std::cout << "Hostname : " << hostname->getData() << std::endl;
     std::cout << "Username : " << username->getData() << std::endl;
     std::cout << "OS : " << OS->getData() << std::endl;
     std::cout << "Kernel Version : " << kernelVersion->getData() << std::endl;
     std::cout << "Date and Time : " << dateTime->getData() << std::endl;
-}
+}*/

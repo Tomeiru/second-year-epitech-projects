@@ -17,6 +17,6 @@ int main(int ac, char **av)
         return (84);
     }
     MyGKrellmInfo infos;
-    infos.printInfo();
+    //infos.printInfo();
     startCurses(&infos);
 }
