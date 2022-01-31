@@ -12,7 +12,7 @@ NAME =	MyGKrellm
 
 OBJ = 	$(SRC:.cpp=.o)
 
-CPPFLAGS = -I./includes
+CPPFLAGS = -I./includes -g -Wall -Wextra -Werror
 
 all: $(NAME)
 
