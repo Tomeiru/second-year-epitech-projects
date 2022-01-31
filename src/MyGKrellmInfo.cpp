@@ -9,68 +9,52 @@
 
 MyGKrellmInfo::MyGKrellmInfo(char **env)
 {
-    struct utsname buf;
-    time_t now = time(0);
-    struct tm tstruct;
-    char buff[22];
-
-    uname(&buf);
-    tstruct = *localtime(&now);
-    strftime(buff, sizeof(buff), "%d/%m/%Y : %X", &tstruct);
-    hostname = buf.nodename;
-    for (int i = 0; env[i]; i++)
-        if (strstr(env[i], "USERNAME=") != nullptr)
-            username = env[i] + 9;
-    OS = buf.sysname;
-    kernelVersion = buf.release;
-    dateTime = buff;
+    hostname = new HostnameModule;
+    username = new UsernameModule(env);
+    OS = new OSModule;
+    kernelVersion = new KernelVersionModule;
+    dateTime = new DateTimeModule;
 }
 
 MyGKrellmInfo::~MyGKrellmInfo()
 {
+    delete hostname;
+    delete username;
+    delete OS;
+    delete kernelVersion;
+    delete dateTime;
 }
 
-std::string MyGKrellmInfo::getHostname(void)
+IMonitorModule *MyGKrellmInfo::getHostname(void)
 {
     return (hostname);
 }
 
-std::string MyGKrellmInfo::getUsername(void)
+IMonitorModule *MyGKrellmInfo::getUsername(void)
 {
     return (username);
 }
 
-std::string MyGKrellmInfo::getOS(void)
+IMonitorModule *MyGKrellmInfo::getOS(void)
 {
     return (OS);
 }
 
-std::string MyGKrellmInfo::getKernelVersion(void)
+IMonitorModule *MyGKrellmInfo::getKernelVersion(void)
 {
     return (kernelVersion);
 }
 
-std::string MyGKrellmInfo::getDateTime(void)
+IMonitorModule *MyGKrellmInfo::getDateTime(void)
 {
     return (dateTime);
 }
 
-void MyGKrellmInfo::refreshDateTime(void)
-{
-    time_t now = time(0);
-    struct tm tstruct;
-    char buff[22];
-
-    tstruct = *localtime(&now);
-    strftime(buff, sizeof(buff), "%d/%m/%Y : %X", &tstruct);
-    dateTime = buff;
-}
-
 void MyGKrellmInfo::printInfo(void)
 {
-    std::cout << "Hostname : " << hostname << std::endl;
-    std::cout << "Username : " << username << std::endl;
-    std::cout << "OS : " << OS << std::endl;
-    std::cout << "Kernel Version : " << kernelVersion << std::endl;
-    std::cout << "Date and Time : " << dateTime << std::endl;
+    std::cout << "Hostname : " << hostname->getData() << std::endl;
+    std::cout << "Username : " << username->getData() << std::endl;
+    std::cout << "OS : " << OS->getData() << std::endl;
+    std::cout << "Kernel Version : " << kernelVersion->getData() << std::endl;
+    std::cout << "Date and Time : " << dateTime->getData() << std::endl;
 }

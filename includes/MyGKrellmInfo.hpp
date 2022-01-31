@@ -8,23 +8,29 @@
 #ifndef MYGKRELLMINFO_HPP_
 #define MYGKRELLMINFO_HPP_
 
+#include "DateTimeModule.hpp"
+#include "HostnameModule.hpp"
+#include "KernelVersionModule.hpp"
+#include "OSModule.hpp"
+#include "UsernameModule.hpp"
+
+
 class MyGKrellmInfo {
     public:
         MyGKrellmInfo(char **);
         ~MyGKrellmInfo();
-        std::string getHostname();
-        std::string getUsername();
-        std::string getOS();
-        std::string getKernelVersion();
-        std::string getDateTime();
-        void refreshDateTime();
+        IMonitorModule *getHostname();
+        IMonitorModule *getUsername();
+        IMonitorModule *getOS();
+        IMonitorModule *getKernelVersion();
+        IMonitorModule *getDateTime();
         void printInfo();
     protected:
-        std::string hostname;
-        std::string username;
-        std::string OS;
-        std::string kernelVersion;
-        std::string dateTime;
+        IMonitorModule *hostname;
+        IMonitorModule *username;
+        IMonitorModule *OS;
+        IMonitorModule *kernelVersion;
+        IMonitorModule *dateTime;
     private:
 };
 
