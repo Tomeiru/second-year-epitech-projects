@@ -9,9 +9,6 @@
 
 void argumentCheck(int ac, char **av)
 {
-    std::string text = "text";
-    std::string graphical = "graphical";
-
     if (ac != 2)
         throw std::invalid_argument ("Wrong amount of arguments!");
     if (strcmp(av[1], "text") != 0 && strcmp(av[1], "graphical") != 0)
