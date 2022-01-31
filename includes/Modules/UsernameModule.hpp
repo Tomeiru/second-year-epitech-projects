@@ -16,9 +16,14 @@ class UsernameModule : public IMonitorModule {
         UsernameModule();
         ~UsernameModule();
         std::string getData();
+        bool getDisplayed();
+        ModuleType getType();
+        void toggleDisplayed();
         void updateData();
     protected:
         std::string username;
+        bool Displayed;
+        ModuleType Type;
     private:
 };
 

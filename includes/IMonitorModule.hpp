@@ -10,11 +10,21 @@
 
 #include <iostream>
 
+enum ModuleType {
+    USERNAME,
+    HOSTNAME,
+    OSTYPE,
+    KERNELVERSION,
+    DATETIME
+};
 
 class IMonitorModule {
     public:
         virtual ~IMonitorModule() {};
         virtual std::string getData() = 0;
+        virtual bool getDisplayed() = 0;
+        virtual ModuleType getType() = 0;
+        virtual void toggleDisplayed() = 0;
         virtual void updateData() = 0;
     protected:
     private:

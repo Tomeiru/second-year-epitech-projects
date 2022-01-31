@@ -16,9 +16,14 @@ class DateTimeModule : public IMonitorModule {
         DateTimeModule();
         ~DateTimeModule();
         std::string getData();
+        bool getDisplayed();
+        ModuleType getType();
+        void toggleDisplayed();
         void updateData();
     protected:
         std::string DateTime;
+        bool Displayed;
+        ModuleType Type;
     private:
 };
 

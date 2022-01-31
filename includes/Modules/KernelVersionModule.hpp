@@ -16,9 +16,14 @@ class KernelVersionModule : public IMonitorModule {
         KernelVersionModule();
         ~KernelVersionModule();
         std::string getData();
+        bool getDisplayed();
+        ModuleType getType();
+        void toggleDisplayed();
         void updateData();
     protected:
         std::string KernelVersion;
+        bool Displayed;
+        ModuleType Type;
     private:
 };
 

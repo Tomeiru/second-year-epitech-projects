@@ -13,6 +13,8 @@ KernelVersionModule::KernelVersionModule()
 
     uname(&buf);
     KernelVersion = buf.release;
+    Displayed = true;
+    Type = KERNELVERSION;
 }
 
 KernelVersionModule::~KernelVersionModule()
@@ -22,6 +24,21 @@ KernelVersionModule::~KernelVersionModule()
 std::string KernelVersionModule::getData(void)
 {
     return (KernelVersion);
+}
+
+bool KernelVersionModule::getDisplayed(void)
+{
+    return (Displayed);
+}
+
+ModuleType KernelVersionModule::getType(void)
+{
+    return (Type);
+}
+
+void KernelVersionModule::toggleDisplayed()
+{
+    Displayed = (Displayed == true) ? false : true;
 }
 
 void KernelVersionModule::updateData(void)

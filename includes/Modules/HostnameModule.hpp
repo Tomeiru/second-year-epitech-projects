@@ -16,9 +16,14 @@ class HostnameModule : public IMonitorModule {
         HostnameModule();
         ~HostnameModule();
         std::string getData();
+        bool getDisplayed();
+        ModuleType getType();
+        void toggleDisplayed();
         void updateData();
     protected:
         std::string hostname;
+        bool Displayed;
+        ModuleType Type;
     private:
 };
 

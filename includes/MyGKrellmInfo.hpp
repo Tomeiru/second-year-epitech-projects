@@ -14,7 +14,6 @@
 #include "OSModule.hpp"
 #include "UsernameModule.hpp"
 
-
 class MyGKrellmInfo {
     public:
         MyGKrellmInfo();

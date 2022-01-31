@@ -13,6 +13,8 @@ OSModule::OSModule()
 
     uname(&buf);
     OS = buf.sysname;
+    Displayed = true;
+    Type = OSTYPE;
 }
 
 OSModule::~OSModule()
@@ -22,6 +24,21 @@ OSModule::~OSModule()
 std::string OSModule::getData(void)
 {
     return (OS);
+}
+
+bool OSModule::getDisplayed(void)
+{
+    return (Displayed);
+}
+
+ModuleType OSModule::getType(void)
+{
+    return (Type);
+}
+
+void OSModule::toggleDisplayed()
+{
+    Displayed = (Displayed == true) ? false : true;
 }
 
 void OSModule::updateData(void)

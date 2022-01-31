@@ -16,9 +16,14 @@ class OSModule : public IMonitorModule {
         OSModule();
         ~OSModule();
         std::string getData();
+        bool getDisplayed();
+        ModuleType getType();
+        void toggleDisplayed();
         void updateData();
     protected:
         std::string OS;
+        bool Displayed;
+        ModuleType Type;
     private:
 };
 
