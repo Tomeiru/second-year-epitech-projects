@@ -7,10 +7,10 @@
 
 #include "MyGKrellm.hpp"
 
-MyGKrellmInfo::MyGKrellmInfo(char **env)
+MyGKrellmInfo::MyGKrellmInfo()
 {
     hostname = new HostnameModule;
-    username = new UsernameModule(env);
+    username = new UsernameModule();
     OS = new OSModule;
     kernelVersion = new KernelVersionModule;
     dateTime = new DateTimeModule;

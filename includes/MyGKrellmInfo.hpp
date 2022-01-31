@@ -17,7 +17,7 @@
 
 class MyGKrellmInfo {
     public:
-        MyGKrellmInfo(char **);
+        MyGKrellmInfo();
         ~MyGKrellmInfo();
         IMonitorModule *getHostname();
         IMonitorModule *getUsername();

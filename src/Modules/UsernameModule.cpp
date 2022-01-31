@@ -7,12 +7,9 @@
 
 #include "UsernameModule.hpp"
 
-UsernameModule::UsernameModule(char **env)
+UsernameModule::UsernameModule()
 {
-    for (int i = 0; env[i]; i++)
-        if (strstr(env[i], "USERNAME=") != nullptr)
-            username = env[i] + 9;
-    envBU = env;
+    username = getlogin();
 }
 
 UsernameModule::~UsernameModule()
@@ -26,7 +23,5 @@ std::string UsernameModule::getData(void)
 
 void UsernameModule::updateData()
 {
-    for (int i = 0; envBU[i]; i++)
-        if (strstr(envBU[i], "USERNAME=") != nullptr)
-            username = envBU[i] + 9;
+    username = getlogin();
 }

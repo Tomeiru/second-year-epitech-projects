@@ -11,10 +11,13 @@
 #include <iostream>
 #include <exception>
 #include <cstring>
+#include <ncurses.h>
+#include <unistd.h>
 #include <sys/utsname.h>
 #include "MyGKrellmInfo.hpp"
 
 void argumentCheck(int ac, char **av);
+int startCurses(MyGKrellmInfo *info);
 
 /*class MyGKrellm {
     public:

@@ -7,7 +7,7 @@
 
 #include "MyGKrellm.hpp"
 
-int main(int ac, char **av, char **env)
+int main(int ac, char **av)
 {
     try {
         argumentCheck(ac, av);
@@ -16,6 +16,7 @@ int main(int ac, char **av, char **env)
         std::cerr << error.what() << std::endl;
         return (84);
     }
-    MyGKrellmInfo infos(env);
+    MyGKrellmInfo infos;
     infos.printInfo();
+    startCurses(&infos);
 }

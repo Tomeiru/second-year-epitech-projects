@@ -13,13 +13,12 @@
 
 class UsernameModule : public IMonitorModule {
     public:
-        UsernameModule(char **);
+        UsernameModule();
         ~UsernameModule();
         std::string getData();
         void updateData();
     protected:
         std::string username;
-        char **envBU;
     private:
 };
 
