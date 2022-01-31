@@ -5,7 +5,6 @@
 ** startNcurses
 */
 
-#include "MyGKrellm.hpp"
 #include "MyGKrellmInfo.hpp"
 
 int startCurses(MyGKrellmInfo *info)

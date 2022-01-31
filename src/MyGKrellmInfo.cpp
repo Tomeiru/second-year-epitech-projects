@@ -5,7 +5,7 @@
 ** MyGKrellmInfo
 */
 
-#include "MyGKrellm.hpp"
+#include "MyGKrellmInfo.hpp"
 
 ModuleList_t *createNode(IMonitorModule *newModule)
 {

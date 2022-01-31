@@ -5,7 +5,7 @@
 ** argumentCheck
 */
 
-#include "MyGKrellm.hpp"
+#include "MyGKrellmInfo.hpp"
 
 void argumentCheck(int ac, char **av)
 {

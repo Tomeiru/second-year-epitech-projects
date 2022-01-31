@@ -8,22 +8,16 @@
 #ifndef KERNELVERSIONMODULE_HPP_
 #define KERNELVERSIONMODULE_HPP_
 
-#include "IMonitorModule.hpp"
-#include "MyGKrellm.hpp"
+class DefaultModule;
 
-class KernelVersionModule : public IMonitorModule {
+#include "DefaultModule.hpp"
+
+class KernelVersionModule : virtual public DefaultModule  {
     public:
         KernelVersionModule();
         ~KernelVersionModule();
-        std::string getData();
-        bool getDisplayed();
-        ModuleType getType();
-        void toggleDisplayed();
         void updateData();
     protected:
-        std::string KernelVersion;
-        bool Displayed;
-        ModuleType Type;
     private:
 };
 

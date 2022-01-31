@@ -8,6 +8,10 @@
 #ifndef MYGKRELLMINFO_HPP_
 #define MYGKRELLMINFO_HPP_
 
+#include <iostream>
+#include <exception>
+#include <cstring>
+#include <ncurses.h>
 #include "DateTimeModule.hpp"
 #include "HostnameModule.hpp"
 #include "KernelVersionModule.hpp"
@@ -41,5 +45,8 @@ class MyGKrellmInfo {
         IMonitorModule *dateTime;*/
     private:
 };
+
+void argumentCheck(int ac, char **av);
+int startCurses(MyGKrellmInfo *info);
 
 #endif /* !MYGKRELLMINFO_HPP_ */

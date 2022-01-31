@@ -8,8 +8,6 @@
 #ifndef IMONITORDISPLAY_HPP_
 #define IMONITORDISPLAY_HPP_
 
-#include "MyGKrellm.hpp"
-
 class IMonitorDisplay {
     public:
         virtual ~IMonitorDisplay() {};

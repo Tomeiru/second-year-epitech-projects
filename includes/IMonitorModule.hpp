@@ -11,6 +11,7 @@
 #include <iostream>
 
 enum ModuleType {
+    DEFAULT,
     USERNAME,
     HOSTNAME,
     OSTYPE,

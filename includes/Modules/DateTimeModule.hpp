@@ -8,22 +8,16 @@
 #ifndef DATETIMEMODULE_HPP_
 #define DATETIMEMODULE_HPP_
 
-#include "IMonitorModule.hpp"
-#include "MyGKrellm.hpp"
+class DefaultModule;
 
-class DateTimeModule : public IMonitorModule {
+#include "DefaultModule.hpp"
+
+class DateTimeModule : virtual public DefaultModule {
     public:
         DateTimeModule();
         ~DateTimeModule();
-        std::string getData();
-        bool getDisplayed();
-        ModuleType getType();
-        void toggleDisplayed();
         void updateData();
     protected:
-        std::string DateTime;
-        bool Displayed;
-        ModuleType Type;
     private:
 };
 

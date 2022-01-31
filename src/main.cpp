@@ -5,7 +5,7 @@
 ** Main
 */
 
-#include "MyGKrellm.hpp"
+#include "MyGKrellmInfo.hpp"
 
 int main(int ac, char **av)
 {

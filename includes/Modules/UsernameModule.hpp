@@ -8,22 +8,16 @@
 #ifndef USERNAMEMODULE_HPP_
 #define USERNAMEMODULE_HPP_
 
-#include "IMonitorModule.hpp"
-#include "MyGKrellm.hpp"
+class DefaultModule;
 
-class UsernameModule : public IMonitorModule {
+#include "DefaultModule.hpp"
+
+class UsernameModule : virtual public DefaultModule  {
     public:
         UsernameModule();
         ~UsernameModule();
-        std::string getData();
-        bool getDisplayed();
-        ModuleType getType();
-        void toggleDisplayed();
         void updateData();
     protected:
-        std::string username;
-        bool Displayed;
-        ModuleType Type;
     private:
 };
 

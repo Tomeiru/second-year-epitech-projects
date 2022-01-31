@@ -8,22 +8,16 @@
 #ifndef OSMODULE_HPP_
 #define OSMODULE_HPP_
 
-#include "IMonitorModule.hpp"
-#include "MyGKrellm.hpp"
+class DefaultModule;
 
-class OSModule : public IMonitorModule {
+#include "DefaultModule.hpp"
+
+class OSModule : virtual public DefaultModule {
     public:
         OSModule();
         ~OSModule();
-        std::string getData();
-        bool getDisplayed();
-        ModuleType getType();
-        void toggleDisplayed();
         void updateData();
     protected:
-        std::string OS;
-        bool Displayed;
-        ModuleType Type;
     private:
 };
 

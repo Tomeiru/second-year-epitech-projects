@@ -8,22 +8,16 @@
 #ifndef HOSTNAMEMODULE_HPP_
 #define HOSTNAMEMODULE_HPP_
 
-#include "IMonitorModule.hpp"
-#include "MyGKrellm.hpp"
+class DefaultModule;
 
-class HostnameModule : public IMonitorModule {
+#include "DefaultModule.hpp"
+
+class HostnameModule : virtual public DefaultModule {
     public:
         HostnameModule();
         ~HostnameModule();
-        std::string getData();
-        bool getDisplayed();
-        ModuleType getType();
-        void toggleDisplayed();
         void updateData();
     protected:
-        std::string hostname;
-        bool Displayed;
-        ModuleType Type;
     private:
 };
 

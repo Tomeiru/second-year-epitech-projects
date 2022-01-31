@@ -8,6 +8,7 @@
 SRC =	src/main.cpp	\
 		src/argumentCheck.cpp	\
 		src/MyGKrellmInfo.cpp	\
+		src/Modules/DefaultModule.cpp	\
 		src/Modules/DateTimeModule.cpp	\
 		src/Modules/HostnameModule.cpp	\
 		src/Modules/KernelVersionModule.cpp	\
