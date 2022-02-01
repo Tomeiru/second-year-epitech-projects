@@ -5,6 +5,7 @@
 ** startNcurses
 */
 
+#include <signal.h>
 #include "MyGKrellmInfo.hpp"
 
 void inputGestion(MyGKrellmInfo *info)
@@ -31,6 +32,11 @@ void inputGestion(MyGKrellmInfo *info)
     }
 }
 
+void resizeHandler(int dummy)
+{
+    clear();
+}
+
 int startCurses(MyGKrellmInfo *info)
 {
     int windowWidth = 0;
@@ -38,18 +44,21 @@ int startCurses(MyGKrellmInfo *info)
     int a = -1;
 
     initscr();
-    getmaxyx(stdscr, windowHeight, windowWidth);
     noecho();
     curs_set(0);
 
     while (1) {
+        getmaxyx(stdscr, windowHeight, windowWidth);
         for (ModuleList_t *temp = info->getModules(); temp != nullptr; temp = temp->next)
-            if (info->getHelpModule()->getDisplayed() != true && temp->module->getDisplayed() == true)
+            if (info->getHelpModule()->getDisplayed() == true)
+                mvprintw(0, 0, "%s", info->getHelpModule()->getData().c_str());
+            else if (temp->module->getDisplayed() == true)
                 mvprintw(windowHeight / 2 - a++, windowWidth / 2 - temp->module->getData().length() / 2, "%s", temp->module->getData().c_str());
         info->getDateTime()->updateData();
         a = -1;
         timeout(0);
         inputGestion(info);
+        signal(SIGWINCH, resizeHandler);
         refresh();
     }
     endwin();

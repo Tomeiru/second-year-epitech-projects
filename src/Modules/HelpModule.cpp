@@ -9,7 +9,7 @@
 
 HelpModule::HelpModule() : DefaultModule::DefaultModule()
 {
-    Data = "";
+    Data = "Hotkeys\n\nH - Toggle the Help screen\nQ - Quit the application\n\nU - Show/Hide the Username and Hostname\nO - Show/Hide the OS and Kernel Version\nD - Show/Hide the Date and Time\n";
     Displayed = false;
     Type = HELP;
 }
