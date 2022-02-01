@@ -18,12 +18,14 @@ class DefaultModule : public IMonitorModule {
     public:
         DefaultModule();
         ~DefaultModule();
+        std::string getTitle();
         std::string getData();
         bool getDisplayed();
         ModuleType getType();
         void toggleDisplayed();
         void updateData();
     protected:
+        std::string Title;
         std::string Data;
         bool Displayed;
         ModuleType Type;

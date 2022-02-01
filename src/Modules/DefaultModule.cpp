@@ -17,6 +17,11 @@ DefaultModule::~DefaultModule()
 {
 }
 
+std::string DefaultModule::getTitle(void)
+{
+    return (Title);
+}
+
 std::string DefaultModule::getData(void)
 {
     return (Data);

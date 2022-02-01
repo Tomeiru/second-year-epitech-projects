@@ -12,6 +12,7 @@ OSKernelVersionModule::OSKernelVersionModule()
     struct utsname buf;
 
     uname(&buf);
+    Title = "OS :";
     Data = buf.sysname;
     Data.append(" ");
     Data.append(buf.release);

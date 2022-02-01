@@ -10,7 +10,9 @@
 
 #include <iostream>
 #include <exception>
+#include <string>
 #include <cstring>
+#include <stdint.h>
 #include <ncurses.h>
 #include "DateTimeModule.hpp"
 #include "HostUserNameModule.hpp"
