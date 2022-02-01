@@ -13,13 +13,14 @@ SRC =	src/main.cpp	\
 		src/Modules/HostUserNameModule.cpp	\
 		src/Modules/OSKernelVersionModule.cpp	\
 		src/Modules/HelpModule.cpp	\
-		src/nCurses.cpp
+		src/nCurses.cpp	\
+		src/sfml.cpp
 
 NAME =	MyGKrellm
 
 OBJ = 	$(SRC:.cpp=.o)
 
-CPPFLAGS = -I./includes -I./includes/Modules -g -Wall -Wextra -lncurses
+CPPFLAGS = -I./includes -I./includes/Modules -g -Wall -Wextra -lncurses -lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio
 
 all: $(NAME)
 

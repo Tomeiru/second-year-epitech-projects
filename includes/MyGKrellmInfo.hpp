@@ -29,19 +29,14 @@ class MyGKrellmInfo {
         IMonitorModule *getOSKernelVersion();
         IMonitorModule *getDateTime();
         IMonitorModule *getHelpModule();
-        /*void printInfo();*/
     protected:
         ModuleList_t *modules;
         IMonitorModule *helpModule;
-        /*IMonitorModule *hostname;
-        IMonitorModule *username;
-        IMonitorModule *OS;
-        IMonitorModule *kernelVersion;
-        IMonitorModule *dateTime;*/
     private:
 };
 
 void argumentCheck(int ac, char **av);
 int startCurses(MyGKrellmInfo *info);
+void startSFML(MyGKrellmInfo *info);
 
 #endif /* !MYGKRELLMINFO_HPP_ */

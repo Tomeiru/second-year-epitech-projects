@@ -8,7 +8,7 @@
 #include <signal.h>
 #include "MyGKrellmInfo.hpp"
 
-void inputGestion(MyGKrellmInfo *info, WINDOW *my_win)
+int inputGestion(MyGKrellmInfo *info, WINDOW *my_win)
 {
     int ch = getch();
 
@@ -33,7 +33,10 @@ void inputGestion(MyGKrellmInfo *info, WINDOW *my_win)
             info->getDateTime()->toggleDisplayed();
             wclear(my_win);
             break;
+        case 's' :
+            return (1);
     }
+    return (0);
 }
 
 void resizeHandler(int dummy)
@@ -68,7 +71,11 @@ int startCurses(MyGKrellmInfo *info)
             }
         info->getDateTime()->updateData();
         timeout(0);
-        inputGestion(info, my_win);
+        if (inputGestion(info, my_win) == 1) {
+            endwin();
+            startSFML(info);
+            break;
+        }
         signal(SIGWINCH, resizeHandler);
         wrefresh(my_win);
         a = 2;

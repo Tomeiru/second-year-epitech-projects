@@ -17,6 +17,8 @@ int main(int ac, char **av)
         return (84);
     }
     MyGKrellmInfo infos;
-    //infos.printInfo();
-    startCurses(&infos);
+    if (strcmp(av[1], "text") == 0)
+        startCurses(&infos);
+    else
+        startSFML(&infos);
 }
