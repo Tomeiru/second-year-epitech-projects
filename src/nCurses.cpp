@@ -38,7 +38,7 @@ void inputGestion(MyGKrellmInfo *info, WINDOW *my_win)
 
 void resizeHandler(int dummy)
 {
-    (void*)(&dummy);
+    (void)(dummy);
     clear();
 }
 
