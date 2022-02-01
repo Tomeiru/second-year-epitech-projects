@@ -15,6 +15,7 @@ DateTimeModule::DateTimeModule() : DefaultModule::DefaultModule()
     char buff[22];
 
     strftime(buff, sizeof(buff), "%d/%m/%Y : %X", &tstruct);
+    Title = "Date and time :";
     Data = buff;
     Type = DATETIME;
 }

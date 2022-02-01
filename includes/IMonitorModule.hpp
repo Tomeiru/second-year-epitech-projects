@@ -21,6 +21,7 @@ enum ModuleType {
 class IMonitorModule {
     public:
         virtual ~IMonitorModule() {};
+        virtual std::string getTitle() = 0;
         virtual std::string getData() = 0;
         virtual bool getDisplayed() = 0;
         virtual ModuleType getType() = 0;

@@ -39,29 +39,30 @@ void resizeHandler(int dummy)
 
 int startCurses(MyGKrellmInfo *info)
 {
-    int windowWidth = 0;
-    int windowHeight = 0;
-    int a = -1;
-
     initscr();
-    noecho();
-    curs_set(0);
+    int height = LINES;
+    int width = 40;
+    int winY = 0;
+    int winX = (COLS / 2) - 20;
+    WINDOW *my_win = newwin(height, width, winY, winX);;
+    int a = 2;
 
+    cbreak();
+    refresh();
+    curs_set(0);
+    box(my_win, 0, 0);
     while (1) {
-        getmaxyx(stdscr, windowHeight, windowWidth);
         for (ModuleList_t *temp = info->getModules(); temp != nullptr; temp = temp->next)
-            if (info->getHelpModule()->getDisplayed() == true)
-                mvprintw(0, 0, "%s", info->getHelpModule()->getData().c_str());
-            else if (temp->module->getDisplayed() == true)
-                mvprintw(windowHeight / 2 - a++, windowWidth / 2 - temp->module->getData().length() / 2, "%s", temp->module->getData().c_str());
+            if (temp->module->getDisplayed() == true) {
+                mvwprintw(my_win, a++, width / 2 - temp->module->getTitle().length() / 2, "%s", temp->module->getTitle().c_str());
+                mvwprintw(my_win, a++, width / 2 - temp->module->getData().length() / 2, "%s", temp->module->getData().c_str());
+                a += 2;
+            }
         info->getDateTime()->updateData();
-        a = -1;
-        timeout(0);
-        inputGestion(info);
-        signal(SIGWINCH, resizeHandler);
-        refresh();
+        wrefresh(my_win);
+        a = 2;
     }
     endwin();
-    std::cout << windowHeight << " " << windowWidth << std::endl;
+    std::cout << height << " " << width << std::endl;
     return (0);
 }

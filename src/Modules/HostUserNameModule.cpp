@@ -12,6 +12,7 @@ HostUserNameModule::HostUserNameModule()
     struct utsname buf;
 
     uname(&buf);
+    Title = "Host and Username :";
     Data = getlogin();
     Data.append(" ");
     Data.append(buf.nodename);
