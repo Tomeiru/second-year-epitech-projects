@@ -8,7 +8,7 @@
 #include <signal.h>
 #include "MyGKrellmInfo.hpp"
 
-void inputGestion(MyGKrellmInfo *info)
+void inputGestion(MyGKrellmInfo *info, WINDOW *my_win)
 {
     int ch = getch();
 
@@ -19,15 +19,19 @@ void inputGestion(MyGKrellmInfo *info)
             break;
         case 'h' :
             info->getHelpModule()->toggleDisplayed();
+            wclear(my_win);
             break;
         case 'u' :
             info->getHostUsername()->toggleDisplayed();
+            wclear(my_win);
             break;
         case 'o' :
             info->getOSKernelVersion()->toggleDisplayed();
+            wclear(my_win);
             break;
         case 'd' :
             info->getDateTime()->toggleDisplayed();
+            wclear(my_win);
             break;
     }
 }
@@ -51,6 +55,7 @@ int startCurses(MyGKrellmInfo *info)
     cbreak();
     refresh();
     curs_set(0);
+    noecho();
     while (1) {
         for (ModuleList_t *temp = info->getModules(); temp != nullptr; temp = temp->next)
             if (info->getHelpModule()->getDisplayed() == true)
@@ -63,7 +68,7 @@ int startCurses(MyGKrellmInfo *info)
             }
         info->getDateTime()->updateData();
         timeout(0);
-        inputGestion(info);
+        inputGestion(info, my_win);
         signal(SIGWINCH, resizeHandler);
         wrefresh(my_win);
         a = 2;
