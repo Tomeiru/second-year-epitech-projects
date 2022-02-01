@@ -15,6 +15,7 @@
 #include "DateTimeModule.hpp"
 #include "HostUserNameModule.hpp"
 #include "OSKernelVersionModule.hpp"
+#include "HelpModule.hpp"
 
 typedef struct ModuleList_s {
     IMonitorModule *module;
@@ -31,9 +32,11 @@ class MyGKrellmInfo {
         IMonitorModule *getHostUsername();
         IMonitorModule *getOSKernelVersion();
         IMonitorModule *getDateTime();
+        IMonitorModule *getHelpModule();
         /*void printInfo();*/
     protected:
         ModuleList_t *modules;
+        IMonitorModule *helpModule;
         /*IMonitorModule *hostname;
         IMonitorModule *username;
         IMonitorModule *OS;

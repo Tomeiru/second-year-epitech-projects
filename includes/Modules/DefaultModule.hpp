@@ -12,6 +12,7 @@ class IMonitorModule;
 
 #include <sys/utsname.h>
 #include <unistd.h>
+#include <ncurses.h>
 #include "IMonitorModule.hpp"
 
 class DefaultModule : public IMonitorModule {

@@ -12,6 +12,7 @@ SRC =	src/main.cpp	\
 		src/Modules/DateTimeModule.cpp	\
 		src/Modules/HostUserNameModule.cpp	\
 		src/Modules/OSKernelVersionModule.cpp	\
+		src/Modules/HelpModule.cpp	\
 		src/nCurses.cpp
 
 NAME =	MyGKrellm

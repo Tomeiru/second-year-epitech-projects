@@ -14,7 +14,8 @@ enum ModuleType {
     DEFAULT,
     HOSTUSERNAME,
     OSKERNELVERSION,
-    DATETIME
+    DATETIME,
+    HELP
 };
 
 class IMonitorModule {

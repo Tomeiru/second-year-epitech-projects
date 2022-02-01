@@ -7,6 +7,30 @@
 
 #include "MyGKrellmInfo.hpp"
 
+void inputGestion(MyGKrellmInfo *info)
+{
+    int ch = getch();
+
+    switch (ch) {
+        case 'q' :
+            endwin();
+            exit(0);
+            break;
+        case 'h' :
+            info->getHelpModule()->toggleDisplayed();
+            break;
+        case 'u' :
+            info->getHostUsername()->toggleDisplayed();
+            break;
+        case 'o' :
+            info->getOSKernelVersion()->toggleDisplayed();
+            break;
+        case 'd' :
+            info->getDateTime()->toggleDisplayed();
+            break;
+    }
+}
+
 int startCurses(MyGKrellmInfo *info)
 {
     int windowWidth = 0;
@@ -15,23 +39,19 @@ int startCurses(MyGKrellmInfo *info)
 
     initscr();
     getmaxyx(stdscr, windowHeight, windowWidth);
+    noecho();
     curs_set(0);
 
     while (1) {
         for (ModuleList_t *temp = info->getModules(); temp != nullptr; temp = temp->next)
-            if (temp->module->getDisplayed() == true)
+            if (info->getHelpModule()->getDisplayed() != true && temp->module->getDisplayed() == true)
                 mvprintw(windowHeight / 2 - a++, windowWidth / 2 - temp->module->getData().length() / 2, "%s", temp->module->getData().c_str());
         info->getDateTime()->updateData();
         a = -1;
+        timeout(0);
+        inputGestion(info);
         refresh();
     }
-    /*while (1) {
-        mvprintw(windowHeight / 2 - 2, windowWidth / 2 - info->getHostname()->getData().length() / 2, "%s\n", info->getHostname()->getData().c_str());
-        mvprintw(windowHeight / 2 - 1, windowWidth / 2 - info->getUsername()->getData().length() / 2, "%s\n", info->getUsername()->getData().c_str());
-        mvprintw(windowHeight / 2, windowWidth / 2 - info->getOS()->getData().length() / 2 - info->getKernelVersion()->getData().length() / 2, "%s %s\n", info->getOS()->getData().c_str(), info->getKernelVersion()->getData().c_str());
-        mvprintw(windowHeight / 2 + 1, windowWidth / 2 - info->getDateTime()->getData().length() / 2, "%s\n", info->getDateTime()->getData().c_str());
-        info->getDateTime()->updateData();
-    }*/
     endwin();
     std::cout << windowHeight << " " << windowWidth << std::endl;
     return (0);

@@ -35,6 +35,7 @@ ModuleType DefaultModule::getType(void)
 void DefaultModule::toggleDisplayed()
 {
     Displayed = (Displayed == true) ? false : true;
+    clear();
 }
 
 void DefaultModule::updateData()

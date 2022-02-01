@@ -22,6 +22,7 @@ MyGKrellmInfo::MyGKrellmInfo()
     list->next = createNode(new OSKernelVersionModule);
     list->next->next = createNode(new HostUserNameModule);
     modules = list;
+    helpModule = new HelpModule;
 }
 
 MyGKrellmInfo::~MyGKrellmInfo()
@@ -64,6 +65,11 @@ IMonitorModule *MyGKrellmInfo::getDateTime(void)
 
     for ( ; temp->module->getType() != DATETIME; temp = temp->next);
     return (temp->module);
+}
+
+IMonitorModule *MyGKrellmInfo::getHelpModule(void)
+{
+    return (helpModule);
 }
 
 /*void MyGKrellmInfo::printInfo(void)
