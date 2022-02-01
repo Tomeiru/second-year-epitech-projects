@@ -8,12 +8,6 @@
 #ifndef MYGKRELLMINFO_HPP_
 #define MYGKRELLMINFO_HPP_
 
-#include <iostream>
-#include <exception>
-#include <string>
-#include <cstring>
-#include <stdint.h>
-#include <ncurses.h>
 #include "DateTimeModule.hpp"
 #include "HostUserNameModule.hpp"
 #include "OSKernelVersionModule.hpp"

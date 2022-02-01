@@ -9,6 +9,13 @@
 #define IMONITORMODULE_HPP_
 
 #include <iostream>
+#include <sys/utsname.h>
+#include <unistd.h>
+#include <ncurses.h>
+#include <exception>
+#include <string>
+#include <cstring>
+#include <stdint.h>
 
 enum ModuleType {
     DEFAULT,
