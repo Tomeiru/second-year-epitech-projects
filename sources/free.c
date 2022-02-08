@@ -9,6 +9,7 @@
 
 void free(void *ptr)
 {
-    UNUSED(ptr);
+    if (ptr == NULL)
+        return;
     return;
 }
