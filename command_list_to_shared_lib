@@ -1,0 +1,2 @@
+gcc -c -Wall -Wextra -Werror -fpic src.c src1.c // compile .c into .o;
+gcc -shared -o libbasic.so easy_functions.o
