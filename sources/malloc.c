@@ -47,6 +47,7 @@ void *insert_malloc(size_t size, metadata_t *prev)
     if (prev->size <= size + sizeof(metadata_t))
         return (ret);
     new_metadata = create_metadata(prev->size - sizeof(metadata_t) - size, ret + size);
+    new_metadata->free = 1;
     prev->size = size;
     new_metadata->next = prev->next;
     if (prev->next != NULL)
