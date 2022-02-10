@@ -10,6 +10,7 @@
 
 // MACROS
     #define UNUSED(x) (void)(x)
+    #define ALIGN(x) ((((x-1)/4)*4)+4)
 
 // INCLUDES
     #include <stdio.h>
