@@ -7,23 +7,38 @@
 
 #include "alloc.h"
 
-void *new_malloc(size_t size, metadata_t *node_prev)
+metadata_t *create_metadata(size_t size)
 {
     metadata_t *new_metadata = sbrk(0);
-    void *ret = NULL;
 
     if (sbrk(sizeof(metadata_t)) == ((void *)- 1))
         return (NULL);
+    new_metadata->prev = NULL;
     new_metadata->next = NULL;
     new_metadata->size = size;
+    new_metadata->free = 0;
+    new_metadata->magic[0] = -115;
+    return (new_metadata);
+}
+
+void *new_malloc(size_t size, metadata_t *node_prev)
+{
+    metadata_t *new_metadata = create_metadata(size);
+    void *ret = NULL;
+
+    if (new_metadata == NULL)
+        return (NULL);
     ret = sbrk(0);
     if (sbrk(size) == ((void *) - 1))
         return (NULL);
-    new_metadata->free = 0;
-    if (node_prev != NULL && node_prev->next == NULL)
+    if (node_prev != NULL && node_prev->next == NULL) {
         node_prev->next = new_metadata;
-    if (node_prev != NULL && node_prev->next != NULL) {
+        new_metadata->prev = node_prev;
+        return (ret);
+    }if (node_prev != NULL && node_prev->next != NULL) {
         new_metadata->next = node_prev->next;
+        new_metadata->prev = node_prev;
+        node_prev->next->prev = new_metadata;
         node_prev->next = new_metadata;
     }return (ret);
 }

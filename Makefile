@@ -11,7 +11,7 @@ SRC =	sources/calloc.c	\
 		sources/realloc.c	\
 		sources/reallocarray.c
 
-CFLAGS = -Wall -Wextra -Werror -fpic -I./include
+CFLAGS = -Wall -Wextra -fpic -I./include
 
 OBJ = 	$(SRC:.c=.o)
 
