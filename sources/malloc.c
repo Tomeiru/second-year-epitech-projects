@@ -29,11 +29,13 @@ void *new_malloc(size_t size, size_t pagesize, metadata_t *prev)
     if (sbrk(pagesize * pagetocover) == ((void *)- 1))
         return (NULL);
     base_metadata = create_metadata(size, base);
-    metadata = create_metadata((pagesize * pagetocover) - size - sizeof(metadata_t), base + sizeof(metadata_t) + size);
+    metadata = create_metadata((pagesize * pagetocover) - size - sizeof(metadata_t) * 2, base + sizeof(metadata_t) + size);
     base_metadata->next = metadata;
     metadata->prev = base_metadata;
-    if (prev != NULL)
+    if (prev != NULL) {
         prev->next = base_metadata;
+        base_metadata->prev = prev;
+    }
     metadata->free = 1;
     return (base + sizeof(metadata_t));
 }
@@ -63,8 +65,8 @@ void *other_malloc(size_t size, void *base_break, size_t pagesize)
     int best = -1;
     size_t best_backup = -1;
 
-    for (int i = 0 ; mdata->next != NULL; mdata = mdata->next) {
-        if (mdata->size >= size && size < best_backup && mdata->free == 1) {
+    for (int i = 0 ; mdata != NULL; mdata = mdata->next) {
+        if (mdata->size >= size && mdata->size < best_backup && mdata->free == 1) {
             best = i;
             best_backup = mdata->size;
         }
@@ -73,8 +75,8 @@ void *other_malloc(size_t size, void *base_break, size_t pagesize)
     if (best == -1)
         return (new_malloc(size, pagesize, mdata));
     mdata = base_break;
-    for (int i = 0; mdata->next != NULL; mdata = mdata->next)
-        if (best == i)
+    for (int i = 0; mdata != NULL; mdata = mdata->next)
+        if (best == i++)
             break;
     return (insert_malloc(size, mdata));
 }

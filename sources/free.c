@@ -15,7 +15,7 @@ void free(void *ptr)
         return;
     metadata = ptr - sizeof(metadata_t);
     if (metadata->magic[0] != -115) {
-        write(1, "free(): invalid pointer\n", 24);
+        write(2, "free(): invalid pointer\n", 24);
         return;
     }metadata->free = 1;
     if (metadata->next != NULL && metadata->next->free == 1) {
@@ -23,7 +23,7 @@ void free(void *ptr)
         metadata->next = metadata->next->next;
         if (metadata->next->next != NULL)
             metadata->next->next->prev = metadata;
-    }if (metadata->prev->free == 1) {
+    }if (metadata->prev != NULL && metadata->prev->free == 1) {
         metadata->prev->size = metadata->prev->size + sizeof(metadata_t) + metadata->size;
         metadata->prev->next = metadata->next;
         if (metadata->next != NULL)
