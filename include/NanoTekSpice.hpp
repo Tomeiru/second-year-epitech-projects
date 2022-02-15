@@ -8,9 +8,12 @@
 #ifndef NANOTEKSPICE_HPP_
 #define NANOTEKSPICE_HPP_
 
+#define UNUSED(x) (void)(x)
+
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <exception>
+#include <vector>
 
 #endif /* !NANOTEKSPICE_HPP_ */

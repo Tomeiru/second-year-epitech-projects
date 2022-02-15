@@ -8,7 +8,7 @@
 #ifndef ICOMPONENT_HPP_
 #define ICOMPONENT_HPP_
 
-#include <iostream>
+#include "NanoTekSpice.hpp"
 
 namespace nts
 {
