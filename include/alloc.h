@@ -22,7 +22,7 @@ typedef struct metadata_s {
     int free;
     struct metadata_s *next;
     struct metadata_s *prev;
-    char magic[1];
+    //char magic[1];
 } metadata_t;
 
 // DECLARATION
