@@ -100,8 +100,3 @@ void *malloc(size_t size)
     ret = other_malloc(aligned_size, base_break, pagesize);
     return (ret);
 }
-
-int main(void)
-{
-    malloc(0);
-}
