@@ -90,6 +90,8 @@ void *malloc(size_t size)
     size_t aligned_size = ALIGN(size);
     size_t pagesize = getpagesize() * 2;
 
+    if (size == 0)
+        return (NULL);
     if (base_break == NULL) {
         base_break = sbrk(0);
         ret = new_malloc(aligned_size, pagesize, NULL);
@@ -97,4 +99,9 @@ void *malloc(size_t size)
     }
     ret = other_malloc(aligned_size, base_break, pagesize);
     return (ret);
+}
+
+int main(void)
+{
+    malloc(0);
 }
