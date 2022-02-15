@@ -13,7 +13,7 @@ void free(void *ptr)
 
     if (ptr == NULL)
         return;
-    metadata = ptr - sizeof(metadata_t);
+    metadata = ptr - MTDTSIZE;
     if (metadata->magic[0] != -115) {
         write(2, "free(): invalid pointer\n", 24);
         return;

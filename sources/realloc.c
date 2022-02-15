@@ -23,8 +23,9 @@ void *realloc(void *ptr, size_t size)
     ret = malloc(size);
     if (ret == NULL)
         return (NULL);
-    old_data = ptr - sizeof(metadata_t);
-    new_data = ret - sizeof(metadata_t);
-    memcpy(ret, ptr, (old_data->size >= new_data->size) ? (new_data->size) : (old_data->size));
+    old_data = ptr - MTDTSIZE;
+    new_data = ret - MTDTSIZE;
+    memcpy(ret, ptr, (old_data->size >= new_data->size) ? (new_data->size) :
+    (old_data->size));
     return (ret);
 }

@@ -8,10 +8,6 @@
 #ifndef ALLOC_H_
     #define ALLOC_H_
 
-// MACROS
-    #define UNUSED(x) (void)(x)
-    #define ALIGN(x) ((((x-1)/4)*4)+4)
-
 // INCLUDES
     #include <stdio.h>
     #include <unistd.h>
@@ -25,6 +21,12 @@ typedef struct metadata_s {
     struct metadata_s *prev;
     char magic[1];
 } metadata_t;
+
+// MACROS
+    #define UNUSED(x) (void)(x)
+    #define ALIGN(x) ((((x-1)/4)*4)+4)
+    #define MTDTSIZE sizeof(metadata_t)
+
 
 // DECLARATION
 void *malloc(size_t size);

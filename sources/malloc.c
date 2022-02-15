@@ -21,7 +21,8 @@ metadata_t *create_metadata(size_t size, void *base)
 
 void *new_malloc(size_t size, size_t pagesize, metadata_t *prev)
 {
-    size_t pagetocover = ((size + sizeof(metadata_t)) % pagesize == 0) ? ((size + sizeof(metadata_t)) / pagesize) : (((size + sizeof(metadata_t)) / pagesize) + 1);
+    size_t pagetocover = ((size + MTDTSIZE) % pagesize == 0) ?
+    ((size + MTDTSIZE) / pagesize) : (((size + MTDTSIZE) / pagesize) + 1);
     metadata_t *base_metadata;
     metadata_t *metadata;
     void *base = sbrk(0);
@@ -29,28 +30,29 @@ void *new_malloc(size_t size, size_t pagesize, metadata_t *prev)
     if (sbrk(pagesize * pagetocover) == ((void *)- 1))
         return (NULL);
     base_metadata = create_metadata(size, base);
-    if ((size + sizeof(metadata_t)) % pagesize != 0) {
-        metadata = create_metadata((pagesize * pagetocover) - size - sizeof(metadata_t) * 2, base + sizeof(metadata_t) + size);
+    if ((size + MTDTSIZE) % pagesize != 0) {
+        metadata = create_metadata((pagesize * pagetocover) -
+        size - MTDTSIZE * 2, base + MTDTSIZE + size);
         base_metadata->next = metadata;
         metadata->prev = base_metadata;
     }
     if (prev != NULL) {
         prev->next = base_metadata;
         base_metadata->prev = prev;
-    }
-    metadata->free = 1;
-    return (base + sizeof(metadata_t));
+    }metadata->free = 1;
+    return (base + MTDTSIZE);
 }
 
 void *insert_malloc(size_t size, metadata_t *prev)
 {
-    void *ret = (void *) prev + sizeof(metadata_t);
+    void *ret = (void *) prev + MTDTSIZE;
     metadata_t *new_metadata;
 
     prev->free = 0;
-    if (prev->size <= size + sizeof(metadata_t))
+    if (prev->size <= size + MTDTSIZE)
         return (ret);
-    new_metadata = create_metadata(prev->size - sizeof(metadata_t) - size, ret + size);
+    new_metadata = create_metadata(prev->size - MTDTSIZE - size,
+    ret + size);
     new_metadata->free = 1;
     prev->size = size;
     new_metadata->next = prev->next;
@@ -68,7 +70,8 @@ void *other_malloc(size_t size, void *base_break, size_t pagesize)
     size_t best_backup = -1;
 
     for (int i = 0 ; mdata != NULL; mdata = mdata->next) {
-        if (mdata->size >= size && mdata->size < best_backup && mdata->free == 1) {
+        if (mdata->size >= size && mdata->size < best_backup &&
+        mdata->free == 1) {
             best = i;
             best_backup = mdata->size;
         }
