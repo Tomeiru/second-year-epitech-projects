@@ -45,7 +45,7 @@ void *new_malloc(size_t size, size_t pagesize, metadata_t *prev)
 
 void *insert_malloc(size_t size, metadata_t *prev)
 {
-    void *ret = (void *) prev + MTDTSIZE;
+    void *ret = (void *)prev + MTDTSIZE;
     metadata_t *new_metadata;
 
     prev->free = 0;
