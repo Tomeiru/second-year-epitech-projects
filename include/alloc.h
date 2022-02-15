@@ -22,11 +22,14 @@ typedef struct metadata_s {
     int free;
     struct metadata_s *next;
     struct metadata_s *prev;
-    //char magic[1];
+    char magic[1];
 } metadata_t;
 
 // DECLARATION
 void *malloc(size_t size);
 void free(void *ptr);
+void *realloc(void *ptr, size_t size);
+void *reallocarray(void *ptr, size_t nmenb, size_t size);
+void *calloc(size_t nmenb, size_t size);
 
 #endif /* !ALLOC_H_ */
