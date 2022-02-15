@@ -9,8 +9,9 @@
 
 void *reallocarray(void *ptr, size_t nmenb, size_t size)
 {
-    UNUSED(ptr);
-    UNUSED(nmenb);
-    UNUSED(size);
-    return (NULL);
+    size_t total_size = nmenb * size;
+
+    if (total_size / nmenb != size)
+        return (NULL);
+    return (realloc(ptr, total_size));
 }

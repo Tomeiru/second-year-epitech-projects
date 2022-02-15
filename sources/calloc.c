@@ -10,10 +10,14 @@
 void *calloc(size_t nmenb, size_t size)
 {
     size_t total_size = nmenb * size;
+    char *ret;
 
     if (nmenb == 0 || size == 0)
         return (NULL);
     if (total_size / nmenb != size)
         return (NULL);
-    return (malloc(nmenb * size));
+    ret = malloc(total_size);
+    for (size_t i = 0; i < total_size; i++)
+        ret[i] = 0;
+    return ((void *)ret);
 }

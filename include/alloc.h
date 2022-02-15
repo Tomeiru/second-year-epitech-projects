@@ -15,6 +15,7 @@
 // INCLUDES
     #include <stdio.h>
     #include <unistd.h>
+    #include <string.h>
 
 // STRUCT
 typedef struct metadata_s {
