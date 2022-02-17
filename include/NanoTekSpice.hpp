@@ -15,5 +15,7 @@
 #include <filesystem>
 #include <exception>
 #include <vector>
+#include <regex>
+#include <tuple>
 
 #endif /* !NANOTEKSPICE_HPP_ */
