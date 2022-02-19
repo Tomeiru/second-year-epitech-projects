@@ -27,7 +27,7 @@ void *new_malloc(size_t size, size_t pagesize, metadata_t *prev)
     metadata_t *metadata;
     void *base = sbrk(0);
 
-    if (sbrk(pagesize * pagetocover) == ((void *)- 1))
+    if (sbrk(pagesize * pagetocover) == ((void *) -1))
         return (NULL);
     base_metadata = create_metadata(size, base);
     if ((size + MTDTSIZE) % pagesize != 0) {
