@@ -14,17 +14,18 @@ checkStringFull (a:b:c:[])
  | otherwise = True
 checkStringFull _ = False
 
-checkLastChar :: String -> Bool
-checkLastChar (a:[]) = elem a ("123456")
-checkLastChar _ = False
+checkLastChar :: String -> Bool -> Bool
+checkLastChar (a:[]) False = elem a ("123456")
+checkLastChar (a:[]) True = elem a ("56")
+checkLastChar _ _ = False
 
 checkExpectedCombination :: String -> [String] -> Bool
 checkExpectedCombination _ [] = False
 checkExpectedCombination arg (comb:comb_next)
  | take 5 arg == comb && comb == "full_" = checkStringFull (drop 5 arg)
- | take 5 arg == comb = checkLastChar (drop 5 arg)
- | take 6 arg == comb = checkLastChar (drop 6 arg)
- | take 9 arg == comb = checkLastChar (drop 9 arg)
+ | take 5 arg == comb = checkLastChar (drop 5 arg) False
+ | take 6 arg == comb = checkLastChar (drop 6 arg) False
+ | take 9 arg == comb = checkLastChar (drop 9 arg) True
  | otherwise = checkExpectedCombination arg comb_next
 
 checkArgsContent :: [String] -> Bool
