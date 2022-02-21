@@ -3,6 +3,8 @@ import Data.Maybe
 import System.Exit
 import System.Environment
 import Text.Read
+import Text.Printf
+import Data.List
 
 -- functions for error handling
 checkStringFull :: String -> Bool
@@ -72,23 +74,61 @@ operationToTuple str = ((take ((length str) - 2) str), ((read ((last str):[]) ::
 
 -- main functions
 
+printFunction :: [Int] -> String -> Double -> Bool -> IO ()
+printFunction (a:[]) str pourcentage False = printf "Chances to get a %i %s: %.2f%%\n" (a) (str) (pourcentage)
+printFunction (a:b:[]) str pourcentage True = printf "Changes to get a %i %s %i: %.2f%%\n" (a) (str) (b) (pourcentage)
+
+--calculate :: Int -> Int -> Double
+--calculate 0 _ = 0
+--calculate 1 nbSuccess = 
+
+perfectDices :: [Int] -> Int -> Int
+perfectDices dices value = length $ filter (== value) dices
+
 full :: [Int] -> [Int] -> IO ()
-full dices (a:b:[]) = exitWith(ExitSuccess)
+full dices (a:b:[])
+ | perfectDices dices a == 3 && perfectDices dices b == 2 = printFunction (a:b:[]) "full of" 100 True
+ | otherwise = exitWith(ExitFailure 84)
 
 pair :: [Int] -> Int -> IO ()
-pair dices a = exitWith(ExitSuccess)
+pair dices a
+ | perfectDices dices a >= 2 = printFunction (a:[]) "pair" 100 False
+ | otherwise = exitWith(ExitFailure 84)
 
 three :: [Int] -> Int -> IO ()
-three dices a = exitWith(ExitSuccess)
+three dices a
+ | perfectDices dices a >= 3 = printFunction (a:[]) "three-of-a-kind" 100 False
+ | otherwise = exitWith(ExitFailure 84)
 
 four :: [Int] -> Int -> IO ()
-four dices a = exitWith(ExitSuccess)
+four dices a
+ | perfectDices dices a >= 4 = printFunction (a:[]) "four-of-a-kind" 100 False
+ | otherwise = exitWith(ExitFailure 84)
+
+checkStraightSix :: [Int] -> Int -> Int -> Int
+checkStraightSix _ 1 ret = ret
+checkStraightSix dices rest ret
+ | find (==rest) dices == Nothing = checkStraightSix dices (rest - 1) ret
+ | otherwise = checkStraightSix dices (rest - 1) (ret + 1)
+
+checkStraightFive :: [Int] -> Int -> Int -> Int
+checkStraightFive _ 0 ret = ret
+checkStraightFive dices rest ret
+ | find (==rest) dices == Nothing = checkStraightFive dices (rest - 1) ret
+ | otherwise = checkStraightFive dices (rest - 1) (ret + 1)
 
 straight :: [Int] -> Int -> IO ()
-straight dices a = exitWith(ExitSuccess)
+straight dices 6
+ | checkStraightSix dices 6 0 == 5 = printFunction (6:[]) "straight" 100 False
+ | otherwise = exitWith(ExitFailure 84)
+straight dices 5
+ | checkStraightFive dices 5 0 == 5 = printFunction (5:[]) "straight" 100 False
+ | otherwise = exitWith(ExitFailure 84)
 
 yamsComb :: [Int] -> Int -> IO ()
-yamsComb dices a = exitWith(ExitSuccess)
+yamsComb dices a
+ | perfectDices dices a >= 5 = printFunction (a:[]) "yams" 100 False
+ | otherwise = exitWith(ExitFailure 84)
 
 yams :: [Int] -> (String,[Int]) -> IO ()
 yams dices ("full", list) = full dices list
