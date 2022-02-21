@@ -1,0 +1,16 @@
+/*
+** EPITECH PROJECT, 2022
+** PGE2
+** File description:
+** Selector_4512
+*/
+
+#include "Selector_4512.hpp"
+
+Selector_4512::Selector_4512(std::string name) : Component(name, 16)
+{
+}
+
+Selector_4512::~Selector_4512()
+{
+}
