@@ -78,32 +78,50 @@ printFunction :: [Int] -> String -> Double -> Bool -> IO ()
 printFunction (a:[]) str pourcentage False = printf "Chances to get a %i %s: %.2f%%\n" (a) (str) (pourcentage)
 printFunction (a:b:[]) str pourcentage True = printf "Changes to get a %i %s %i: %.2f%%\n" (a) (str) (b) (pourcentage)
 
---calculate :: Int -> Int -> Double
---calculate 0 _ = 0
---calculate 1 nbSuccess = 
+myFactorial :: Double -> Double
+myFactorial 0 = 1
+myFactorial n = n * myFactorial (n - 1)
+
+calculateStraight :: Int -> Double
+calculateStraight value = myFactorial (fromIntegral value) / (6 ^ value)
+
+perfectDicesMax :: [Int] -> Int -> Int -> Int
+perfectDicesMax dices value max
+ | (length $ filter (== value) dices) > max = max
+ | otherwise = (length $ filter (== value) dices)
+
+perfectDicesFull :: [Int] -> Int -> Bool -> Int
+perfectDicesFull dices value three
+ | three == True && ((length $ filter (== value) dices) > 3) = 3
+ | three == False && ((length $ filter (== value) dices) > 2) = 2
+ | otherwise = length $ filter (== value) dices
 
 perfectDices :: [Int] -> Int -> Int
 perfectDices dices value = length $ filter (== value) dices
 
+binomialCoeff :: Double -> Double -> Double
+binomialCoeff n k = (myFactorial n)/((myFactorial k) * (myFactorial (n - k)))
+
+calculateFull :: Double -> Double -> Double -> Double
+calculateFull m k1 k2 = ((binomialCoeff (5 - m) k1) * (binomialCoeff (5 - m - k1) k2)) / (6)^(round (k1 + k2))
+
 full :: [Int] -> [Int] -> IO ()
-full dices (a:b:[])
- | perfectDices dices a == 3 && perfectDices dices b == 2 = printFunction (a:b:[]) "full of" 100 True
- | otherwise = exitWith(ExitFailure 84)
+full dices (a:b:[]) = printFunction (a:b:[]) "full of" (calculateFull (fromIntegral (perfectDicesFull dices a True + perfectDicesFull dices b False)) (fromIntegral (3 - perfectDicesFull dices a True)) (fromIntegral (2 - perfectDicesFull dices b False)) * 100) True
+
+calculateAllExceptException :: Double -> Double -> Double
+calculateAllExceptException nbTry nbSuccess
+ | nbSuccess > nbTry = 0
+ | otherwise = (binomialCoeff nbTry nbSuccess) * ((1/6)^(round nbSuccess)) * ((5/6)^round (nbTry - nbSuccess)) + calculateAllExceptException nbTry (nbSuccess + 1)
+
 
 pair :: [Int] -> Int -> IO ()
-pair dices a
- | perfectDices dices a >= 2 = printFunction (a:[]) "pair" 100 False
- | otherwise = exitWith(ExitFailure 84)
+pair dices a = printFunction (a:[]) "pair" (calculateAllExceptException (fromIntegral(5 - perfectDices dices a)) (fromIntegral(2 - perfectDicesMax dices a 2)) * 100) False
 
 three :: [Int] -> Int -> IO ()
-three dices a
- | perfectDices dices a >= 3 = printFunction (a:[]) "three-of-a-kind" 100 False
- | otherwise = exitWith(ExitFailure 84)
+three dices a = printFunction (a:[]) "three-of-a-kind" (calculateAllExceptException (fromIntegral(5 - perfectDices dices a)) (fromIntegral(3 - perfectDicesMax dices a 3)) * 100) False
 
 four :: [Int] -> Int -> IO ()
-four dices a
- | perfectDices dices a >= 4 = printFunction (a:[]) "four-of-a-kind" 100 False
- | otherwise = exitWith(ExitFailure 84)
+four dices a = printFunction (a:[]) "four-of-a-kind" (calculateAllExceptException (fromIntegral(5 - perfectDices dices a)) (fromIntegral(4 - perfectDicesMax dices a 4)) * 100) False
 
 checkStraightSix :: [Int] -> Int -> Int -> Int
 checkStraightSix _ 1 ret = ret
@@ -118,17 +136,11 @@ checkStraightFive dices rest ret
  | otherwise = checkStraightFive dices (rest - 1) (ret + 1)
 
 straight :: [Int] -> Int -> IO ()
-straight dices 6
- | checkStraightSix dices 6 0 == 5 = printFunction (6:[]) "straight" 100 False
- | otherwise = exitWith(ExitFailure 84)
-straight dices 5
- | checkStraightFive dices 5 0 == 5 = printFunction (5:[]) "straight" 100 False
- | otherwise = exitWith(ExitFailure 84)
+straight dices 6 = printFunction (6:[]) "straight" (calculateStraight (5 -(checkStraightSix dices 6 0)) * 100) False
+straight dices 5 =  printFunction (5:[]) "straight" (calculateStraight (5 -(checkStraightFive dices 5 0)) * 100) False
 
 yamsComb :: [Int] -> Int -> IO ()
-yamsComb dices a
- | perfectDices dices a >= 5 = printFunction (a:[]) "yams" 100 False
- | otherwise = exitWith(ExitFailure 84)
+yamsComb dices a = printFunction (a:[]) "yams" (calculateAllExceptException (fromIntegral(5 - perfectDices dices a)) (fromIntegral(5 - perfectDicesMax dices a 5)) * 100) False
 
 yams :: [Int] -> (String,[Int]) -> IO ()
 yams dices ("full", list) = full dices list
