@@ -30,11 +30,13 @@ class NanoParser {
         void checkLinksLine(size_t index);
         std::string getNameFromNameValue(std::string NameValue);
         std::string getValueFromNameValue(std::string NameValue);
-
+        void checkLinksName(std::string name, size_t index, bool first);
+        void checkLinksValue(std::string name, size_t value, size_t index, bool first);
+        std::vector<std::tuple<std::string, size_t>> generateComponentPin(void);
     protected:
         std::vector<std::string> _fileContent;
         std::vector<std::tuple<std::string, std::string>> _chipsets;
-        std::vector<std::tuple<std::string, std::string, std::string, std::string>> _links;
+        std::vector<std::tuple<std::string, size_t, std::string, size_t>> _links;
     private:
 };
 

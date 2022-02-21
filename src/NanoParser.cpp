@@ -82,7 +82,7 @@ void NanoParser::checkComponentType(std::string componentType, size_t index)
             return;
     errorStr = "The component specified for the creation of a chipset in line ";
     errorStr.append(std::to_string(index + 1));
-    errorStr.append(" (excluding comments) doesn't exist");
+    errorStr.append(" (excluding comments and empty lines) doesn't exist");
     throw NanoError(errorStr);
 }
 
@@ -102,7 +102,7 @@ void NanoParser::checkComponentName(std::string componentName, size_t index)
         if (componentName == std::get<1>(_chipsets[i - 1])) {
             errorStr = "Name of component already exists for the creation of a chipset in line ";
             errorStr.append(std::to_string(index + 1));
-            errorStr.append(" (excluding comments)");
+            errorStr.append(" (excluding comments and empty lines)");
             throw NanoError(errorStr);
         }
     }
@@ -117,7 +117,7 @@ void NanoParser::checkChipsetLine(size_t index)
     if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9]+)([ \t])([a-z0-9_]+)"))) {
         errorStr = "Wrong format for the creation of a chipset in line ";
         errorStr.append(std::to_string(index + 1));
-        errorStr.append(" (excluding comments)");
+        errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
     componentType = getComponentTypeFromLine(index);
@@ -153,27 +153,107 @@ std::string NanoParser::getValueFromNameValue(std::string NameValue)
     return (ret);
 }
 
+void NanoParser::checkLinksName(std::string name, size_t index, bool first)
+{
+    std::string errorStr;
+
+    for (size_t i = 0; i < _chipsets.size(); i++)
+        if (name == std::get<1>(_chipsets[i]))
+            return;
+    if (first == true)
+        errorStr = "Name in the first link doesn't correspond to an existing component in line ";
+    else
+        errorStr = "Name in the second link doesn't correspond to an existing component in line ";
+    errorStr.append(std::to_string(index + 1));
+    errorStr.append(" (excluding comments and empty lines)");
+    throw NanoError(errorStr);
+}
+
+std::vector<std::tuple<std::string, size_t>> NanoParser::generateComponentPin(void)
+{
+    std::vector<std::tuple<std::string, size_t>> ret;
+
+    ret.push_back(std::make_tuple("input", 1));
+    ret.push_back(std::make_tuple("clock", 1));
+    ret.push_back(std::make_tuple("true", 1));
+    ret.push_back(std::make_tuple("false", 1));
+    ret.push_back(std::make_tuple("output", 1));
+    ret.push_back(std::make_tuple("4001", 14));
+    ret.push_back(std::make_tuple("4011", 14));
+    ret.push_back(std::make_tuple("4030", 14));
+    ret.push_back(std::make_tuple("4071", 14));
+    ret.push_back(std::make_tuple("4081", 14));
+    ret.push_back(std::make_tuple("4069", 14));
+    ret.push_back(std::make_tuple("4008", 16));
+    ret.push_back(std::make_tuple("4013", 14));
+    ret.push_back(std::make_tuple("4017", 16));
+    ret.push_back(std::make_tuple("4040", 16));
+    ret.push_back(std::make_tuple("4094", 16));
+    ret.push_back(std::make_tuple("4512", 16));
+    ret.push_back(std::make_tuple("4514", 24));
+    ret.push_back(std::make_tuple("4801", 24));
+    ret.push_back(std::make_tuple("2716", 24));
+    ret.push_back(std::make_tuple("logger", 10));
+    return (ret);
+}
+
+void NanoParser::checkLinksValue(std::string name, size_t value, size_t index, bool first)
+{
+    std::string errorStr;
+    size_t i = 0;
+    size_t l = 0;
+    bool error = false;
+    static std::vector<std::tuple<std::string, size_t>> list = generateComponentPin();
+
+    for ( ; i < _chipsets.size(); i++)
+        if (name == std::get<1>(_chipsets[i]))
+            break;
+    for ( ; l < list.size(); l++)
+        if (std::get<0>(_chipsets[i]) == std::get<0>(list[l]))
+            break;
+    if (std::get<1>(list[l]) == 1) {
+        if (value != 1)
+            error = true;
+    }
+    else if (std::get<1>(list[l]) == 10) {
+        if (value == 0 || value > 10)
+            error = true;
+    }
+    else if (value == 0 || value >= std::get<1>(list[l]) || value == std::get<1>(list[l]) / 2)
+        error = true;
+    if (error == true) {
+        if (first == true)
+            errorStr = "Value in the first link isn't a correct value in line ";
+        else
+            errorStr = "Value in the second link isn't a correct value in line ";
+        errorStr.append(std::to_string(index + 1));
+        errorStr.append(" (excluding comments and empty lines)");
+        throw NanoError(errorStr);
+    }
+}
+
 void NanoParser::checkLinksLine(size_t index)
 {
     std::string errorStr;
     std::string firstName;
-    std::string firstValue;
+    size_t firstValue;
     std::string secondName;
-    std::string secondValue;
+    size_t secondValue;
 
     if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9_]+)([:])([0-9]+)([ \t])([a-z0-9_]+)([:])([0-9]+)"))) {
         errorStr = "Wrong format for the creation of a links in line ";
         errorStr.append(std::to_string(index + 2));
-        errorStr.append(" (excluding comments)");
+        errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
     firstName = getNameFromNameValue(getComponentTypeFromLine(index));
-    firstValue = getValueFromNameValue(getComponentTypeFromLine(index));
-    //checkComponentType(componentType, index);
+    checkLinksName(firstName, index, true);
+    firstValue = std::stol(getValueFromNameValue(getComponentTypeFromLine(index)));
+    checkLinksValue(firstName, firstValue, index, true);
     secondName = getNameFromNameValue(getComponentNameFromLine(index));
-    secondValue = getValueFromNameValue(getComponentNameFromLine(index));
-    //checkComponentName(componentName, index);
-    std::cout << firstName << " " << firstValue << " " << secondName << " " << secondValue << std::endl;
+    checkLinksName(secondName, index, false);
+    secondValue = std::stol(getValueFromNameValue(getComponentNameFromLine(index)));
+    checkLinksValue(secondName, secondValue, index, false);
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
 }
 
@@ -192,7 +272,4 @@ void NanoParser::checkFileContent(void)
     checkEmptyFile();
     checkChipsetField();
     checkLinksField();
-    //for (int i = 1; i < _fileContent.size(); i++)
-        //if (true) //check if .chipset line is valid
-
 }
