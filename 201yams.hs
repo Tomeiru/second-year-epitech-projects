@@ -76,7 +76,7 @@ operationToTuple str = ((take ((length str) - 2) str), ((read ((last str):[]) ::
 
 printFunction :: [Int] -> String -> Double -> Bool -> IO ()
 printFunction (a:[]) str pourcentage False = printf "Chances to get a %i %s: %.2f%%\n" (a) (str) (pourcentage)
-printFunction (a:b:[]) str pourcentage True = printf "Changes to get a %i %s %i: %.2f%%\n" (a) (str) (b) (pourcentage)
+printFunction (a:b:[]) str pourcentage True = printf "Chances to get a %i %s %i: %.2f%%\n" (a) (str) (b) (pourcentage)
 
 myFactorial :: Double -> Double
 myFactorial 0 = 1
