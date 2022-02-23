@@ -8,7 +8,7 @@ strpbrk:
 
 first_loop:
         CMP BYTE[RAX], 0
-        JE end
+        JE endalt
         JMP second_loop
 
 second_loop:
