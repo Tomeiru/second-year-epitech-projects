@@ -6,6 +6,12 @@ strstr:
         MOV RAX, RDI
         MOV R8, RSI
         MOV R9, 0
+        CMP BYTE[RDI], 0
+        JE init
+
+init:
+        CMP BYTE[RSI], 0
+        JE endalttwo
 
 loop:
         CMP BYTE[RAX], 0
@@ -37,4 +43,8 @@ end:
 
 endalt:
         MOV RAX, 0
+        RET
+
+endalttwo:
+        MOV RAX, RDI
         RET
