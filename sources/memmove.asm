@@ -1,8 +1,8 @@
 BITS 64
 SECTION .text
-GLOBAL my_memmove
+GLOBAL memmove
 
-my_memmove:
+memmove:
         XOR RAX, RAX
         XOR R9, R9
         XOR R10B, R10B
