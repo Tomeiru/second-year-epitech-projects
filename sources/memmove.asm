@@ -1,19 +1,30 @@
 BITS 64
 SECTION .text
-GLOBAL memmove
+GLOBAL my_memmove
 
-memmove:
-        MOV RAX, RDI
+my_memmove:
+        XOR RAX, RAX
         XOR R9, R9
         XOR R10B, R10B
 
-copy_temp:
-        CMP RDX, R9
+loop:
+        CMP R9, RDX
+        JE intermediate
+        MOV AL, BYTE[RSI + R9]
+        PUSH RAX
+        ADD R9, 1
+        JMP loop
+
+intermediate:
+        SUB R9, 1
+
+second_loop:
+        CMP R9, -1
         JE end
-        MOV R10B, BYTE[RSI + R9]
-        MOV BYTE [RDI + R9], R10B
-        INC R9
-        JMP copy_temp
+        POP RAX
+        MOV BYTE[RDI + R9], AL
+        SUB R9, 1
+        JMP second_loop
 
 end:
         RET
