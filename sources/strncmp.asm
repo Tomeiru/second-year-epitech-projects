@@ -6,7 +6,7 @@ strncmp:
         MOV RAX, 0
 
 loop:
-        CMP RDX, 0
+        CMP RDX, 1
         JE end
         CMP BYTE[RDI], 0
         JE end
