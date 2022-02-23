@@ -6,10 +6,10 @@ index:
         MOV RAX, RDI
 
 loop:
-        CMP BYTE[RAX], 0
-        JE endalt
         CMP BYTE[RAX], SIL
         JE end
+        CMP BYTE[RAX], 0
+        JE endalt
         ADD RAX, 1
         JMP loop
 
