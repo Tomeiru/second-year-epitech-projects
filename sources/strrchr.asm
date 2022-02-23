@@ -7,10 +7,10 @@ strrchr:
         MOV R10, 0
 
 loop:
-        CMP BYTE[R9], 0
-        JE end
         CMP BYTE[R9], SIL
         JE define
+        CMP BYTE[R9], 0
+        JE end
 
 endloop:
         ADD R9, 1
@@ -28,4 +28,6 @@ endalt:
 define:
         MOV RAX, R9
         MOV R10, 1
+        CMP SIL, 0
+        JE end
         JMP endloop
