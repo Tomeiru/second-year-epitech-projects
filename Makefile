@@ -16,7 +16,10 @@ SRC =	sources/memcpy.asm	\
 		sources/strncmp.asm	\
 		sources/strpbrk.asm	\
 		sources/strrchr.asm	\
-		sources/strstr.asm
+		sources/strstr.asm	\
+		sources/index.asm	\
+		sources/rindex.asm
+
 
 CFLAGS = -Wall -Wextra -fpic -I./include
 
