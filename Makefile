@@ -6,15 +6,17 @@
 ##
 
 SRC =	src/NanoTekSpice.cpp	\
+		src/NanoError.cpp	\
+		src/NanoParser.cpp	\
 		src/Component/ABasicComponent.cpp 	\
 		src/Component/AGateComponent.cpp	\
-		src/Component/AAdvancedComponent.cpp
+		src/Component/AAdvancedComponent.cpp	\
 
 NAME =	nanotekspice
 
 OBJ = 	$(SRC:.cpp=.o)
 
-CPPFLAGS = -I./include -I./include/Component -Wall -Wextra
+CPPFLAGS = -g -I./include -I./include/Component -Wall -Wextra
 
 all: $(NAME)
 

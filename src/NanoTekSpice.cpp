@@ -5,11 +5,20 @@
 ** NanoTekSpice
 */
 
-#include "NanoTekSpice.hpp"
+#include "NanoParser.hpp"
 
 int main(int ac, char **av)
 {
-    UNUSED(ac);
-    UNUSED(av);
+    NanoParser Parser;
+
+    try {
+        Parser.argumentCheck(ac);
+        Parser.openFile(av[1]);
+        Parser.checkFileContent();
+    }
+    catch (NanoError const &error) {
+        std::cerr << error.what() << std::endl;
+        return (84);
+    }
     return (0);
 }
