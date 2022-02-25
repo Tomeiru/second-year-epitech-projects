@@ -257,6 +257,11 @@ void NanoParser::checkLinksLine(size_t index)
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
 }
 
+std::vector<std::tuple<std::string, std::string>> NanoParser::getChipsetVec(void)
+{
+    return (_chipsets);
+}
+
 void NanoParser::checkLinksField(void)
 {
     if (_fileContent.size() - _chipsets.size() <= 2)
@@ -266,6 +271,8 @@ void NanoParser::checkLinksField(void)
     for (size_t i = _chipsets.size() + 2; i < _fileContent.size(); i++)
         checkLinksLine(i);
 }
+
+
 
 void NanoParser::checkFileContent(void)
 {

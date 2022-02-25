@@ -8,8 +8,9 @@
 #ifndef ICOMPONENT_HPP_
 #define ICOMPONENT_HPP_
 
+class AnalogicGate;
+
 #include "NanoTekSpice.hpp"
-#include "AnalogicGate.hpp"
 
 namespace nts
 {
@@ -33,8 +34,8 @@ namespace nts
             virtual void setName(std::string name) = 0;
             virtual void setSinglePin(std::size_t pin, nts::Tristate state) = 0;
             virtual void setAllPin(nts::Tristate state) = 0;
+            virtual std::string getName(void) = 0;
     };
-
 }
 
 #endif /* !ICOMPONENT_HPP_ */

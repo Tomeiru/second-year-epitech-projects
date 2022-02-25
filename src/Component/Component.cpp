@@ -7,7 +7,7 @@
 
 #include "Component.hpp"
 
-Component::Component(std::string Name, std::size_t NbrPin) : _Comp(Name), _Pin(NbrPin, nts::UNDEFINED), _NbrPin(1)
+Component::Component(std::string Name, std::size_t NbrPin) : _Comp(Name), _Pin(NbrPin, nts::UNDEFINED), _NbrPin(NbrPin)
 {
     setSinglePin(NbrPin/2, nts::Tristate::IGNORE);
     setSinglePin(NbrPin, nts::Tristate::IGNORE);
@@ -73,7 +73,7 @@ void Component::setSinglePin(std::size_t pin, nts::Tristate state)
 
 void Component::setAllPin(nts::Tristate state)
 {
-    for (int i = 0; i < _NbrPin; i++) {
+    for (size_t i = 0; i < _NbrPin; i++) {
         _Pin[i] = state;
     }
 }

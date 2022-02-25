@@ -12,7 +12,7 @@
 
 class False : public Component{
     public:
-        False(std::string name);
+        False();
         ~False();
 
     protected:

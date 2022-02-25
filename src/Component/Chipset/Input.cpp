@@ -7,7 +7,7 @@
 
 #include "Input.hpp"
 
-Input::Input(std::string name) : Component("Input", 1)
+Input::Input() : Component("Input", 1)
 {
 }
 

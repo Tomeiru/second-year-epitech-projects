@@ -7,7 +7,7 @@
 
 #include "True.hpp"
 
-True::True(std::string name) : Component("True", 1)
+True::True() : Component("True", 1)
 {
 }
 

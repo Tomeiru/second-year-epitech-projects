@@ -8,11 +8,11 @@
 #ifndef OR_4071_HPP_
 #define OR_4071_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Or_4071 : public Component{
     public:
-        Or_4071(std::string name);
+        Or_4071();
         ~Or_4071();
         void simulate(std::size_t tick);
     protected:

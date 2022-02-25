@@ -8,11 +8,11 @@
 #ifndef INVERTER_4069_HPP_
 #define INVERTER_4069_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Inverter_4069 : public Component {
     public:
-        Inverter_4069(std::string name);
+        Inverter_4069();
         ~Inverter_4069();
         void simulate(std::size_t tick);
     protected:

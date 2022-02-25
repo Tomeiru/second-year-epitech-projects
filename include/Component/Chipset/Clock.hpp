@@ -12,7 +12,7 @@
 
 class Clock : public Component{
     public:
-        Clock(std::string name);
+        Clock();
         ~Clock();
 
     protected:

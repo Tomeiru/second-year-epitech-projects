@@ -12,6 +12,7 @@
 #include "Input.hpp"
 #include "False.hpp"
 #include "Clock.hpp"
+#include "Output.hpp"
 #include "Adder_4008.hpp"
 #include "And_4081.hpp"
 #include "Counter_4040.hpp"

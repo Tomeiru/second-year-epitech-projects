@@ -7,7 +7,7 @@
 
 #include "Selector_4512.hpp"
 
-Selector_4512::Selector_4512(std::string name) : Component("4512", 16)
+Selector_4512::Selector_4512() : Component("4512", 16)
 {
 }
 

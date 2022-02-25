@@ -7,7 +7,7 @@
 
 #include "Register_4094.hpp"
 
-Register_4094::Register_4094(std::string name) : Component("4094", 16)
+Register_4094::Register_4094() : Component("4094", 16)
 {
 }
 

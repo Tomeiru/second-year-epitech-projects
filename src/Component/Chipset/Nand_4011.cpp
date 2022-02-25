@@ -7,7 +7,7 @@
 
 #include "Nand_4011.hpp"
 
-Nand_4011::Nand_4011(std::string name) : Component("4011", 14)
+Nand_4011::Nand_4011() : Component("4011", 14)
 {
 }
 
@@ -17,7 +17,7 @@ Nand_4011::~Nand_4011()
 
 void Nand_4011::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     setSinglePin(3, gate.nand_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.nand_gate(_Pin[4], _Pin[5]));

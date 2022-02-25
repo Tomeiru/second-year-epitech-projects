@@ -8,11 +8,11 @@
 #ifndef XOR_4030_HPP_
 #define XOR_4030_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Xor_4030 : public Component {
     public:
-        Xor_4030(std::string name);
+        Xor_4030();
         ~Xor_4030();
         void simulate(std::size_t tick);
     protected:

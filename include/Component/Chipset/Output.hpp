@@ -12,7 +12,7 @@
 
 class Output : public Component {
     public:
-        Output(std::string name);
+        Output();
         ~Output();
 
     protected:

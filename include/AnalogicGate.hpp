@@ -8,7 +8,7 @@
 #ifndef ANALOGICGATE_HPP_
 #define ANALOGICGATE_HPP_
 
-#include "IComponent.hpp"
+#include "Component.hpp"
 
 class AnalogicGate {
     public:

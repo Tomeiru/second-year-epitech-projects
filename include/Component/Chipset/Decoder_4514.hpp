@@ -8,11 +8,11 @@
 #ifndef DECODER_4514_HPP_
 #define DECODER_4514_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Decoder_4514 : public Component{
     public:
-        Decoder_4514(std::string name);
+        Decoder_4514();
         ~Decoder_4514();
 
     protected:

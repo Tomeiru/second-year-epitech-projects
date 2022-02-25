@@ -8,11 +8,11 @@
 #ifndef SELECTOR_4512_HPP_
 #define SELECTOR_4512_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Selector_4512 : public Component{
     public:
-        Selector_4512(std::string name);
+        Selector_4512();
         ~Selector_4512();
 
     protected:

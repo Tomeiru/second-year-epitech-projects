@@ -20,6 +20,7 @@ std::map<std::string, std::function<std::unique_ptr<nts::IComponent>(void)>> Fac
     std::make_pair("true", []() {return std::make_unique<True>();}),
     std::make_pair("false", []() {return std::make_unique<False>();}),
     std::make_pair("clock", []() {return std::make_unique<Clock>();}),
+    std::make_pair("output", []() {return std::make_unique<Output>();}),
     std::make_pair("4008", []() {return std::make_unique<Adder_4008>();}),
     std::make_pair("4081", []() {return std::make_unique<And_4081>();}),
     std::make_pair("4040", []() {return std::make_unique<Counter_4040>();}),
@@ -41,5 +42,5 @@ std::unique_ptr<nts::IComponent> Factory::create(std::string &name)
 {
     std::map<std::string, std::function<std::unique_ptr<nts::IComponent> ()>>::iterator comp = factory_list.find(name);
 
-    return (comp->second)();
+    return ((comp->second)());
 }

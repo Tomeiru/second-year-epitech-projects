@@ -6,11 +6,13 @@
 */
 
 #include "NanoLoop.hpp"
+#include "Circuit.hpp"
 
 int main(int ac, char **av)
 {
     NanoParser Parser;
     NanoLoop Loop;
+    Circuit Circuit;
 
     try {
         Parser.argumentCheck(ac);
@@ -18,6 +20,13 @@ int main(int ac, char **av)
         Parser.checkFileContent();
     }
     catch (NanoError const &error) {
+        std::cerr << error.what() << std::endl;
+        return (84);
+    }
+    try {
+        Circuit.initFactory(Parser.getChipsetVec());
+    }
+    catch (std::exception const &error) {
         std::cerr << error.what() << std::endl;
         return (84);
     }

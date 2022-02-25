@@ -8,11 +8,11 @@
 #ifndef RAM_4801_HPP_
 #define RAM_4801_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class RAM_4801 : public Component {
     public:
-        RAM_4801(std::string name);
+        RAM_4801();
         ~RAM_4801();
 
     protected:

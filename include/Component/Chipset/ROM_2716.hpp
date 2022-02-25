@@ -8,11 +8,11 @@
 #ifndef ROM_2716_HPP_
 #define ROM_2716_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class ROM_2716 : public Component {
     public:
-        ROM_2716(std::string name);
+        ROM_2716();
         ~ROM_2716();
 
     protected:

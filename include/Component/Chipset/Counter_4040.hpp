@@ -8,11 +8,11 @@
 #ifndef COUNTER_4040_HPP_
 #define COUNTER_4040_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class Counter_4040 : public Component{
     public:
-        Counter_4040(std::string name);
+        Counter_4040();
         ~Counter_4040();
 
     protected:

@@ -12,7 +12,7 @@
 
 class Input : public Component {
     public:
-        Input(std::string name);
+        Input();
         ~Input();
 
     protected:

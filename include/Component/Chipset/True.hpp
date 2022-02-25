@@ -12,7 +12,7 @@
 
 class True : public Component {
     public:
-        True(std::string name);
+        True();
         ~True();
 
     protected:

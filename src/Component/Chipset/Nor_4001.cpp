@@ -7,7 +7,7 @@
 
 #include "Nor_4001.hpp"
 
-Nor_4001::Nor_4001(std::string name) : Component("4001", 14)
+Nor_4001::Nor_4001() : Component("4001", 14)
 {
 }
 
@@ -17,7 +17,7 @@ Nor_4001::~Nor_4001()
 
 void Nor_4001::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     setSinglePin(3, gate.nor_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.nor_gate(_Pin[4], _Pin[5]));

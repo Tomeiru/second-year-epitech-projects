@@ -8,11 +8,11 @@
 #ifndef FLIPFLOP_4013_HPP_
 #define FLIPFLOP_4013_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class FlipFlop_4013 : public Component{
     public:
-        FlipFlop_4013(std::string name);
+        FlipFlop_4013();
         ~FlipFlop_4013();
         void simulate(std::size_t tick);
     protected:

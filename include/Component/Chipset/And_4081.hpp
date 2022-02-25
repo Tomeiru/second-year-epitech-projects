@@ -8,11 +8,11 @@
 #ifndef AND_4081_HPP_
 #define AND_4081_HPP_
 
-#include "Component.hpp"
+#include "AnalogicGate.hpp"
 
 class And_4081 : public Component {
     public:
-        And_4081(std::string name);
+        And_4081();
         ~And_4081();
         void simulate(std::size_t tick);
     protected:

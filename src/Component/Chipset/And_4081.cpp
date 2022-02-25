@@ -7,7 +7,7 @@
 
 #include "And_4081.hpp"
 
-And_4081::And_4081(std::string name) : Component("4081", 14)
+And_4081::And_4081() : Component("4081", 14)
 {
 }
 
@@ -17,7 +17,7 @@ And_4081::~And_4081()
 
 void And_4081::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     setSinglePin(3, gate.and_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.and_gate(_Pin[4], _Pin[5]));

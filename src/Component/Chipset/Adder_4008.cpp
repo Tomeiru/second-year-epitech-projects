@@ -7,7 +7,7 @@
 
 #include "Adder_4008.hpp"
 
-Adder_4008::Adder_4008(std::string name) : Component("4008", 16)
+Adder_4008::Adder_4008() : Component("4008", 16)
 {
 }
 
@@ -24,7 +24,7 @@ Adder_4008::~Adder_4008()
 
 void Adder_4008::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     nts::Tristate next_A4 = gate.or_gate(_Pin[0], _Pin[14]);
     nts::Tristate next_B4 = gate.and_gate(_Pin[14], _Pin[0]);

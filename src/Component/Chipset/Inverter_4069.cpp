@@ -7,7 +7,7 @@
 
 #include "Inverter_4069.hpp"
 
-Inverter_4069::Inverter_4069(std::string name) : Component("4069", 14)
+Inverter_4069::Inverter_4069() : Component("4069", 14)
 {
 }
 
@@ -17,7 +17,7 @@ Inverter_4069::~Inverter_4069()
 
 void Inverter_4069::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     setSinglePin(1, gate.not_gate(_Pin[0]));
     setSinglePin(3, gate.not_gate(_Pin[2]));

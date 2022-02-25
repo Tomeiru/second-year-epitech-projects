@@ -7,7 +7,7 @@
 
 #include "Or_4071.hpp"
 
-Or_4071::Or_4071(std::string name) : Component("4071", 14)
+Or_4071::Or_4071() : Component("4071", 14)
 {
 }
 
@@ -17,7 +17,7 @@ Or_4071::~Or_4071()
 
 void Or_4071::simulate(std::size_t tick)
 {
-    AnalogicGate gate = AnalogicGate();
+    AnalogicGate gate;
 
     setSinglePin(3, gate.or_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.or_gate(_Pin[4], _Pin[5]));
