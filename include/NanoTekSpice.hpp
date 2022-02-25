@@ -17,5 +17,8 @@
 #include <vector>
 #include <regex>
 #include <tuple>
+#include <memory>
+#include <map>
+#include <functional>
 
 #endif /* !NANOTEKSPICE_HPP_ */

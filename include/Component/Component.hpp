@@ -5,21 +5,15 @@
 ** BasicComponent
 */
 
-#ifndef ABASICCOMPONENT_HPP_
-#define ABASICCOMPONENT_HPP_
+#ifndef COMPONENT_HPP_
+#define COMPONENT_HPP_
 
 #include "IComponent.hpp"
 
-enum ComponentType {
-    BASIC,
-    GATE,
-    ADVANCED
-};
-
-class ABasicComponent : public nts::IComponent {
+class Component : public nts::IComponent {
     public:
-        ABasicComponent();
-        ~ABasicComponent();
+        Component(std::string Name, std::size_t NbrPin);
+        ~Component();
         void simulate(std::size_t tick);
         nts::Tristate compute(std::size_t pin);
         void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
@@ -27,13 +21,14 @@ class ABasicComponent : public nts::IComponent {
         std::vector<nts::Tristate> getPinVector();
         nts::Tristate getSinglePin(std::size_t pin);
         std::size_t getNbrPin();
-        ComponentType getType();
+        std::string getName();
         void setSinglePin(std::size_t pin, nts::Tristate state);
+        void setAllPin(nts::Tristate state);
     protected:
         std::vector<nts::Tristate> _Pin;
         std::size_t _NbrPin;
-        ComponentType _Type;
+        std::string _Name;
     private:
 };
 
-#endif /* !ABASICCOMPONENT_HPP_ */
+#endif /* !COMPONENT_HPP_ */
