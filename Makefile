@@ -8,6 +8,8 @@
 SRC =	src/NanoTekSpice.cpp	\
 		src/NanoError.cpp	\
 		src/NanoParser.cpp	\
+		src/NanoLoop.cpp	\
+		src/CommandFunction.cpp	\
 		src/Component/ABasicComponent.cpp 	\
 		src/Component/AGateComponent.cpp	\
 		src/Component/AAdvancedComponent.cpp	\
