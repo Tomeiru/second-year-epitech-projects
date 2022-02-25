@@ -7,7 +7,7 @@
 
 #include "Xor_4030.hpp"
 
-Xor_4030::Xor_4030(std::string name) : Component(name, 14)
+Xor_4030::Xor_4030(std::string name) : Component("4030", 14)
 {
 }
 

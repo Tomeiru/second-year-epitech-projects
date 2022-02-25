@@ -7,7 +7,7 @@
 
 #include "RAM_4801.hpp"
 
-RAM_4801::RAM_4801(std::string name) : Component(name, 24)
+RAM_4801::RAM_4801(std::string name) : Component("4801", 24)
 {
 }
 

@@ -7,7 +7,7 @@
 
 #include "Nand_4011.hpp"
 
-Nand_4011::Nand_4011(std::string name) : Component(name, 14)
+Nand_4011::Nand_4011(std::string name) : Component("4011", 14)
 {
 }
 

@@ -7,7 +7,7 @@
 
 #include "Or_4071.hpp"
 
-Or_4071::Or_4071(std::string name) : Component(name, 14)
+Or_4071::Or_4071(std::string name) : Component("4071", 14)
 {
 }
 

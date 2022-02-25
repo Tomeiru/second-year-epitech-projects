@@ -7,7 +7,7 @@
 
 #include "And_4081.hpp"
 
-And_4081::And_4081(std::string name) : Component(name, 14)
+And_4081::And_4081(std::string name) : Component("4081", 14)
 {
 }
 
