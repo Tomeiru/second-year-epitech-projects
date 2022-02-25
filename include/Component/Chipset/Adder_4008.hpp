@@ -14,7 +14,7 @@ class Adder_4008 : public Component{
     public:
         Adder_4008(std::string name);
         ~Adder_4008();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

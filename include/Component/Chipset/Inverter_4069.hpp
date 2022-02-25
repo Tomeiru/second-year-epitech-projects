@@ -14,7 +14,7 @@ class Inverter_4069 : public Component {
     public:
         Inverter_4069(std::string name);
         ~Inverter_4069();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };
