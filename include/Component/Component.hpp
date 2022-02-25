@@ -22,11 +22,13 @@ class Component : public nts::IComponent {
         nts::Tristate getSinglePin(std::size_t pin);
         std::size_t getNbrPin();
         std::string getName();
+        void setName(std::string name);
         void setSinglePin(std::size_t pin, nts::Tristate state);
         void setAllPin(nts::Tristate state);
     protected:
         std::vector<nts::Tristate> _Pin;
         std::size_t _NbrPin;
+        std::string _Comp;
         std::string _Name;
     private:
 };

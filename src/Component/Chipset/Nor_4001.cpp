@@ -7,7 +7,7 @@
 
 #include "Nor_4001.hpp"
 
-Nor_4001::Nor_4001(std::string name) : Component(name, 14)
+Nor_4001::Nor_4001(std::string name) : Component("4001", 14)
 {
 }
 

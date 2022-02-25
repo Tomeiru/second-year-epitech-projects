@@ -7,7 +7,7 @@
 
 #include "Johnson_4017.hpp"
 
-Johnson_4017::Johnson_4017(std::string name) : Component(name, 15)
+Johnson_4017::Johnson_4017(std::string name) : Component("4017", 15)
 {
 }
 

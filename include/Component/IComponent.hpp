@@ -30,6 +30,7 @@ namespace nts
             virtual std::vector<nts::Tristate> getPinVector() = 0;
             virtual nts::Tristate getSinglePin(std::size_t pin) = 0;
             virtual std::size_t getNbrPin() = 0;
+            virtual void setName(std::string name) = 0;
             virtual void setSinglePin(std::size_t pin, nts::Tristate state) = 0;
             virtual void setAllPin(nts::Tristate state) = 0;
     };

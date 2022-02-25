@@ -7,7 +7,7 @@
 
 #include "Output.hpp"
 
-Output::Output(std::string name) : Component(name, 1)
+Output::Output(std::string name) : Component("Output", 1)
 {
 }
 

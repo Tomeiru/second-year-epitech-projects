@@ -41,7 +41,5 @@ std::unique_ptr<nts::IComponent> Factory::create(std::string &name)
 {
     std::map<std::string, std::function<std::unique_ptr<nts::IComponent> ()>>::iterator comp = factory_list.find(name);
 
-    if (comp == factory_list.end())
-        throw NanoError::NanoError("Component not found");
     return (comp->second)();
 }

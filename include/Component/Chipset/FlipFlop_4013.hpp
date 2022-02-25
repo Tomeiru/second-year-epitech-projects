@@ -14,7 +14,7 @@ class FlipFlop_4013 : public Component{
     public:
         FlipFlop_4013(std::string name);
         ~FlipFlop_4013();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };
