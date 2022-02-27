@@ -3,28 +3,25 @@ SECTION .text
 GLOBAL memmove
 
 memmove:
-        XOR RAX, RAX
         XOR R9, R9
-        XOR R10B, R10B
+        XOR R10, R10
 
 loop:
         CMP R9, RDX
-        JE intermediate
-        MOV AL, BYTE[RSI + R9]
-        PUSH RAX
+        JE second_loop
+        MOV R11B, BYTE[RSI + R9]
+        MOV BYTE[RBP + R9], R11B
         ADD R9, 1
         JMP loop
 
-intermediate:
-        SUB R9, 1
-
 second_loop:
-        CMP R9, -1
+        CMP R10, RDX
         JE end
-        POP RAX
-        MOV BYTE[RDI + R9], AL
-        SUB R9, 1
+        MOV R11B, BYTE[RBP + R10]
+        MOV BYTE[RDI + R10], R11B
+        ADD R10, 1
         JMP second_loop
 
 end:
+        MOV RAX, RDI
         RET
