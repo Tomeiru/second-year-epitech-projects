@@ -91,6 +91,7 @@ std::string NanoParser::getComponentNameFromLine(size_t index)
     std::string ret = _fileContent[index];
 
     ret.erase(0, ret.find_first_of(" \t") + 1);
+    ret.erase(0, ret.find_first_not_of(" \t"));
     return (ret);
 }
 
@@ -114,16 +115,18 @@ void NanoParser::checkChipsetLine(size_t index)
     std::string componentType;
     std::string componentName;
 
-    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9]+)([ \t])([a-z0-9_]+)"))) {
+    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9]+)([ \t]+)([a-z0-9_]+)"))) {
         errorStr = "Wrong format for the creation of a chipset in line ";
         errorStr.append(std::to_string(index + 1));
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
+    std::cout << "Sheeeesh" << index << std::endl;
     componentType = getComponentTypeFromLine(index);
     checkComponentType(componentType, index);
     componentName = getComponentNameFromLine(index);
     checkComponentName(componentName, index);
+    std::cout << "\"" <<componentType << "\" | \"" << componentName << "\"" << std::endl;
     _chipsets.push_back(std::make_tuple(componentType, componentName));
 }
 
@@ -240,12 +243,13 @@ void NanoParser::checkLinksLine(size_t index)
     std::string secondName;
     size_t secondValue;
 
-    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9_]+)([:])([0-9]+)([ \t])([a-z0-9_]+)([:])([0-9]+)"))) {
+    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9_]+)([:])([0-9]+)([ \t]+)([a-z0-9_]+)([:])([0-9]+)"))) {
         errorStr = "Wrong format for the creation of a links in line ";
         errorStr.append(std::to_string(index + 2));
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
+    std::cout << "Sheeeeshdeeeeh" << index << std::endl;
     firstName = getNameFromNameValue(getComponentTypeFromLine(index));
     checkLinksName(firstName, index, true);
     firstValue = std::stol(getValueFromNameValue(getComponentTypeFromLine(index)));
@@ -254,6 +258,7 @@ void NanoParser::checkLinksLine(size_t index)
     checkLinksName(secondName, index, false);
     secondValue = std::stol(getValueFromNameValue(getComponentNameFromLine(index)));
     checkLinksValue(secondName, secondValue, index, false);
+    std::cout << "\"" << firstName << "\":\"" << firstValue << "\" | \"" << secondName << "\":\"" << secondValue << "\"" << std::endl;
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
 }
 

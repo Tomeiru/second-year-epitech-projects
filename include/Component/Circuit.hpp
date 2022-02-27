@@ -17,7 +17,7 @@ class Circuit {
         void initFactory(std::vector<std::tuple<std::string, std::string>> chipsets);
 
     protected:
-        std::map<std::string, std::unique_ptr<nts::IComponent>> _Factory;
+        std::map<std::string, std::unique_ptr<nts::IComponent>> _Components;
     private:
 };
 

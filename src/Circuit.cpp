@@ -20,8 +20,8 @@ void Circuit::initFactory(std::vector<std::tuple<std::string, std::string>> chip
     Factory factory;
 
     for (size_t i = 0; i < chipsets.size(); i++) {
-        _Factory.emplace(std::get<1>(chipsets[i]), factory.create(std::get<0>(chipsets[i])));
-        _Factory[std::get<1>(chipsets[i])].get()->setName(std::get<1>(chipsets[i]));
-        std::cout << _Factory[std::get<1>(chipsets[i])].get()->getName() << " || " << _Factory[std::get<1>(chipsets[i])].get()->getNbrPin() << std::endl;
+        _Components.emplace(std::get<1>(chipsets[i]), factory.create(std::get<0>(chipsets[i])));
+        _Components[std::get<1>(chipsets[i])].get()->setName(std::get<1>(chipsets[i]));
+        std::cout << _Components[std::get<1>(chipsets[i])].get()->getName() << " || " << _Components[std::get<1>(chipsets[i])].get()->getNbrPin() << std::endl;
     }
 }
