@@ -18,16 +18,10 @@ int main(int ac, char **av)
         Parser.argumentCheck(ac);
         Parser.openFile(av[1]);
         Parser.checkFileContent();
-    }
-    catch (NanoError const &error) {
-        std::cerr << error.what() << std::endl;
-        return (84);
-    }
-    try {
         Circuit.initCircuit(Parser.getChipsetVec());
         Circuit.initLinks(Parser.getLinksVec());
     }
-    catch (std::exception const &error) {
+    catch (NanoError const &error) {
         std::cerr << error.what() << std::endl;
         return (84);
     }
