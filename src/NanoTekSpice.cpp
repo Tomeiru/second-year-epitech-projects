@@ -24,7 +24,8 @@ int main(int ac, char **av)
         return (84);
     }
     try {
-        Circuit.initFactory(Parser.getChipsetVec());
+        Circuit.initCircuit(Parser.getChipsetVec());
+        Circuit.initLinks(Parser.getLinksVec());
     }
     catch (std::exception const &error) {
         std::cerr << error.what() << std::endl;

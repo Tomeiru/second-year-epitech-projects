@@ -35,13 +35,14 @@ void NanoParser::openFile(char *filepath)
 
     if (!content.is_open())
         throw NanoError("Cannot open file passed as parameter");
-    while (std::getline(content, line))
-        if (line != "" && line[line.find_first_not_of(delims)] != '#') {
+    while (std::getline(content, line)) {
+        if (line != "" && line.find_last_not_of(delims) != std::string::npos && line[line.find_first_not_of(delims)] != '#') {
             if (line.find('#') != std::string::npos)
                 line.resize(line.find_first_of('#'));
             line.resize(line.find_last_not_of(delims) + 1);
             _fileContent.push_back(line);
         }
+    }
 }
 
 std::vector<std::string> NanoParser::getFileContent(void)
@@ -121,12 +122,10 @@ void NanoParser::checkChipsetLine(size_t index)
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
-    std::cout << "Sheeeesh" << index << std::endl;
     componentType = getComponentTypeFromLine(index);
     checkComponentType(componentType, index);
     componentName = getComponentNameFromLine(index);
     checkComponentName(componentName, index);
-    std::cout << "\"" <<componentType << "\" | \"" << componentName << "\"" << std::endl;
     _chipsets.push_back(std::make_tuple(componentType, componentName));
 }
 
@@ -249,7 +248,6 @@ void NanoParser::checkLinksLine(size_t index)
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
-    std::cout << "Sheeeeshdeeeeh" << index << std::endl;
     firstName = getNameFromNameValue(getComponentTypeFromLine(index));
     checkLinksName(firstName, index, true);
     firstValue = std::stol(getValueFromNameValue(getComponentTypeFromLine(index)));
@@ -258,13 +256,7 @@ void NanoParser::checkLinksLine(size_t index)
     checkLinksName(secondName, index, false);
     secondValue = std::stol(getValueFromNameValue(getComponentNameFromLine(index)));
     checkLinksValue(secondName, secondValue, index, false);
-    std::cout << "\"" << firstName << "\":\"" << firstValue << "\" | \"" << secondName << "\":\"" << secondValue << "\"" << std::endl;
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
-}
-
-std::vector<std::tuple<std::string, std::string>> NanoParser::getChipsetVec(void)
-{
-    return (_chipsets);
 }
 
 void NanoParser::checkLinksField(void)
@@ -277,11 +269,19 @@ void NanoParser::checkLinksField(void)
         checkLinksLine(i);
 }
 
-
-
 void NanoParser::checkFileContent(void)
 {
     checkEmptyFile();
     checkChipsetField();
     checkLinksField();
+}
+
+std::vector<std::tuple<std::string, std::string>> NanoParser::getChipsetVec(void)
+{
+    return (_chipsets);
+}
+
+std::vector<std::tuple<std::string, size_t, std::string, size_t>> NanoParser::getLinksVec(void)
+{
+    return (_links);
 }
