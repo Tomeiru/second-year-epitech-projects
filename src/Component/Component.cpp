@@ -9,8 +9,7 @@
 
 Component::Component(std::string Name, std::size_t NbrPin) : _Comp(Name), _Pin(NbrPin, nts::UNDEFINED), _NbrPin(NbrPin)
 {
-    setSinglePin(NbrPin/2, nts::Tristate::IGNORE);
-    setSinglePin(NbrPin, nts::Tristate::IGNORE);
+    setAllPin(nts::UNDEFINED);
 }
 
 Component::~Component()
@@ -39,7 +38,9 @@ void Component::setLink(std::size_t pin, nts::IComponent &other, std::size_t oth
 
 void Component::dump() const
 {
-    return;
+    std::cout << "Name: " << _Name << std::endl;
+    std::cout << "Type of Component: " << _Comp << std::endl;
+    std::cout << "Total number of pin: " << _NbrPin << std::endl;
 }
 
 std::vector<nts::Tristate> Component::getPinVector()
@@ -49,9 +50,7 @@ std::vector<nts::Tristate> Component::getPinVector()
 
 nts::Tristate Component::getSinglePin(std::size_t pin)
 {
-    if (pin == 0 || pin > _NbrPin)
-        return (nts::UNDEFINED);
-    return (_Pin[pin - 1]);
+    return (_Pin[pin]);
 }
 
 std::size_t Component::getNbrPin()
@@ -66,15 +65,20 @@ std::string Component::getName()
 
 void Component::setSinglePin(std::size_t pin, nts::Tristate state)
 {
-    if (pin == 0 || pin > _NbrPin)
-        return;
-    _Pin[pin - 1] = state;
+    _Pin[pin] = state;
 }
 
 void Component::setAllPin(nts::Tristate state)
 {
-    for (size_t i = 0; i < _NbrPin; i++) {
-        _Pin[i] = state;
+    if (getNbrPin() != 1) {
+        for (size_t i = 0; i < _NbrPin; i++)
+            _Pin[i] = state;
+        setSinglePin(_NbrPin/2 - 1, nts::Tristate::IGNORE);
+        setSinglePin(_NbrPin - 1, nts::Tristate::IGNORE);
+        return;
+    }
+    else {
+        setSinglePin(0, state);
     }
 }
 

@@ -12,14 +12,11 @@ int main(int ac, char **av)
 {
     NanoParser Parser;
     NanoLoop Loop;
-    Circuit Circuit;
 
     try {
         Parser.argumentCheck(ac);
         Parser.openFile(av[1]);
         Parser.checkFileContent();
-        Circuit.initCircuit(Parser.getChipsetVec());
-        Circuit.initLinks(Parser.getLinksVec());
     }
     catch (NanoError const &error) {
         std::cerr << error.what() << std::endl;

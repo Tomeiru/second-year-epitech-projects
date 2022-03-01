@@ -62,14 +62,6 @@ void NanoParser::checkEmptyFile(void)
         throw NanoError("File passed as parameter is empty");
 }
 
-std::string NanoParser::getComponentTypeFromLine(size_t index)
-{
-    std::string ret = _fileContent[index];
-
-    ret.resize(ret.find_first_of(" \t"));
-    return (ret);
-}
-
 void NanoParser::checkComponentType(std::string componentType, size_t index)
 {
     std::string errorStr;
@@ -85,15 +77,6 @@ void NanoParser::checkComponentType(std::string componentType, size_t index)
     errorStr.append(std::to_string(index + 1));
     errorStr.append(" (excluding comments and empty lines) doesn't exist");
     throw NanoError(errorStr);
-}
-
-std::string NanoParser::getComponentNameFromLine(size_t index)
-{
-    std::string ret = _fileContent[index];
-
-    ret.erase(0, ret.find_first_of(" \t") + 1);
-    ret.erase(0, ret.find_first_not_of(" \t"));
-    return (ret);
 }
 
 void NanoParser::checkComponentName(std::string componentName, size_t index)
@@ -113,18 +96,19 @@ void NanoParser::checkComponentName(std::string componentName, size_t index)
 void NanoParser::checkChipsetLine(size_t index)
 {
     std::string errorStr;
+    std::smatch match;
     std::string componentType;
     std::string componentName;
 
-    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9]+)([ \t]+)([a-z0-9_]+)"))) {
+    if (!std::regex_search(_fileContent[index], match, std::regex("([a-z0-9]+)([ \t]+)([a-z0-9_]+)"))) {
         errorStr = "Wrong format for the creation of a chipset in line ";
         errorStr.append(std::to_string(index + 1));
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
-    componentType = getComponentTypeFromLine(index);
+    componentType = match[1].str();
     checkComponentType(componentType, index);
-    componentName = getComponentNameFromLine(index);
+    componentName = match[3].str();
     checkComponentName(componentName, index);
     _chipsets.push_back(std::make_tuple(componentType, componentName));
 }
@@ -137,22 +121,6 @@ void NanoParser::checkChipsetField(void)
         throw NanoError("File passed as parameter doesn't contain a \".chipsets:\" field or it isn't the first thing in the file");
     for (size_t i = 1; i < _fileContent.size() && _fileContent[i] != ".links:"; i++)
         checkChipsetLine(i);
-}
-
-std::string NanoParser::getNameFromNameValue(std::string NameValue)
-{
-    std::string ret = NameValue;
-
-    ret.resize(ret.find_first_of(":"));
-    return (ret);
-}
-
-std::string NanoParser::getValueFromNameValue(std::string NameValue)
-{
-    std::string ret = NameValue;
-
-    ret.erase(0, ret.find_first_of(":") + 1);
-    return (ret);
 }
 
 void NanoParser::checkLinksName(std::string name, size_t index, bool first)
@@ -241,20 +209,21 @@ void NanoParser::checkLinksLine(size_t index)
     size_t firstValue;
     std::string secondName;
     size_t secondValue;
+    std::smatch match;
 
-    if (!std::regex_match(_fileContent[index], std::regex("([a-z0-9_]+)([:])([0-9]+)([ \t]+)([a-z0-9_]+)([:])([0-9]+)"))) {
+    if (!std::regex_search(_fileContent[index], match, std::regex("([a-z0-9_]+)([:])([0-9]+)([ \t]+)([a-z0-9_]+)([:])([0-9]+)"))) {
         errorStr = "Wrong format for the creation of a links in line ";
         errorStr.append(std::to_string(index + 2));
         errorStr.append(" (excluding comments and empty lines)");
         throw NanoError(errorStr);
     }
-    firstName = getNameFromNameValue(getComponentTypeFromLine(index));
+    firstName = match[1].str();
     checkLinksName(firstName, index, true);
-    firstValue = std::stol(getValueFromNameValue(getComponentTypeFromLine(index)));
+    firstValue = std::stol(match[3].str());
     checkLinksValue(firstName, firstValue, index, true);
-    secondName = getNameFromNameValue(getComponentNameFromLine(index));
+    secondName = match[5].str();
     checkLinksName(secondName, index, false);
-    secondValue = std::stol(getValueFromNameValue(getComponentNameFromLine(index)));
+    secondValue = std::stol(match[7].str());
     checkLinksValue(secondName, secondValue, index, false);
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
 }

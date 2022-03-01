@@ -22,14 +22,10 @@ class NanoParser {
         void checkEmptyFile(void);
         void checkChipsetField(void);
         void checkChipsetLine(size_t index);
-        std::string getComponentTypeFromLine(size_t index);
         void checkComponentType(std::string componentType, size_t index);
-        std::string getComponentNameFromLine(size_t index);
         void checkComponentName(std::string componentType, size_t index);
         void checkLinksField(void);
         void checkLinksLine(size_t index);
-        std::string getNameFromNameValue(std::string NameValue);
-        std::string getValueFromNameValue(std::string NameValue);
         void checkLinksName(std::string name, size_t index, bool first);
         void checkLinksValue(std::string name, size_t value, size_t index, bool first);
         std::vector<std::tuple<std::string, size_t>> generateComponentPin(void);

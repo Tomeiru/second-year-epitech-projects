@@ -7,7 +7,6 @@
 
 SRC =	src/AnalogicGate.cpp	\
 		src/Circuit.cpp	\
-		src/CommandFunction.cpp	\
 		src/NanoError.cpp	\
 		src/NanoLoop.cpp	\
 		src/NanoParser.cpp	\
