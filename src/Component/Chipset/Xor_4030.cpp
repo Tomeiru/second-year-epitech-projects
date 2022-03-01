@@ -19,6 +19,7 @@ void Xor_4030::simulate(std::size_t tick)
 {
     AnalogicGate gate = AnalogicGate();
 
+    UNUSED(tick);
     setSinglePin(3, gate.xor_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.xor_gate(_Pin[4], _Pin[5]));
     setSinglePin(10, gate.xor_gate(_Pin[7], _Pin[8]));

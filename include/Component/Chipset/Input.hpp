@@ -14,7 +14,7 @@ class Input : public Component {
     public:
         Input(std::string name);
         ~Input();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

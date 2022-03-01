@@ -14,7 +14,7 @@ class Register_4094 : public Component {
     public:
         Register_4094(std::string name);
         ~Register_4094();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

@@ -14,7 +14,7 @@ class Counter_4040 : public Component{
     public:
         Counter_4040(std::string name);
         ~Counter_4040();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

@@ -14,6 +14,7 @@ class True : public Component {
     public:
         True(std::string name);
         ~True();
+        void simulate(std::size_t tick);
 
     protected:
     private:

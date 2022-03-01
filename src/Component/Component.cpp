@@ -47,7 +47,7 @@ std::vector<nts::Tristate> Component::getPinVector()
     return (_Pin);
 }
 
-nts::Tristate Component::getSinglePin(std::size_t pin)
+nts::Tristate Component::compute(std::size_t pin)
 {
     if (pin == 0 || pin > _NbrPin)
         return (nts::UNDEFINED);

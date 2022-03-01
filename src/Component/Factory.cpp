@@ -37,7 +37,7 @@ std::map<std::string, std::function<std::unique_ptr<nts::IComponent>(void)>> Fac
     std::make_pair("4081", []() {return std::make_unique<Xor_4030>();})
 };
 
-std::unique_ptr<nts::IComponent> Factory::create(std::string &name)
+std::unique_ptr<nts::IComponent> Factory::createComponent(std::string &name)
 {
     std::map<std::string, std::function<std::unique_ptr<nts::IComponent> ()>>::iterator comp = factory_list.find(name);
 

@@ -19,6 +19,7 @@ void And_4081::simulate(std::size_t tick)
 {
     AnalogicGate gate = AnalogicGate();
 
+    UNUSED(tick);
     setSinglePin(3, gate.and_gate(_Pin[0], _Pin[1]));
     setSinglePin(4, gate.and_gate(_Pin[4], _Pin[5]));
     setSinglePin(10, gate.and_gate(_Pin[7], _Pin[8]));

@@ -15,3 +15,8 @@ Output::~Output()
 {
 }
 
+void Output::simulate(std::size_t tick)
+{
+    UNUSED(tick);
+    return;
+}

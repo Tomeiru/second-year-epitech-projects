@@ -14,6 +14,7 @@ class False : public Component{
     public:
         False(std::string name);
         ~False();
+        void simulate(std::size_t tick);
 
     protected:
     private:

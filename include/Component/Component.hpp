@@ -19,7 +19,6 @@ class Component : public nts::IComponent {
         void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin);
         void dump() const;
         std::vector<nts::Tristate> getPinVector();
-        nts::Tristate getSinglePin(std::size_t pin);
         std::size_t getNbrPin();
         std::string getName();
         void setName(std::string name);

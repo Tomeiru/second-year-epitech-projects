@@ -26,6 +26,7 @@ void Adder_4008::simulate(std::size_t tick)
 {
     AnalogicGate gate = AnalogicGate();
 
+    UNUSED(tick);
     nts::Tristate next_A4 = gate.or_gate(_Pin[0], _Pin[14]);
     nts::Tristate next_B4 = gate.and_gate(_Pin[14], _Pin[0]);
     nts::Tristate next_A3 = gate.or_gate(_Pin[2], _Pin[1]);

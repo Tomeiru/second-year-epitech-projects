@@ -14,7 +14,7 @@ class Johnson_4017 : public Component {
     public:
         Johnson_4017(std::string name);
         ~Johnson_4017();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };
