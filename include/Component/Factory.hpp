@@ -29,6 +29,7 @@
 #include "Selector_4512.hpp"
 #include "Xor_4030.hpp"
 #include "NanoError.hpp"
+#include "Logger.hpp"
 
 class Factory {
     public:
