@@ -32,7 +32,8 @@ SRC =	src/AnalogicGate.cpp	\
 		src/Component/Chipset/ROM_2716.cpp	\
 		src/Component/Chipset/Selector_4512.cpp	\
 		src/Component/Chipset/True.cpp	\
-		src/Component/Chipset/Xor_4030.cpp
+		src/Component/Chipset/Xor_4030.cpp 		\
+		src/Component/Chipset/Logger.cpp
 
 NAME =	nanotekspice
 

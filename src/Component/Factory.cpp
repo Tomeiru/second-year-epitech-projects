@@ -35,7 +35,8 @@ std::map<std::string, std::function<std::unique_ptr<nts::IComponent>(void)>> Fac
     std::make_pair("4514", []() {return std::make_unique<Register_4094>();}),
     std::make_pair("4514", []() {return std::make_unique<ROM_2716>();}),
     std::make_pair("4008", []() {return std::make_unique<Selector_4512>();}),
-    std::make_pair("4081", []() {return std::make_unique<Xor_4030>();})
+    std::make_pair("4081", []() {return std::make_unique<Xor_4030>();}),
+    std::make_pair("logger", []() {return std::make_unique<Logger>();})
 };
 
 std::unique_ptr<nts::IComponent> Factory::createComponent(std::string &name)
