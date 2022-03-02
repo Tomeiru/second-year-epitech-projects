@@ -68,7 +68,7 @@ void NanoParser::checkComponentType(std::string componentType, size_t index)
     std::vector <std::string> componentList = {
         "input", "clock", "true", "false", "output", "4001", "4011", "4030",
         "4071", "4081", "4069", "4008", "4013", "4017", "4040", "4094", "4512",
-        "4514", "4801", "2716", "logger"
+        "4514", "logger"
     };
     for (size_t i = 0; i < componentList.size(); i++)
         if (componentList[i] == componentType)
@@ -161,8 +161,6 @@ std::vector<std::tuple<std::string, size_t>> NanoParser::generateComponentPin(vo
     ret.push_back(std::make_tuple("4094", 16));
     ret.push_back(std::make_tuple("4512", 16));
     ret.push_back(std::make_tuple("4514", 24));
-    ret.push_back(std::make_tuple("4801", 24));
-    ret.push_back(std::make_tuple("2716", 24));
     ret.push_back(std::make_tuple("logger", 10));
     return (ret);
 }
@@ -202,6 +200,14 @@ void NanoParser::checkLinksValue(std::string name, size_t value, size_t index, b
     }
 }
 
+bool NanoParser::checkLinksOutputName(std::string name)
+{
+    for (size_t i = 0; i < _chipsets.size(); i++)
+        if (name == std::get<1>(_chipsets[i]) && std::get<0>(_chipsets[i]) == "output")
+            return (true);
+    return (false);
+}
+
 void NanoParser::checkLinksLine(size_t index)
 {
     std::string errorStr;
@@ -226,6 +232,11 @@ void NanoParser::checkLinksLine(size_t index)
     secondValue = std::stol(match[7].str());
     checkLinksValue(secondName, secondValue, index, false);
     _links.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
+    if (checkLinksOutputName(firstName) == true)
+        _outputFirstLinks.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
+    if (checkLinksOutputName(secondName) == true)
+        _outputSecondLinks.push_back(std::make_tuple(firstName, firstValue, secondName, secondValue));
+
 }
 
 void NanoParser::checkLinksField(void)
@@ -253,4 +264,14 @@ std::vector<std::tuple<std::string, std::string>> NanoParser::getChipsetVec(void
 std::vector<std::tuple<std::string, size_t, std::string, size_t>> NanoParser::getLinksVec(void)
 {
     return (_links);
+}
+
+std::vector<std::tuple<std::string, size_t, std::string, size_t>> NanoParser::getOutputFirstLinksVec(void)
+{
+    return (_outputFirstLinks);
+}
+
+std::vector<std::tuple<std::string, size_t, std::string, size_t>> NanoParser::getOutputSecondLinksVec(void)
+{
+    return (_outputSecondLinks);
 }

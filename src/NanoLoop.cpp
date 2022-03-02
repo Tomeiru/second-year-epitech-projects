@@ -19,7 +19,7 @@ void NanoLoop::assignData(NanoParser &data)
 {
     _data = data;
     _circuit.initCircuit(_data.getChipsetVec());
-    _circuit.initLinks(_data.getLinksVec());
+    _circuit.initLinks(_data.getLinksVec(), _data.getOutputFirstLinksVec(), _data.getOutputSecondLinksVec());
     _tick = 0;
 }
 
@@ -167,6 +167,29 @@ void NanoLoop::clearQueue(void)
     }
 }
 
+nts::Tristate NanoLoop::getStatefromLink(std::string name, size_t pin)
+{
+    auto component = _circuit.getComponents().find(name);
+
+    if (component->second->getComp() == "Input" || component->second->getComp() == "Clock" || component->second->getComp() == "True" || component->second->getComp() == "False" || component->second->getComp() == "Output")
+        return (component->second->compute(0));
+    return (nts::UNDEFINED);
+}
+
+void NanoLoop::simulateSecondOutput(std::tuple<std::string, size_t, std::string, size_t> link)
+{
+    nts::Tristate state = getStatefromLink(std::get<0>(link), std::get<1>(link));
+    auto it = _circuit.getComponents().find(std::get<2>(link));
+    it->second->setSinglePin(0, state);
+}
+
+void NanoLoop::simulateFirstOutput(std::tuple<std::string, size_t, std::string, size_t> link)
+{
+    nts::Tristate state = getStatefromLink(std::get<2>(link), std::get<3>(link));
+    auto it = _circuit.getComponents().find(std::get<0>(link));
+    it->second->setSinglePin(0, state);
+}
+
 void NanoLoop::simulateFunc(void)
 {
     std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
@@ -177,6 +200,12 @@ void NanoLoop::simulateFunc(void)
             auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
             it->second->simulate(_tick);
         }
+    }
+    for (size_t i = 0; i < _data.getOutputFirstLinksVec().size(); i++) {
+        simulateFirstOutput(_data.getOutputFirstLinksVec()[i]);
+    }
+    for (size_t i = 0; i < _data.getOutputSecondLinksVec().size(); i++) {
+        simulateSecondOutput(_data.getOutputSecondLinksVec()[i]);
     }
     _tick += 1;
 }

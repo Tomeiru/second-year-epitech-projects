@@ -33,6 +33,9 @@ class NanoLoop {
         nts::Tristate inputArgToTristate(std::string inputValue);
         void addToQueue(std::string command);
         void clearQueue(void);
+        void simulateFirstOutput(std::tuple<std::string, size_t, std::string, size_t>);
+        void simulateSecondOutput(std::tuple<std::string, size_t, std::string, size_t>);
+        nts::Tristate getStatefromLink(std::string name, size_t pin);
 
     protected:
         NanoParser _data;

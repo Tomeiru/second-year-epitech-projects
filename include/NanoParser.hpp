@@ -31,10 +31,15 @@ class NanoParser {
         std::vector<std::tuple<std::string, size_t>> generateComponentPin(void);
         std::vector<std::tuple<std::string, std::string>> getChipsetVec(void);
         std::vector<std::tuple<std::string, size_t, std::string, size_t>> getLinksVec(void);
+        std::vector<std::tuple<std::string, size_t, std::string, size_t>> getOutputFirstLinksVec(void);
+        std::vector<std::tuple<std::string, size_t, std::string, size_t>> getOutputSecondLinksVec(void);
+        bool checkLinksOutputName(std::string);
     protected:
         std::vector<std::string> _fileContent;
         std::vector<std::tuple<std::string, std::string>> _chipsets;
         std::vector<std::tuple<std::string, size_t, std::string, size_t>> _links;
+        std::vector<std::tuple<std::string, size_t, std::string, size_t>> _outputFirstLinks;
+        std::vector<std::tuple<std::string, size_t, std::string, size_t>> _outputSecondLinks;
     private:
 };
 
