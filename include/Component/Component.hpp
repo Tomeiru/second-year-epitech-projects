@@ -21,6 +21,7 @@ class Component : public nts::IComponent {
         std::vector<nts::Tristate> getPinVector();
         std::size_t getNbrPin();
         std::string getName();
+        std::string getComp();
         void setName(std::string name);
         void setSinglePin(std::size_t pin, nts::Tristate state);
         void setAllPin(nts::Tristate state);

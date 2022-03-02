@@ -57,6 +57,11 @@ std::string Component::getName()
     return (_Name);
 }
 
+std::string Component::getComp()
+{
+    return (_Comp);
+}
+
 void Component::setSinglePin(std::size_t pin, nts::Tristate state)
 {
     _Pin[pin] = state;

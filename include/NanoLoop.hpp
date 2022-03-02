@@ -31,11 +31,14 @@ class NanoLoop {
         void inputFunc(std::string command);
         void printState(nts::Tristate state);
         nts::Tristate inputArgToTristate(std::string inputValue);
+        void addToQueue(std::string command);
+        void clearQueue(void);
 
     protected:
         NanoParser _data;
         Circuit _circuit;
         size_t _tick;
+        std::vector<std::string> _queue;
     private:
 };
 

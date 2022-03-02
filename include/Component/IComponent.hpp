@@ -19,6 +19,8 @@ namespace nts
         UNDEFINED = (-true),
         TRUE = true,
         FALSE = false,
+        NEWTRUE = 84,
+        NEWFALSE = 168
     };
 
     class IComponent {
@@ -30,6 +32,7 @@ namespace nts
             virtual void dump() const = 0;
             virtual std::vector<nts::Tristate> getPinVector() = 0;
             virtual std::size_t getNbrPin() = 0;
+            virtual std::string getComp() = 0;
             virtual void setName(std::string name) = 0;
             virtual void setSinglePin(std::size_t pin, nts::Tristate state) = 0;
             virtual void setAllPin(nts::Tristate state) = 0;

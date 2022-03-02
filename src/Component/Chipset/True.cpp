@@ -9,14 +9,9 @@
 
 True::True() : Component("True", 1)
 {
+    setSinglePin(0, nts::TRUE);
 }
 
 True::~True()
 {
-}
-
-void True::simulate(std::size_t tick)
-{
-    UNUSED(tick);
-    setSinglePin(0, nts::Tristate::TRUE);
 }

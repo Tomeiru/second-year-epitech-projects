@@ -19,6 +19,7 @@ void Nor_4001::simulate(std::size_t tick)
 {
     AnalogicGate gate;
 
+    UNUSED(tick);
     setSinglePin(2, gate.nor_gate(_Pin[0], _Pin[1]));
     setSinglePin(3, gate.nor_gate(_Pin[4], _Pin[5]));
     setSinglePin(9, gate.nor_gate(_Pin[7], _Pin[8]));

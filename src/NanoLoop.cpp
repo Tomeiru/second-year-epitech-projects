@@ -59,7 +59,7 @@ void NanoLoop::execCommand(std::string command)
         return (loopFunc());
     if (command == "dump")
         return (dumpFunc());
-    return (inputFunc(command));
+    return (addToQueue(command));
 }
 
 void NanoLoop::start(void)
@@ -107,12 +107,18 @@ void NanoLoop::exitFunc(void)
 
 void NanoLoop::printState(nts::Tristate state)
 {
-    if (state == nts::UNDEFINED)
+    if (state == nts::UNDEFINED) {
         std::cout << "U";
-    if (state == nts::TRUE)
-        std::cout << "1";
-    if (state == nts::FALSE)
+        return;
+    }
+    if (state == nts::NEWFALSE || state == nts::FALSE) {
         std::cout << "0";
+        return;
+    }
+    if (state == nts::NEWTRUE || state == nts::TRUE) {
+        std::cout << "1";
+        return;
+    }
 }
 
 void NanoLoop::displayInput(void)
@@ -153,10 +159,26 @@ void NanoLoop::displayFunc(void)
     displayOutput();
 }
 
+void NanoLoop::clearQueue(void)
+{
+    while (_queue.empty() != true) {
+        inputFunc(_queue[_queue.size() - 1]);
+        _queue.pop_back();
+    }
+}
+
 void NanoLoop::simulateFunc(void)
 {
+    std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
+
+    clearQueue();
+    for (size_t i = 0; i < chipsets.size(); i++) {
+        if (std::get<0>(chipsets[i]) == "clock") {
+            auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
+            it->second->simulate(_tick);
+        }
+    }
     _tick += 1;
-    std::cout << "simulate" << std::endl;
 }
 
 void NanoLoop::loopFunc(void)
@@ -195,5 +217,16 @@ void NanoLoop::inputFunc(std::string command)
     std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
 
     auto it = _circuit.getComponents().find(match[1].str());
-    it->second->setSinglePin(0, inputArgToTristate(match[3]));
+    if (it->second->getComp() != "Clock")
+        return (it->second->setSinglePin(0, inputArgToTristate(match[3])));
+    if (inputArgToTristate(match[3]) == nts::TRUE)
+        return (it->second->setSinglePin(0, nts::NEWTRUE));
+    if (inputArgToTristate(match[3]) == nts::FALSE)
+        return (it->second->setSinglePin(0, nts::NEWFALSE));
+    return (it->second->setSinglePin(0, nts::UNDEFINED));
+}
+
+void NanoLoop::addToQueue(std::string command)
+{
+    _queue.push_back(command);
 }
