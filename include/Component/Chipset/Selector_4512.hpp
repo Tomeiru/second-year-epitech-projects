@@ -14,7 +14,7 @@ class Selector_4512 : public Component{
     public:
         Selector_4512();
         ~Selector_4512();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

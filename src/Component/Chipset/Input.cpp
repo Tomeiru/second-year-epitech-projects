@@ -14,3 +14,9 @@ Input::Input() : Component("Input", 1)
 Input::~Input()
 {
 }
+
+void Input::simulate(std::size_t tick)
+{
+    UNUSED(tick);
+    return;
+}

@@ -22,12 +22,6 @@ void Component::simulate(std::size_t tick)
     return;
 }
 
-nts::Tristate Component::compute(std::size_t pin)
-{
-    UNUSED(pin);
-    return (nts::UNDEFINED);
-}
-
 void Component::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
     UNUSED(pin);
@@ -48,7 +42,7 @@ std::vector<nts::Tristate> Component::getPinVector()
     return (_Pin);
 }
 
-nts::Tristate Component::getSinglePin(std::size_t pin)
+nts::Tristate Component::compute(std::size_t pin)
 {
     return (_Pin[pin]);
 }

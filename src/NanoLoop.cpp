@@ -124,7 +124,7 @@ void NanoLoop::displayInput(void)
         if (std::get<0>(chipsets[i]) == "input" || std::get<0>(chipsets[i]) == "clock") {
             auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
             std::cout << "  " << it->second->getName() << ": ";
-            printState(it->second->getSinglePin(0));
+            printState(it->second->compute(0));
             std::cout << std::endl;
         }
     }
@@ -140,7 +140,7 @@ void NanoLoop::displayOutput(void)
         if (std::get<0>(chipsets[i]) == "output") {
             auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
             std::cout << "  " << it->second->getName() << ": ";
-            printState(it->second->getSinglePin(0));
+            printState(it->second->compute(0));
             std::cout << std::endl;
         }
     }

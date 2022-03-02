@@ -35,7 +35,7 @@ class Factory {
         Factory();
         ~Factory();
         static std::map<std::string, std::function<std::unique_ptr<nts::IComponent>(void)>> factory_list;
-        std::unique_ptr<nts::IComponent> create(std::string &comp);
+        std::unique_ptr<nts::IComponent> createComponent(std::string &comp);
     protected:
     private:
 };

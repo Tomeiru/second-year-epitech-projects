@@ -14,3 +14,9 @@ False::False() : Component("False", 1)
 False::~False()
 {
 }
+
+void False::simulate(std::size_t tick)
+{
+    UNUSED(tick);
+    setSinglePin(0, nts::Tristate::FALSE);
+}

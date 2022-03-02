@@ -14,6 +14,7 @@ class Output : public Component {
     public:
         Output();
         ~Output();
+        void simulate(std::size_t tick);
 
     protected:
     private:

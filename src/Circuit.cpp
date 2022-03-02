@@ -31,7 +31,7 @@ void Circuit::initCircuit(std::vector<std::tuple<std::string, std::string>> chip
     Factory factory;
 
     for (size_t i = 0; i < chipsets.size(); i++) {
-        _Components.emplace(std::get<1>(chipsets[i]), factory.create(std::get<0>(chipsets[i])));
+        _Components.emplace(std::get<1>(chipsets[i]), factory.createComponent(std::get<0>(chipsets[i])));
         _Components[std::get<1>(chipsets[i])].get()->setName(std::get<1>(chipsets[i]));
     }
 }

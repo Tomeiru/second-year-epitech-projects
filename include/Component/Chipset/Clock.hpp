@@ -14,6 +14,7 @@ class Clock : public Component{
     public:
         Clock();
         ~Clock();
+        void simulate(std::size_t tick);
 
     protected:
     private:

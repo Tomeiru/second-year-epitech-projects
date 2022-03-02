@@ -27,6 +27,7 @@ void FlipFlop_4013::simulate(std::size_t tick)
 {
     AnalogicGate gate;
 
+    UNUSED(tick);
     if (_Pin[3] == nts::Tristate::TRUE && _Pin[5] == nts::Tristate::TRUE) {
         setSinglePin(0, nts::Tristate::TRUE);
         setSinglePin(1, nts::Tristate::TRUE);
@@ -34,4 +35,30 @@ void FlipFlop_4013::simulate(std::size_t tick)
         setSinglePin(1, nts::Tristate::TRUE);
     else if (_Pin[5] == nts::Tristate::TRUE)
         setSinglePin(0, nts::Tristate::TRUE);
+    else if (_Pin[2] == nts::Tristate::FALSE)
+        return;
+    else if (_Pin[4] == nts::Tristate::FALSE) {
+        setSinglePin(0, nts::Tristate::FALSE);
+        setSinglePin(1, nts::Tristate::TRUE);
+    } else if (_Pin[4] == nts::Tristate::TRUE) {
+        setSinglePin(0, nts::Tristate::TRUE);
+        setSinglePin(1, nts::Tristate::FALSE);
+    }
+
+    if (_Pin[7] == nts::Tristate::TRUE && _Pin[9] == nts::Tristate::TRUE) {
+        setSinglePin(12, nts::Tristate::TRUE);
+        setSinglePin(11, nts::Tristate::TRUE);
+    } else if (_Pin[7] == nts::Tristate::TRUE)
+        setSinglePin(11, nts::Tristate::TRUE);
+    else if (_Pin[9] == nts::Tristate::TRUE)
+        setSinglePin(12, nts::Tristate::TRUE);
+    else if (_Pin[10] == nts::Tristate::FALSE)
+        return;
+    else if (_Pin[8] == nts::Tristate::FALSE) {
+        setSinglePin(12, nts::Tristate::FALSE);
+        setSinglePin(11, nts::Tristate::TRUE);
+    } else if (_Pin[8] == nts::Tristate::TRUE) {
+        setSinglePin(12, nts::Tristate::TRUE);
+        setSinglePin(11, nts::Tristate::FALSE);
+    }
 }
