@@ -24,6 +24,7 @@ int main(int ac, char **av)
     }
     try {
         Loop.assignData(Parser);
+        Loop.simulateFunc();
         Loop.start();
     }
     catch (NanoError const &error) {
