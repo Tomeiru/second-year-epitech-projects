@@ -14,7 +14,7 @@ class RAM_4801 : public Component {
     public:
         RAM_4801();
         ~RAM_4801();
-
+        void simulate(std::size_t tick);
     protected:
     private:
 };

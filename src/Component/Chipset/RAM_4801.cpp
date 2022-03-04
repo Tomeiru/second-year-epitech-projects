@@ -14,3 +14,8 @@ RAM_4801::RAM_4801() : Component("4801", 24)
 RAM_4801::~RAM_4801()
 {
 }
+
+void RAM_4801::simulate(std::size_t tick)
+{
+    UNUSED(tick);
+}

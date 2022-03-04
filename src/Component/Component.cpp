@@ -35,6 +35,10 @@ void Component::dump() const
     std::cout << "Name: " << _Name << std::endl;
     std::cout << "Type of Component: " << _Comp << std::endl;
     std::cout << "Total number of pin: " << _NbrPin << std::endl;
+    std::cout << "Pin vector:";
+    for (auto i: _Pin)
+        std::cout << i << ' ';
+    std::cout << std::endl;
 }
 
 std::vector<nts::Tristate> Component::getPinVector()
