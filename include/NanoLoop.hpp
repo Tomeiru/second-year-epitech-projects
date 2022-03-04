@@ -49,6 +49,7 @@ class NanoLoop {
         Circuit _circuit;
         size_t _tick;
         std::vector<std::string> _queue;
+        bool _first;
     private:
 };
 

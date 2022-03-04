@@ -21,6 +21,7 @@ void NanoLoop::assignData(NanoParser &data)
     _circuit.initCircuit(_data.getChipsetVec());
     _circuit.initLinks(_data.getLinksVec(), _data.getOutputFirstLinksVec(), _data.getOutputSecondLinksVec());
     _tick = 0;
+    _first = true;
 }
 
 void NanoLoop::checkCommand(std::string command)
@@ -428,10 +429,12 @@ void NanoLoop::simulateFunc(void)
     std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
 
     clearQueue();
-    for (size_t i = 0; i < chipsets.size(); i++) {
-        if (std::get<0>(chipsets[i]) == "clock") {
-            auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
-            it->second->simulate(_tick);
+    if (_first != true) {
+        for (size_t i = 0; i < chipsets.size(); i++) {
+            if (std::get<0>(chipsets[i]) == "clock") {
+                auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
+                it->second->simulate(_tick);
+            }
         }
     }
     for (size_t i = 0; i < _data.getOutputSecondLinksVec().size(); i++) {
@@ -440,7 +443,10 @@ void NanoLoop::simulateFunc(void)
     for (size_t i = 0; i < _data.getOutputFirstLinksVec().size(); i++) {
         setStatefromLink(_data.getOutputFirstLinksVec()[i], true);
     }
-    _tick += 1;
+    if (_first != true)
+        _tick += 1;
+    else
+        _first = false;
 }
 
 void NanoLoop::loopFunc(void)
