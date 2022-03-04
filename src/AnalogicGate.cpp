@@ -54,7 +54,7 @@ nts::Tristate AnalogicGate::nor_gate(nts::Tristate a, nts::Tristate b)
 nts::Tristate AnalogicGate::xor_gate(nts::Tristate a, nts::Tristate b)
 {
     if (a == nts::Tristate::UNDEFINED || b == nts::Tristate::UNDEFINED)
-        return (nts::Tristate::TRUE);
+        return (nts::Tristate::UNDEFINED);
     else if (a == b)
         return (nts::Tristate::FALSE);
     return (nts::Tristate::TRUE);
