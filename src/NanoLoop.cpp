@@ -204,7 +204,7 @@ void NanoLoop::setStateGate(std::string nameGet, size_t pinGet, std::string name
         getLinkLine(nameGet, 9);
         getLinkLine(nameGet, 8);
     }
-    componentToGet->second->simulate(0);
+    componentToGet->second->simulate(_tick);
     componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
 }
 
@@ -235,7 +235,163 @@ void NanoLoop::setStateInverter(std::string nameGet, size_t pinGet, std::string 
     if (pinGet == 12) {
         getLinkLine(nameGet, 13);
     }
-    componentToGet->second->simulate(0);
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateAdder(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet == 1 || pinGet == 2 || pinGet == 3 || pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 15) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 10 || pinGet == 11 || pinGet == 12 || pinGet == 13 || pinGet == 14) {
+        getLinkLine(nameGet, 1);
+        getLinkLine(nameGet, 2);
+        getLinkLine(nameGet, 3);
+        getLinkLine(nameGet, 4);
+        getLinkLine(nameGet, 5);
+        getLinkLine(nameGet, 6);
+        getLinkLine(nameGet, 7);
+        getLinkLine(nameGet, 9);
+        getLinkLine(nameGet, 15);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateFlipFlop(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet == 3 || pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 8 || pinGet == 9 || pinGet == 10 || pinGet == 11) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 1) {
+        getLinkLine(nameGet, 3);
+        getLinkLine(nameGet, 4);
+    }
+    if (pinGet == 2) {
+        getLinkLine(nameGet, 5);
+        getLinkLine(nameGet, 6);
+    }
+    if (pinGet == 12) {
+        getLinkLine(nameGet, 8);
+        getLinkLine(nameGet, 9);
+    }
+    if (pinGet == 13) {
+        getLinkLine(nameGet, 10);
+        getLinkLine(nameGet, 11);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateJohnson(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet == 13 || pinGet == 14 || pinGet == 15) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 1 || pinGet == 2 || pinGet == 3 || pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 10 || pinGet == 11  || pinGet == 12) {
+        getLinkLine(nameGet, 13);
+        getLinkLine(nameGet, 14);
+        getLinkLine(nameGet, 15);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateCounter(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet == 10 || pinGet == 11) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 1 || pinGet == 2 || pinGet == 3 || pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 12 || pinGet == 13  || pinGet == 14 || pinGet == 15) {
+        getLinkLine(nameGet, 10);
+        getLinkLine(nameGet, 11);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateShift(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet == 1 || pinGet == 2 || pinGet == 3 || pinGet == 15) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 10 || pinGet == 11 || pinGet == 12 || pinGet == 13 || pinGet == 14) {
+        getLinkLine(nameGet, 1);
+        getLinkLine(nameGet, 2);
+        getLinkLine(nameGet, 3);
+        getLinkLine(nameGet, 15);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateSelector(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if (pinGet < 8 || (pinGet > 8 && pinGet < 14) || (pinGet == 15)) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 14) {
+        getLinkLine(nameGet, 1);
+        getLinkLine(nameGet, 2);
+        getLinkLine(nameGet, 3);
+        getLinkLine(nameGet, 4);
+        getLinkLine(nameGet, 5);
+        getLinkLine(nameGet, 6);
+        getLinkLine(nameGet, 7);
+        getLinkLine(nameGet, 9);
+        getLinkLine(nameGet, 10);
+        getLinkLine(nameGet, 11);
+        getLinkLine(nameGet, 12);
+        getLinkLine(nameGet, 13);
+        getLinkLine(nameGet, 15);
+    }
+    componentToGet->second->simulate(_tick);
+    componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
+}
+
+void NanoLoop::setStateDecoder(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet)
+{
+    auto componentToGet = _circuit.getComponents().find(nameGet);
+    auto componentToSet = _circuit.getComponents().find(nameSet);
+
+    if ((pinGet > 3 && pinGet < 12) || (pinGet > 12 && pinGet < 21)) {
+        getLinkLine(nameGet, pinGet);
+        return;
+    }
+    if (pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 10 || pinGet == 11 || pinGet == 12 || pinGet == 13 || pinGet == 14) {
+        getLinkLine(nameGet, 1);
+        getLinkLine(nameGet, 2);
+        getLinkLine(nameGet, 3);
+        getLinkLine(nameGet, 21);
+        getLinkLine(nameGet, 22);
+        getLinkLine(nameGet, 23);
+    }
+    componentToGet->second->simulate(_tick);
     componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
 }
 
@@ -254,6 +410,20 @@ void NanoLoop::setStatefromLink(std::tuple<std::string, size_t, std::string, siz
         setStateGate(nameGet, pinGet, nameSet, pinSet);
     if (componentToGet->second->getComp() == "4069")
         setStateInverter(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4008")
+        setStateAdder(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4013")
+        setStateFlipFlop(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4017")
+        setStateJohnson(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4040")
+        setStateCounter(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4094")
+        setStateShift(nameGet, pinGet, nameSet,pinSet);
+    if (componentToGet->second->getComp() == "4512")
+        setStateSelector(nameGet, pinGet, nameSet, pinSet);
+    if (componentToGet->second->getComp() == "4514")
+        setStateDecoder(nameGet, pinGet, nameSet, pinSet);
     return;
 }
 

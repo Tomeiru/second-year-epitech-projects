@@ -37,6 +37,13 @@ class NanoLoop {
         void setStateGate(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
         void getLinkLine(std::string nameGet, size_t pinGet);
         void setStateInverter(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateAdder(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateFlipFlop(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateJohnson(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateCounter(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateShift(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateSelector(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
+        void setStateDecoder(std::string nameGet, size_t pinGet, std::string nameSet, size_t pinSet);
     protected:
         NanoParser _data;
         Circuit _circuit;

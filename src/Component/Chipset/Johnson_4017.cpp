@@ -7,7 +7,7 @@
 
 #include "Johnson_4017.hpp"
 
-Johnson_4017::Johnson_4017() : Component("4017", 15)
+Johnson_4017::Johnson_4017() : Component("4017", 16)
 {
 }
 
