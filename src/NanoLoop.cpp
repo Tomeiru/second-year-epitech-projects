@@ -272,19 +272,15 @@ void NanoLoop::setStateFlipFlop(std::string nameGet, size_t pinGet, std::string 
         getLinkLine(nameGet, pinGet);
         return;
     }
-    if (pinGet == 1) {
+    if (pinGet == 1 || pinGet == 2) {
         getLinkLine(nameGet, 3);
         getLinkLine(nameGet, 4);
-    }
-    if (pinGet == 2) {
         getLinkLine(nameGet, 5);
         getLinkLine(nameGet, 6);
     }
-    if (pinGet == 12) {
+    if (pinGet == 12 || pinGet == 13) {
         getLinkLine(nameGet, 8);
         getLinkLine(nameGet, 9);
-    }
-    if (pinGet == 13) {
         getLinkLine(nameGet, 10);
         getLinkLine(nameGet, 11);
     }
@@ -438,11 +434,11 @@ void NanoLoop::simulateFunc(void)
             it->second->simulate(_tick);
         }
     }
-    for (size_t i = 0; i < _data.getOutputFirstLinksVec().size(); i++) {
-        setStatefromLink(_data.getOutputFirstLinksVec()[i], true);
-    }
     for (size_t i = 0; i < _data.getOutputSecondLinksVec().size(); i++) {
         setStatefromLink(_data.getOutputSecondLinksVec()[i], false);
+    }
+    for (size_t i = 0; i < _data.getOutputFirstLinksVec().size(); i++) {
+        setStatefromLink(_data.getOutputFirstLinksVec()[i], true);
     }
     _tick += 1;
 }
