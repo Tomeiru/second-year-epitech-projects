@@ -127,15 +127,13 @@ void NanoLoop::displayInput(void)
     std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
 
     std::cout << "input(s):" << std::endl;
-    for (size_t i = 0; i < chipsets.size(); i++) {
-        if (std::get<0>(chipsets[i]) == "input" || std::get<0>(chipsets[i]) == "clock") {
-            auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
+    for (auto it = _circuit.getComponents().cbegin(); it != _circuit.getComponents().cend(); it++) {
+        if (it->second->getComp() == "Input") {
             std::cout << "  " << it->second->getName() << ": ";
             printState(it->second->compute(0));
             std::cout << std::endl;
         }
     }
-
 }
 
 void NanoLoop::displayOutput(void)
@@ -143,9 +141,8 @@ void NanoLoop::displayOutput(void)
     std::vector<std::tuple<std::string, std::string>> chipsets = _data.getChipsetVec();
 
     std::cout << "output(s):" << std::endl;
-    for (size_t i = 0; i < chipsets.size(); i++) {
-        if (std::get<0>(chipsets[i]) == "output") {
-            auto it = _circuit.getComponents().find(std::get<1>(chipsets[i]));
+    for (auto it = _circuit.getComponents().cbegin(); it != _circuit.getComponents().cend(); it++) {
+        if (it->second->getComp() == "Output") {
             std::cout << "  " << it->second->getName() << ": ";
             printState(it->second->compute(0));
             std::cout << std::endl;
