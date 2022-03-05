@@ -128,7 +128,7 @@ void NanoLoop::displayInput(void)
 
     std::cout << "input(s):" << std::endl;
     for (auto it = _circuit.getComponents().cbegin(); it != _circuit.getComponents().cend(); it++) {
-        if (it->second->getComp() == "Input") {
+        if (it->second->getComp() == "Input" || it->second->getComp() == "Clock") {
             std::cout << "  " << it->second->getName() << ": ";
             printState(it->second->compute(0));
             std::cout << std::endl;
