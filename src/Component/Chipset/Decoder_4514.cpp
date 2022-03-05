@@ -29,9 +29,14 @@ void Decoder_4514::simulate(std::size_t tick)
     int addr = 0;
 
     UNUSED(tick);
+    if (_Pin[0] != nts::TRUE)
+        return;
     if (_Pin[22] == nts::Tristate::TRUE) {
-        setAllPin(nts::Tristate::FALSE);
-        setSinglePin(21, nts::Tristate::TRUE);
+        for (size_t i = 3; i < 11; i++)
+            setSinglePin(i, nts::Tristate::FALSE);
+        for (size_t i = 12; i < 20; i++)
+            setSinglePin(i, nts::Tristate::FALSE);
+        return;
     }
     addr += _Pin[1] == nts::Tristate::TRUE ? 1 : 0;
     addr += _Pin[2] == nts::Tristate::TRUE ? 2 : 0;

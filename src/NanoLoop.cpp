@@ -376,18 +376,16 @@ void NanoLoop::setStateDecoder(std::string nameGet, size_t pinGet, std::string n
     auto componentToGet = _circuit.getComponents().find(nameGet);
     auto componentToSet = _circuit.getComponents().find(nameSet);
 
-    if ((pinGet > 3 && pinGet < 12) || (pinGet > 12 && pinGet < 21)) {
+    if ((pinGet > 0 && pinGet < 4) || (pinGet > 20 && pinGet < 24)) {
         getLinkLine(nameGet, pinGet);
         return;
     }
-    if (pinGet == 4 || pinGet == 5 || pinGet == 6 || pinGet == 7 || pinGet == 9 || pinGet == 10 || pinGet == 11 || pinGet == 12 || pinGet == 13 || pinGet == 14) {
-        getLinkLine(nameGet, 1);
-        getLinkLine(nameGet, 2);
-        getLinkLine(nameGet, 3);
-        getLinkLine(nameGet, 21);
-        getLinkLine(nameGet, 22);
-        getLinkLine(nameGet, 23);
-    }
+    getLinkLine(nameGet, 1);
+    getLinkLine(nameGet, 2);
+    getLinkLine(nameGet, 3);
+    getLinkLine(nameGet, 21);
+    getLinkLine(nameGet, 22);
+    getLinkLine(nameGet, 23);
     componentToGet->second->simulate(_tick);
     componentToSet->second->setSinglePin(pinSet - 1, componentToGet->second->compute(pinGet - 1));
 }
