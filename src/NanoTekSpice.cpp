@@ -28,7 +28,10 @@ int main(int ac, char **av)
         Loop.start();
     }
     catch (NanoError const &error) {
-        return (0);
+        if (strcmp(error.what(), "EOF") == 0)
+            return (0);
+        std::cerr << error.what() << std::endl;
+        return (84);
     }
     return (0);
 }

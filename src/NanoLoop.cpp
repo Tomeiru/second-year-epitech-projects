@@ -69,13 +69,7 @@ void NanoLoop::start(void)
 
     std::cout << "> ";
     command = getInput();
-    try {
-        checkCommand(command);
-    }
-    catch (NanoError const &error) {
-        std::cerr << error.what() << std::endl;
-        return (start());
-    }
+    checkCommand(command);
     execCommand(command);
     return (start());
 }
