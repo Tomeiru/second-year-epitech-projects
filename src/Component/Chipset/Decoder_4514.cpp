@@ -29,7 +29,7 @@ void Decoder_4514::simulate(std::size_t tick)
     int addr = 0;
 
     UNUSED(tick);
-    if (_Pin[0] == nts::UNDEFINED) {
+    if (_Pin[22] == nts::Tristate::UNDEFINED || _Pin[0] == nts::UNDEFINED) {
         for (size_t i = 3; i < 11; i++)
             setSinglePin(i, nts::Tristate::UNDEFINED);
         for (size_t i = 12; i < 20; i++)
