@@ -27,6 +27,10 @@ void Selector_4512::simulate(std::size_t tick)
     int addr = 0;
 
     UNUSED(tick);
+    if (_Pin[9] == nts::UNDEFINED || _Pin[14] == nts::UNDEFINED) {
+        setSinglePin(13, nts::Tristate::UNDEFINED);
+        return;
+    }
     if (_Pin[14] == nts::Tristate::TRUE) {
         setSinglePin(13, nts::Tristate::UNDEFINED);
         return;
