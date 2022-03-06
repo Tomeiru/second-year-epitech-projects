@@ -38,7 +38,7 @@ void Counter_4040::simulate(std::size_t tick)
         tick /= 2;
     }
     binaire = std::string((size_t)12 - std::min((size_t)12, binaire.length()), '0') + binaire;
-    if (_Pin[9] == nts::Tristate::FALSE) {
+    if (_Pin[9] == nts::Tristate::TRUE) {
         setSinglePin(8, binaire[11] == '1' ? nts::Tristate::TRUE : nts::Tristate::FALSE);
         setSinglePin(6, binaire[10] == '1' ? nts::Tristate::TRUE : nts::Tristate::FALSE);
         setSinglePin(5, binaire[9] == '1' ? nts::Tristate::TRUE : nts::Tristate::FALSE);

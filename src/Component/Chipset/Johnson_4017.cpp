@@ -32,7 +32,7 @@ void Johnson_4017::simulate(std::size_t tick)
         setSinglePin(2, nts::Tristate::TRUE);
         return;
     }
-    if (clock == nts::Tristate::TRUE) {
+    if (clock == nts::Tristate::FALSE) {
         setSinglePin(2, tick == 0 ? nts::Tristate::TRUE : nts::Tristate::FALSE);
         setSinglePin(1, tick == 1 ? nts::Tristate::TRUE : nts::Tristate::FALSE);
         setSinglePin(3, tick == 2 ? nts::Tristate::TRUE : nts::Tristate::FALSE);

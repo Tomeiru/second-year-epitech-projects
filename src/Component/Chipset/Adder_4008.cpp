@@ -47,5 +47,5 @@ void Adder_4008::simulate(std::size_t tick)
     setSinglePin(11, gate.not_gate(gate.xor_gate(gate.or_gate(next_B3, gate.not_gate(next_A3)), rest_2)));
     setSinglePin(10, gate.not_gate(gate.xor_gate(gate.or_gate(next_B2, gate.not_gate(next_A2)), rest_1)));
     setSinglePin(9, gate.not_gate(gate.xor_gate(gate.or_gate(next_B1, gate.not_gate(next_A1)), _Pin[8])));
-    setSinglePin(13, gate.or_gate(gate.and_gate(_Pin[8], quadra_and1), quadra_or));
+    setSinglePin(13, gate.not_gate(gate.or_gate(gate.and_gate(_Pin[8], quadra_and1), quadra_or)));
 }
