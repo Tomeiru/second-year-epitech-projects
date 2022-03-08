@@ -117,6 +117,6 @@ void Unsold::PrintUnsold(void)
     printf("expected value of Y:    %.1f\n", last[2]);
     printf("variance of Y:          %.1f\n", last[3]);
     printf("expected value of Z:    %.1f\n", last[4]);
-    printf("variance of 2:          %.1f\n", last[5]);
+    printf("variance of Z:          %.1f\n", last[5]);
     printf("--------------------------------------------------------------------------------\n");
 }
