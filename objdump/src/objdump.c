@@ -354,7 +354,7 @@ int single_file(char *filepath)
 
     if (!elf) {
         if (!strcmp("a.out", filepath))
-            write(2, "my_objdump: 'a.out': No such file\n", 31);
+            write(2, "my_objdump: 'a.out': No such file\n", 34);
         else {
             write(2, "my_objdump: ", 12);
             write(2, filepath, strlen(filepath));
