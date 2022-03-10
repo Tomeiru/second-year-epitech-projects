@@ -184,7 +184,7 @@ void print_fflag_sfour(char *filepath, Elf64_Ehdr *elf)
     printf("\n%s:     file format elf64-x86-64\n", filepath);
     printf("architecture: i386:x86-64, flags ");
     bfd_flags_sfour(elf);
-    printf("start address %#018lx", elf->e_entry);
+    printf("start address 0x%016lx", elf->e_entry);
     printf("\n\n");
 }
 
@@ -193,7 +193,7 @@ void print_fflag_ttwo(char *filepath, Elf32_Ehdr *elf)
     printf("\n%s:     file format elf32-i386\n", filepath);
     printf("architecture: i386, flags ");
     bfd_flags_ttwo(elf);
-    printf("start address %#010x", elf->e_entry);
+    printf("start address 0x%08x", elf->e_entry);
     printf("\n\n");
 }
 
@@ -358,7 +358,7 @@ int single_file(char *filepath)
         else {
             write(2, "my_objdump: '", 12);
             write(2, filepath, strlen(filepath));
-            write(2, "': No such file\n", 15);
+            write(2, "': No such file\n", 16);
         }
         return (84);
     }
