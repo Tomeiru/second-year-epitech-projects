@@ -5,7 +5,12 @@
 ## Makefile
 ##
 
-SRC =	src/objdump.c
+SRC =	src/objdump.c	\
+		src/utils.c	\
+		src/sixty_four/bfd_flags_sfour.c	\
+		src/sixty_four/objdump_sfour.c	\
+		src/thirty_two/bfd_flags_ttwo.c	\
+		src/thirty_two/objdump_ttwo.c
 
 MAIN =	src/main.c
 

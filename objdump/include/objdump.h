@@ -23,5 +23,10 @@
 
 // PROTOTYPES
 int objdump(int ac, char **av);
+int objdump_sfour(char *filepath, Elf64_Ehdr *elf);
+int objdump_ttwo(char *filepath, Elf32_Ehdr *elf);
+void apply_flag(char **flags, char *flag, int idx, char value);
+void bfd_flags_sfour(Elf64_Ehdr *elf);
+void bfd_flags_ttwo(Elf32_Ehdr *elf);
 
 #endif /* !OBJDUMP_H_ */
