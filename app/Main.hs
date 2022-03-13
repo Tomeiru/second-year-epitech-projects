@@ -4,6 +4,7 @@ import System.Exit
 import System.Environment
 import Data.Maybe
 import Text.Read
+import Text.Printf (FormatParse(FormatParse))
 
 data Conf = Conf {
     rule :: Maybe Int,
@@ -14,7 +15,8 @@ data Conf = Conf {
 }
 
 defaultConf :: Conf
-defaultConf = Conf{rule = Nothing, start = Just 0, nbLines = Just (-1), window = Just 80, move = Just 0}
+defaultConf = Conf{rule = Nothing, start = Just 0, nbLines = Just (
+    -1), window = Just 80, move = Just 0}
 
 
 wGVFC :: Char -> Int
@@ -77,78 +79,116 @@ binaryToRule (1:xs) rule = binaryToRule xs (rule ++ ['*'])
 binaryToRule (0:xs) rule = binaryToRule xs (rule ++ [' '])
 binaryToRule _ _ = []
 
-spacePad :: String -> Int -> Bool -> String
-spacePad (char:str) window left
- | length (char:str) == window = char:str
- | length (char:str) < window && left = spacePad (' ':char:str) window False
- | length (char:str) < window = spacePad ((char:str) ++ " ") window True
- | length (char:str) > window && left = spacePad str window False
- | length (char:str) > window = spacePad (take (length (char:str) - 1) (char:str)) window True
-spacePad _ _ _ = ""
+spacePad :: String -> Int -> String
+spacePad str window
+ | (window > length str) && ((window - length str) `mod` 2 == 1) = replicate ((
+     (window - length str) `div` 2) + 1) ' ' ++ str ++ replicate ((
+         window - length str) `div` 2) ' '
+ | window > length str = replicate ((
+     window - length str) `div` 2) ' ' ++ str ++ replicate ((
+         window - length str) `div` 2) ' '
+ | otherwise = take window (drop ((length str - window) `div` 2) str)
 
-wolframMove :: String -> Int -> String
-wolframMove str 0 = str
-wolframMove (char:str) index
- | index < 0 = wolframMove (str ++ " ") (index + 1)
- | otherwise =  wolframMove (take (length (' ':char:str) - 1) (' ':char:str)) (index - 1)
-wolframMove _ _ = ""
+wolframMove :: String -> String -> Int -> Int -> String
+wolframMove str ss i win
+ | win >= length ss && i < 0 = drop (-i) str ++ replicate (-i) ' '
+ | win >= length ss = replicate i ' ' ++ take (length str - i) str
+ | i < 0 && (-i - ((length ss - win + 1))`div` 2) > 0 = drop (-i) str ++ drop (
+     length ss - ((length ss - win + 1))`div` 2) ss ++ replicate (-i - ((
+         length ss - win + 1))`div` 2) ' '
+ | i < 0 = drop (-i) str ++ take (-i) (drop (length ss - ((
+     length ss - win + 1))`div` 2) ss)
+ | (i - ((length ss - win))`div` 2) > 0 = replicate (i - ((
+     length ss - win))`div` 2) ' ' ++ take (((
+         length ss - win))`div` 2) ss ++ take (length str - i) str
+ | otherwise = drop (-(i - ((length ss - win))`div` 2)) (take (((
+     length ss - win))`div` 2) ss) ++ take (length str - i) str
 
-printWolframPadding :: Int -> Int -> Int -> Int -> Int -> String -> String -> IO()
-printWolframPadding inc max start window moveVar "*" rule
- | start <= 0 = putStrLn (wolframMove (spacePad "*" window True) moveVar) >>
-                putStrLn (wolframMove (spacePad (cLT 0 [] rule) window True) moveVar) >>
-                printWolframPadding (inc + 1) max (start - 1) window moveVar (cLT 0 [] rule) rule
- | otherwise = printWolframPadding (inc + 1) max (start - 1) window moveVar (cLT 0 [] rule) rule
-printWolframPadding inc max start window moveVar pStr rule
+printRecallFirst :: String -> Int -> Int -> Int -> Int -> Int -> String -> IO ()
+printRecallFirst str inc max start window moveVar rule
+ | start <= 0 = putStrLn (wolframMove (
+     spacePad "*" window) "*" moveVar window) >>
+                putStrLn (wolframMove (
+                    spacePad str window) str moveVar window) >>
+                printWolframPad (
+                    inc + 1) max (start - 1) window moveVar str rule
+ | otherwise = printWolframPad (
+     inc + 1) max (start - 1) window moveVar (cLT 0 [] rule) rule
+
+printRecallOther :: String -> Int -> Int -> Int -> Int -> Int -> String -> IO ()
+printRecallOther str inc max start window moveVar rule
+ | start <= 0 = putStrLn (wolframMove (
+     spacePad str window) str moveVar window) >>
+               printWolframPad (
+                   inc + 1) max (start - 1) window moveVar str rule
+ | otherwise = printWolframPad (
+     inc + 1) max (start - 1) window moveVar str rule
+
+printWolframPad :: Int -> Int -> Int -> Int -> Int -> String -> String -> IO()
+printWolframPad inc max start window moveVar "*" rule = printRecallFirst (
+    cLT 0 [] rule) inc max start window moveVar rule
+printWolframPad inc max start window moveVar pStr rule
  | inc == max = exitSuccess
- | start <= 0 =putStrLn (wolframMove(spacePad (cL 0 pStr [] rule) window True) moveVar) >>
-               printWolframPadding (inc + 1) max (start - 1) window moveVar (cL 0 pStr [] rule) rule
- | otherwise = printWolframPadding (inc + 1) max (start - 1) window moveVar (cL 0 pStr [] rule) rule
+ | otherwise = printRecallOther (
+     cL 0 pStr [] rule) inc max start window moveVar rule
 
 algo :: Conf -> IO ()
-algo conf = printWolframPadding 0 ((delMaybeInt (nbLines conf)) + (delMaybeInt (start conf)) - 1) (delMaybeInt (start conf) - 1) (delMaybeInt (window conf)) (delMaybeInt (move conf)) "*" (
+algo conf = printWolframPad 0 (delMaybeInt (nbLines conf) + delMaybeInt (
+    start conf) - 1) (delMaybeInt (start conf) - 1) (delMaybeInt (
+        window conf)) (delMaybeInt (move conf)) "*" (
     binaryToRule (padToEight (intToBinary (delMaybeInt (rule conf)) [])) [])
 
 
-getRule, getStart, getLines, getWindow, getMove :: [String] -> Maybe Int
+getRule :: [String] -> Maybe Int
 getRule ("--rule":x':_) = readMaybe x' :: Maybe Int
 getRule (x:x':xs) = getRule xs
 getRule _ = Nothing
+
+getStart :: [String] -> Maybe Int
 getStart ("--start":x':_) = readMaybe x' :: Maybe Int
 getStart (x:x':xs) = getStart xs
 getStart _ = Nothing
+
+getLines :: [String] -> Maybe Int
 getLines ("--lines":x':_) = readMaybe x' :: Maybe Int
 getLines (x:x':xs) = getLines xs
 getLines _ = Nothing
+
+getWindow :: [String] -> Maybe Int
 getWindow ("--window":x':_) = readMaybe x' :: Maybe Int
 getWindow (x:x':xs) = getWindow xs
 getWindow _ = Nothing
+
+getMove :: [String] -> Maybe Int
 getMove ("--move":x':_) = readMaybe x' :: Maybe Int
 getMove (x:x':xs) = getMove xs
 getMove _ = Nothing
 
-assignConfValue :: Conf -> Maybe Int -> [Maybe Int] -> Int -> Maybe Conf
-assignConfValue conf _ _ 0 = Just conf
-assignConfValue conf rule (Nothing:list) 4 = assignConfValue conf{rule = rule} rule list 3
-assignConfValue conf rule (start:list) 4 = assignConfValue conf{rule = rule, start = start} rule list 3
-assignConfValue conf rule (Nothing:list) 3 = assignConfValue conf rule list 2
-assignConfValue conf rule (lines:list) 3 = assignConfValue conf{nbLines = lines} rule list 2
-assignConfValue conf rule (Nothing:list) 2 = assignConfValue conf rule list 1
-assignConfValue conf rule (window:list) 2 = assignConfValue conf{window = window} rule list 1
-assignConfValue conf rule [Nothing] 1 = assignConfValue conf rule [] 0
-assignConfValue conf rule [move] 1 = assignConfValue conf{move = move} rule [] 0
-assignConfValue conf rule _ _ = assignConfValue conf rule [] 0
+aConfVal :: Conf -> Maybe Int -> [Maybe Int] -> Int -> Maybe Conf
+aConfVal conf _ _ 0 = Just conf
+aConfVal conf rule (Nothing:list) 4 = aConfVal conf{rule = rule} rule list 3
+aConfVal conf rule (start:list) 4 = aConfVal conf{
+    rule = rule, start = start} rule list 3
+aConfVal conf rule (Nothing:list) 3 = aConfVal conf rule list 2
+aConfVal conf rule (lines:list) 3 = aConfVal conf{nbLines = lines} rule list 2
+aConfVal conf rule (Nothing:list) 2 = aConfVal conf rule list 1
+aConfVal conf rule (window:list) 2 = aConfVal conf{window = window} rule list 1
+aConfVal conf rule [Nothing] 1 = aConfVal conf rule [] 0
+aConfVal conf rule [move] 1 = aConfVal conf{move = move} rule [] 0
+aConfVal conf rule _ _ = aConfVal conf rule [] 0
 
-getOpts :: Conf -> Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int -> Maybe Conf
+getOpts :: Conf -> Maybe Int -> 
+    Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int -> Maybe Conf
 getOpts conf Nothing _ _ _ _ = Nothing
 getOpts conf rule start lines window move
  | rule < Just 0 || rule > Just 255 = Nothing
- | start /= Nothing && start < Just 0 = Nothing
- | window /= Nothing && window < Just 0 = Nothing
- | otherwise = assignConfValue conf rule [start,lines,window,move] 4
+ | isJust start && start < Just 0 = Nothing
+ | isJust window && window < Just 0 = Nothing
+ | otherwise = aConfVal conf rule [start,lines,window,move] 4
 
 checkArgContentSecond :: [String] -> [String] -> Maybe Conf
-checkArgContentSecond [] copy = getOpts defaultConf (getRule copy) (getStart copy) (getLines copy) (getWindow copy) (getMove copy)
+checkArgContentSecond [] copy = getOpts defaultConf (getRule copy) (
+    getStart copy) (getLines copy) (getWindow copy) (getMove copy)
 checkArgContentSecond (x:x':xs) copy
  | x `notElem` ["--rule","--start","--lines","--window","--move"] = Nothing
  | isNothing (readMaybe x' :: Maybe Int) = Nothing
