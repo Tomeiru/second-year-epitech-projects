@@ -5,7 +5,14 @@
 ## Makefile
 ##
 
-SRC =	src/nm_func.c
+SRC =	src/nm_func.c	\
+		src/utils.c	\
+		src/sixty_four/nm_sfour.c	\
+		src/sixty_four/determine_flag_sfour.c	\
+		src/sixty_four/create_sort_list_sfour.c	\
+		src/thirty_two/nm_ttwo.c	\
+		src/thirty_two/determine_flag_ttwo.c	\
+		src/thirty_two/create_sort_list_ttwo.c
 
 MAIN =	src/main.c
 

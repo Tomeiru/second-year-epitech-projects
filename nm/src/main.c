@@ -9,7 +9,5 @@
 
 int main(int ac, char **av)
 {
-    UNUSED(ac);
-    UNUSED(av);
-    return (nm_func());
+    return (nm_func(ac, av));
 }

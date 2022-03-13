@@ -8,6 +8,7 @@
 #ifndef OBJDUMP_H_
     #define OBJDUMP_H_
 
+// MACRO
     #define UNUSED(x) (void)(x)
 
 // INCLUDE
