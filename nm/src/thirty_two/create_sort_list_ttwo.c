@@ -23,44 +23,45 @@ symbol_ttwo_t *create_node_ttwo(char *name, Elf32_Sym sym, Elf32_Shdr *secs)
     return (node);
 }
 
+int find_placement_ttwo(symbol_ttwo_t **list, symbol_ttwo_t *node)
+{
+    char *node_cname = clear_name(node->name);
+    char *temp_cname;
+    int ret = 0;
+
+    for (symbol_ttwo_t *temp = *list; temp != NULL; temp = temp->next) {
+        temp_cname = clear_name(temp->name);
+        if (strcasecmp(temp_cname, node_cname) < 0) {
+            ret++;
+            continue;
+        }if (strcasecmp(temp_cname, node_cname) > 0)
+            return (ret);
+        ret += temp->value < node->value ? 1 : 0;
+        if (temp->value < node->value)
+            continue;
+        return (ret);
+    }
+    return (ret);
+}
+
 void add_to_sorted_list_ttwo(symbol_ttwo_t **list, symbol_ttwo_t *node)
 {
+    int idx = 0;
+    symbol_ttwo_t *temp = *list;
     symbol_ttwo_t *prev = NULL;
-    char *temp_cname;
-    char *node_cname;
 
     if (*list == NULL) {
         *list = node;
         return;
-    }node_cname = clear_name(node->name);
-    for (symbol_ttwo_t *temp = *list; temp != NULL; temp = temp->next) {
-        temp_cname = clear_name(temp->name);
-        if (strcasecmp(temp_cname, node_cname) < 0) {
-            prev = temp;
-            continue;
-        }
-        if (strcasecmp(temp_cname, node_cname) > 0) {
-            if (prev == NULL) {
-                node->next = temp;
-                temp = node;
-                return;
-            }
-            prev->next = node;
-            node->next = temp;
-            return;
-        }
-        if (temp->value < node->value)  {
-            prev = temp;
-            continue;
-        }
-        if (prev == NULL) {
-            node->next = temp;
-            temp = node;
-            return;
-        }
-        prev->next = node;
-        node->next = temp;
-        return;
     }
-    prev->next = node;
+    idx = find_placement_ttwo(list, node);
+    for (int i = 0; i < idx; i++) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (prev == NULL) {
+        node->next = temp;
+        temp = node;
+    }prev->next = node;
+    node->next = temp;
 }

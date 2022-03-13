@@ -23,39 +23,45 @@ symbol_sfour_t *create_node_sfour(char *name, Elf64_Sym sym, Elf64_Shdr *secs)
     return (node);
 }
 
+int find_placement_sfour(symbol_sfour_t **list, symbol_sfour_t *node)
+{
+    char *node_cname = clear_name(node->name);
+    char *temp_cname;
+    int ret = 0;
+
+    for (symbol_sfour_t *temp = *list; temp != NULL; temp = temp->next) {
+        temp_cname = clear_name(temp->name);
+        if (strcasecmp(temp_cname, node_cname) < 0) {
+            ret++;
+            continue;
+        }if (strcasecmp(temp_cname, node_cname) > 0)
+            return (ret);
+        ret += temp->value < node->value ? 1 : 0;
+        if (temp->value < node->value)
+            continue;
+        return (ret);
+    }
+    return (ret);
+}
+
 void add_to_sorted_list_sfour(symbol_sfour_t **list, symbol_sfour_t *node)
 {
+    int idx = 0;
+    symbol_sfour_t *temp = *list;
     symbol_sfour_t *prev = NULL;
-    char *temp_cname;
-    char *node_cname;
 
     if (*list == NULL) {
         *list = node;
         return;
-    }node_cname = clear_name(node->name);
-    for (symbol_sfour_t *temp = *list; temp != NULL; temp = temp->next) {
-        temp_cname = clear_name(temp->name);
-        if (strcasecmp(temp_cname, node_cname) < 0) {
-            prev = temp;
-            continue;
-        }if (strcasecmp(temp_cname, node_cname) > 0) {
-            if (prev == NULL) {
-                node->next = temp;
-                temp = node;
-                return;
-            }
-            prev->next = node;
-            node->next = temp;
-            return;
-        }if (temp->value < node->value)  {
-            prev = temp;
-            continue;
-        }if (prev == NULL) {
-            node->next = temp;
-            temp = node;
-            return;
-        }prev->next = node;
+    }
+    idx = find_placement_sfour(list, node);
+    for (int i = 0; i < idx; i++) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (prev == NULL) {
         node->next = temp;
-        return;
+        temp = node;
     }prev->next = node;
+    node->next = temp;
 }
