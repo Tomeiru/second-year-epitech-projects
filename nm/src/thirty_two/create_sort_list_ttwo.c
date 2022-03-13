@@ -62,6 +62,7 @@ void add_to_sorted_list_ttwo(symbol_ttwo_t **list, symbol_ttwo_t *node)
     if (prev == NULL) {
         node->next = temp;
         temp = node;
+        return;
     }prev->next = node;
     node->next = temp;
 }

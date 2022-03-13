@@ -62,6 +62,7 @@ void add_to_sorted_list_sfour(symbol_sfour_t **list, symbol_sfour_t *node)
     if (prev == NULL) {
         node->next = temp;
         temp = node;
+        return;
     }prev->next = node;
     node->next = temp;
 }
