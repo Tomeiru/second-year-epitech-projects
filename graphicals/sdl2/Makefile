@@ -1,0 +1,29 @@
+##
+## EPITECH PROJECT, 2020
+## Makefile
+## File description:
+## Makefile
+##
+
+SRC =	sources/arcadeSdl2.cpp
+
+CPPFLAGS = -Wall -Wextra -fpic -I./includes
+
+OBJ = 	$(SRC:.cpp=.o)
+
+NAME = arcade_sdl2.so
+
+all:	$(NAME)
+
+$(NAME):	$(OBJ)
+		mkdir -p ../../lib
+		g++ -shared -o $(NAME) $(OBJ)
+		mv $(NAME) ../../lib
+
+clean:
+		rm -f $(OBJ)
+
+fclean:	clean
+		rm -f ../../lib/$(NAME)
+
+re:	fclean all
