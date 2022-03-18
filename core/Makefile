@@ -17,11 +17,12 @@ all: $(NAME)
 
 $(NAME):	$(OBJ)
 		g++ -o $(NAME) $(OBJ) $(CPPFLAGS)
+		mv $(NAME) ../$(NAME)
 
 clean:
 		rm -f $(OBJ)
 
 fclean:	clean
-		rm -fr $(NAME)
+		rm -fr ../$(NAME)
 
 re:	fclean all
