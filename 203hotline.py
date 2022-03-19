@@ -57,6 +57,7 @@ def hotlineDistr(av):
     hotlineBinomialDistr(p)
     print()
     hotlinePoissonDistr(p)
+    return (0)
 
 def printComb(n, k, comb):
     print(str(k) + "-combinations of a set of size " + str(n) + ":\n" + str(comb))
@@ -67,6 +68,7 @@ def hotlineComb(av):
     if n < 0 or k < 0 or n < k:
         raise
     printComb(n, k, math.comb(n, k))
+    return (0)
 
 def usage():
     print("USAGE\n    ./203hotline [n k | d]\n\nDESCRIPTION\n    n      n value for the computation of C(n, k)\n    k      k value for the computation of C(n, k)\n    d      average duration of calls (in seconds)")
