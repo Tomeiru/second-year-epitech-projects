@@ -33,6 +33,7 @@ jenkins:
             permissions:
               - "Job/Build"
               - "Job/Workspace"
+              - "Overall/Read"
             assignments:
               - "Jeremy"
           - name: "Gorilla"
@@ -43,11 +44,13 @@ jenkins:
               - "Job/Create"
               - "Job/Delete"
               - "Job/Configure"
+              - "Overall/Read"
             assignments:
               - "vaugie_g"
           - name: "assist"
             description: "Assistant"
             permissions:
               - "Job/Read"
+              - "Overall/Read"
             assignments:
               - "nasso"
