@@ -9,5 +9,6 @@
 #define GAME2_HPP_
 
 #include <iostream>
+#include "ICore.hpp"
 
 #endif /* !GAME2_HPP_ */

@@ -8,6 +8,7 @@
 #ifndef ARCADESDL2_HPP_
 #define ARCADESDL2_HPP_
 
+#include "ICore.hpp"
 #include <iostream>
 
 #endif /* !ARCADESDL2_HPP_ */

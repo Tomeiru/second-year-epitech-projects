@@ -7,7 +7,7 @@
 
 SRC =	sources/game1.cpp
 
-CPPFLAGS = -Wall -Wextra -fpic -I./includes
+CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
 
 OBJ = 	$(SRC:.cpp=.o)
 

@@ -8,6 +8,7 @@
 #ifndef ARCADESFML_HPP_
 #define ARCADESFML_HPP_
 
+#include "ICore.hpp"
 #include <iostream>
 
 #endif /* !ARCADESFML_HPP_ */
