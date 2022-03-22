@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
-** game1
+** nibbler
 */
 
-#include "game1.hpp"
+#include "arcadeNibbler.hpp"
 
-int salut(int number)
+int coucou(int number)
 {
     std::cout << number << std::endl;
     return (number);

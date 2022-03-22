@@ -2,12 +2,12 @@
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
-** game2
+** pacman
 */
 
-#include "game2.hpp"
+#include "arcadePacman.hpp"
 
-int coucou(int number)
+int salut(int number)
 {
     std::cout << number << std::endl;
     return (number);

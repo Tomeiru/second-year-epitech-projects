@@ -5,13 +5,13 @@
 ## Makefile
 ##
 
-SRC =	sources/game2.cpp
+SRC =	sources/arcadePacman.cpp
 
 CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
 
 OBJ = 	$(SRC:.cpp=.o)
 
-NAME = arcade_game2.so
+NAME = arcade_pacman.so
 
 all:	$(NAME)
 

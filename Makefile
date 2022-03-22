@@ -9,9 +9,9 @@ NAME = do_it
 
 CORE = $(MAKE)	-s	-C	core/
 
-GAME1 = $(MAKE)	-s	-C	games/game1/
+GAME1 = $(MAKE)	-s	-C	games/pacman/
 
-GAME2 = $(MAKE)	-s	-C	games/game2/
+GAME2 = $(MAKE)	-s	-C	games/nibbler/
 
 NCURSES = $(MAKE)	-s	-C	graphicals/ncurses/
 

@@ -2,13 +2,13 @@
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
-** game2
+** nibbler
 */
 
-#ifndef GAME2_HPP_
-#define GAME2_HPP_
+#ifndef ARCADENIBBLER_HPP_
+#define ARCADENIBBLER_HPP_
 
 #include <iostream>
 #include "ICore.hpp"
 
-#endif /* !GAME2_HPP_ */
+#endif /* !ARCADENIBBLER_HPP_ */
