@@ -27,10 +27,10 @@ def hotlineBinomialDistr(p):
     for k in range(51):
         value = calcBinomial(3500, k, p)
         printInLoop(k, value)
-        if k > 25:
+        if k <= 25:
             overload += value
     compTime = time.time() - start
-    printOverloadAndTime(overload * 100, compTime * 1000)
+    printOverloadAndTime((1 - overload) * 100, compTime * 1000)
 
 def calcPoisson(k, λ):
     ret = ((λ ** k) / math.factorial(k)) * (math.exp(-λ))
@@ -44,10 +44,10 @@ def hotlinePoissonDistr(p):
     for k in range(51):
         value = calcPoisson(k, λ)
         printInLoop(k, value)
-        if k > 25:
+        if k <= 25:
             overload += value
     compTime = time.time() - start
-    printOverloadAndTime(overload * 100, compTime * 1000)
+    printOverloadAndTime((1 - overload) * 100, compTime * 1000)
 
 def hotlineDistr(av):
     duration = int(av[0])
