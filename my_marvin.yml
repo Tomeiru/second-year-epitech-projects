@@ -33,6 +33,7 @@ jenkins:
             permissions:
               - "Job/Build"
               - "Job/Workspace"
+              - "Job/Read"
               - "Overall/Read"
             assignments:
               - "Jeremy"
@@ -44,6 +45,9 @@ jenkins:
               - "Job/Create"
               - "Job/Delete"
               - "Job/Configure"
+              - "Job/Move"
+              - "Job/Cancel"
+              - "Job/Read"
               - "Overall/Read"
             assignments:
               - "vaugie_g"
@@ -52,5 +56,6 @@ jenkins:
             permissions:
               - "Job/Read"
               - "Overall/Read"
+              - "Job/Workspace"
             assignments:
               - "nasso"
