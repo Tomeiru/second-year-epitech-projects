@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <exception>
+#include <dlfcn.h>
 #include "ICore.hpp"
 
 #define UNUSED(x) (void)(x)

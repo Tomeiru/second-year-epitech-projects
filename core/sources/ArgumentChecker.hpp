@@ -13,6 +13,7 @@
 class ArgumentChecker {
     public:
         static void CheckNumber(int ac);
+        static void *CheckAndOpenLibrary(char *arg);
     protected:
     private:
 };

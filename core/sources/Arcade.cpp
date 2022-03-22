@@ -9,9 +9,11 @@
 
 int main(int ac, char **av)
 {
-    UNUSED(av);
+    void *lib = NULL;
+
     try {
         ArgumentChecker::CheckNumber(ac);
+        lib = ArgumentChecker::CheckAndOpenLibrary(av[1]);
     }
     catch (ArcadeError const &error) {
         std::cerr << error.what() << std::endl;
