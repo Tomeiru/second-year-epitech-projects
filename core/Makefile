@@ -5,11 +5,13 @@
 ## Makefile
 ##
 
-SRC =	sources/Arcade.cpp
+SRC =	sources/Arcade.cpp	\
+		sources/ArcadeError.cpp	\
+		sources/ArgumentChecker.cpp
 
 NAME =	arcade
 
-CPPFLAGS = -I./includes -Wall -Wextra
+CPPFLAGS = -g -I./includes -Wall -Wextra
 
 OBJ = 	$(SRC:.cpp=.o)
 

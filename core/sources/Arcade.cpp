@@ -5,11 +5,16 @@
 ** Arcade
 */
 
-#include "Arcade.hpp"
+#include "ArgumentChecker.hpp"
 
 int main(int ac, char **av)
 {
-    UNUSED(ac);
     UNUSED(av);
-    std::cout << "Welcome to the core!" << std::endl;
+    try {
+        ArgumentChecker::CheckNumber(ac);
+    }
+    catch (ArcadeError const &error) {
+        std::cerr << error.what() << std::endl;
+        return (84);
+    }
 }

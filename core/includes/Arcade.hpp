@@ -9,6 +9,7 @@
 #define ARCADE_HPP_
 
 #include <iostream>
+#include <exception>
 
 #define UNUSED(x) (void)(x)
 
