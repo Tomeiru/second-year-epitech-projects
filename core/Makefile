@@ -7,6 +7,7 @@
 
 SRC =	sources/Arcade.cpp	\
 		sources/ArcadeError.cpp	\
+		sources/ArcadeMain.cpp	\
 		sources/ArgumentChecker.cpp
 
 NAME =	arcade

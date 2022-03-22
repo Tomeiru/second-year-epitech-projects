@@ -5,18 +5,47 @@
 ** Arcade
 */
 
-#include "ArgumentChecker.hpp"
+#include "Arcade.hpp"
 
-int main(int ac, char **av)
+Arcade::Arcade()
 {
-    void *lib = NULL;
+    _dlGame = NULL;
+    _dlGraphical = NULL;
+}
 
-    try {
-        ArgumentChecker::CheckNumber(ac);
-        lib = ArgumentChecker::CheckAndOpenLibrary(av[1]);
+Arcade::~Arcade()
+{
+}
+
+void Arcade::changeLibraryByPath(std::string path, bool graphical)
+{
+    if (graphical) {
+        dlclose(_dlGraphical);
+        _dlGraphical = dlopen(path.c_str(), RTLD_LAZY);
+        initClassFromDl(true);
+        return;
     }
-    catch (ArcadeError const &error) {
-        std::cerr << error.what() << std::endl;
-        return (84);
+    if (_dlGame != NULL)
+        dlclose(_dlGame);
+    _dlGame = dlopen(path.c_str(), RTLD_LAZY);
+    initClassFromDl(false);
+}
+
+void Arcade::setDlGraphical(void *dlGraphical)
+{
+    _dlGraphical = dlGraphical;
+}
+
+void Arcade::initClassFromDl(bool graphical)
+{
+    std::unique_ptr<IDisplayModule> (*displayHandle)(void);
+    std::unique_ptr<IGameModule> (*gameHandle)(void);
+
+    if (graphical) {
+        *(void **) &displayHandle = dlsym(_dlGraphical, "gEpitechArcadeGetDisplayModuleHandle");
+        _graphical = (*displayHandle)();
+        return;
     }
+    *(void **) &gameHandle = dlsym(_dlGame, "gEpitechArcadeGetGameModuleHandle");
+    _game = (*gameHandle)();
 }

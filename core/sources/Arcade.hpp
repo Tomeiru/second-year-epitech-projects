@@ -8,11 +8,22 @@
 #ifndef ARCADE_HPP_
 #define ARCADE_HPP_
 
-#include <iostream>
-#include <exception>
-#include <dlfcn.h>
-#include "ICore.hpp"
+#include "ArgumentChecker.hpp"
 
-#define UNUSED(x) (void)(x)
+class Arcade {
+    public:
+        Arcade();
+        ~Arcade();
+        void setDlGraphical(void *graphical);
+        void changeLibraryByPath(std::string path, bool graphical);
+        void initClassFromDl(bool graphical);
+
+    protected:
+        void *_dlGraphical;
+        std::unique_ptr<IDisplayModule> _graphical;
+        void *_dlGame;
+        std::unique_ptr<IGameModule> _game;
+    private:
+};
 
 #endif /* !ARCADE_HPP_ */

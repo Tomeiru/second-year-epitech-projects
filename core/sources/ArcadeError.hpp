@@ -8,7 +8,7 @@
 #ifndef ARCADEERROR_HPP_
 #define ARCADEERROR_HPP_
 
-#include "Arcade.hpp"
+#include "ArcadeMain.hpp"
 
 class ArcadeError : public std::exception {
     public:
