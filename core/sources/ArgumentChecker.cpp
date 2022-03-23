@@ -17,7 +17,7 @@ void *ArgumentChecker::CheckAndOpenLibrary(char *arg)
 {
     void *lib = NULL;
 
-    if (!(lib = dlopen(arg, RTLD_LAZY)))
+    if (!(lib = dlopen(arg, RTLD_NOW)))
         throw ArcadeError("dlopen error", dlerror());
     if (!dlsym(lib, "gEpitechArcadeGetDisplayModuleHandle")) {
         dlclose(lib);

@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SRC =	sources/arcadeNcurses.cpp
+SRC =	sources/ArcadeNcurses.cpp
 
 CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
 

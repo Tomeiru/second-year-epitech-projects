@@ -20,13 +20,13 @@ Arcade::~Arcade()
 void Arcade::changeLibraryByPath(std::string path, bool graphical)
 {
     if (graphical) {
-        dlclose(_dlGraphical);
+        closeDl(true);
         _dlGraphical = dlopen(path.c_str(), RTLD_LAZY);
         initClassFromDl(true);
         return;
     }
     if (_dlGame != NULL)
-        dlclose(_dlGame);
+        closeDl(false);
     _dlGame = dlopen(path.c_str(), RTLD_LAZY);
     initClassFromDl(false);
 }
@@ -48,4 +48,15 @@ void Arcade::initClassFromDl(bool graphical)
     }
     *(void **) &gameHandle = dlsym(_dlGame, "gEpitechArcadeGetGameModuleHandle");
     _game = (*gameHandle)();
+}
+
+void Arcade::closeDl(bool graphical)
+{
+    if (graphical) {
+        _graphical = nullptr;
+        dlclose(_dlGraphical);
+        return;
+    }
+    _game = nullptr;
+    dlclose(_dlGame);
 }

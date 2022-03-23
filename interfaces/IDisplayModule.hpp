@@ -9,6 +9,7 @@
 // - pixelsPerCell must be set to the value from the old display module
 class IDisplayModule {
     public:
+        virtual ~IDisplayModule() = default;
         // Usually used to represent positions
         struct Vector2u {
             std::uint32_t x;
@@ -29,13 +30,13 @@ class IDisplayModule {
 
         // This MUST not be 0. It is the width and height of a call in the game
         // Yes, I know this is stupid and this could just be a variable, but we apparently have to be "pure" and that means no variables at all in interfaces apparently
-        void setPixelsPerCell(std::uint32_t pixelsPerCell);
-        std::uint32_t getPixelsPerCell();
+        virtual void setPixelsPerCell(std::uint32_t pixelsPerCell) = 0;
+        virtual std::uint32_t getPixelsPerCell() = 0;
 
         // RawTexture is a class containing a texture. A texture contains a width and a height, which SHOULD correspond to the width and height of the image in the .png file. Note that with a backend that supports using images in sprite (usually graphics), usually only the pngFilename parameters will be used, whereas on a backend that does not (usually text) usually only the rest of the parameters will be used. Note that pointers to RawTexture become invalid after destroying a graphics library and MUST be destroyed before doing so
         class RawTexture {
-        public:
-            virtual ~RawTexture() = 0;
+            public:
+                virtual ~RawTexture() = 0;
         };
 
         // This MUST only ever be called by ICore, which MUST properly handle the case where graphics libraries are reloaded during a game session (and yes the subject requires this)
@@ -115,3 +116,5 @@ class IDisplayModule {
 
 // Note: This should return a pointer to some IDisplayModuleImpl (please do not make that an actual class name), which should then be deleted when we're done with the module
 extern "C" std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle();
+
+#define UNUSED(x) (void)(x)

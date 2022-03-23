@@ -13,6 +13,4 @@
 #include <dlfcn.h>
 #include "IGameModule.hpp"
 
-#define UNUSED(x) (void)(x)
-
 #endif /* !ARCADEMAIN_HPP_ */
