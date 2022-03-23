@@ -23,7 +23,7 @@ jenkins:
       roles:
         global:
           - name: "admin"
-            description: "Marvin Master"
+            description: "Marvin master"
             permissions:
               - "Overall/Administer"
             assignments:
@@ -59,3 +59,5 @@ jenkins:
               - "Job/Workspace"
             assignments:
               - "nasso"
+jobs:
+  - file: /var/jenkins_home/job_dsl.groovy
