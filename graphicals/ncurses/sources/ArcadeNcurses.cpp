@@ -15,6 +15,7 @@ ArcadeNcurses::ArcadeNcurses()
 
 ArcadeNcurses::~ArcadeNcurses()
 {
+    endwin();
     std::cout << "I deconstructed the ArcadeNcurses struct" << std::endl;
 }
 
@@ -46,9 +47,16 @@ std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std
     return (nullptr);
 }
 
-void ArcadeNcurses::openWindow(IDisplayModule::Vector2u pixelsWantedWindowSize)
+void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)
 {
-    UNUSED(pixelsWantedWindowSize);
+    initscr();
+    WINDOW *win = !windowSize.y && !windowSize.x ?
+    newwin(LINES, COLS, 0, 0) :
+    newwin(windowSize.y, windowSize.x, (LINES - windowSize.y) / 2, (COLS - windowSize.x) / 2);
+    box(win, 0, 0);
+    refresh();
+    wrefresh(win);
+    setWindow(win);
     return;
 }
 
@@ -79,6 +87,12 @@ void ArcadeNcurses::endTextInput()
     return;
 }
 
+void ArcadeNcurses::clearScreen(IDisplayModule::Color color)
+{
+    UNUSED(color);
+    return;
+}
+
 void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite)
 {
     UNUSED(sprite);
@@ -88,4 +102,14 @@ void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite)
 void ArcadeNcurses::display()
 {
     return;
+}
+
+WINDOW *ArcadeNcurses::getWindow()
+{
+    return (_win);
+}
+
+void ArcadeNcurses::setWindow(WINDOW *win)
+{
+    _win = win;
 }

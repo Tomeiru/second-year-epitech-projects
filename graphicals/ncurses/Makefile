@@ -17,7 +17,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 		mkdir -p ../../lib
-		g++ -shared -o $(NAME) $(OBJ)
+		g++ -shared -o $(NAME) $(OBJ) -lncurses
 		mv $(NAME) ../../lib/
 
 clean:

@@ -11,6 +11,7 @@
 #include "ICore.hpp"
 #include <iostream>
 #include <vector>
+#include <curses.h>
 
 class ArcadeNcurses : public IDisplayModule {
     public:
@@ -25,11 +26,15 @@ class ArcadeNcurses : public IDisplayModule {
         void startTextInput();
         std::string getTextInput();
         void endTextInput();
+        void clearScreen(IDisplayModule::Color color);
         void renderSprite(IDisplayModule::Sprite sprite);
         void display();
+        WINDOW *getWindow();
+        void setWindow(WINDOW *win);
 
     protected:
         std::uint32_t _pixelsPerCell;
+        WINDOW *_win;
     private:
 };
 

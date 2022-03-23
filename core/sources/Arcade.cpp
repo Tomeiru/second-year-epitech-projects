@@ -60,3 +60,9 @@ void Arcade::closeDl(bool graphical)
     _game = nullptr;
     dlclose(_dlGame);
 }
+
+void Arcade::mainMenu(void)
+{
+    _graphical->openWindow((IDisplayModule::Vector2u){0, 0});
+    //getInput
+}

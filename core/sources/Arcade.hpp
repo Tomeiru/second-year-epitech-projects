@@ -18,6 +18,7 @@ class Arcade {
         void changeLibraryByPath(std::string path, bool graphical);
         void initClassFromDl(bool graphical);
         void closeDl(bool graphical);
+        void mainMenu(void);
         std::unique_ptr<IDisplayModule> _graphical;
         std::unique_ptr<IGameModule> _game;
     protected:
