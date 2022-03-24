@@ -12,43 +12,46 @@ ArcadeNcurses::ArcadeNcurses()
     _pixelsPerCell = 0;
     _win = NULL;
     _input = -1;
-    std::cout << "I constructed the ArcadeNcurses struct" << std::endl;
+    std::cerr << "I constructed the ArcadeNcurses class" << std::endl;
 }
 
 ArcadeNcurses::~ArcadeNcurses()
 {
     endwin();
-    std::cout << "I deconstructed the ArcadeNcurses struct" << std::endl;
+    std::cerr << "I deconstructed the ArcadeNcurses class" << std::endl;
 }
 
-std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void)
+std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void) //DONE
 {
+    std::cerr << "I'm creating the ArcadeNcurses class" << std::endl;
     return (std::make_unique<ArcadeNcurses>());
 }
 
-void ArcadeNcurses::setPixelsPerCell(std::uint32_t pixelsPerCell)
+void ArcadeNcurses::setPixelsPerCell(std::uint32_t pixelsPerCell) //DONE
 {
-    UNUSED(pixelsPerCell);
-    std::cout << "kekw" << std::endl;
-    return;
+    _pixelsPerCell = pixelsPerCell;
+    std::cerr << "I've set PixelsPerCell" << std::endl;
 }
 
-std::uint32_t ArcadeNcurses::getPixelsPerCell(void)
+std::uint32_t ArcadeNcurses::getPixelsPerCell(void) //DONE
 {
+    std::cerr << "I'm getting PixelsPerCell" << std::endl;
     return (_pixelsPerCell);
 }
 
 std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height)
 {
-    UNUSED(pngFilename);
+    if (pngFilename != "")
+        return (nullptr);
     UNUSED(character);
     UNUSED(characterColor);
     UNUSED(backgroundColor);
     UNUSED(width);
     UNUSED(height);
+    std::cerr << "I'm loading a texture" << std::endl;
     return (nullptr);
 }
-
+//DONE IN THEORY (test needed)
 void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)
 {
     initscr();
@@ -59,42 +62,68 @@ void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)
     nodelay(win, TRUE);
     noecho();
     curs_set(0);
+    keypad(stdscr, TRUE);
+    start_color();
+    initAllColorPair();
+    mousemask(BUTTON1_RELEASED | BUTTON2_RELEASED, NULL);
     box(win, 0, 0);
     refresh();
     wrefresh(win);
     setWindow(win);
+    std::cerr << "I opened a window" << std::endl;
     return;
 }
 
-bool ArcadeNcurses::isButtonPressed(IDisplayModule::Button button)
+bool ArcadeNcurses::isButtonPressed(IDisplayModule::Button button)//DONE IN THEORY (test needed)
 {
-    return (true);
+    std::cerr << "I'm in isButtonPressed for " << keyToCursesKey.at(button) << std::endl;
+    if (_input == keyToCursesKey.at(button))
+        return (true);
+    return (false);
 }
 
-IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEvent()
+IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEvent() //DONE IN THEORY (test needed)
 {
-    MouseButtonReleaseEvent *ptr = new MouseButtonReleaseEvent;
-    return (*ptr);
+    std::cerr << "I'm in getMouseButtonReleaseEvent" << std::endl;
+    MouseButtonReleaseEvent event;
+    MEVENT eventNcurses;
+
+    event.type = MouseButtonReleaseEvent::Type::None;
+    event.cellPosition = (IDisplayModule::Vector2u){0, 0};
+    if (_input == KEY_MOUSE)
+        if (!getmouse(&eventNcurses)) {
+            if (eventNcurses.bstate & BUTTON1_RELEASED)
+                event.type = MouseButtonReleaseEvent::Type::Left;
+            if (eventNcurses.bstate & BUTTON2_RELEASED)
+                event.type = MouseButtonReleaseEvent::Type::Right;
+            event.cellPosition = (IDisplayModule::Vector2u){(uint32_t)eventNcurses.x, (uint32_t)eventNcurses.y};
+        }
+    return (event);
 }
 
 void ArcadeNcurses::startTextInput()
 {
+    std::cerr << "I'm starting text input" << std::endl;
     return;
 }
 
 std::string ArcadeNcurses::getTextInput()
 {
+    std::cerr << "I'm in the middle of getting text input" << std::endl;
     return (std::string("Lol"));
 }
 
 void ArcadeNcurses::endTextInput()
 {
+    std::cerr << "I'm finishing text input" << std::endl;
     return;
 }
 
-void ArcadeNcurses::clearScreen(IDisplayModule::Color color)
+void ArcadeNcurses::clearScreen(IDisplayModule::Color color) //DONE
 {
-    UNUSED(color);
+    //wbkgd(_win, COLOR_PAIR((int)color + 1));
+    wbkgd(_win, COLOR_PAIR((int)color * 8 + (int) color + 1));
+    std::cerr << "I have cleared the screen" << std::endl;
     return;
 }
 
@@ -104,43 +133,46 @@ void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite)
     return;
 }
 
-void ArcadeNcurses::display()
+void ArcadeNcurses::display() //DONE
 {
     wrefresh(_win);
+    std::cerr << "I displayed (refreshed) the window" << std::endl;
     return;
 }
 
 bool ArcadeNcurses::isClosing()
 {
+    std::cerr << "I'm determining if i'm closing" << std::endl;
     return (false);
 }
 
 void ArcadeNcurses::update(void)
 {
-    static int i = 0;
-    static int seconds = 0;
-    static int first_time = time(NULL);
-    int actual_time = time(NULL);
-
-    seconds = actual_time - first_time;
+    std::cerr << "I'm gonna update" << std::endl;
     werase(_win);
-    mvwprintw(_win, 0, 1, "%s", "Main Menu");
-    mvwprintw(_win, 10, 10, "%i | %i", i++, seconds);
     box(_win, 0, 0);
     _input = getch();
-    if (_input == 'q') {
-        endwin();
-        exit(1);
-    }
     return;
 }
 
-WINDOW *ArcadeNcurses::getWindow()
+WINDOW *ArcadeNcurses::getWindow() //DONE
 {
+    std::cerr << "I'm getting the window" << std::endl;
     return (_win);
 }
 
-void ArcadeNcurses::setWindow(WINDOW *win)
+void ArcadeNcurses::setWindow(WINDOW *win) //DONE
 {
+    std::cerr << "I'm setting the window" << std::endl;
     _win = win;
+}
+
+void ArcadeNcurses::initAllColorPair(void) //DONE
+{
+    std::cerr << "I'm initializing all the color pair for ncurses" << std::endl;
+    int i = 1;
+
+    for (int ii = 0; ii < 8; ii++)
+        for (int iii = 0; iii < 8; iii++)
+                init_pair(i++, iii, ii);
 }

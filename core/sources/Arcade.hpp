@@ -33,12 +33,23 @@ class Arcade : public ICore {
         void changeLibraryByPath(std::string path, bool graphical);
         void initClassFromDl(bool graphical);
         void closeDl(bool graphical);
-        void mainMenu(void);
+        void checkFunctionButton(void);
+        void gameRestart(void);
+        void goBackToMenu(void);
+        void exitArcade(void);
+        void gameLoop(void);
+        void launchGame(void);
     protected:
         std::unique_ptr<IDisplayModule> _graphical;
         std::unique_ptr<IGameModule> _game;
         void *_dlGraphical;
         void *_dlGame;
+        std::string _prevGraphPath;
+        std::string _nextGraphPath;
+        std::string _prevGamePath;
+        std::string _nextGamePath;
+        bool _inGame;
+        bool _inMenu;
         unsigned _framerate;
     private:
 };

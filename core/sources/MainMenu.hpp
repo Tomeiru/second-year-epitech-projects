@@ -17,6 +17,7 @@ class MainMenu : public IGameModule {
         void init(ICore *coreHandle);
         void update();
         void draw();
+        void checkPressedButton();
     protected:
         ICore *_core;
     private:

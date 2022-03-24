@@ -10,8 +10,8 @@
 
 #include "ICore.hpp"
 #include <iostream>
-#include <vector>
 #include <curses.h>
+#include <map>
 
 class ArcadeNcurses : public IDisplayModule {
     public:
@@ -33,6 +33,7 @@ class ArcadeNcurses : public IDisplayModule {
         void setWindow(WINDOW *win);
         bool isClosing();
         void update();
+        void initAllColorPair();
 
     protected:
         std::uint32_t _pixelsPerCell;
@@ -40,5 +41,8 @@ class ArcadeNcurses : public IDisplayModule {
         int _input;
     private:
 };
+
+extern const std::map<IDisplayModule::Button, int> keyToCursesKey;
+
 
 #endif /* !ARCADENCURSES_HPP_ */

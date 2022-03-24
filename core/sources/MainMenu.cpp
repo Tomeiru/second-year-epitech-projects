@@ -20,8 +20,13 @@ void MainMenu::init(ICore *coreHandle)
     _core = coreHandle;
 }
 
+void MainMenu::checkPressedButton()
+{
+}
+
 void MainMenu::update()
 {
+    checkPressedButton();
     return;
 }
 

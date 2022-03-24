@@ -5,9 +5,10 @@
 ## Makefile
 ##
 
-SRC =	sources/ArcadeNcurses.cpp
+SRC =	sources/ArcadeNcurses.cpp	\
+		sources/CorrespNcurses.cpp
 
-CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
+CPPFLAGS = -g -Wall -Wextra -fpic -I../../interfaces
 
 OBJ = 	$(SRC:.cpp=.o)
 
