@@ -8,7 +8,8 @@
 SRC =	sources/Arcade.cpp	\
 		sources/ArcadeError.cpp	\
 		sources/ArcadeMain.cpp	\
-		sources/ArgumentChecker.cpp
+		sources/ArgumentChecker.cpp	\
+		sources/MainMenu.cpp
 
 NAME =	arcade
 

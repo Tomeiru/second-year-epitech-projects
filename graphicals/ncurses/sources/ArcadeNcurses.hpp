@@ -31,10 +31,13 @@ class ArcadeNcurses : public IDisplayModule {
         void display();
         WINDOW *getWindow();
         void setWindow(WINDOW *win);
+        bool isClosing();
+        void update();
 
     protected:
         std::uint32_t _pixelsPerCell;
         WINDOW *_win;
+        int _input;
     private:
 };
 
