@@ -37,7 +37,7 @@ jenkins:
               - "Overall/Read"
             assignments:
               - "Jeremy"
-          - name: "Gorilla"
+          - name: "gorilla"
             description: "Group Obsessively Researching Innovation Linked to Learning and Accomplishment"
             permissions:
               - "Job/Build"
@@ -61,3 +61,15 @@ jenkins:
               - "nasso"
 jobs:
   - file: /var/jenkins_home/job_dsl.groovy
+
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - basicSSHUserPrivateKey:
+          description: "ssh key for github"
+          id: "SSH_JENKINS"
+          privateKeySource:
+            directEntry:
+              privateKey: ${SSH_KEY}
+          scope: GLOBAL
