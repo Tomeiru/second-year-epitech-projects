@@ -88,6 +88,7 @@ void Arcade::clearScreen(ICore::Color color)
 
 void Arcade::renderSprite(ICore::Sprite sprite)//TODO
 {
+    UNUSED(sprite);
     return;
 }
 
@@ -206,5 +207,6 @@ void Arcade::launchGame(void)
 
 void Arcade::addNewScore(std::uint32_t score)
 {
+    UNUSED(score);
     return;
 }

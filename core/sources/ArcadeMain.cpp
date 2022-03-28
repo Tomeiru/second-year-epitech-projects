@@ -9,13 +9,13 @@
 
 int main(int ac, char **av)
 {
-    Arcade game;
+    Arcade core;
 
     try {
         ArgumentChecker::CheckNumber(ac);
-        game.setDlGraphical(ArgumentChecker::CheckAndOpenLibrary(av[1]));
-        game.initClassFromDl(true);
-        game.launchGame();
+        core.setDlGraphical(ArgumentChecker::CheckAndOpenLibrary(av[1]));
+        core.initClassFromDl(true);
+        core.launchGame();
     }
     catch (ArcadeError const &error) {
         std::cerr << error.what() << std::endl;

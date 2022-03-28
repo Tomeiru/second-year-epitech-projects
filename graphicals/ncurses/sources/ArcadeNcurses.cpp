@@ -5,7 +5,7 @@
 ** ArcadeNcurses
 */
 
-#include "ArcadeNcurses.hpp"
+#include "RawTextureNcurses.hpp"
 
 ArcadeNcurses::ArcadeNcurses()
 {
@@ -39,20 +39,14 @@ std::uint32_t ArcadeNcurses::getPixelsPerCell(void) //DONE
     return (_pixelsPerCell);
 }
 
-std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height)
+std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
 {
-    if (pngFilename != "")
-        return (nullptr);
-    UNUSED(character);
-    UNUSED(characterColor);
-    UNUSED(backgroundColor);
-    UNUSED(width);
-    UNUSED(height);
-    std::cerr << "I'm loading a texture" << std::endl;
-    return (nullptr);
+    std::cerr << "I've loaded a texture in Ncurses" << std::endl;
+    UNUSED(pngFilename);
+    return (std::make_unique<RawTextureNcurses>(character, characterColor, backgroundColor, width, height));
 }
-//DONE IN THEORY (test needed)
-void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)
+
+void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THEORY (test needed)
 {
     initscr();
     nodelay(stdscr, TRUE);
@@ -127,9 +121,17 @@ void ArcadeNcurses::clearScreen(IDisplayModule::Color color) //DONE
     return;
 }
 
-void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite)
+void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite) //DONE
 {
-    UNUSED(sprite);
+    RawTextureNcurses *texture = dynamic_cast<RawTextureNcurses *>(sprite.texture);
+    char character = texture->getCharacter();
+
+    attron(COLOR_PAIR(texture->getColor()));
+    for (std::size_t i = 0; i < texture->getHeight(); i++) {
+        for (std::size_t ii = 0; ii < texture->getWidth(); ii++)
+            mvwprintw(_win, sprite.rawPixelPosition.y + i, sprite.rawPixelPosition.x + ii, "%c", character);
+    }
+    attroff(COLOR_PAIR(texture->getColor()));
     return;
 }
 
@@ -146,7 +148,7 @@ bool ArcadeNcurses::isClosing()
     return (false);
 }
 
-void ArcadeNcurses::update(void)
+void ArcadeNcurses::update(void) //DONE
 {
     std::cerr << "I'm gonna update" << std::endl;
     werase(_win);

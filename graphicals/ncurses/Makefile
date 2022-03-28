@@ -6,7 +6,8 @@
 ##
 
 SRC =	sources/ArcadeNcurses.cpp	\
-		sources/CorrespNcurses.cpp
+		sources/CorrespNcurses.cpp	\
+		sources/RawTextureNcurses.cpp
 
 CPPFLAGS = -g -Wall -Wextra -fpic -I../../interfaces
 

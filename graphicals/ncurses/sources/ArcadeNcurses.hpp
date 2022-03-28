@@ -23,16 +23,18 @@ class ArcadeNcurses : public IDisplayModule {
         void openWindow(IDisplayModule::Vector2u pixelsWantedWindowSize);
         bool isButtonPressed(IDisplayModule::Button button);
         IDisplayModule::MouseButtonReleaseEvent getMouseButtonReleaseEvent();
+        bool isClosing();
         void startTextInput();
         std::string getTextInput();
         void endTextInput();
         void clearScreen(IDisplayModule::Color color);
         void renderSprite(IDisplayModule::Sprite sprite);
         void display();
+        void update();
+
+        // Personal Functions
         WINDOW *getWindow();
         void setWindow(WINDOW *win);
-        bool isClosing();
-        void update();
         void initAllColorPair();
 
     protected:

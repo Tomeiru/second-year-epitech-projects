@@ -13,7 +13,7 @@ SRC =	sources/Arcade.cpp	\
 
 NAME =	arcade
 
-CPPFLAGS = -g -I./../interfaces -Wall -Wextra
+CPPFLAGS = -g -I./../interfaces -Wall -Wextra -ldl
 
 OBJ = 	$(SRC:.cpp=.o)
 
