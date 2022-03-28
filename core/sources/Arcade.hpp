@@ -27,6 +27,7 @@ class Arcade : public ICore {
         void endTextInput();
         void clearScreen(ICore::Color color);
         void renderSprite(ICore::Sprite sprite);
+        void addNewScore(std::uint32_t score);
 
         // Personal Functions
         void setDlGraphical(void *graphical);

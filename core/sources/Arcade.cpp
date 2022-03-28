@@ -203,3 +203,8 @@ void Arcade::launchGame(void)
     openWindow((IDisplayModule::Vector2u){0, 0});
     gameLoop();
 }
+
+void Arcade::addNewScore(std::uint32_t score)
+{
+    return;
+}
