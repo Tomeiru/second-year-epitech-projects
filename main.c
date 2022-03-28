@@ -7,5 +7,8 @@
 
 int main(void)
 {
+    int a = 0;
+
+    printf("%i\n", a);
     return (0);
 }
