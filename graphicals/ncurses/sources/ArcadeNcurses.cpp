@@ -119,6 +119,7 @@ void ArcadeNcurses::endTextInput()
 //First is background then foreground
 void ArcadeNcurses::clearScreen(IDisplayModule::Color color) //DONE
 {
+    werase(_win);
     wbkgd(_win, COLOR_PAIR(findPair(color, color)));
     std::cerr << "ncurses: I have cleared the screen" << std::endl;
     return;
