@@ -20,6 +20,7 @@ class MainMenu : public IGameModule {
         void checkPressedButton();
     protected:
         ICore *_core;
+        ICore::Texture *_text;
     private:
 };
 
