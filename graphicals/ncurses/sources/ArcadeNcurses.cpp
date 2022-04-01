@@ -112,6 +112,7 @@ void ArcadeNcurses::endTextInput()
 {
     std::cerr << "I'm finishing text input" << std::endl;
     _isTextInputOn = false;
+    _textInput = "";
     return;
 }
 
