@@ -12,6 +12,7 @@ ArcadeNcurses::ArcadeNcurses()
     _pixelsPerCell = 0;
     _win = NULL;
     _input = -1;
+    _isTextInputOn = false;
     std::cerr << "I constructed the ArcadeNcurses class" << std::endl;
 }
 
@@ -48,11 +49,10 @@ std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std
 
 void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THEORY (test needed)
 {
+    UNUSED(windowSize);
     initscr();
     nodelay(stdscr, TRUE);
-    WINDOW *win = !windowSize.y && !windowSize.x ?
-    newwin(LINES, COLS, 0, 0) :
-    newwin(windowSize.y, windowSize.x, (LINES - windowSize.y) / 2, (COLS - windowSize.x) / 2);
+    WINDOW *win = newwin(LINES, COLS, 0, 0);
     nodelay(win, TRUE);
     noecho();
     curs_set(0);
@@ -98,25 +98,27 @@ IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEven
 void ArcadeNcurses::startTextInput()
 {
     std::cerr << "I'm starting text input" << std::endl;
+    _isTextInputOn = true;
     return;
 }
 
 std::string ArcadeNcurses::getTextInput()
 {
     std::cerr << "I'm in the middle of getting text input" << std::endl;
-    return (std::string("Lol"));
+    return (_textInput);
 }
 
 void ArcadeNcurses::endTextInput()
 {
     std::cerr << "I'm finishing text input" << std::endl;
+    _isTextInputOn = false;
     return;
 }
 
+//First is background then foreground
 void ArcadeNcurses::clearScreen(IDisplayModule::Color color) //DONE
 {
-    //wbkgd(_win, COLOR_PAIR((int)color + 1));
-    wbkgd(_win, COLOR_PAIR((int)color * 8 + (int) color + 1));
+    wbkgd(_win, COLOR_PAIR(findPair(color, color)));
     std::cerr << "I have cleared the screen" << std::endl;
     return;
 }
@@ -125,18 +127,20 @@ void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite) //DONE
 {
     RawTextureNcurses *texture = dynamic_cast<RawTextureNcurses *>(sprite.texture);
     char character = texture->getCharacter();
+    uint32_t x = ((sprite.rawPixelPosition.x + texture->getWidth() / 2) / _pixelsPerCell);
+    uint32_t y = ((sprite.rawPixelPosition.y + texture->getHeight() / 2) / _pixelsPerCell);
 
     attron(COLOR_PAIR(texture->getColor()));
-    for (std::size_t i = 0; i < texture->getHeight(); i++) {
-        for (std::size_t ii = 0; ii < texture->getWidth(); ii++)
-            mvwprintw(_win, sprite.rawPixelPosition.y + i, sprite.rawPixelPosition.x + ii, "%c", character);
-    }
+    mvwaddch(_win, y, x, character);
     attroff(COLOR_PAIR(texture->getColor()));
     return;
 }
 
 void ArcadeNcurses::display() //DONE
 {
+    wattron(_win, COLOR_PAIR(findPair(IDisplayModule::Color::black, IDisplayModule::Color::white)));
+    box(_win, 0, 0);
+    wattroff(_win, COLOR_PAIR(findPair(IDisplayModule::Color::black, IDisplayModule::Color::white)));
     wrefresh(_win);
     std::cerr << "I displayed (refreshed) the window" << std::endl;
     return;
@@ -154,6 +158,8 @@ void ArcadeNcurses::update(void) //DONE
     werase(_win);
     box(_win, 0, 0);
     _input = getch();
+    if (_isTextInputOn && isalnum(_input))
+        _textInput.push_back((char)_input);
     return;
 }
 
@@ -177,4 +183,9 @@ void ArcadeNcurses::initAllColorPair(void) //DONE
     for (int ii = 0; ii < 8; ii++)
         for (int iii = 0; iii < 8; iii++)
                 init_pair(i++, iii, ii);
+}
+
+int ArcadeNcurses::findPair(IDisplayModule::Color background, IDisplayModule::Color foreground)
+{
+    return ((int)background * 8 + (int)foreground + 1);
 }

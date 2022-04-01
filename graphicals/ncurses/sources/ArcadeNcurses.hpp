@@ -36,11 +36,14 @@ class ArcadeNcurses : public IDisplayModule {
         WINDOW *getWindow();
         void setWindow(WINDOW *win);
         void initAllColorPair();
+        int findPair(IDisplayModule::Color foreground, IDisplayModule::Color background);
 
     protected:
         std::uint32_t _pixelsPerCell;
         WINDOW *_win;
         int _input;
+        bool _isTextInputOn;
+        std::string _textInput;
     private:
 };
 

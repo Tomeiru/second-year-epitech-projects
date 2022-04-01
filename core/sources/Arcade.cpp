@@ -6,6 +6,7 @@
 */
 
 #include "Arcade.hpp"
+#include "Texture.hpp"
 
 // ICore Functions
 Arcade::Arcade()
@@ -39,14 +40,10 @@ void Arcade::setFramerate(unsigned framerate)
 
 ICore::Texture *Arcade::loadTexture(const std::string &pngFilename, char character, ICore::Color characterColor, ICore::Color backgroundColor, std::size_t width, std::size_t height)//TODO
 {
-    UNUSED(pngFilename);
-    UNUSED(character);
-    UNUSED(characterColor);
-    UNUSED(backgroundColor);
-    UNUSED(width);
-    UNUSED(height);
-    return (nullptr);
-    //return (_graphical->loadTexture(pngFilename, character, characterColor, backgroundColor, width, height));
+    ICore::Texture texture(pngFilename, character, characterColor, backgroundColor, width, height, std::move(_graphical->loadTexture(pngFilename, character, characterColor, backgroundColor, width, height)));
+
+    _textureDeque.push_back(std::move(texture));
+    return (&_textureDeque.back());
 }
 
 void Arcade::openWindow(IDisplayModule::Vector2u pixelsWantedWindowSize)
@@ -88,7 +85,11 @@ void Arcade::clearScreen(ICore::Color color)
 
 void Arcade::renderSprite(ICore::Sprite sprite)//TODO
 {
-    UNUSED(sprite);
+    IDisplayModule::Sprite displaySprite;
+
+    displaySprite.rawPixelPosition = sprite.pixelPosition;
+    displaySprite.texture = sprite.texture->getTexture();
+    _graphical->renderSprite(displaySprite);
     return;
 }
 
@@ -201,7 +202,9 @@ void Arcade::gameLoop(void)
 void Arcade::launchGame(void)
 {
     _game->init(this);
-    openWindow((IDisplayModule::Vector2u){0, 0});
+    openWindow((IDisplayModule::Vector2u){50, 50});
+    setPixelsPerCell(8);
+    setFramerate(30);
     gameLoop();
 }
 

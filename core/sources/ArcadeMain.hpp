@@ -11,6 +11,7 @@
 #include <iostream>
 #include <exception>
 #include <dlfcn.h>
+#include <deque>
 #include "IGameModule.hpp"
 
 #endif /* !ARCADEMAIN_HPP_ */

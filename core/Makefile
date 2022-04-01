@@ -9,7 +9,8 @@ SRC =	sources/Arcade.cpp	\
 		sources/ArcadeError.cpp	\
 		sources/ArcadeMain.cpp	\
 		sources/ArgumentChecker.cpp	\
-		sources/MainMenu.cpp
+		sources/MainMenu.cpp	\
+		sources/Texture.cpp
 
 NAME =	arcade
 

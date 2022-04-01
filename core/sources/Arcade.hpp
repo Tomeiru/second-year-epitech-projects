@@ -41,6 +41,7 @@ class Arcade : public ICore {
         void gameLoop(void);
         void launchGame(void);
     protected:
+        std::deque<ICore::Texture> _textureDeque;
         std::unique_ptr<IDisplayModule> _graphical;
         std::unique_ptr<IGameModule> _game;
         void *_dlGraphical;
