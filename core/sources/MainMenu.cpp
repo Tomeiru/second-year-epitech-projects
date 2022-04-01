@@ -18,6 +18,9 @@ MainMenu::~MainMenu()
 void MainMenu::init(ICore *coreHandle)
 {
     _core = coreHandle;
+    _core->openWindow((IDisplayModule::Vector2u){50, 50});
+    _core->setPixelsPerCell(8);
+    _core->setFramerate(30);
     _text = _core->loadTexture("kekw", 'h', ICore::Color::yellow, ICore::Color::red, 8, 8);
 }
 

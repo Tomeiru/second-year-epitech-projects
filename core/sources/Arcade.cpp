@@ -202,9 +202,6 @@ void Arcade::gameLoop(void)
 void Arcade::launchGame(void)
 {
     _game->init(this);
-    openWindow((IDisplayModule::Vector2u){50, 50});
-    setPixelsPerCell(8);
-    setFramerate(30);
     gameLoop();
 }
 
