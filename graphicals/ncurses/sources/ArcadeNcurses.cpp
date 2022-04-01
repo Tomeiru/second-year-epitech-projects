@@ -13,6 +13,7 @@ ArcadeNcurses::ArcadeNcurses()
     _win = NULL;
     _input = -1;
     _isTextInputOn = false;
+    _textInput = "";
     std::cerr << "ncurses: I constructed the ArcadeNcurses class" << std::endl;
 }
 

@@ -173,7 +173,7 @@ void Arcade::checkFunctionButton(void)
         gameRestart();
     if (isButtonPressed(IDisplayModule::Button::F6))
         goBackToMenu();
-    if (isButtonPressed(IDisplayModule::Button::F7))
+    if (isButtonPressed(IDisplayModule::Button::F7) || _graphical->isClosing() == true)
         exitArcade();
 }
 

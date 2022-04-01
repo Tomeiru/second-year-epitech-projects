@@ -5,7 +5,9 @@
 ## Makefile
 ##
 
-SRC =	sources/arcadeSfml.cpp
+SRC =	sources/ArcadeSfml.cpp	\
+		sources/CorrespSfml.cpp	\
+		sources/RawTextureSfml.cpp
 
 CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
 
@@ -17,7 +19,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 		mkdir -p ../../lib
-		g++ -shared -o $(NAME) $(OBJ)
+		g++ -shared -o $(NAME) $(OBJ) -lsfml-graphics -lsfml-window -lsfml-system
 		mv $(NAME) ../../lib
 
 clean:
