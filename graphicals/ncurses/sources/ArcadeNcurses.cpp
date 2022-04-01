@@ -129,8 +129,8 @@ void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite) //DONE
 {
     RawTextureNcurses *texture = dynamic_cast<RawTextureNcurses *>(sprite.texture);
     char character = texture->getCharacter();
-    uint32_t x = ((sprite.rawPixelPosition.x + texture->getWidth() / 2) / _pixelsPerCell);
-    uint32_t y = ((sprite.rawPixelPosition.y + texture->getHeight() / 2) / _pixelsPerCell);
+    uint32_t x = ((sprite.rawPixelPosition.x + texture->getWidth() / 2) / _pixelsPerCell) + 1;
+    uint32_t y = ((sprite.rawPixelPosition.y + texture->getHeight() / 2) / _pixelsPerCell) + 1;
 
     std::cerr << "ncurses: I will render sprite " << character << " at " << x << " " << y << " with color " << texture->getColor() << std::endl;
     wattron(_win, COLOR_PAIR(texture->getColor()));
