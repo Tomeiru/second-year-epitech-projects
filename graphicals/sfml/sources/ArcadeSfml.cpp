@@ -42,7 +42,7 @@ std::uint32_t ArcadeSfml::getPixelsPerCell(void) //DONE
 
 std::unique_ptr<IDisplayModule::RawTexture> ArcadeSfml::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
 {
-    std::cerr << "SFML: I've loaded a texture in Ncurses" << std::endl;
+    std::cerr << "SFML: I've loaded a texture in SFML" << std::endl;
     UNUSED(width);
     UNUSED(height);
     return (std::make_unique<RawTextureSfml>(pngFilename, character, characterColor, backgroundColor, _pixelsPerCell));
@@ -50,7 +50,9 @@ std::unique_ptr<IDisplayModule::RawTexture> ArcadeSfml::loadTexture(const std::s
 
 void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)//DONE
 {
-    _win.create(sf::VideoMode(windowSize.x, windowSize.y), "Arcade");
+    _win.create(sf::VideoMode(windowSize.x * _pixelsPerCell, windowSize.y * _pixelsPerCell), "Arcade");
+    sf::View view(sf::Vector2f(windowSize.x * _pixelsPerCell / 2, windowSize.y * _pixelsPerCell / 2), sf::Vector2f(windowSize.x * _pixelsPerCell, windowSize.y * _pixelsPerCell));
+    _win.setView(view);
     std::cerr << "SFML: I opened a window" << std::endl;
     return;
 }
@@ -116,6 +118,7 @@ void ArcadeSfml::renderSprite(IDisplayModule::Sprite sprite) //DONE
     sf::Texture texture = rawTexture->getTexture();
     sf::Sprite sfmlSprite(texture);
     sfmlSprite.setPosition(sf::Vector2f((float)sprite.rawPixelPosition.x, (float)sprite.rawPixelPosition.y));
+    _win.draw(sfmlSprite);
     std::cerr << "SFML: I will render sprite" << std::endl;
     return;
 }
@@ -137,11 +140,9 @@ void ArcadeSfml::update(void) //DONE
 {
     sf::Event event;
     std::cerr << "SFML: I'm gonna update" << std::endl;
-
+    static int i = 0;
     while (_win.pollEvent(event)) {
-        if (event.type == sf::Event::Resized)
-            _win.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
-        else if (event.type == sf::Event::KeyPressed) {
+        if (event.type == sf::Event::KeyPressed) {
             if (_isTextInputOn && (event.key.code >= 0 && event.key.code <= 35)) {
                 if (event.key.code > 25)
                     _textInput.push_back((char) event.key.code + 22);

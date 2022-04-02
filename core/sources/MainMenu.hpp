@@ -21,6 +21,7 @@ class MainMenu : public IGameModule {
     protected:
         ICore *_core;
         ICore::Texture *_text;
+        ICore::Texture *_pac;
     private:
 };
 

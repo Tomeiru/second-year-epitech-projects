@@ -9,7 +9,7 @@
 
 RawTextureSfml::RawTextureSfml(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, u_int32_t pixelsPerCell)
 {
-    if (pngFilename.back() == 'f') {
+    if (pngFilename.back() == 'f' || pngFilename.back() == 'F' ) {
         _isASCII = true;
         _ascii.create(pixelsPerCell, pixelsPerCell);
         sf::Font font;
