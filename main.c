@@ -69,7 +69,7 @@ double get_result(double a, double value)
 
     for ( ; lol < value; above = above * 2)
         lol = big_f_calculator(a, (double)above);
-    above /= 2;
+    above = above != 1 ? above / 2 : 1;
     return (algo(a, 0, above, value));
 }
 
