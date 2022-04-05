@@ -37,13 +37,50 @@ void return_time(double a, double *e)
     int minutes = result;
     int seconds = round((result - minutes) * 60);
 
-    printf("Average return time: %im %is\n", minutes, seconds);
+    printf("Average return time: %im %02is\n", minutes, seconds);
 }
 
 void standard_deviation(double a, double y)
 {
     double result = ((-0.75) * (a + 2) * y) + ((0.4375) * (3.f * a + 2.f) + (y * y));
     printf("Standard deviation: %.3f\n", sqrt(result));
+}
+
+double big_f_calculator(double a, double x)
+{
+    double ret = 1.f - (a * exp(-x) + (4 - 3 * a) / 2 * exp(-2 * x) + (2 * a - 4) / 4 * exp(-4 * x));
+    return (ret);
+    //1 - (1.6 × e^-1 + (4 - 3 × 1.6) ÷ 2 × e^-2 + (2 × 1.6 - 4) ÷ 4 × e^-4)
+}
+
+double algo(double a, double below, double above, double objective)
+{
+    double middle = below + ((above - below) / 2);
+    double result = big_f_calculator(a, middle);
+
+    if (above - below < 0.001)
+        return (middle);
+    return (result > objective ? algo(a, below, middle, objective) : algo(a, middle, above, objective));
+}
+
+double get_result(double a, double value)
+{
+    double lol = big_f_calculator(a, (double)1);
+    int above = 1;
+
+    for ( ; lol < value; above = above * 2)
+        lol = big_f_calculator(a, (double)above);
+    above /= 2;
+    return (algo(a, 0, above, value));
+}
+
+void calculate_time_back(double a, int percentage)
+{
+    double result = get_result(a, (double)percentage / 100);
+    int minutes = result;
+    int seconds = round((result - minutes) * 60);
+
+    printf("Time after which %i%% of the ducks are back: %im %02is\n", percentage, minutes, seconds);
 }
 
 int main(int ac, char **av)
@@ -60,5 +97,8 @@ int main(int ac, char **av)
         return (84);
     return_time(a, &e);
     standard_deviation(a, e);
-    printf("%f\n", 0.399576 - 0.122379 * a);
+    calculate_time_back(a, 50);
+    calculate_time_back(a, 99);
+    printf("Percentage of ducks back after 1 minute: %.1f%%\n", big_f_calculator(a, 1) * 100);
+    printf("Percentage of ducks back after 2 minutes: %.1f%%\n", big_f_calculator(a, 2) * 100);
 }
