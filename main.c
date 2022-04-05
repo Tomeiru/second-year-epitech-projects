@@ -50,7 +50,6 @@ double big_f_calculator(double a, double x)
 {
     double ret = 1.f - (a * exp(-x) + (4 - 3 * a) / 2 * exp(-2 * x) + (2 * a - 4) / 4 * exp(-4 * x));
     return (ret);
-    //1 - (1.6 × e^-1 + (4 - 3 × 1.6) ÷ 2 × e^-2 + (2 × 1.6 - 4) ÷ 4 × e^-4)
 }
 
 double algo(double a, double below, double above, double objective)
