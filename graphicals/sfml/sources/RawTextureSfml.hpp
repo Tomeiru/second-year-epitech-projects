@@ -14,7 +14,7 @@ class RawTextureSfml : public IDisplayModule::RawTexture {
     public:
         RawTextureSfml(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, u_int32_t pixelsPerCell);
         ~RawTextureSfml();
-        sf::Texture getTexture();
+        const sf::Texture &getTexture();
 
     protected:
         sf::Texture _texture;

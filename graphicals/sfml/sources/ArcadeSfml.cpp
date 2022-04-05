@@ -50,8 +50,8 @@ std::unique_ptr<IDisplayModule::RawTexture> ArcadeSfml::loadTexture(const std::s
 
 void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)//DONE
 {
-    _win.create(sf::VideoMode(windowSize.x * _pixelsPerCell, windowSize.y * _pixelsPerCell), "Arcade");
-    sf::View view(sf::Vector2f(windowSize.x * _pixelsPerCell / 2, windowSize.y * _pixelsPerCell / 2), sf::Vector2f(windowSize.x * _pixelsPerCell, windowSize.y * _pixelsPerCell));
+    _win.create(sf::VideoMode(windowSize.x, windowSize.y), "Arcade");
+    sf::View view(sf::Vector2f(windowSize.x / 2, windowSize.y/ 2), sf::Vector2f(windowSize.x, windowSize.y));
     _win.setView(view);
     std::cerr << "SFML: I opened a window" << std::endl;
     return;
@@ -115,7 +115,7 @@ void ArcadeSfml::clearScreen(IDisplayModule::Color color) //DONE
 void ArcadeSfml::renderSprite(IDisplayModule::Sprite sprite) //DONE
 {
     RawTextureSfml *rawTexture = dynamic_cast<RawTextureSfml *>(sprite.texture);
-    sf::Texture texture = rawTexture->getTexture();
+    const sf::Texture &texture = rawTexture->getTexture();
     sf::Sprite sfmlSprite(texture);
     sfmlSprite.setPosition(sf::Vector2f((float)sprite.rawPixelPosition.x, (float)sprite.rawPixelPosition.y));
     _win.draw(sfmlSprite);
@@ -140,7 +140,6 @@ void ArcadeSfml::update(void) //DONE
 {
     sf::Event event;
     std::cerr << "SFML: I'm gonna update" << std::endl;
-    static int i = 0;
     while (_win.pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
             if (_isTextInputOn && (event.key.code >= 0 && event.key.code <= 35)) {

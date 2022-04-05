@@ -30,7 +30,7 @@ RawTextureSfml::~RawTextureSfml()
 {
 }
 
-sf::Texture RawTextureSfml::getTexture()
+const sf::Texture &RawTextureSfml::getTexture()
 {
     if (_isASCII)
         return (_ascii.getTexture());
