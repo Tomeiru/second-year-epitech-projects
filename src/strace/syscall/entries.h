@@ -19,13 +19,13 @@ int strace_syscall_print_sys_execveat(struct strace *self,
 
 static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
     [SYS_execve] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_execve,
         .number = SYS_execve,
         .name = "execve",
         .num_arguments = 3,
     },
     [SYS_execveat] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_execveat,
         .number = SYS_execveat,
         .name = "execveat",
         .num_arguments = 5,

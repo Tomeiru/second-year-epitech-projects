@@ -6,108 +6,86 @@
 */
 
 #include "start_child.h"
-#include "print_error_message/errno_and_die.h"
+#include "start_child_part2.h"
+#include "do_ptrace_seize.h"
 #include "save_errno_kill.h"
 #include "do_exec.h"
-#include "do_ptrace_seize.h"
+#include "print_error_message/errno_and_die.h"
 #include "process/add.h"
 #include "process/do_post_attach.h"
 #include "standard_fds/redirect.h"
-#include <string.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/stat.h>
 #include <sys/wait.h>
 #include <errno.h>
 #include <stdint.h>
-#include <limits.h>
+
+static void ssc_part4(ssc_state_t *s)
+{
+    if (strace_do_ptrace_seize(s->self, s->self->child_pid,
+        &s->ptrace_command)) {
+        strace_save_errno_kill(s->self->child_pid, SIGKILL);
+        strace_print_error_message_errno_and_die(s->self,
+            "attach: ptrace(%s, %jd)", s->ptrace_command,
+            (intmax_t)s->self->child_pid);
+    }
+    kill(s->self->child_pid, SIGCONT);
+    s->process = strace_process_add(s->self, s->self->child_pid);
+    strace_process_do_post_attach(s->self, s->process,
+        STRACE_PROCESS_NO_DETACH_FIRST_EXEC | STRACE_PROCESS_HIDE_LOG);
+    strace_standard_fds_redirect(s->self);
+}
+
+static void ssc_part3(ssc_state_t *s)
+{
+    s->self->traced_process_params.argv = s->argv;
+    s->self->traced_process_params.exec_pathname = s->pathname;
+    if (s->pid == 0)
+        strace_do_exec(s->self);
+    s->self->child_pid = s->pid;
+    while (waitpid(s->self->child_pid, &s->wait_status, WSTOPPED) < 0) {
+        if (errno == EINTR)
+            continue;
+        strace_print_error_message_errno_and_die(s->self, "waitpid");
+    }
+    if (!WIFSTOPPED(s->wait_status) || WSTOPSIG(s->wait_status) != SIGSTOP) {
+        strace_save_errno_kill(s->self->child_pid, SIGKILL);
+        strace_print_error_message_errno_and_die(s->self,
+            "Unexpected wait status %#x", s->wait_status);
+    }
+    ssc_part4(s);
+}
+
+static void ssc_part2(ssc_state_t *s)
+{
+    if (s->filename_length > (sizeof(s->pathname) - 1)) {
+        errno = ENAMETOOLONG;
+        strace_print_error_message_errno_and_die(s->self, "exec");
+    }
+    if (strchr(s->filename, '/') != NULL)
+        memcpy(s->pathname, s->filename, s->filename_length + 1);
+    else {
+        s->path = getenv("PATH");
+        ssc_do_loop(s);
+        if (s->path == NULL || *s->path == '\0')
+            s->pathname[0] = '\0';
+    }
+    if (stat(s->pathname, &s->stat_buffer) != 0)
+        strace_print_error_message_errno_and_die(s->self, "Can't stat '%s'",
+            s->pathname);
+    s->pid = fork();
+    if (s->pid < 0)
+        strace_print_error_message_errno_and_die(s->self, "fork");
+    ssc_part3(s);
+}
 
 void strace_start_child(struct strace *self, char **argv)
 {
-    char pathname[PATH_MAX];
-    const char *filename = argv[0];
-    size_t filename_length = strlen(filename);
-    struct stat stat_buffer;
+    ssc_state_t state = {
+        .self = self,
+        .argv = argv,
+        .filename = argv[0],
+        .filename_length = strlen(argv[0]),
+    };
 
-    if (filename_length > (sizeof(pathname) - 1)) {
-        errno = ENAMETOOLONG;
-        strace_print_error_message_errno_and_die(self, "exec");
-    }
-    if (strchr(filename, '/') != NULL)
-        memcpy(pathname, filename, filename_length + 1);
-    else {
-        const char *path = getenv("PATH");
-        size_t before_colon;
-        size_t after_colon;
-        size_t pathname_length;
-
-        for (; path != NULL && *path != '\0'; path += after_colon) {
-
-            const char *colon = strchr(path, ':');
-
-            if (colon != NULL) {
-                before_colon = colon - path;
-                after_colon = before_colon + 1;
-            } else {
-                before_colon = strlen(path);
-                after_colon = before_colon;
-            }
-            if (before_colon == 0) {
-                if (getcwd(pathname, PATH_MAX) == NULL)
-                    continue;
-                pathname_length = strlen(pathname);
-            } else if (before_colon > sizeof(pathname) - 1)
-                continue;
-            else {
-                strncpy(pathname, path, before_colon);
-                pathname_length = before_colon;
-            }
-            if (pathname_length != 0 && pathname[pathname_length - 1] != '/')
-                pathname[pathname_length++] = '/';
-            if (filename_length + pathname_length > sizeof(pathname) - 1)
-                continue;
-            strcpy(pathname + pathname_length, filename);
-
-            if (stat(pathname, &stat_buffer) == 0 &&
-                S_ISREG(stat_buffer.st_mode) &&
-                (stat_buffer.st_mode & 0111))
-                break;
-        }
-        if (path == NULL || *path == '\0')
-            pathname[0] = '\0';
-    }
-    if (stat(pathname, &stat_buffer) != 0)
-        strace_print_error_message_errno_and_die(self, "Can't stat '%s'", pathname);
-    pid_t pid = fork();
-    if (pid < 0)
-        strace_print_error_message_errno_and_die(self, "fork");
-    self->traced_process_params.argv = argv;
-    self->traced_process_params.exec_pathname = pathname;
-    if (pid == 0)
-        strace_do_exec(self);
-    self->child_pid = pid;
-
-    int wait_status;
-    while (waitpid(self->child_pid, &wait_status, WSTOPPED) < 0) {
-        if (errno == EINTR)
-            continue;
-        strace_print_error_message_errno_and_die(self, "waitpid");
-    }
-    if (!WIFSTOPPED(wait_status) || WSTOPSIG(wait_status) != SIGSTOP) {
-        strace_save_errno_kill(self->child_pid, SIGKILL);
-        strace_print_error_message_errno_and_die(self,
-            "Unexpected wait status %#x", wait_status);
-    }
-    const char *ptrace_command;
-    if (strace_do_ptrace_seize(self, self->child_pid, &ptrace_command)) {
-        strace_save_errno_kill(self->child_pid, SIGKILL);
-        strace_print_error_message_errno_and_die(self,
-            "attach: ptrace(%s, %jd)", ptrace_command,
-            (intmax_t)self->child_pid);
-    }
-    kill(self->child_pid, SIGCONT);
-    struct strace_process *process = strace_process_add(self, self->child_pid);
-    strace_process_do_post_attach(self, process,
-        STRACE_PROCESS_NO_DETACH_FIRST_EXEC | STRACE_PROCESS_HIDE_LOG);
-    strace_standard_fds_redirect(self);
+    ssc_part2(&state);
 }

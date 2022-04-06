@@ -16,7 +16,7 @@ void strace_vprint_error_message(struct strace *self, int errno,
     fflush(NULL);
     fprintf(stderr, "%s: ", self->program_invocation_name);
     vfprintf(stderr, format, arguments);
-    if (errno)
+    if (errno != 0)
         fprintf(stderr, ": %s\n", strerror(errno));
     else
         fputc('\n', stderr);

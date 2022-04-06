@@ -90,6 +90,7 @@ SOURCE_FILES += strace/syscall/print_next_argument strace/calloc
 SOURCE_FILES += strace/syscall/get_error strace/get_errno_name
 SOURCE_FILES += strace/syscall/print_sys/execve
 SOURCE_FILES += strace/syscall/print_sys/execveat
+SOURCE_FILES += strace/syscall/print_sys/do_execve
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 

@@ -7,10 +7,11 @@
 
 #include "../entries.h"
 #include "../../print_error_message.h"
+#include "do_execve.h"
 
 int strace_syscall_print_sys_execve(struct strace *self,
     struct strace_process *proc)
 {
-    strace_print_error_message(self, "TODO: implement execve properly");
+    strace_syscall_print_sys_do_execve(self, proc, 0);
     return (strace_syscall_print_raw_arguments(self, proc));
 }
