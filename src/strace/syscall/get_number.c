@@ -37,24 +37,15 @@ static int check_x86_stuff(struct strace *self, struct strace_process *proc)
     return (1);
 }
 
-int strace_syscall_get_number(struct strace *self, struct strace_process *proc)
+static int ssgn_part2(struct strace *self, struct strace_process *proc)
 {
-    int r;
+    struct strace_syscall_entry_buffer *p;
 
-    proc->syscall_number = -1;
-    proc->syscall_entry = NULL;
-    proc->qualifier_flags = STRACE_QUALIFIER_RAW;
-    if (strace_get_regs(self, proc) < 0)
-        return (-1);
-    r = check_x86_stuff(self, proc);
-    if (r != 1)
-        return (r);
     if (strace_syscall_number_is_valid(proc->syscall_number)) {
         proc->syscall_entry = &STRACE_SYSCALL_ENTRIES[proc->syscall_number];
         proc->qualifier_flags = 0;
     } else {
-        struct strace_syscall_entry_buffer *p = strace_zalloc(self, sizeof(*p));
-
+        p = strace_zalloc(self, sizeof(*p));
         p->proc = proc;
         p->entry = STRACE_SYSCALL_STUB_ENTRY;
         p->entry.name = p->buffer;
@@ -67,4 +58,19 @@ int strace_syscall_get_number(struct strace *self, struct strace_process *proc)
     if (proc->flags & STRACE_PROCESS_RECOVERING)
         proc->qualifier_flags &= STRACE_QUALIFIER_RAW;
     return (1);
+}
+
+int strace_syscall_get_number(struct strace *self, struct strace_process *proc)
+{
+    int r;
+
+    proc->syscall_number = -1;
+    proc->syscall_entry = NULL;
+    proc->qualifier_flags = STRACE_QUALIFIER_RAW;
+    if (strace_get_regs(self, proc) < 0)
+        return (-1);
+    r = check_x86_stuff(self, proc);
+    if (r != 1)
+        return (r);
+    return (ssgn_part2(self, proc));
 }

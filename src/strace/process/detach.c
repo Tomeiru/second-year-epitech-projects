@@ -49,6 +49,27 @@ static void wait_loop(struct strace *st, struct strace_process *self)
     }
 }
 
+static void spd_part2(struct strace *st, struct strace_process *self)
+{
+    int ptrace_error;
+
+    if (syscall(SYS_tkill, self->pid, 0) < 0) {
+        if (errno != ESRCH)
+            strace_print_error_message_errno(st, "tkill(%u,0)", self->pid);
+        drop(st, self);
+        return;
+    }
+    ptrace_error = ptrace(PTRACE_INTERRUPT, self->pid, 0, 0);
+    if (ptrace_error == 0) {
+        wait_loop(st, self);
+        return;
+    }
+    if (errno != ESRCH)
+        strace_print_error_message_errno(st, "ptrace(PTRACE_INTERRUPT,%u)",
+            self->pid);
+    drop(st, self);
+}
+
 void strace_process_detach(struct strace *st, struct strace_process *self)
 {
     int ptrace_error;
@@ -68,19 +89,5 @@ void strace_process_detach(struct strace *st, struct strace_process *self)
         drop(st, self);
         return;
     }
-    if (syscall(SYS_tkill, self->pid, 0) < 0) {
-        if (errno != ESRCH)
-            strace_print_error_message_errno(st, "tkill(%u,0)", self->pid);
-        drop(st, self);
-        return;
-    }
-    ptrace_error = ptrace(PTRACE_INTERRUPT, self->pid, 0, 0);
-    if (ptrace_error == 0) {
-        wait_loop(st, self);
-        return;
-    }
-    if (errno != ESRCH)
-        strace_print_error_message_errno(st, "ptrace(PTRACE_INTERRUPT,%u)",
-            self->pid);
-    drop(st, self);
+    spd_part2(st, self);
 }

@@ -12,7 +12,7 @@
 void strace_process_startup(struct strace *st, struct strace_process *self)
 {
     self->flags &= ~STRACE_PROCESS_BEFORE_FIRST_STOP;
-    if ((self->flags & STRACE_PROCESS_GRABBED) && (strace_syscall_get_number(st,
-        self) == 1))
+    if ((self->flags & STRACE_PROCESS_GRABBED) &&
+        (strace_syscall_get_number(st, self) == 1))
         (void)0;
 }
