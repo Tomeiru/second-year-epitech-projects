@@ -47,7 +47,49 @@ BINARY_NAME := strace
 all: $(BINARY_NAME)
 
 # Program sources files
-SOURCE_FILES := main
+SOURCE_FILES := main strace/get_next_event strace/do_event strace/exit
+SOURCE_FILES += strace/print_error_message/and_die strace/init
+SOURCE_FILES += strace/process/startup strace/set_current_process
+SOURCE_FILES += strace/list/head_remove strace/event_table_size_check
+SOURCE_FILES += strace/print_error_message/errno_and_die
+SOURCE_FILES += strace/process/get_from_pid
+SOURCE_FILES += strace/print_error_message/print_error_message
+SOURCE_FILES += strace/list/is_empty strace/list/append
+SOURCE_FILES += strace/print_signal_stop strace/print_signalled
+SOURCE_FILES += strace/process/drop strace/print_exited
+SOURCE_FILES += strace/do_ptrace_restart strace/cleanup
+SOURCE_FILES += strace/vprint_error_message strace/do_trace_syscall
+SOURCE_FILES += strace/print_event_exit_stopped strace/die/die
+SOURCE_FILES += strace/cstr_to_uint strace/process/add
+SOURCE_FILES += strace/print_error_message/help_and_die
+SOURCE_FILES += strace/standard_fds/check_open strace/start_child
+SOURCE_FILES += strace/init_do_attach strace/syscall/get_number
+SOURCE_FILES += strace/list/remove strace/grow_array
+SOURCE_FILES += strace/syscall/print_leader strace/sprint_signal_name
+SOURCE_FILES += strace/printf strace/syscall/print_line_ended
+SOURCE_FILES += strace/process/free_private_data
+SOURCE_FILES += strace/print_error_message/errno strace/process/detach
+SOURCE_FILES += strace/syscall/enter_decode strace/syscall/enter_trace
+SOURCE_FILES += strace/syscall/enter_finish strace/syscall/exit_decode
+SOURCE_FILES += strace/syscall/exit_trace strace/syscall/exit_finish
+SOURCE_FILES += strace/syscall/print_resume strace/syscall/print_tab
+SOURCE_FILES += strace/fd/open_dummy strace/do_exec strace/save_errno_kill
+SOURCE_FILES += strace/do_ptrace_seize strace/process/do_post_attach
+SOURCE_FILES += strace/standard_fds/redirect strace/process/attach
+SOURCE_FILES += strace/syscall/number_is_valid strace/get_regs strace/zalloc
+SOURCE_FILES += strace/syscall/print_raw_arguments strace/snprintf
+SOURCE_FILES += strace/syscall/entry_buffer_free
+SOURCE_FILES += strace/process/set_private_data strace/die/oom
+SOURCE_FILES += strace/reallocarray strace/get_signal_name strace/vprintf
+SOURCE_FILES += strace/syscall/get_arguments strace/process/get_syscall_entry
+SOURCE_FILES += strace/syscall/print_start_arguments strace/process/is_raw
+SOURCE_FILES += strace/syscall/get_result strace/syscall/print_end_arguments
+SOURCE_FILES += strace/syscall/print_error_return strace/fd/set_cloexec
+SOURCE_FILES += strace/syscall/number_is_in_range
+SOURCE_FILES += strace/syscall/print_next_argument strace/calloc
+SOURCE_FILES += strace/syscall/get_error strace/get_errno_name
+SOURCE_FILES += strace/syscall/print_sys/execve
+SOURCE_FILES += strace/syscall/print_sys/execveat
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 
@@ -55,7 +97,13 @@ $(BINARY_NAME): $(OBJECT_FILES)
 > $(CC) $(LDFLAGS) -o $@ $^
 
 obj/src/%.o: src/%.c
-> @mkdir --parents obj/src/nm
+> @mkdir --parents obj/src/strace/print_error_message
+> @mkdir --parents obj/src/strace/process
+> @mkdir --parents obj/src/strace/list
+> @mkdir --parents obj/src/strace/die
+> @mkdir --parents obj/src/strace/standard_fds
+> @mkdir --parents obj/src/strace/syscall/print_sys
+> @mkdir --parents obj/src/strace/fd
 > $(CC) -c $< -o $@ $(CFLAGS)
 
 # Include dependencies for the object files
