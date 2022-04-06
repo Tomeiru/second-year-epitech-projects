@@ -19,7 +19,7 @@ void strace_process_attach(struct strace *st, struct strace_process *self)
     if (strace_do_ptrace_seize(st, self->pid, &ptrace_command) < 0) {
         strace_print_error_message_errno(st, "attach: ptrace(%s, %jd)",
             ptrace_command, (intmax_t)self->pid);
-        strace_process_drop(stx, self);
+        strace_process_drop(st, self);
         return;
     }
     strace_process_do_post_attach(st, self, STRACE_PROCESS_GRABBED);

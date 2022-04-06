@@ -8,7 +8,8 @@
 #include "get_errno_name.h"
 #include "errnostrs.h"
 
-const char *strace_get_errno_name(uint64_t errno)
+const char *strace_get_errno_name(uint64_t err_number)
 {
-    return (errno < STRACE_ERRNOSTRS_COUNT ? STRACE_ERRNOSTRS[errno] : NULL); 
+    return (err_number < STRACE_ERRNOSTRS_COUNT ?
+        STRACE_ERRNOSTRS[err_number] : NULL);
 }

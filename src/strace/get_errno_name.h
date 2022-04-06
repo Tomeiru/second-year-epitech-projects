@@ -9,4 +9,4 @@
 
 #include <stdint.h>
 
-const char *strace_get_errno_name(uint64_t errno);
+const char *strace_get_errno_name(uint64_t err_number);

@@ -11,6 +11,7 @@
 void strace_syscall_exit_finish(struct strace *self,
     struct strace_process *proc)
 {
+    (void)self;
     proc->flags &= ~STRACE_PROCESS_IN_SYSCALL;
     proc->syscall_retval_format = 0;
     strace_process_free_private_data(proc);
