@@ -43,7 +43,20 @@ static void sset_part2_do_switch(struct strace *self,
     }
 }
 
-static int sset_part2(struct strace *self, struct strace_process *proc)
+static void sset_part2_do_switch2(struct strace *self,
+    struct strace_process *proc, int retval_format)
+{
+    switch (retval_format & STRACE_SYSCALL_RETVAL_FORMAT_MASK) {
+    case STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL:
+        strace_printf(self, "= %ju", (uintmax_t)proc->syscall_retval);
+        break;
+    default:
+        strace_print_error_message(self, "invalid retval format");
+    }
+}
+
+static int sset_part2(struct strace *self, struct strace_process *proc,
+    int retval_format)
 {
     strace_syscall_print_end_arguments(self);
     strace_printf(self, " ");
@@ -57,7 +70,7 @@ static int sset_part2(struct strace *self, struct strace_process *proc)
     } else if (proc->syscall_error != 0)
         sset_part2_do_switch(self, proc);
     else
-        strace_print_error_message(self, "invalid retval format");
+        sset_part2_do_switch2(self, proc, retval_format);
     strace_printf(self, "\n");
     strace_syscall_print_line_ended(self);
     return (0);
@@ -85,5 +98,5 @@ int strace_syscall_exit_trace(struct strace *self, struct strace_process *proc,
             retval_format = strace_process_get_syscall_entry(proc)->function(
                 self, proc);
     }
-    return (sset_part2(self, proc));
+    return (sset_part2(self, proc, retval_format));
 }

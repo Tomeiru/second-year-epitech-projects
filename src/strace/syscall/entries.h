@@ -14,7 +14,7 @@
 
 int strace_syscall_print_sys_execve(struct strace *self,
     struct strace_process *proc);
-int strace_syscall_print_sys_execveat(struct strace *self,
+int strace_syscall_print_arguments_decimal(struct strace *self,
     struct strace_process *proc);
 
 static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
@@ -25,19 +25,19 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 3,
     },
     [SYS_execveat] = {
-        .function = &strace_syscall_print_sys_execveat,
+        .function = &strace_syscall_print_raw_arguments,
         .number = SYS_execveat,
         .name = "execveat",
         .num_arguments = 5,
     },
     [SYS_exit] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_arguments_decimal,
         .number = SYS_exit,
         .name = "exit",
         .num_arguments = 1,
     },
     [SYS_exit_group] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_arguments_decimal,
         .number = SYS_exit,
         .name = "exit_group",
         .num_arguments = 1,
@@ -1105,7 +1105,7 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 2,
     },
     [SYS_iopl] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_arguments_decimal,
         .number = SYS_iopl,
         .name = "iopl",
         .num_arguments = 1,
@@ -1411,13 +1411,13 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 2,
     },
     [SYS_timer_getoverrun] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_arguments_decimal,
         .number = SYS_timer_getoverrun,
         .name = "timer_getoverrun",
         .num_arguments = 1,
     },
     [SYS_timer_delete] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_arguments_decimal,
         .number = SYS_timer_delete,
         .name = "timer_delete",
         .num_arguments = 1,
@@ -1991,6 +1991,12 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_pwritev2,
         .name = "pwritev2",
         .num_arguments = 5,
+    },
+    [SYS_pkey_free] = {
+        .function = &strace_syscall_print_arguments_decimal,
+        .number = SYS_pkey_free,
+        .name = "pkey_free",
+        .num_arguments = 1,
     },
 };
 static const size_t STRACE_SYSCALL_ENTRIES_COUNT =

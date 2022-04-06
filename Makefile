@@ -89,8 +89,21 @@ SOURCE_FILES += strace/syscall/number_is_in_range
 SOURCE_FILES += strace/syscall/print_next_argument strace/calloc
 SOURCE_FILES += strace/syscall/get_error strace/get_errno_name
 SOURCE_FILES += strace/syscall/print_sys/execve
-SOURCE_FILES += strace/syscall/print_sys/execveat
-SOURCE_FILES += strace/syscall/print_sys/do_execve
+SOURCE_FILES += strace/syscall/print_sys/do_execve strace/syscall/print_path
+SOURCE_FILES += strace/syscall/print_argv strace/syscall/print_argc
+SOURCE_FILES += strace/syscall/print_address strace/syscall/print_path_n
+SOURCE_FILES += strace/syscall/print_array_next
+SOURCE_FILES += strace/syscall/print_more_data_after_this
+SOURCE_FILES += strace/syscall/print_address_comment
+SOURCE_FILES += strace/syscall/print_array_begin strace/syscall/print_string
+SOURCE_FILES += strace/syscall/print_array_end strace/copy_mem_from_pid
+SOURCE_FILES += strace/copy_str_from_pid strace/printf_comment
+SOURCE_FILES += strace/syscall/print_quoted_c_string strace/quote_string
+SOURCE_FILES += strace/syscall/print_comment_begin
+SOURCE_FILES += strace/syscall/print_comment_end
+SOURCE_FILES += strace/syscall/print_quoted_string strace/is_printable
+SOURCE_FILES += strace/sprint_byte_octal strace/syscall/print_unavailable
+SOURCE_FILES += strace/syscall/print_arguments_decimal
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 

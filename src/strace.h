@@ -18,6 +18,15 @@
 struct strace;
 struct strace_process;
 
+union strace_long_innards {
+    long value;
+    char innards[sizeof(long)];
+};
+
+enum strace_syscall_print_quote_style {
+    STRACE_SYSCALL_PRINT_QUOTE_0_TERM = 0x1,
+};
+
 struct strace_list_item {
     struct strace_list_item *prev;
     struct strace_list_item *next;
@@ -36,6 +45,8 @@ enum strace_process_flags {
 };
 
 enum strace_syscall_retval_format {
+    STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL = 0x0,
+    STRACE_SYSCALL_RETVAL_FORMAT_MASK = 0xF,
     STRACE_SYSCALL_RETVAL_DECODED = 0x40,
 };
 

@@ -13,5 +13,5 @@ int strace_syscall_print_sys_execve(struct strace *self,
     struct strace_process *proc)
 {
     strace_syscall_print_sys_do_execve(self, proc, 0);
-    return (strace_syscall_print_raw_arguments(self, proc));
+    return (STRACE_SYSCALL_RETVAL_DECODED);
 }
