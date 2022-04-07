@@ -5,7 +5,12 @@
 ## Makefile
 ##
 
-SRC =	
+SRC =	src/fork_and_execve.c	\
+		src/strace_command.c	\
+		src/strace_pid.c	\
+		src/path_to_array.c	\
+		src/printer.c	\
+		src/path_command.c
 
 MAIN =	src/main.c
 
