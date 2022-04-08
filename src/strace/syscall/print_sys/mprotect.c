@@ -12,8 +12,8 @@
 #include "../print_flags.h"
 #include "../enum_prot.h"
 
-int strace_syscall_print_sys_mprotect(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_mprotect(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_address(self, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);

@@ -14,8 +14,8 @@
 #include "../printf.h"
 #include <sys/resource.h>
 
-void strace_syscall_print_rlimit(struct strace *self,
-    struct strace_process *proc, __syscall_ulong_t address)
+void strace_syscall_print_rlimit(
+    struct strace *self, struct strace_process *proc, __syscall_ulong_t address)
 {
     struct rlimit rlimit_buffer;
 

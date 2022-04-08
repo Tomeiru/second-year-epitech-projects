@@ -13,8 +13,8 @@
 
 static const size_t ALLOC_SIZE_DEFAULT = 256;
 
-void *strace_grow_array(struct strace *self, void *ptr,
-    size_t *num_members, size_t member_size)
+void *strace_grow_array(
+    struct strace *self, void *ptr, size_t *num_members, size_t member_size)
 {
     size_t members_added;
 

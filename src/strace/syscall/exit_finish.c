@@ -8,8 +8,8 @@
 #include "exit_finish.h"
 #include "../process/free_private_data.h"
 
-void strace_syscall_exit_finish(struct strace *self,
-    struct strace_process *proc)
+void strace_syscall_exit_finish(
+    struct strace *self, struct strace_process *proc)
 {
     (void)self;
     proc->flags &= ~STRACE_PROCESS_IN_SYSCALL;

@@ -14,7 +14,7 @@
 void strace_printf_comment(struct strace *self, const char *format, ...)
 {
     va_list arguments;
-    
+
     if (format == NULL || *format == '\0')
         return;
     va_start(arguments, format);

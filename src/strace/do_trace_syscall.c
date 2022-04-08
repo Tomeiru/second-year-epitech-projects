@@ -16,7 +16,7 @@
 int strace_do_trace_syscall(struct strace *self, struct strace_process *proc)
 {
     int r;
-    
+
     if (!(proc->flags & STRACE_PROCESS_IN_SYSCALL)) {
         r = strace_syscall_enter_decode(self, proc);
         if (r == 0)

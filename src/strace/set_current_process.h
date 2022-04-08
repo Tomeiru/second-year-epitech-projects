@@ -9,5 +9,5 @@
 
 #include "../strace.h"
 
-void strace_set_current_process(struct strace *self,
-    struct strace_process *proc);
+void strace_set_current_process(
+    struct strace *self, struct strace_process *proc);

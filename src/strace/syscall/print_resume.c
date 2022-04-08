@@ -10,8 +10,8 @@
 #include "../process/get_syscall_entry.h"
 #include "../printf.h"
 
-void strace_syscall_print_resume(struct strace *self,
-    struct strace_process *proc)
+void strace_syscall_print_resume(
+    struct strace *self, struct strace_process *proc)
 {
     if (self->printing_process != proc) {
         strace_syscall_print_leader(self, proc);

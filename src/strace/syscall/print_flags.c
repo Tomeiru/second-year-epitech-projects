@@ -19,8 +19,8 @@ int strace_syscall_print_flags(struct strace *self,
 
     for (size_t i = 0; (flags || j == 0) && i < enu->size; ++i) {
         val = enu->data[i].value;
-        if (enu->data[i].string != NULL && ((flags == val) || (val != 0 &&
-            (flags & val) == val))) {
+        if (enu->data[i].string != NULL &&
+            ((flags == val) || (val != 0 && (flags & val) == val))) {
             if (j++)
                 strace_printf(self, "|");
             strace_printf(self, "%s", enu->data[i].string);

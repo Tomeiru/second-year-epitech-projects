@@ -57,8 +57,8 @@ static void print_flags(struct strace *self, __kernel_ulong_t flags)
         strace_printf(self, "|%u<<MAP_HUGE_SHIFT", huget_val >> MAP_HUGE_SHIFT);
 }
 
-int strace_syscall_print_sys_mmap(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_mmap(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_address(self, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);

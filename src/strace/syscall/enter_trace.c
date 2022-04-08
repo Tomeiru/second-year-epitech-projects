@@ -19,8 +19,8 @@ static int sset_part2(struct strace *self, struct strace_process *proc)
     int result;
 
     strace_syscall_print_leader(self, proc);
-    strace_syscall_print_start_arguments(self,
-        strace_process_get_syscall_entry(proc)->name);
+    strace_syscall_print_start_arguments(
+        self, strace_process_get_syscall_entry(proc)->name);
     result = strace_process_is_raw(self, proc) ?
         strace_syscall_print_raw_arguments(self, proc) :
         strace_process_get_syscall_entry(proc)->function(self, proc);

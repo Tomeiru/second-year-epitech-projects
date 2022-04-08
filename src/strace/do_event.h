@@ -7,5 +7,5 @@
 
 #include "../strace.h"
 
-bool strace_do_event(struct strace *self,
-    const struct strace_event_data *event_data);
+bool strace_do_event(
+    struct strace *self, const struct strace_event_data *event_data);

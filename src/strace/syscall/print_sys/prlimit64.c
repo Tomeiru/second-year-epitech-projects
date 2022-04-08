@@ -36,18 +36,18 @@ static const struct strace_enum RLIMIT_ENUM = {
     .size = sizeof(RLIMIT_ENUM_DATA) / sizeof(RLIMIT_ENUM_DATA[0]),
 };
 
-int strace_syscall_print_sys_prlimit64(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_prlimit64(
+    struct strace *self, struct strace_process *proc)
 {
     if (!(proc->flags & STRACE_PROCESS_IN_SYSCALL)) {
         STRACE_SYSCALL_PRINT_DECIMAL(self, proc->syscall_arguments[0]);
         strace_syscall_print_next_argument(self);
-        strace_syscall_print_enum_value(self, &RLIMIT_ENUM,
-            proc->syscall_arguments[1], "RLIMIT_???");
+        strace_syscall_print_enum_value(
+            self, &RLIMIT_ENUM, proc->syscall_arguments[1], "RLIMIT_???");
         strace_syscall_print_next_argument(self);
         strace_syscall_print_rlimit(self, proc, proc->syscall_arguments[2]);
         strace_syscall_print_next_argument(self);
-    } else 
+    } else
         strace_syscall_print_rlimit(self, proc, proc->syscall_arguments[3]);
     return (0);
 }

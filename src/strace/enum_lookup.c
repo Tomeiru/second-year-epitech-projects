@@ -8,8 +8,7 @@
 #include "enum_lookup.h"
 #include <stddef.h>
 
-const char *strace_enum_lookup(const struct strace_enum *enu,
-    uintmax_t value)
+const char *strace_enum_lookup(const struct strace_enum *enu, uintmax_t value)
 {
     if (enu == NULL || enu->data == NULL)
         return (NULL);

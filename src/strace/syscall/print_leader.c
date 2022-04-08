@@ -9,8 +9,8 @@
 #include "../set_current_process.h"
 #include <stddef.h>
 
-void strace_syscall_print_leader(struct strace *self,
-    struct strace_process *proc)
+void strace_syscall_print_leader(
+    struct strace *self, struct strace_process *proc)
 {
     if (self->printing_process != NULL)
         strace_set_current_process(self, proc);

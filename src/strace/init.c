@@ -34,11 +34,11 @@ static void do_attach_list(struct strace *self, char *attach_list)
     while (*attach_list != '\0') {
         do_attach_list_loop_start(attach_list, &delimiter, &current_char, &pid);
         if (pid <= 0)
-            strace_print_error_message_and_die(self, "Invalid process id: '%s'",
-                attach_list);
+            strace_print_error_message_and_die(
+                self, "Invalid process id: '%s'", attach_list);
         if (pid == self->tracer_pid)
-            strace_print_error_message_and_die(self,
-                "I'm sorry, I can't let you do that, Dave.");
+            strace_print_error_message_and_die(
+                self, "I'm sorry, I can't let you do that, Dave.");
         *delimiter = current_char;
         strace_process_add(self, pid);
         if (current_char == '\0')
@@ -52,8 +52,8 @@ static void si_part3(struct strace *self, int argc, char **argv)
     argv += optind;
     argc -= optind;
     if (argc < 0 || (!self->has_traced_process && argc == 0))
-        strace_print_error_message_help_and_die(self,
-            "must have PROG [ARGS] or -p PID");
+        strace_print_error_message_help_and_die(
+            self, "must have PROG [ARGS] or -p PID");
     sigaction(SIGCHLD, &((struct sigaction){.sa_handler = SIG_DFL}),
         &self->traced_process_params.sigchld_sigaction);
     self->traced_process_uid = getuid();
@@ -69,8 +69,8 @@ static void si_part2(struct strace *self, int argc, char **argv)
     int current_character;
 
     while (true) {
-        current_character = getopt_long(argc, argv, "+hp:s", STRACE_OPTIONS,
-            NULL);
+        current_character =
+            getopt_long(argc, argv, "+hp:s", STRACE_OPTIONS, NULL);
         if (current_character == EOF)
             break;
         switch (current_character) {
@@ -92,9 +92,9 @@ void strace_init(struct strace *self, int argc, char **argv)
 {
     memset(self, 0, sizeof(*self));
     self->print_raw_arguments = true;
-    self->gne_pending_procs =
-        (struct strace_list_item){&self->gne_pending_procs,
-        &self->gne_pending_procs};
+    self->gne_pending_procs = (struct strace_list_item){
+        &self->gne_pending_procs, &self->gne_pending_procs
+    };
     self->x86_io.iov_base = &self->x86_regs;
     self->program_invocation_name = (argc > 0 && argv[0] != NULL && *argv[0] !=
         '\0') ? argv[0] : STRACE_DEFAULT_NAME;

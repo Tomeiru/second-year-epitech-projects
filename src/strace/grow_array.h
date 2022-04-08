@@ -9,5 +9,5 @@
 
 #include "../strace.h"
 
-void *strace_grow_array(struct strace *self, void *ptr,
-    size_t *num_members, size_t member_size);
+void *strace_grow_array(
+    struct strace *self, void *ptr, size_t *num_members, size_t member_size);

@@ -24,8 +24,8 @@ static const struct strace_enum FLAGS_ENUM = {
     .size = sizeof(FLAGS_ENUM_DATA) / sizeof(FLAGS_ENUM_DATA[0]),
 };
 
-int strace_syscall_print_sys_getrandom(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_getrandom(
+    struct strace *self, struct strace_process *proc)
 {
     if (proc->flags & STRACE_PROCESS_IN_SYSCALL) {
         if (proc->syscall_error != 0)
@@ -37,8 +37,8 @@ int strace_syscall_print_sys_getrandom(struct strace *self,
         strace_syscall_print_next_argument(self);
         STRACE_SYSCALL_PRINT_UNSIGNED(self, proc->syscall_arguments[1]);
         strace_syscall_print_next_argument(self);
-        strace_syscall_print_flags(self, &FLAGS_ENUM,
-            proc->syscall_arguments[2], "GRND_???");
+        strace_syscall_print_flags(
+            self, &FLAGS_ENUM, proc->syscall_arguments[2], "GRND_???");
     }
     return (0);
 }

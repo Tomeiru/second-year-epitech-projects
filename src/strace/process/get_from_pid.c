@@ -8,8 +8,8 @@
 #include "get_from_pid.h"
 #include <stddef.h>
 
-struct strace_process *strace_process_get_from_pid(struct strace *self,
-    pid_t pid)
+struct strace_process *strace_process_get_from_pid(
+    struct strace *self, pid_t pid)
 {
     if (pid <= 0)
         return (NULL);

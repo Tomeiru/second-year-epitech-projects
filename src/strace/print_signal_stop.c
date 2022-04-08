@@ -19,8 +19,8 @@ void strace_print_signal_stop(struct strace *self, struct strace_process *proc,
     if (!(proc->flags & STRACE_PROCESS_HIDE_LOG)) {
         strace_syscall_print_leader(self, proc);
         if (signal_info != NULL) {
-            strace_printf(self, "--- %s ", strace_sprint_signal_name(self,
-                signal));
+            strace_printf(
+                self, "--- %s ", strace_sprint_signal_name(self, signal));
             strace_printf(self, "TODO: print signal info");
             strace_printf(self, " ---\n");
         } else

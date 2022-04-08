@@ -10,8 +10,8 @@
 #include "../die.h"
 #include <errno.h>
 
-void strace_print_error_message_errno_and_die(struct strace *self,
-    const char *format, ...)
+void strace_print_error_message_errno_and_die(
+    struct strace *self, const char *format, ...)
 {
     va_list arguments;
 

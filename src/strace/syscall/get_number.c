@@ -23,8 +23,8 @@
 // x86-64 syscall instruction is 0x50F
 static int check_x86_stuff(struct strace *self, struct strace_process *proc)
 {
-    long instruction = ptrace(PTRACE_PEEKTEXT, proc->pid,
-        (void *)self->x86_regs.rip, (void *)NULL);
+    long instruction = ptrace(
+        PTRACE_PEEKTEXT, proc->pid, (void *)self->x86_regs.rip, (void *)NULL);
 
     if ((instruction & 0xFFFF) != 0x50F)
         return (0);
@@ -49,11 +49,11 @@ static int ssgn_part2(struct strace *self, struct strace_process *proc)
         p->proc = proc;
         p->entry = STRACE_SYSCALL_STUB_ENTRY;
         p->entry.name = p->buffer;
-        STRACE_ARR_SPRINTF(self, p->buffer, "syscall_%#jx",
-            (intmax_t)proc->syscall_number);
+        STRACE_ARR_SPRINTF(
+            self, p->buffer, "syscall_%#jx", (intmax_t)proc->syscall_number);
         proc->syscall_entry = &p->entry;
-        strace_process_set_private_data(proc, p,
-            strace_syscall_entry_buffer_free);
+        strace_process_set_private_data(
+            proc, p, strace_syscall_entry_buffer_free);
     }
     if (proc->flags & STRACE_PROCESS_RECOVERING)
         proc->qualifier_flags &= STRACE_QUALIFIER_RAW;

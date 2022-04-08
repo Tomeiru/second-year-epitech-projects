@@ -34,8 +34,8 @@ static void sspa_part2(sspa_state_t *s)
         s->address < s->previous_address ? ", unterminated" : "");
 }
 
-void strace_syscall_print_argc(struct strace *self,
-    struct strace_process *proc, __kernel_ulong_t address)
+void strace_syscall_print_argc(
+    struct strace *self, struct strace_process *proc, __kernel_ulong_t address)
 {
     sspa_state_t state = {
         .self = self,

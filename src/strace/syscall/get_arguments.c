@@ -7,8 +7,8 @@
 
 #include "get_arguments.h"
 
-int strace_syscall_get_arguments(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_get_arguments(
+    struct strace *self, struct strace_process *proc)
 {
     proc->syscall_arguments[0] = self->x86_regs.rdi;
     proc->syscall_arguments[1] = self->x86_regs.rsi;

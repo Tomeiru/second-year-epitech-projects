@@ -20,8 +20,8 @@ void strace_do_exec(struct strace *self)
             strace_print_error_message_errno_and_die(self, "setreuid");
     raise(SIGSTOP);
     if (self->traced_process_params.sigchld_sigaction.sa_handler != SIG_DFL)
-        sigaction(SIGCHLD, &self->traced_process_params.sigchld_sigaction,
-            NULL);
+        sigaction(
+            SIGCHLD, &self->traced_process_params.sigchld_sigaction, NULL);
     execv(self->traced_process_params.exec_pathname,
         self->traced_process_params.argv);
     strace_print_error_message_errno_and_die(self, "exec");

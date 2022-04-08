@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-void strace_syscall_get_error(struct strace *self, struct strace_process *proc,
-    bool check_errno);
+void strace_syscall_get_error(
+    struct strace *self, struct strace_process *proc, bool check_errno);

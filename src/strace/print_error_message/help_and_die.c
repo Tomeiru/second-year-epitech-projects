@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stddef.h>
 
-void strace_print_error_message_help_and_die(struct strace *self,
-    const char *format, ...)
+void strace_print_error_message_help_and_die(
+    struct strace *self, const char *format, ...)
 {
     va_list arguments;
 

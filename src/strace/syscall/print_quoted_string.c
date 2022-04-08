@@ -30,8 +30,8 @@ static int sspqs_part2(sspqsp2_opts_t *o)
     return (r);
 }
 
-int strace_syscall_print_quoted_string(struct strace *self, const char *string,
-    size_t size, unsigned style)
+int strace_syscall_print_quoted_string(
+    struct strace *self, const char *string, size_t size, unsigned style)
 {
     char *buffer;
     char *out_string;

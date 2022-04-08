@@ -9,5 +9,5 @@
 
 #include "../../../strace.h"
 
-void strace_syscall_print_sys_do_execve(struct strace *self,
-    struct strace_process *proc, unsigned args_index);
+void strace_syscall_print_sys_do_execve(
+    struct strace *self, struct strace_process *proc, unsigned args_index);

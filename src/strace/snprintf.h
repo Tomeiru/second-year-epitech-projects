@@ -9,5 +9,5 @@
 
 #include "../strace.h"
 
-int strace_snprintf(struct strace *self, char *buffer, size_t size,
-    const char *format, ...);
+int strace_snprintf(
+    struct strace *self, char *buffer, size_t size, const char *format, ...);

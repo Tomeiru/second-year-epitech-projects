@@ -60,8 +60,8 @@ static const struct strace_enum FUTEX_ENUM = {
     .size = sizeof(FUTEX_ENUM_DATA) / sizeof(FUTEX_ENUM_DATA[0]),
 };
 
-static void do_commands_part2(struct strace *self, struct strace_process *proc,
-    int command)
+static void do_commands_part2(
+    struct strace *self, struct strace_process *proc, int command)
 {
     if (command == FUTEX_CMP_REQUEUE || command == FUTEX_CMP_REQUEUE_PI) {
         strace_syscall_print_next_argument(self);
@@ -84,8 +84,8 @@ static void do_commands_part2(struct strace *self, struct strace_process *proc,
     STRACE_SYSCALL_PRINT_HEX(self, proc->syscall_arguments[5]);
 }
 
-static void do_commands(struct strace *self, struct strace_process *proc,
-    int command)
+static void do_commands(
+    struct strace *self, struct strace_process *proc, int command)
 {
     if (command == FUTEX_REQUEUE) {
         strace_syscall_print_next_argument(self);
@@ -106,13 +106,13 @@ static void do_commands(struct strace *self, struct strace_process *proc,
     return (do_commands_part2(self, proc, command));
 }
 
-int strace_syscall_print_sys_futex(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_futex(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_address(self, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);
-    strace_syscall_print_enum_value(self, &FUTEX_ENUM,
-        proc->syscall_arguments[1], "FUTEX_???");
+    strace_syscall_print_enum_value(
+        self, &FUTEX_ENUM, proc->syscall_arguments[1], "FUTEX_???");
     do_commands(self, proc, proc->syscall_arguments[1] & 127);
     return (STRACE_SYSCALL_RETVAL_DECODED);
 }

@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-int strace_syscall_exit_trace(struct strace *self, struct strace_process *proc,
-    int r);
+int strace_syscall_exit_trace(
+    struct strace *self, struct strace_process *proc, int r);

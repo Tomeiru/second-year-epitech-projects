@@ -9,8 +9,8 @@
 #include "../vprint_error_message.h"
 #include <errno.h>
 
-void strace_print_error_message_errno(struct strace *self,
-    const char *format, ...)
+void strace_print_error_message_errno(
+    struct strace *self, const char *format, ...)
 {
     va_list arguments;
 

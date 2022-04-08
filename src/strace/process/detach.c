@@ -20,8 +20,8 @@
 static void drop(struct strace *st, struct strace_process *self)
 {
     if (self->flags & STRACE_PROCESS_ATTACHED)
-        strace_print_error_message(st, "Process %ju detached",
-            (uintmax_t)self->pid);
+        strace_print_error_message(
+            st, "Process %ju detached", (uintmax_t)self->pid);
     strace_process_drop(st, self);
 }
 
@@ -65,8 +65,8 @@ static void spd_part2(struct strace *st, struct strace_process *self)
         return;
     }
     if (errno != ESRCH)
-        strace_print_error_message_errno(st, "ptrace(PTRACE_INTERRUPT,%u)",
-            self->pid);
+        strace_print_error_message_errno(
+            st, "ptrace(PTRACE_INTERRUPT,%u)", self->pid);
     drop(st, self);
 }
 
@@ -84,8 +84,8 @@ void strace_process_detach(struct strace *st, struct strace_process *self)
         return;
     }
     if (errno != ESRCH) {
-        strace_print_error_message_errno(st, "ptrace(PTRACE_DETACH,%u)",
-            self->pid);
+        strace_print_error_message_errno(
+            st, "ptrace(PTRACE_DETACH,%u)", self->pid);
         drop(st, self);
         return;
     }

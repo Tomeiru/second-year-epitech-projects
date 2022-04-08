@@ -13,7 +13,7 @@
 const char *strace_get_signal_name(struct strace *self, unsigned signal)
 {
     static char buffer[sizeof("SIGRT_%u") + sizeof(signal) * 6];
-    
+
     if (signal <= 0)
         return (NULL);
     if (signal < STRACE_SIGNAL_ENTRIES_COUNT)

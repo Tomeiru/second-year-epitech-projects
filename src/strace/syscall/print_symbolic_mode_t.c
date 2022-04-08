@@ -30,15 +30,15 @@ static const struct strace_enum IFMT_ENUM = {
 void strace_syscall_print_symbolic_mode_t(struct strace *self, mode_t mode)
 {
     const char *ifmt_string = "";
-    
+
     if (mode & S_IFMT)
         ifmt_string = strace_enum_lookup(&IFMT_ENUM, mode & S_IFMT);
     if (ifmt_string == NULL) {
         STRACE_SYSCALL_PRINT_OCTAL_03(self, mode);
         return;
     }
-    strace_printf(self, "%s%s%s%s%s%#03o", ifmt_string, ifmt_string[0] != '\0'
-        ? "|" : "", (mode & S_ISUID) ? "S_ISUID|" : "", (mode & S_ISGID) ?
-        "S_ISGID|" : "", (mode & S_ISVTX) ? "S_ISVTX|" : "",
-        mode & ~(S_IFMT|S_ISUID|S_ISGID|S_ISVTX));
+    strace_printf(self, "%s%s%s%s%s%#03o", ifmt_string,
+        ifmt_string[0] != '\0' ? "|" : "", (mode & S_ISUID) ? "S_ISUID|" : "",
+        (mode & S_ISGID) ? "S_ISGID|" : "", (mode & S_ISVTX) ? "S_ISVTX|" : "",
+        mode & ~(S_IFMT | S_ISUID | S_ISGID | S_ISVTX));
 }

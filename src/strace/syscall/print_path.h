@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-int strace_syscall_print_path(struct strace *self, struct strace_process *proc,
-    __kernel_ulong_t address);
+int strace_syscall_print_path(
+    struct strace *self, struct strace_process *proc, __kernel_ulong_t address);

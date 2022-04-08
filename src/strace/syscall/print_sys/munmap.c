@@ -10,8 +10,8 @@
 #include "../print_next_argument.h"
 #include "../print_unsigned.h"
 
-int strace_syscall_print_sys_munmap(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_munmap(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_address(self, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);

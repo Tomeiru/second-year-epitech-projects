@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-struct strace_process *strace_process_get_from_pid(struct strace *self,
-    pid_t pid);
+struct strace_process *strace_process_get_from_pid(
+    struct strace *self, pid_t pid);

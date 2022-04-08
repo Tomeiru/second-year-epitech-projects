@@ -52,14 +52,12 @@ int strace_quote_string(sqs_opts_t *o)
             0x100,
         .os_ptr = o->out_string,
         .uc_in_string = (const unsigned char *)o->in_string,
-        .hex_style = (o->style &
-            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING) ? ((o->style &
-            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_MASK) >>
-            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT) :
+        .hex_style = (o->style & STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING) ?
+            ((o->style & STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_MASK) >>
+                STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT) :
             STRACE_HEX_STRING_NONE,
     };
 
-    state.use_hex = state.hex_style ==
-        STRACE_HEX_STRING_ALL;
+    state.use_hex = state.hex_style == STRACE_HEX_STRING_ALL;
     return (sqs_part2(&state));
 }

@@ -37,11 +37,11 @@ static int sspse_part2(sspse_state_t *s)
     if (s->size > s->length)
         s->size = s->length;
     if (s->style & STRACE_SYSCALL_PRINT_QUOTE_0_TERM)
-        s->r = strace_copy_str_from_pid(&((scsfp_opts_t){s->self, s->proc->pid,
-            s->address, s->size, s->string}));
+        s->r = strace_copy_str_from_pid(&((scsfp_opts_t){
+            s->self, s->proc->pid, s->address, s->size, s->string }));
     else
-        s->r = strace_copy_mem_from_pid(&((scmfp_opts_t){s->self, s->proc->pid,
-            s->address, s->size, s->string}));
+        s->r = strace_copy_mem_from_pid(&((scmfp_opts_t){
+            s->self, s->proc->pid, s->address, s->size, s->string }));
     if (s->r < 0) {
         strace_syscall_print_address(s->self, s->address);
         return (s->r);
@@ -59,7 +59,7 @@ int strace_syscall_print_string_ex(sspse_opts_t *o)
         .style = o->style,
         .size = 32 + 1,
     };
-    
+
     if (state.address == 0) {
         strace_printf(state.self, "NULL");
         return (-1);

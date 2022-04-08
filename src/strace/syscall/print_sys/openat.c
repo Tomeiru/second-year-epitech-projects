@@ -72,8 +72,8 @@ static const char *do_mode(struct strace *self, unsigned flags)
         &OPEN_MODE_ENUM, flags, separator})) ?: output_string);
 }
 
-int strace_syscall_print_sys_openat(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_openat(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_dir_fd(self, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);

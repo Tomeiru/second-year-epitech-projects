@@ -31,7 +31,6 @@ typedef struct ssc_state {
     struct strace_process *process;
 } ssc_state_t;
 
-
 static bool ssc_do_loop_part2(ssc_state_t *s)
 {
     if (s->before_colon == 0) {
@@ -49,8 +48,8 @@ static bool ssc_do_loop_part2(ssc_state_t *s)
     if (s->filename_length + s->pathname_length > sizeof(s->pathname) - 1)
         return (true);
     strcpy(s->pathname + s->pathname_length, s->filename);
-    return (!((stat(s->pathname, &s->stat_buffer) == 0 && S_ISREG(
-        s->stat_buffer.st_mode) && (s->stat_buffer.st_mode & 0111))));
+    return (!((stat(s->pathname, &s->stat_buffer) == 0 &&
+        S_ISREG(s->stat_buffer.st_mode) && (s->stat_buffer.st_mode & 0111))));
 }
 
 static void ssc_do_loop(ssc_state_t *s)

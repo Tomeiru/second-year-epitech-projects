@@ -15,10 +15,10 @@ void strace_fd_set_cloexec(struct strace *self, int fd)
     int new_flags = old_flags | FD_CLOEXEC;
 
     if (old_flags < 0)
-        strace_print_error_message_errno_and_die(self, "fcntl(%d, F_GETFD)",
-            fd);
+        strace_print_error_message_errno_and_die(
+            self, "fcntl(%d, F_GETFD)", fd);
     if (new_flags != old_flags)
         if (fcntl(fd, F_SETFD, new_flags) != 0)
-            strace_print_error_message_errno_and_die(self,
-                "fcntl(%d, F_SETFD, %#x)", fd, new_flags);
+            strace_print_error_message_errno_and_die(
+                self, "fcntl(%d, F_SETFD, %#x)", fd, new_flags);
 }

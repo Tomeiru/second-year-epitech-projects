@@ -18,8 +18,8 @@
 #include <linux/errno.h>
 #include <stdint.h>
 
-static void sset_part2_do_switch(struct strace *self,
-    struct strace_process *proc)
+static void sset_part2_do_switch(
+    struct strace *self, struct strace_process *proc)
 {
     switch (proc->syscall_error) {
     case ERESTARTSYS:
@@ -38,13 +38,13 @@ static void sset_part2_do_switch(struct strace *self,
             "signal)");
         break;
     default:
-        strace_syscall_print_error_return(self, proc->syscall_retval,
-            proc->syscall_error);
+        strace_syscall_print_error_return(
+            self, proc->syscall_retval, proc->syscall_error);
     }
 }
 
-static void sset_part2_do_switch2(struct strace *self,
-    struct strace_process *proc, int retval_format)
+static void sset_part2_do_switch2(
+    struct strace *self, struct strace_process *proc, int retval_format)
 {
     switch (retval_format & STRACE_SYSCALL_RETVAL_FORMAT_MASK) {
     case STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL:
@@ -61,16 +61,16 @@ static void sset_part2_do_switch2(struct strace *self,
     }
 }
 
-static int sset_part2(struct strace *self, struct strace_process *proc,
-    int retval_format)
+static int sset_part2(
+    struct strace *self, struct strace_process *proc, int retval_format)
 {
     strace_syscall_print_end_arguments(self);
     strace_printf(self, " ");
     strace_syscall_print_tab(self);
     if (strace_process_is_raw(self, proc)) {
         if (proc->syscall_error != 0)
-            strace_syscall_print_error_return(self, proc->syscall_retval,
-                proc->syscall_error);
+            strace_syscall_print_error_return(
+                self, proc->syscall_retval, proc->syscall_error);
         else
             strace_printf(self, "= %#jx", (intmax_t)proc->syscall_retval);
     } else if (proc->syscall_error != 0)
@@ -82,8 +82,8 @@ static int sset_part2(struct strace *self, struct strace_process *proc,
     return (0);
 }
 
-int strace_syscall_exit_trace(struct strace *self, struct strace_process *proc,
-    int r)
+int strace_syscall_exit_trace(
+    struct strace *self, struct strace_process *proc, int r)
 {
     int retval_format;
 
@@ -101,8 +101,8 @@ int strace_syscall_exit_trace(struct strace *self, struct strace_process *proc,
         if (proc->syscall_retval_format & STRACE_SYSCALL_RETVAL_DECODED)
             retval_format = proc->syscall_retval_format;
         else
-            retval_format = strace_process_get_syscall_entry(proc)->function(
-                self, proc);
+            retval_format =
+                strace_process_get_syscall_entry(proc)->function(self, proc);
     }
     return (sset_part2(self, proc, retval_format));
 }

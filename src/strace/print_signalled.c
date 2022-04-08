@@ -20,8 +20,8 @@ void strace_print_signalled(struct strace *self, struct strace_process *proc,
         self->child_pid = 0;
     }
     strace_syscall_print_leader(self, proc);
-    strace_printf(self, "+++ killed by %s %s+++\n", strace_sprint_signal_name(
-        self, WTERMSIG(wait_status)), WCOREDUMP(wait_status) ?
-        "(core dumped) " : "");
+    strace_printf(self, "+++ killed by %s %s+++\n",
+        strace_sprint_signal_name(self, WTERMSIG(wait_status)),
+        WCOREDUMP(wait_status) ? "(core dumped) " : "");
     strace_syscall_print_line_ended(self);
 }

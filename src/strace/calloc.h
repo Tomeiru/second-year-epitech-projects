@@ -9,5 +9,5 @@
 
 #include "../strace.h"
 
-void *strace_calloc(struct strace *self, size_t num_members,
-    size_t member_size);
+void *strace_calloc(
+    struct strace *self, size_t num_members, size_t member_size);

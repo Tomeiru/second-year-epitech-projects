@@ -16,8 +16,8 @@
 #include "print_string.h"
 #include "../copy_mem_from_pid.h"
 
-static bool do_after_copy_mem_fail(struct strace *self,
-    __kernel_ulong_t address, size_t i)
+static bool do_after_copy_mem_fail(
+    struct strace *self, __kernel_ulong_t address, size_t i)
 {
     if (i == 0) {
         strace_syscall_print_address(self, address);
@@ -68,8 +68,8 @@ void sspap2_part2(sspa_state_t *s)
     strace_syscall_print_array_end(s->self);
 }
 
-void strace_syscall_print_argv(struct strace *self, struct strace_process *proc,
-    __kernel_ulong_t address)
+void strace_syscall_print_argv(
+    struct strace *self, struct strace_process *proc, __kernel_ulong_t address)
 {
     sspa_state_t state = {
         .self = self,

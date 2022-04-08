@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-void strace_print_error_message_and_die(struct strace *self,
-    const char *format, ...);
+void strace_print_error_message_and_die(
+    struct strace *self, const char *format, ...);

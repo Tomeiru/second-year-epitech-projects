@@ -19,8 +19,8 @@ void strace_init_do_attach(struct strace *self)
             return;
         if (self->traced_process.pid == self->tracer_pid) {
             errno = EPERM;
-            strace_print_error_message_errno(self, "attach: pid %jd",
-                (intmax_t)self->traced_process.pid);
+            strace_print_error_message_errno(
+                self, "attach: pid %jd", (intmax_t)self->traced_process.pid);
             strace_process_drop(self, &self->traced_process);
             return;
         }

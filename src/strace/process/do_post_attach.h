@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-void strace_process_do_post_attach(struct strace *self,
-    struct strace_process *process, unsigned flags);
+void strace_process_do_post_attach(
+    struct strace *self, struct strace_process *process, unsigned flags);

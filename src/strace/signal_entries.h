@@ -45,5 +45,5 @@ static const char *STRACE_SIGNAL_ENTRIES[] = {
     [SIGSYS] = "SIGSYS",
     [__SIGRTMIN] = "SIGRTMIN",
 };
-static size_t STRACE_SIGNAL_ENTRIES_COUNT = (sizeof(STRACE_SIGNAL_ENTRIES) /
-    sizeof(STRACE_SIGNAL_ENTRIES[0]));
+static size_t STRACE_SIGNAL_ENTRIES_COUNT =
+    (sizeof(STRACE_SIGNAL_ENTRIES) / sizeof(STRACE_SIGNAL_ENTRIES[0]));

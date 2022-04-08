@@ -10,8 +10,8 @@
 #include "print_struct_stat.h"
 #include <sys/stat.h>
 
-void strace_syscall_do_struct_stat(struct strace *self,
-    struct strace_process *proc, __kernel_ulong_t address)
+void strace_syscall_do_struct_stat(
+    struct strace *self, struct strace_process *proc, __kernel_ulong_t address)
 {
     struct stat stat_buffer;
 

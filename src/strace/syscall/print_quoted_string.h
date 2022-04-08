@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-int strace_syscall_print_quoted_string(struct strace *self, const char *string,
-    size_t size, unsigned style);
+int strace_syscall_print_quoted_string(
+    struct strace *self, const char *string, size_t size, unsigned style);

@@ -9,8 +9,8 @@
 #include "../printf.h"
 #include <stdio.h>
 
-void strace_syscall_print_start_arguments(struct strace *self,
-    const char *syscall_name)
+void strace_syscall_print_start_arguments(
+    struct strace *self, const char *syscall_name)
 {
     strace_printf(self, "%s(", syscall_name);
 }

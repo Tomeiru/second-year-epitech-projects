@@ -24,8 +24,8 @@ int strace_do_ptrace_restart(struct strace *self, unsigned restart_operation,
     ptrace_errno = errno;
     if (ptrace_errno == 0 || ptrace_errno == ESRCH)
         return (0);
-    if (self->current_process != 0 && self->current_process->current_column !=
-        0) {
+    if (self->current_process != 0 &&
+        self->current_process->current_column != 0) {
         strace_printf(self, " <Cannot restart pid %jd with ptrace(%u): %s>\n",
             (intmax_t)proc->pid, restart_operation, strerror(ptrace_errno));
         strace_syscall_print_line_ended(self);

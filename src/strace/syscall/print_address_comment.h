@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-void strace_syscall_print_address_comment(struct strace *self,
-    __kernel_ulong_t address);
+void strace_syscall_print_address_comment(
+    struct strace *self, __kernel_ulong_t address);

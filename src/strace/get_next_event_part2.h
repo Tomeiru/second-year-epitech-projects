@@ -31,7 +31,7 @@ static inline void sgne_do_loop_switch_stop(sgne_state_t *s)
 }
 
 static inline void sgne_do_loop_switch(sgne_state_t *s)
-{    
+{
     switch (s->event) {
     case 0:
         sgne_do_loop_switch_0(s);
@@ -70,7 +70,7 @@ static inline bool sgne_do_loop_proc_non_null_part2(sgne_state_t *s)
     return (s->self->gne_extra_proc == NULL);
 }
 
-static inline bool sgne_do_loop_proc_non_null(sgne_state_t *s)    
+static inline bool sgne_do_loop_proc_non_null(sgne_state_t *s)
 {
     strace_event_table_size_check(s->self, s->event_table_position);
     s->event_data = s->self->event_table + s->event_table_position;

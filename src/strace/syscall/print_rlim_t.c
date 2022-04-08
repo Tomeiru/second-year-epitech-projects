@@ -14,7 +14,7 @@ void strace_syscall_print_rlim_t(struct strace *self, rlim_t rlim)
 {
     const char *string = NULL;
     char buffer[sizeof(rlim) * 6 + sizeof("*1024")];
-    
+
     if (rlim == RLIM64_INFINITY)
         string = "RLIM64_INFINITY";
     else if (rlim > 1024 && (rlim % 1024) == 0) {

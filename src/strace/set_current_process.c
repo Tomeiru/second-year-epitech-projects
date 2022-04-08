@@ -7,8 +7,8 @@
 
 #include "set_current_process.h"
 
-void strace_set_current_process(struct strace *self,
-    struct strace_process *proc)
+void strace_set_current_process(
+    struct strace *self, struct strace_process *proc)
 {
     self->current_process = proc;
 }

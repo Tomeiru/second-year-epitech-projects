@@ -9,8 +9,8 @@
 #include "../vprint_error_message.h"
 #include "../die.h"
 
-void strace_print_error_message_and_die(struct strace *self,
-    const char *format, ...)
+void strace_print_error_message_and_die(
+    struct strace *self, const char *format, ...)
 {
     va_list arguments;
 

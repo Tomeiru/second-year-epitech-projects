@@ -8,8 +8,8 @@
 #include "appendf_string.h"
 #include "print_error_message/and_die.h"
 
-size_t strace_appendf_string_get_position_difference(struct strace *self,
-    char *string, size_t size, char *position)
+size_t strace_appendf_string_get_position_difference(
+    struct strace *self, char *string, size_t size, char *position)
 {
     if ((string + size) < string)
         strace_print_error_message_and_die(self,

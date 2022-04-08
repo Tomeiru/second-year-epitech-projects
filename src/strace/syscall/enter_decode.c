@@ -18,8 +18,8 @@ static bool get_args(struct strace *self, struct strace_process *proc, int *r)
     return (*r == 1);
 }
 
-int strace_syscall_enter_decode(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_enter_decode(
+    struct strace *self, struct strace_process *proc)
 {
     int r = strace_syscall_get_number(self, proc);
 
@@ -27,8 +27,8 @@ int strace_syscall_enter_decode(struct strace *self,
         return (0);
     if (r != 1 || !get_args(self, proc, &r)) {
         strace_syscall_print_leader(self, proc);
-        strace_syscall_print_start_arguments(self,
-            strace_process_get_syscall_entry(proc)->name);
+        strace_syscall_print_start_arguments(
+            self, strace_process_get_syscall_entry(proc)->name);
         return (r);
     }
     return (1);

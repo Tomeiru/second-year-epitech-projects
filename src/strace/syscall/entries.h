@@ -12,40 +12,40 @@
 #include <sys/syscall.h>
 #include <stddef.h>
 
-int strace_syscall_print_arguments_decimal(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_execve(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_write(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_brk(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_arch_prctl(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_access(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_openat(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_newfstatat(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_mmap(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_close(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_read(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_pread(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_mprotect(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_munmap(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_prlimit64(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_getrandom(struct strace *self,
-    struct strace_process *proc);
-int strace_syscall_print_sys_futex(struct strace *self,
-    struct strace_process *proc);
+int strace_syscall_print_arguments_decimal(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_execve(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_write(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_brk(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_arch_prctl(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_access(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_openat(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_newfstatat(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_mmap(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_close(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_read(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_pread(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_mprotect(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_munmap(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_prlimit64(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_getrandom(
+    struct strace *self, struct strace_process *proc);
+int strace_syscall_print_sys_futex(
+    struct strace *self, struct strace_process *proc);
 
 static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
     [SYS_execve] = {

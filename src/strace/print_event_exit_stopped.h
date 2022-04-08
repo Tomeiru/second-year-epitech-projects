@@ -9,5 +9,5 @@
 
 #include "../strace.h"
 
-void strace_print_event_exit_stopped(struct strace *self,
-    struct strace_process *proc);
+void strace_print_event_exit_stopped(
+    struct strace *self, struct strace_process *proc);

@@ -10,5 +10,5 @@
 #include "../strace.h"
 #include <stdarg.h>
 
-void strace_vprint_error_message(struct strace *self, int errno,
-    const char *format, va_list arguments);
+void strace_vprint_error_message(
+    struct strace *self, int errno, const char *format, va_list arguments);

@@ -49,8 +49,8 @@ static void ssc_part3(ssc_state_t *s)
     }
     if (!WIFSTOPPED(s->wait_status) || WSTOPSIG(s->wait_status) != SIGSTOP) {
         strace_save_errno_kill(s->self->child_pid, SIGKILL);
-        strace_print_error_message_errno_and_die(s->self,
-            "Unexpected wait status %#x", s->wait_status);
+        strace_print_error_message_errno_and_die(
+            s->self, "Unexpected wait status %#x", s->wait_status);
     }
     ssc_part4(s);
 }
@@ -70,8 +70,8 @@ static void ssc_part2(ssc_state_t *s)
             s->pathname[0] = '\0';
     }
     if (stat(s->pathname, &s->stat_buffer) != 0)
-        strace_print_error_message_errno_and_die(s->self, "Can't stat '%s'",
-            s->pathname);
+        strace_print_error_message_errno_and_die(
+            s->self, "Can't stat '%s'", s->pathname);
     s->pid = fork();
     if (s->pid < 0)
         strace_print_error_message_errno_and_die(s->self, "fork");

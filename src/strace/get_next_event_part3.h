@@ -65,4 +65,3 @@ static inline void sgne_do_loop_switch_0(sgne_state_t *s)
             STRACE_EVENT_SIGNAL_DELIVERY_STOPPED;
     }
 }
-

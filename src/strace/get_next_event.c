@@ -12,7 +12,7 @@
 #include <errno.h>
 
 static bool sgne_do_loop_part2(sgne_state_t *s)
-{    
+{
     s->proc = strace_process_get_from_pid(s->self, s->pid);
     if (s->proc != NULL && !sgne_do_loop_proc_non_null(s))
         return (false);
@@ -59,7 +59,7 @@ static struct strace_event_data *sgne_part2(sgne_state_t *s)
     return (sgne_get_proc(s));
 }
 
-// We don't expect ECHILD when we have more 
+// We don't expect ECHILD when we have more
 void *strace_get_next_event(struct strace *self)
 {
     sgne_state_t state = {

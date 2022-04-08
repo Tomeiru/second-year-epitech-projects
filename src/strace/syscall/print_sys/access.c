@@ -23,12 +23,12 @@ static const struct strace_enum ACCESS_ENUM = {
     .size = sizeof(ACCESS_ENUM_DATA) / sizeof(ACCESS_ENUM_DATA[0]),
 };
 
-int strace_syscall_print_sys_access(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_access(
+    struct strace *self, struct strace_process *proc)
 {
     strace_syscall_print_path(self, proc, proc->syscall_arguments[0]);
     strace_syscall_print_next_argument(self);
-    strace_syscall_print_flags(self, &ACCESS_ENUM, proc->syscall_arguments[1],
-        "?_OK");
+    strace_syscall_print_flags(
+        self, &ACCESS_ENUM, proc->syscall_arguments[1], "?_OK");
     return (STRACE_SYSCALL_RETVAL_DECODED);
 }

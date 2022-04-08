@@ -9,5 +9,5 @@
 
 #include "../../strace.h"
 
-void strace_syscall_print_start_arguments(struct strace *self,
-    const char *syscall_name);
+void strace_syscall_print_start_arguments(
+    struct strace *self, const char *syscall_name);

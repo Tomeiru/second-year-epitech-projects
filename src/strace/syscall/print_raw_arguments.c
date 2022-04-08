@@ -10,8 +10,8 @@
 #include "print_next_argument.h"
 #include "print_hex.h"
 
-int strace_syscall_print_raw_arguments(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_raw_arguments(
+    struct strace *self, struct strace_process *proc)
 {
     const unsigned num_args =
         strace_process_get_syscall_entry(proc)->num_arguments;

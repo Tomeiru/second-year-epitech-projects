@@ -9,5 +9,4 @@
 
 #include "../strace.h"
 
-const char *strace_enum_lookup(const struct strace_enum *enu,
-    uintmax_t value);
+const char *strace_enum_lookup(const struct strace_enum *enu, uintmax_t value);

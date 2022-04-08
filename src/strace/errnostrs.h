@@ -148,5 +148,5 @@ static const char *const STRACE_ERRNOSTRS[] = {
     [ERESTARTNOHAND] = "ERESTARTNOHAND",
     [ERESTART_RESTARTBLOCK] = "ERESTART_RESTARTBLOCK",
 };
-static const size_t STRACE_ERRNOSTRS_COUNT = (sizeof(STRACE_ERRNOSTRS) /
-    sizeof(STRACE_ERRNOSTRS[0]));
+static const size_t STRACE_ERRNOSTRS_COUNT =
+    (sizeof(STRACE_ERRNOSTRS) / sizeof(STRACE_ERRNOSTRS[0]));

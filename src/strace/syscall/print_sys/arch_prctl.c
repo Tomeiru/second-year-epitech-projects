@@ -29,15 +29,15 @@ static const struct strace_enum ARCH_PRCTL_VALS = {
     .size = sizeof(ARCH_PRCTL_VALS_DATA) / sizeof(ARCH_PRCTL_VALS_DATA[0]),
 };
 
-int strace_syscall_print_sys_arch_prctl(struct strace *self,
-    struct strace_process *proc)
+int strace_syscall_print_sys_arch_prctl(
+    struct strace *self, struct strace_process *proc)
 {
     const unsigned option = proc->syscall_arguments[0];
     const __kernel_ulong_t address = proc->syscall_arguments[1];
 
     if (!(proc->flags & STRACE_PROCESS_IN_SYSCALL))
-        strace_syscall_print_enum_value(self, &ARCH_PRCTL_VALS, option,
-            "ARCH_???");
+        strace_syscall_print_enum_value(
+            self, &ARCH_PRCTL_VALS, option, "ARCH_???");
     switch (option) {
     case ARCH_GET_FS:
     case ARCH_GET_GS:

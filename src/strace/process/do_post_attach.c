@@ -7,8 +7,8 @@
 
 #include "do_post_attach.h"
 
-void strace_process_do_post_attach(struct strace *self,
-    struct strace_process *process, unsigned int flags)
+void strace_process_do_post_attach(
+    struct strace *self, struct strace_process *process, unsigned int flags)
 {
     (void)self;
     process->flags |= STRACE_PROCESS_ATTACHED |
