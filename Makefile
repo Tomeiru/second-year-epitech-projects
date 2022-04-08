@@ -125,7 +125,8 @@ SOURCE_FILES += strace/syscall/print_sys/pread
 SOURCE_FILES += strace/syscall/print_sys/mprotect
 SOURCE_FILES += strace/syscall/print_sys/munmap
 SOURCE_FILES += strace/syscall/print_sys/prlimit64 strace/syscall/print_rlimit
-SOURCE_FILES += strace/syscall/print_rlim_t
+SOURCE_FILES += strace/syscall/print_rlim_t strace/syscall/print_sys/getrandom
+SOURCE_FILES += strace/sprint_byte_hex strace/syscall/print_sys/futex
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 

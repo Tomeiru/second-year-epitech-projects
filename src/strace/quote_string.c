@@ -7,87 +7,59 @@
 
 #include "quote_string.h"
 #include "quote_string_part2.h"
-#include "is_printable.h"
-#include "sprint_byte_octal.h"
+#include "sprint_byte_hex.h"
 
-static int c_string_ended(char *os_ptr)
+static int string_ended(sqs_state_t *s)
 {
-    *os_ptr++ = '"';
-    *os_ptr = '\0';
-    return (0);
+    *s->os_ptr++ = '"';
+    *s->os_ptr = '\0';
+    return (!((s->o->style & STRACE_SYSCALL_PRINT_QUOTE_0_TERM) &&
+        s->uc_in_string[s->i] == '\0'));
 }
 
-static void do_char_part3(dc_opts_t *o)
+static int hex_quote_whole_string(sqs_state_t *s)
 {
-    if (o->current_character == '\v') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = 'v';
-        return;
+    for (s->i = 0; s->i < s->o->size; ++s->i) {
+        s->current_character = s->uc_in_string[s->i];
+        if (s->current_character == s->end_of_string)
+            return (c_string_ended(s->os_ptr));
+        *s->os_ptr++ = '\\';
+        *s->os_ptr++ = 'x';
+        s->os_ptr = strace_sprint_byte_hex(s->os_ptr, s->current_character);
     }
-    if (strace_is_printable(o->current_character))
-        *((*o->os_ptr)++) = o->current_character;
-    else {
-        *((*o->os_ptr)++) = '\\';
-        *o->os_ptr = strace_sprint_byte_octal(*o->os_ptr, o->current_character,
-            o->i + 1 < o->o->size && o->uc_in_string[o->i + 1] >= '0' &&
-            o->uc_in_string[o->i + 1] <= '7');
-    }
+    return (string_ended(s));
 }
 
-static void do_char_part2(dc_opts_t *o)
+static int sqs_part2(sqs_state_t *s)
 {
-    if (o->current_character == '\r') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = 'r';
-        return;
+    *s->os_ptr++ = '"';
+    if (s->use_hex)
+        return (hex_quote_whole_string(s));
+    for (s->i = 0; s->i < s->o->size; ++s->i) {
+        s->current_character = s->uc_in_string[s->i];
+        if (s->current_character == s->end_of_string)
+            return (c_string_ended(s->os_ptr));
+        do_char(s);
     }
-    if (o->current_character == '\t') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = 't';
-        return;
-    }
-    do_char_part3(o);
-}
-
-static void do_char(dc_opts_t *o)
-{
-    if (o->current_character == '"' || o->current_character == '\\') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = o->current_character;
-        return;
-    }
-    if (o->current_character == '\f') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = 'f';
-        return;
-    }
-    if (o->current_character == '\n') {
-        *((*o->os_ptr)++) = '\\';
-        *((*o->os_ptr)++) = 'n';
-        return;
-    }
-    do_char_part2(o);
+    return (string_ended(s));
 }
 
 int strace_quote_string(sqs_opts_t *o)
 {
-    int end_of_string = (o->style & STRACE_SYSCALL_PRINT_QUOTE_0_TERM) ? '\0' :
-        0x100;
-    char *os_ptr = o->out_string;
-    int current_character;
-    const unsigned char *const uc_in_string =
-        (const unsigned char *)o->in_string;
-    size_t i;
+    sqs_state_t state = {
+        .o = o,
+        .end_of_string = (o->style & STRACE_SYSCALL_PRINT_QUOTE_0_TERM) ? '\0' :
+            0x100,
+        .os_ptr = o->out_string,
+        .uc_in_string = (const unsigned char *)o->in_string,
+        .hex_style = (o->style &
+            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING) ? ((o->style &
+            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_MASK) >>
+            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT) :
+            STRACE_HEX_STRING_NONE,
+    };
 
-    *os_ptr++ = '"';
-    for (i = 0; i < o->size; ++i) {
-        current_character = uc_in_string[i];
-        if (current_character == end_of_string)
-            return (c_string_ended(os_ptr));
-        do_char(&((dc_opts_t){o, &os_ptr, current_character, i, uc_in_string}));
-    }
-    *os_ptr++ = '"';
-    *os_ptr = '\0';
-    return (!((o->style & STRACE_SYSCALL_PRINT_QUOTE_0_TERM) &&
-        uc_in_string[i] == '\0'));
+    state.use_hex = state.hex_style ==
+        STRACE_HEX_STRING_ALL;
+    return (sqs_part2(&state));
 }

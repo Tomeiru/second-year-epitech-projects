@@ -42,6 +42,10 @@ int strace_syscall_print_sys_munmap(struct strace *self,
     struct strace_process *proc);
 int strace_syscall_print_sys_prlimit64(struct strace *self,
     struct strace_process *proc);
+int strace_syscall_print_sys_getrandom(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_futex(struct strace *self,
+    struct strace_process *proc);
 
 static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
     [SYS_execve] = {
@@ -153,13 +157,13 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 2,
     },
     [SYS_getrandom] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_getrandom,
         .number = SYS_getrandom,
         .name = "getrandom",
         .num_arguments = 3,
     },
     [SYS_futex] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_futex,
         .number = SYS_futex,
         .name = "futex",
         .num_arguments = 6,
