@@ -12,6 +12,7 @@
 #include <sys/uio.h>
 #include <sys/types.h>
 #include <linux/posix_types.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include "basic_defs.h"
 
@@ -46,6 +47,8 @@ enum strace_process_flags {
 
 enum strace_syscall_retval_format {
     STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL = 0x0,
+    STRACE_SYSCALL_RETVAL_HEX = 0x1,
+    STRACE_SYSCALL_RETVAL_FD = 0x2,
     STRACE_SYSCALL_RETVAL_FORMAT_MASK = 0xF,
     STRACE_SYSCALL_RETVAL_DECODED = 0x40,
 };
@@ -108,6 +111,16 @@ struct strace_event_data {
     enum strace_event_type type;
     siginfo_t signal_info;
     unsigned long message;
+};
+
+struct strace_enum_data {
+    uintmax_t value;
+    const char *string;
+};
+
+struct strace_enum {
+    const struct strace_enum_data *data;
+    size_t size;
 };
 
 struct strace {

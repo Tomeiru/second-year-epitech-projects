@@ -50,6 +50,12 @@ static void sset_part2_do_switch2(struct strace *self,
     case STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL:
         strace_printf(self, "= %ju", (uintmax_t)proc->syscall_retval);
         break;
+    case STRACE_SYSCALL_RETVAL_HEX:
+        strace_printf(self, "= %#jx", (uintmax_t)proc->syscall_retval);
+        break;
+    case STRACE_SYSCALL_RETVAL_FD:
+        strace_printf(self, "= %jd", (intmax_t)proc->syscall_retval);
+        break;
     default:
         strace_print_error_message(self, "invalid retval format");
     }

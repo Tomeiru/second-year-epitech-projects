@@ -12,9 +12,35 @@
 #include <sys/syscall.h>
 #include <stddef.h>
 
+int strace_syscall_print_arguments_decimal(struct strace *self,
+    struct strace_process *proc);
 int strace_syscall_print_sys_execve(struct strace *self,
     struct strace_process *proc);
-int strace_syscall_print_arguments_decimal(struct strace *self,
+int strace_syscall_print_sys_write(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_brk(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_arch_prctl(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_access(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_openat(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_newfstatat(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_mmap(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_close(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_read(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_pread(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_mprotect(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_munmap(struct strace *self,
+    struct strace_process *proc);
+int strace_syscall_print_sys_prlimit64(struct strace *self,
     struct strace_process *proc);
 
 static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
@@ -43,61 +69,61 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 1,
     },
     [SYS_brk] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_brk,
         .number = SYS_brk,
         .name = "brk",
         .num_arguments = 1,
     },
     [SYS_arch_prctl] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_arch_prctl,
         .number = SYS_arch_prctl,
         .name = "arch_prctl",
         .num_arguments = 2,
     },
     [SYS_access] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_access,
         .number = SYS_access,
         .name = "access",
         .num_arguments = 2,
     },
     [SYS_openat] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_openat,
         .number = SYS_openat,
         .name = "openat",
         .num_arguments = 4,
     },
     [SYS_newfstatat] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_newfstatat,
         .number = SYS_newfstatat,
         .name = "newfstatat",
         .num_arguments = 4,
     },
     [SYS_mmap] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_mmap,
         .number = SYS_mmap,
         .name = "mmap",
         .num_arguments = 6,
     },
     [SYS_close] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_close,
         .number = SYS_close,
         .name = "close",
         .num_arguments = 1,
     },
     [SYS_read] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_read,
         .number = SYS_read,
         .name = "read",
         .num_arguments = 3,
     },
     [SYS_pread64] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_pread,
         .number = SYS_pread64,
         .name = "pread64",
         .num_arguments = 4,
     },
     [SYS_mprotect] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_mprotect,
         .number = SYS_mprotect,
         .name = "mprotect",
         .num_arguments = 3,
@@ -109,19 +135,19 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 1,
     },
     [SYS_set_robust_list] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_munmap,
         .number = SYS_set_robust_list,
         .name = "set_robust_list",
         .num_arguments = 2,
     },
     [SYS_prlimit64] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_prlimit64,
         .number = SYS_prlimit64,
         .name = "prlimit64",
         .num_arguments = 4,
     },
     [SYS_munmap] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_munmap,
         .number = SYS_munmap,
         .name = "munmap",
         .num_arguments = 2,
@@ -139,7 +165,7 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 6,
     },
     [SYS_write] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_write,
         .number = SYS_write,
         .name = "write",
         .num_arguments = 3,
@@ -529,13 +555,13 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 2,
     },
     [SYS_fsync] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_close,
         .number = SYS_fsync,
         .name = "fsync",
         .num_arguments = 1,
     },
     [SYS_fdatasync] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_close,
         .number = SYS_fdatasync,
         .name = "fdatasync",
         .num_arguments = 1,
@@ -571,7 +597,7 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 1,
     },
     [SYS_fchdir] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_close,
         .number = SYS_fchdir,
         .name = "fchdir",
         .num_arguments = 1,
@@ -973,13 +999,13 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 2,
     },
     [SYS_mlock] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_munmap,
         .number = SYS_mlock,
         .name = "mlock",
         .num_arguments = 2,
     },
     [SYS_munlock] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_munmap,
         .number = SYS_munlock,
         .name = "munlock",
         .num_arguments = 2,
@@ -1867,7 +1893,7 @@ static const struct strace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 6,
     },
     [SYS_syncfs] = {
-        .function = &strace_syscall_print_raw_arguments,
+        .function = &strace_syscall_print_sys_close,
         .number = SYS_syncfs,
         .name = "syncfs",
         .num_arguments = 1,

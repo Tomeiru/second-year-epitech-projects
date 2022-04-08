@@ -104,6 +104,28 @@ SOURCE_FILES += strace/syscall/print_comment_end
 SOURCE_FILES += strace/syscall/print_quoted_string strace/is_printable
 SOURCE_FILES += strace/sprint_byte_octal strace/syscall/print_unavailable
 SOURCE_FILES += strace/syscall/print_arguments_decimal
+SOURCE_FILES += strace/syscall/print_sys/write strace/syscall/print_string_n
+SOURCE_FILES += strace/syscall/print_string_ex strace/syscall/print_sys/brk
+SOURCE_FILES += strace/syscall/print_sys/arch_prctl
+SOURCE_FILES += strace/syscall/print_enum_value strace/enum_lookup
+SOURCE_FILES += strace/syscall/print_sys/access strace/syscall/print_flags
+SOURCE_FILES += strace/syscall/print_sys/openat strace/sprint_flags
+SOURCE_FILES += strace/syscall/print_dir_fd strace/syscall/print_umode_t
+SOURCE_FILES += strace/appendf_string_get_position_difference
+SOURCE_FILES += strace/syscall/print_sys/newfstatat
+SOURCE_FILES += strace/syscall/do_struct_stat strace/copy_struct_stat_from_pid
+SOURCE_FILES += strace/syscall/print_struct_stat
+SOURCE_FILES += strace/syscall/copy_mem_or_print_address
+SOURCE_FILES += strace/syscall/print_struct_start
+SOURCE_FILES += strace/syscall/print_symbolic_mode_t
+SOURCE_FILES += strace/syscall/print_struct_next
+SOURCE_FILES += strace/syscall/print_struct_end strace/syscall/print_sys/mmap
+SOURCE_FILES += strace/syscall/print_sys/close strace/syscall/print_sys/read
+SOURCE_FILES += strace/syscall/print_sys/pread
+SOURCE_FILES += strace/syscall/print_sys/mprotect
+SOURCE_FILES += strace/syscall/print_sys/munmap
+SOURCE_FILES += strace/syscall/print_sys/prlimit64 strace/syscall/print_rlimit
+SOURCE_FILES += strace/syscall/print_rlim_t
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 
@@ -118,7 +140,7 @@ obj/src/%.o: src/%.c
 > @mkdir --parents obj/src/strace/standard_fds
 > @mkdir --parents obj/src/strace/syscall/print_sys
 > @mkdir --parents obj/src/strace/fd
-> $(CC) -c $< -o $@ $(CFLAGS)
+> $(CC) -c $< -o $@ $(CFLAGS) -D_GNU_SOURCE
 
 # Include dependencies for the object files
 include $(shell [ -d obj ] && find obj/ -type f -name '*.d')
