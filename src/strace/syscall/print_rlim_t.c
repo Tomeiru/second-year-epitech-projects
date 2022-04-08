@@ -8,6 +8,7 @@
 #include "print_rlim_t.h"
 #include "print_unsigned.h"
 #include "../arr_sprintf.h"
+#include <stddef.h>
 
 void strace_syscall_print_rlim_t(struct strace *self, rlim_t rlim)
 {
