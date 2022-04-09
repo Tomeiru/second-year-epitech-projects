@@ -27,6 +27,27 @@ char *get_str_from_reg(pid_t pid, unsigned long long reg)
     return ((char *)str);
 }
 
+void print_good_type_ret(long rax, int type, pid_t pid)
+{
+    char *str;
+
+    if (type == NUM) {
+        fprintf(stderr, ") = %d\n", (int)rax);
+        return;
+    }
+    if (type == STRING) {
+        fprintf(stderr, ") = \"%s\"\n", (str = get_str_from_reg
+        (pid, rax)));
+        free(str);
+        return;
+    }
+    if (type == STRUCT_STAT_P) {
+        fprintf(stderr, ") = %s\n", "{st_mode=");
+        return;
+    }
+    fprintf(stderr, ") = %#lx\n", rax);
+}
+
 void print_good_type(unsigned long long reg, int type, int is_end, pid_t pid)
 {
     char *str;
@@ -62,5 +83,6 @@ void print_com(struct user_regs_struct regs, long rax, pid_t pid, int details)
         args[i], i == table[regs.rax].nb_arg - 1, pid) :
         fprintf(stderr, i == table[regs.rax].nb_arg - 1 ?
         "%#llx" : "%#llx, ", paramArray[i]);
+    details == 1 ? print_good_type_ret(rax, table[regs.rax].return_type, pid) :
     fprintf(stderr, ") = %#lx\n", rax);
 }
