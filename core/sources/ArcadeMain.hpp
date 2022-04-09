@@ -13,6 +13,7 @@
 #include <dlfcn.h>
 #include <deque>
 #include <filesystem>
+#include <fstream>
 #include <string.h>
 #include "IGameModule.hpp"
 

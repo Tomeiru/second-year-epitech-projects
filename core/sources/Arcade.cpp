@@ -23,7 +23,7 @@ Arcade::Arcade()
     _inGame = false;
     _inMenu = true;
     _framerate = 60;
-    _playerName = "";
+    _playerName = "Player1";
 }
 
 Arcade::~Arcade()
@@ -99,7 +99,19 @@ void Arcade::renderSprite(ICore::Sprite sprite)//TODO
 
 void Arcade::addNewScore(std::uint32_t score)
 {
-    UNUSED(score);
+    std::string filename("./score");
+    std::string element_to_write(_playerName);
+    std::fstream file;
+
+    element_to_write.append(": ");
+    element_to_write.append(std::to_string(score));
+    file.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
+    if (!file)
+        std::cerr << "Sorry! Score isn't recordable. Check permission on your ./score file!" << std::endl;
+    else {
+        file << element_to_write << std::endl;
+        file.close();
+    }
     return;
 }
 
