@@ -51,6 +51,7 @@ class Arcade : public ICore {
         void initActualGameGraphical(std::string lib);
         std::string getPrevLibrary(bool graphical);
         std::string getNextLibrary(bool graphical);
+        std::string getNameOfGame(void);
 
     protected:
         std::deque<ICore::Texture> _textureDeque;

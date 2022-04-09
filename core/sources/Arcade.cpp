@@ -100,19 +100,35 @@ void Arcade::renderSprite(ICore::Sprite sprite)//TODO
 void Arcade::addNewScore(std::uint32_t score)
 {
     std::string filename("./score");
-    std::string element_to_write(_playerName);
+    std::string gameName(getNameOfGame());
+    std::string elementToWrite(_playerName);
     std::fstream file;
 
-    element_to_write.append(": ");
-    element_to_write.append(std::to_string(score));
+    if (gameName == "")
+        return;
+    filename.append(gameName);
+    elementToWrite.append(": ");
+    elementToWrite.append(std::to_string(score));
     file.open(filename, std::fstream::in | std::fstream::out | std::fstream::app);
     if (!file)
-        std::cerr << "Sorry! Score isn't recordable. Check permission on your ./score file!" << std::endl;
+        std::cerr << "Sorry! Score isn't recordable. Check permission on your ./score[GAME] file!" << std::endl;
     else {
-        file << element_to_write << std::endl;
+        file << elementToWrite << std::endl;
         file.close();
     }
     return;
+}
+
+std::string Arcade::getNameOfGame(void)
+{
+    if (_actualGamePath == -1)
+        return ("");
+    std::string ret(_gamePathDeque[_actualGamePath]);
+
+    ret.resize(ret.size() - 3);
+    if (ret.find_last_of('/') != std::string::npos)
+        ret.erase(0, ret.find_last_of('/'));
+    return (ret);
 }
 
 const std::string &Arcade::getPlayerName(void)
