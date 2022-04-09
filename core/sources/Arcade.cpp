@@ -23,6 +23,7 @@ Arcade::Arcade()
     _inGame = false;
     _inMenu = true;
     _framerate = 60;
+    _playerName = "";
 }
 
 Arcade::~Arcade()
@@ -94,6 +95,17 @@ void Arcade::renderSprite(ICore::Sprite sprite)//TODO
     displaySprite.texture = sprite.texture->getTexture();
     _graphical->renderSprite(displaySprite);
     return;
+}
+
+void Arcade::addNewScore(std::uint32_t score)
+{
+    UNUSED(score);
+    return;
+}
+
+const std::string &Arcade::getPlayerName(void)
+{
+    return (_playerName);
 }
 
 // Personal Functions
@@ -280,12 +292,6 @@ void Arcade::launchGame(void)
     else
         _game->init(this);
     gameLoop();
-}
-
-void Arcade::addNewScore(std::uint32_t score)
-{
-    UNUSED(score);
-    return;
 }
 
 void Arcade::destroyRawTexture(void)

@@ -28,6 +28,7 @@ class Arcade : public ICore {
         void clearScreen(ICore::Color color);
         void renderSprite(ICore::Sprite sprite);
         void addNewScore(std::uint32_t score);
+        const std::string &getPlayerName(void);
 
         // Personal Functions
         void setDlGraphical(void *graphical);
@@ -67,6 +68,7 @@ class Arcade : public ICore {
         unsigned _framerate;
         std::uint32_t _pixelsPerCell;
         IDisplayModule::Vector2u _windowSize;
+        std::string _playerName;
     private:
 };
 
