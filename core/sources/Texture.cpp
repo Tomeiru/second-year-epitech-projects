@@ -22,8 +22,47 @@ ICore::Texture::~Texture()
 {
 }
 
+void ICore::Texture::setTexture(std::unique_ptr<IDisplayModule::RawTexture> texture)
+{
+    _texture = std::move(texture);
+}
+
 IDisplayModule::RawTexture *ICore::Texture::getTexture(void)
 {
     return (_texture.get());
 }
 
+void ICore::Texture::destroyRawTexture(void)
+{
+    _texture = nullptr;
+}
+
+const std::string &ICore::Texture::getPngFilename(void)
+{
+    return (_pngFilename);
+}
+
+char ICore::Texture::getCharacter(void)
+{
+    return (_character);
+}
+
+ICore::Color ICore::Texture::getCharacterColor(void)
+{
+    return (_characterColor);
+}
+
+ICore::Color ICore::Texture::getBackgroundColor(void)
+{
+    return (_backgroundColor);
+}
+
+std::size_t ICore::Texture::getWidth(void)
+{
+    return (_width);
+}
+
+std::size_t ICore::Texture::getHeight(void)
+{
+    return (_height);
+}

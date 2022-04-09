@@ -6,6 +6,7 @@
 */
 
 #include "MainMenu.hpp"
+#include "Arcade.hpp"
 
 MainMenu::MainMenu()
 {
@@ -15,13 +16,13 @@ MainMenu::~MainMenu()
 {
 }
 
-void MainMenu::init(ICore *coreHandle)
+void MainMenu::init(Arcade *coreHandle)
 {
     _core = coreHandle;
     _core->setPixelsPerCell(8);
     _core->setFramerate(30);
-    _core->openWindow((IDisplayModule::Vector2u){50, 50});
-    _text = _core->loadTexture("assets/font/Joystix.TTF", 'h', ICore::Color::yellow, ICore::Color::red, 8, 8);
+    _core->openWindow((IDisplayModule::Vector2u){1280, 720});
+    _text = _core->loadTexture("assets/font/Joystix.ttf", 'h', ICore::Color::yellow, ICore::Color::red, 8, 8);
     _pac = _core->loadTexture("assets/pac.png", ' ', ICore::Color::yellow, ICore::Color::black, 13, 13);
 }
 

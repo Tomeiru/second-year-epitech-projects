@@ -15,6 +15,7 @@ int main(int ac, char **av)
         ArgumentChecker::CheckNumber(ac);
         core.setDlGraphical(ArgumentChecker::CheckAndOpenLibrary(av[1]));
         core.initClassFromDl(true);
+        core.initActualGraphGraphical(std::string(av[1]));
         core.launchGame();
     }
     catch (ArcadeError const &error) {

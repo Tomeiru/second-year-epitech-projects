@@ -12,13 +12,14 @@
 Arcade::Arcade()
 {
     _graphical = nullptr;
-    _game = std::make_unique<MainMenu>();
+    _game = nullptr;
+    _menu = std::make_unique<MainMenu>();
     _dlGame = NULL;
     _dlGraphical = NULL;
-    _prevGraphPath = std::string("");
-    _nextGraphPath = std::string("");;
-    _prevGamePath = std::string("");;
-    _nextGamePath = std::string("");;
+    _graphPathDeque = initGraphPathDeque();
+    _gamePathDeque = initGamePathDeque();
+    _actualGraphPath = -1;
+    _actualGamePath = -1;
     _inGame = false;
     _inMenu = true;
     _framerate = 60;
@@ -30,6 +31,7 @@ Arcade::~Arcade()
 
 void Arcade::setPixelsPerCell(std::uint32_t pixelsPerCell)
 {
+    _pixelsPerCell = pixelsPerCell;
     _graphical->setPixelsPerCell(pixelsPerCell);
 }
 
@@ -48,6 +50,7 @@ ICore::Texture *Arcade::loadTexture(const std::string &pngFilename, char charact
 
 void Arcade::openWindow(IDisplayModule::Vector2u pixelsWantedWindowSize)
 {
+    _windowSize = pixelsWantedWindowSize;
     _graphical->openWindow(pixelsWantedWindowSize);
 }
 
@@ -96,16 +99,31 @@ void Arcade::renderSprite(ICore::Sprite sprite)//TODO
 // Personal Functions
 void Arcade::changeLibraryByPath(std::string path, bool graphical)
 {
-    if (path == "")
+    void *dl;
+
+    std::cerr << path << std::endl;
+    if (!(dl = dlopen(path.c_str(), RTLD_LAZY))) {
+        std::cerr << "dlopen error: " << dlerror() << std::endl;
         return;
+    }
     if (graphical) {
+        if (!dlsym(dl, "gEpitechArcadeGetDisplayModuleHandle")) {
+            dlclose(dl);
+            std::cerr << "wrong library type: the library provided as argument is not an appropriate graphical library" << std::endl;
+            return;
+        }
         closeDl(true);
-        _dlGraphical = dlopen(path.c_str(), RTLD_LAZY);
+        _dlGraphical = dl;
         initClassFromDl(true);
         return;
     }
+    if (!dlsym(dl, "gEpitechArcadeGetGameModuleHandle")) {
+        dlclose(dl);
+        std::cerr << "wrong library type: the library provided as argument is not an appropriate game library" << std::endl;
+        return;
+    }
     closeDl(false);
-    _dlGame = dlopen(path.c_str(), RTLD_LAZY);
+    _dlGame = dl;
     initClassFromDl(false);
 }
 
@@ -142,39 +160,86 @@ void Arcade::closeDl(bool graphical)
 
 void Arcade::exitArcade()
 {
+    destroyRawTexture();
     closeDl(true);
     closeDl(false);
-    exit(0);
+    throw ArcadeError("exit arcade", "exit arcade");
 }
 
 void Arcade::gameRestart(void)
 {
-    if (_inMenu == true)
-        return;
+    std::unique_ptr<IGameModule> (*gameHandle)(void);
+
+    _game = nullptr;
+    *(void **) &gameHandle = dlsym(_dlGame, "gEpitechArcadeGetGameModuleHandle");
+    _game = (*gameHandle)();
+    _textureDeque.clear();
+    _game->init(this);
+    gameLoop();
+    throw ArcadeError("game restart", "game restart");
 }
 
 void Arcade::goBackToMenu(void)
 {
-    if (_inMenu == true)
-        return;
+    _game = nullptr;
+    invertInBool();
+    _textureDeque.clear();
+    _menu = std::make_unique<MainMenu>();
+    _menu->init(this);
+    gameLoop();
+    throw ArcadeError("go back to menu", "go back to menu");
 }
 
 void Arcade::checkFunctionButton(void)
 {
-    if (isButtonPressed(IDisplayModule::Button::F1))
-        changeLibraryByPath(_prevGraphPath, true);
-    if (isButtonPressed(IDisplayModule::Button::F2))
-        changeLibraryByPath(_nextGraphPath, true);
-    if (isButtonPressed(IDisplayModule::Button::F3))
-        changeLibraryByPath(_prevGamePath, false);
-    if (isButtonPressed(IDisplayModule::Button::F4))
-        changeLibraryByPath(_nextGamePath, false);
+    if (isButtonPressed(IDisplayModule::Button::F1)) {
+        std::cerr << "switch F1" << std::endl;
+        destroyRawTexture();
+        std::cerr << "switch 1" << std::endl;
+        changeLibraryByPath(getPrevLibrary(true), true);
+        std::cerr << "switch 2" << std::endl;
+        setPixelsPerCell(_pixelsPerCell);
+        std::cerr << "switch 3" << std::endl;
+        openWindow(_windowSize);
+        std::cerr << "switch 4" << std::endl;
+        reloadAllTexture();
+        std::cerr << "switch 5" << std::endl;
+    }
+    if (isButtonPressed(IDisplayModule::Button::F2)) {
+        std::cerr << "switch F2" << std::endl;
+        destroyRawTexture();
+        std::cerr << "switch 1" << std::endl;
+        changeLibraryByPath(getNextLibrary(true), true);
+        std::cerr << "switch 2" << std::endl;
+        setPixelsPerCell(_pixelsPerCell);
+        std::cerr << "switch 3" << std::endl;
+        openWindow(_windowSize);
+        std::cerr << "switch 4" << std::endl;
+        reloadAllTexture();
+        std::cerr << "switch 5" << std::endl;
+    }
+    if (isButtonPressed(IDisplayModule::Button::F7) || _graphical->isClosing() == true)
+        exitArcade();
+    if (_inMenu == true)
+        return;
+    if (isButtonPressed(IDisplayModule::Button::F3)) {
+        changeLibraryByPath(getPrevLibrary(false), false);
+        _textureDeque.clear();
+        _game->init(this);
+        gameLoop();
+        throw ArcadeError("change game library", "previous");
+    }
+    if (isButtonPressed(IDisplayModule::Button::F4)) {
+        changeLibraryByPath(getNextLibrary(false), false);
+        _textureDeque.clear();
+        _game->init(this);
+        gameLoop();
+        throw ArcadeError("change game library", "next");
+    }
     if (isButtonPressed(IDisplayModule::Button::F5))
         gameRestart();
     if (isButtonPressed(IDisplayModule::Button::F6))
         goBackToMenu();
-    if (isButtonPressed(IDisplayModule::Button::F7) || _graphical->isClosing() == true)
-        exitArcade();
 }
 
 void Arcade::gameLoop(void)
@@ -189,19 +254,31 @@ void Arcade::gameLoop(void)
         else {
             tend.tv_sec += 1;
             tend.tv_nsec = oneFrameTime - (999999999 - tend.tv_nsec);
+        }_graphical->update();
+        try {
+            checkFunctionButton();
+        }catch (ArcadeError const &error) {
+            break;
         }
-        _graphical->update();
-        checkFunctionButton();
-        _game->update();
-        _game->draw();
-        _graphical->display();
+        if (_inMenu) {
+            _menu->update();
+            _menu->draw();
+        }
+        else {
+            _game->update();
+            _game->draw();
+        }_graphical->display();
         clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &tend, NULL);
     }
 }
 
 void Arcade::launchGame(void)
 {
-    _game->init(this);
+    std::cout << _actualGraphPath << std::endl;
+    if (_inMenu)
+        _menu->init(this);
+    else
+        _game->init(this);
     gameLoop();
 }
 
@@ -209,4 +286,130 @@ void Arcade::addNewScore(std::uint32_t score)
 {
     UNUSED(score);
     return;
+}
+
+void Arcade::destroyRawTexture(void)
+{
+    for (size_t i = 0; i < _textureDeque.size(); i++)
+        _textureDeque[i].destroyRawTexture();
+}
+
+void Arcade::reloadAllTexture(void)
+{
+    for (size_t i = 0; i < _textureDeque.size(); i++) {
+        _textureDeque[i].setTexture(
+            std::move(_graphical->loadTexture(
+            _textureDeque[i].getPngFilename(),
+            _textureDeque[i].getCharacter(),
+            _textureDeque[i].getCharacterColor(),
+            _textureDeque[i].getBackgroundColor(),
+            _textureDeque[i].getWidth(),
+            _textureDeque[i].getHeight())));
+    }
+}
+
+void Arcade::invertInBool(void)
+{
+    _inGame = (_inGame ? false : true);
+    _inMenu = (_inMenu ? false : true);
+}
+
+std::deque<std::string> Arcade::initGraphPathDeque(void)
+{
+    std::string path = "./lib";
+    std::deque<std::string> ret;
+    void *lib = NULL;
+
+    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+        if (!(lib = dlopen(entry.path().u8string().c_str(), RTLD_NOW)))
+            continue;
+        if (!dlsym(lib, "gEpitechArcadeGetDisplayModuleHandle")) {
+            dlclose(lib);
+            continue;
+        }
+        ret.push_back(entry.path().u8string().c_str());
+    }
+    return (ret);
+}
+
+std::deque<std::string> Arcade::initGamePathDeque(void)
+{
+    std::string path = "./lib";
+    std::deque<std::string> ret;
+    void *lib = NULL;
+
+    for (const auto & entry : std::filesystem::directory_iterator(path)) {
+        if (!(lib = dlopen(entry.path().u8string().c_str(), RTLD_NOW)))
+            continue;
+        if (!dlsym(lib, "gEpitechArcadeGetGameModuleHandle")) {
+            dlclose(lib);
+            continue;
+        }
+        ret.push_back(entry.path().u8string().c_str());
+    }
+    return (ret);
+}
+
+void Arcade::initActualGraphGraphical(std::string lib)
+{
+    std::filesystem::path libPath(lib);
+
+    for (size_t i = 0; _graphPathDeque.size(); i++)
+        if (libPath.root_path() == std::filesystem::path(_graphPathDeque[i]).root_path()) {
+            _actualGraphPath = i;
+            return;
+        }
+    _actualGraphPath = -1;
+}
+
+void Arcade::initActualGameGraphical(std::string lib)
+{
+    std::filesystem::path libPath(lib);
+
+    for (size_t i = 0; _gamePathDeque.size(); i++)
+        if (libPath.root_path() == std::filesystem::path(_gamePathDeque[i]).root_path()) {
+            _actualGamePath = i;
+            return;
+        }
+    _actualGamePath = -1;
+}
+
+std::string Arcade::getPrevLibrary(bool graphical)
+{
+    if (graphical) {
+        if (_actualGraphPath == -1 || _graphPathDeque.size() <= 1)
+            return ("");
+        if (_actualGraphPath == 0) {
+            _actualGraphPath = _graphPathDeque.size() - 1;
+            return (_graphPathDeque.back());
+        }
+        return (_graphPathDeque[--_actualGraphPath]);
+    }
+    if (_actualGamePath == -1 || _gamePathDeque.size() <= 1)
+        return ("");
+    if (_actualGamePath == 0) {
+        _actualGamePath = _gamePathDeque.size() - 1;
+        return (_gamePathDeque.back());
+    }
+    return (_gamePathDeque[--_actualGamePath]);
+}
+
+std::string Arcade::getNextLibrary(bool graphical)
+{
+    if (graphical) {
+        if (_actualGraphPath == -1 || _graphPathDeque.size() <= 1)
+            return ("");
+        if ((size_t)_actualGraphPath == _graphPathDeque.size() - 1) {
+            _actualGraphPath = 0;
+            return (_graphPathDeque[0]);
+        }
+        return (_graphPathDeque[++_actualGraphPath]);
+    }
+    if (_actualGamePath == -1 || _gamePathDeque.size() <= 1)
+        return ("");
+    if ((size_t)_actualGamePath == _gamePathDeque.size() - 1) {
+        _actualGamePath = 0;
+        return (_gamePathDeque[0]);
+    }
+    return (_gamePathDeque[++_actualGamePath]);
 }

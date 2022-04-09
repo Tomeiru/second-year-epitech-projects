@@ -40,19 +40,33 @@ class Arcade : public ICore {
         void exitArcade(void);
         void gameLoop(void);
         void launchGame(void);
+        void destroyRawTexture(void);
+        void reloadAllTexture(void);
+        void clearDeque(void);
+        void invertInBool(void);
+        std::deque<std::string> initGraphPathDeque(void);
+        std::deque<std::string> initGamePathDeque(void);
+        void initActualGraphGraphical(std::string lib);
+        void initActualGameGraphical(std::string lib);
+        std::string getPrevLibrary(bool graphical);
+        std::string getNextLibrary(bool graphical);
+
     protected:
         std::deque<ICore::Texture> _textureDeque;
         std::unique_ptr<IDisplayModule> _graphical;
         std::unique_ptr<IGameModule> _game;
+        std::unique_ptr<MainMenu> _menu;
         void *_dlGraphical;
         void *_dlGame;
-        std::string _prevGraphPath;
-        std::string _nextGraphPath;
-        std::string _prevGamePath;
-        std::string _nextGamePath;
+        std::deque<std::string> _graphPathDeque;
+        std::deque<std::string> _gamePathDeque;
+        long _actualGraphPath;
+        long _actualGamePath;
         bool _inGame;
         bool _inMenu;
         unsigned _framerate;
+        std::uint32_t _pixelsPerCell;
+        IDisplayModule::Vector2u _windowSize;
     private:
 };
 

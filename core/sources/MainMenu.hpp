@@ -10,16 +10,18 @@
 
 #include "IGameModule.hpp"
 
-class MainMenu : public IGameModule {
+class Arcade;
+
+class MainMenu {
     public:
         MainMenu();
         ~MainMenu();
-        void init(ICore *coreHandle);
+        void init(Arcade *coreHandle);
         void update();
         void draw();
         void checkPressedButton();
     protected:
-        ICore *_core;
+        Arcade *_core;
         ICore::Texture *_text;
         ICore::Texture *_pac;
     private:

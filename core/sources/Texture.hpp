@@ -15,7 +15,15 @@ class ICore::Texture {
         Texture(const std::string &pngFilename, char character, ICore::Color characterColor, ICore::Color backgroundColor, std::size_t width, std::size_t height, std::unique_ptr<IDisplayModule::RawTexture> texture);
         Texture(Texture&&) = default;
         ~Texture();
+        void setTexture(std::unique_ptr<IDisplayModule::RawTexture> texture);
+        const std::string &getPngFilename(void);
+        char getCharacter(void);
+        ICore::Color getCharacterColor(void);
+        ICore::Color getBackgroundColor(void);
+        std::size_t getWidth(void);
+        std::size_t getHeight(void);
         IDisplayModule::RawTexture *getTexture(void);
+        void destroyRawTexture(void);
 
     protected:
         std::string _pngFilename;
