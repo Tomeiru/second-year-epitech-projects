@@ -10,7 +10,7 @@
 
 MainMenu::MainMenu()
 {
-    _font = "assets/font/Joystix.ttf";
+    _font = "assets/emulogic.ttf";
     _width = 1280;
     _height = 320;
     _pixelPerCells = 16;

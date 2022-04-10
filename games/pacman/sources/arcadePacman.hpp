@@ -17,6 +17,8 @@
 class Pacman : public IGameModule
 {
 public:
+    Pacman();
+    ~Pacman();
     void init(ICore *coreHandle);
     void update();
     void draw();
@@ -97,6 +99,7 @@ private:
     std::pair <int,uint32_t> _prev3;
     std::pair <int,uint32_t> _prev4;
     std::pair <int,uint32_t> _prevpacman;
+    std::string _playerName;
 };
 
 #endif /* !ARCADEPACMAN_HPP_ */

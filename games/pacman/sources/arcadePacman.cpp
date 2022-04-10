@@ -7,6 +7,16 @@
 
 #include "arcadePacman.hpp"
 
+Pacman::Pacman()
+{
+
+}
+
+Pacman::~Pacman()
+{
+    _core->addNewScore((uint32_t) highscore);
+}
+
 void Pacman::init(ICore *coreHandle)
 {
     _core = coreHandle;

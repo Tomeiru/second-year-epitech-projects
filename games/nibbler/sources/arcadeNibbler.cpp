@@ -7,18 +7,13 @@
 
 #include "arcadeNibbler.hpp"
 
-int coucou(int number)
+arcadeNibbler::arcadeNibbler()
 {
-    std::cout << number << std::endl;
-    return (number);
 }
 
-
-arcadeNibbler::arcadeNibbler() {
-}
-
-arcadeNibbler::~arcadeNibbler() {
-
+arcadeNibbler::~arcadeNibbler()
+{
+    _core->addNewScore((uint32_t) _score);
 }
 
 void arcadeNibbler::init(ICore *corehandle) {

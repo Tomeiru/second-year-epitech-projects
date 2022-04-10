@@ -6,9 +6,12 @@
 */
 
 #include "RawTextureSfml.hpp"
+#include <X11/Xlib.h>
+#undef None
 
 ArcadeSfml::ArcadeSfml()
 {
+    XInitThreads();
     _pixelsPerCell = 0;
     _isTextInputOn = false;
     _isClosing = false;
