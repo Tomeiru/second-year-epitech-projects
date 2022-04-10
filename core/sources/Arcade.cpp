@@ -18,8 +18,8 @@ Arcade::Arcade()
     _dlGraphical = NULL;
     _graphPathDeque = initGraphPathDeque();
     _gamePathDeque = initGamePathDeque();
-    _actualGraphPath = -1;
-    _actualGamePath = -1;
+    _actualGraphPath = 0;
+    _actualGamePath = 0;
     _inGame = false;
     _inMenu = true;
     _framerate = 60;
@@ -301,7 +301,12 @@ void Arcade::gameLoop(void)
             break;
         }
         if (_inMenu) {
-            _menu->update();
+            try {
+                _menu->update();
+            }
+            catch (ArcadeError const &error) {
+                break;
+            }
             _menu->draw();
         }
         else {
@@ -446,4 +451,44 @@ std::string Arcade::getNextLibrary(bool graphical)
         return (_gamePathDeque[0]);
     }
     return (_gamePathDeque[++_actualGamePath]);
+}
+
+const std::deque<std::string> &Arcade::getGraphPathDeque(void)
+{
+    return (_graphPathDeque);
+}
+
+const std::deque<std::string> &Arcade::getGamePathDeque(void)
+{
+    return (_gamePathDeque);
+}
+
+const long &Arcade::getActualGraphPath(void)
+{
+    return (_actualGraphPath);
+}
+
+const long &Arcade::getActualGamePath(void)
+{
+    return (_actualGamePath);
+}
+
+void Arcade::setActualGraphPath(long path)
+{
+    _actualGraphPath = path;
+}
+
+void Arcade::setActualGamePath(long path)
+{
+    _actualGamePath = path;
+}
+
+void Arcade::clearTextureDeque(void)
+{
+    _textureDeque.clear();
+}
+
+void Arcade::initGame(void)
+{
+    _game->init(this);
 }

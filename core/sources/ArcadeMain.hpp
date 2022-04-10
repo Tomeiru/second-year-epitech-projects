@@ -14,7 +14,9 @@
 #include <deque>
 #include <filesystem>
 #include <fstream>
+#include <map>
 #include <string.h>
+#include <vector>
 #include "IGameModule.hpp"
 
 #endif /* !ARCADEMAIN_HPP_ */

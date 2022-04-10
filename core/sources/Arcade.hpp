@@ -52,6 +52,14 @@ class Arcade : public ICore {
         std::string getPrevLibrary(bool graphical);
         std::string getNextLibrary(bool graphical);
         std::string getNameOfGame(void);
+        const std::deque<std::string> &getGraphPathDeque(void);
+        const std::deque<std::string> &getGamePathDeque(void);
+        const long &getActualGraphPath(void);
+        const long &getActualGamePath(void);
+        void setActualGraphPath(long path);
+        void setActualGamePath(long path);
+        void clearTextureDeque(void);
+        void initGame(void);
 
     protected:
         std::deque<ICore::Texture> _textureDeque;

@@ -13,6 +13,7 @@
 class RawTextureNcurses : public IDisplayModule::RawTexture {
     public:
         RawTextureNcurses(char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height);
+        RawTextureNcurses(RawTextureNcurses&&) = default;
         ~RawTextureNcurses();
         char getCharacter(void);
         int getColor(void);
