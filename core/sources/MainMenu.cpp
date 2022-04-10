@@ -202,8 +202,8 @@ void MainMenu::activateCursor(void)
     if (_core->getGamePathDeque().size() > 0) {
         _core->changeLibraryByPath(_core->getGamePathDeque()[_core->getActualGamePath()], false);
         _core->clearTextureDeque();
-        _core->initGame();
         _core->invertInBool();
+        _core->initGame();
         _core->gameLoop();
         throw ArcadeError("start!", "good luck!");
     }
@@ -233,7 +233,7 @@ void MainMenu::moveDown(void)
         return;
     }
     if (_cursor < 20) {
-        if (_cursor == 17 || (size_t)_cursor == _core->getGamePathDeque().size() - 1) {
+        if (_cursor == 17 || (size_t)(_cursor - 10) == _core->getGamePathDeque().size() - 1) {
             _cursor = 20;
             return;
         }
@@ -328,6 +328,8 @@ void MainMenu::writeText(std::string text, ICore::Vector2u startingPos)
 
     spriteChar.pixelPosition = startingPos;
     for (size_t i = 0; text[i]; i++) {
+        if (i > 24)
+            break;
         if (isdigit(text[i]) != 0)
             spriteChar.texture = _blueNumbers[text[i] - 48];
         else if (isupper(text[i]) != 0)
@@ -357,6 +359,8 @@ void MainMenu::writeActualText(std::string text, ICore::Vector2u startingPos)
 
     spriteChar.pixelPosition = startingPos;
     for (size_t i = 0; text[i]; i++) {
+        if (i > 24)
+            break;
         if (isdigit(text[i]) != 0)
             spriteChar.texture = _actualNumbers[text[i] - 48];
         else if (isupper(text[i]) != 0)
@@ -386,6 +390,8 @@ void MainMenu::writeCursorText(std::string text, ICore::Vector2u startingPos)
 
     spriteChar.pixelPosition = startingPos;
     for (size_t i = 0; text[i]; i++) {
+        if (i > 24)
+            break;
         if (isdigit(text[i]) != 0)
             spriteChar.texture = _cursorNumbers[text[i] - 48];
         else if (isupper(text[i]) != 0)
@@ -415,6 +421,8 @@ void MainMenu::writeActualCursorText(std::string text, ICore::Vector2u startingP
 
     spriteChar.pixelPosition = startingPos;
     for (size_t i = 0; text[i]; i++) {
+        if (i > 24)
+            break;
         if (isdigit(text[i]) != 0)
             spriteChar.texture = _cursorActualNumbers[text[i] - 48];
         else if (isupper(text[i]) != 0)
@@ -462,10 +470,10 @@ void MainMenu::gameList(void)
 {
     const std::deque<std::string> &copy(_core->getGamePathDeque());
     const long &actual = _core->getActualGamePath();
-    ICore::Vector2u pos = {1040, 112};
+    ICore::Vector2u pos = {864, 112};
 
     for (size_t i = 0; i < copy.size() && i < 8; i++) {
-        std::cerr << "Printing name : " << copy[i] << std::endl;
+        std::cerr << "Printing name : " << copy[i] << " i value : " << i << " _cursor value : " << _cursor << " _actual value : " << actual << std::endl;
         if ((long)i == actual && _cursor == (int)(i + 10))
             writeActualCursorText(copy[i], pos);
         else if ((long)i == actual)
