@@ -8,6 +8,8 @@
 #ifndef ARCADENCURSES_HPP_
 #define ARCADENCURSES_HPP_
 
+#define UNUSED(x) (void)(x)
+
 #include "ICore.hpp"
 #include <iostream>
 #include <curses.h>
@@ -32,7 +34,6 @@ class ArcadeNcurses : public IDisplayModule {
         void display();
         void update();
 
-        // Personal Functions
         WINDOW *getWindow();
         void setWindow(WINDOW *win);
         void initAllColorPair();

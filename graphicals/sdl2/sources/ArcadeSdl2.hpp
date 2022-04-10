@@ -8,6 +8,8 @@
 #ifndef ARCADESDL2_HPP_
 #define ARCADESDL2_HPP_
 
+#define UNUSED(x) (void)(x)
+
 #include "ICore.hpp"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"

@@ -23,29 +23,29 @@ ArcadeSfml::~ArcadeSfml()
     _win.close();
 }
 
-std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void) //DONE
+std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void)
 {
     return (std::make_unique<ArcadeSfml>());
 }
 
-void ArcadeSfml::setPixelsPerCell(std::uint32_t pixelsPerCell) //DONE
+void ArcadeSfml::setPixelsPerCell(std::uint32_t pixelsPerCell)
 {
     _pixelsPerCell = pixelsPerCell;
 }
 
-std::uint32_t ArcadeSfml::getPixelsPerCell(void) //DONE
+std::uint32_t ArcadeSfml::getPixelsPerCell(void)
 {
     return (_pixelsPerCell);
 }
 
-std::unique_ptr<IDisplayModule::RawTexture> ArcadeSfml::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
+std::unique_ptr<IDisplayModule::RawTexture> ArcadeSfml::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height)
 {
     UNUSED(width);
     UNUSED(height);
     return (std::make_unique<RawTextureSfml>(pngFilename, character, characterColor, backgroundColor, _pixelsPerCell));
 }
 
-void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)//DONE
+void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)
 {
     _win.create(sf::VideoMode(windowSize.x, windowSize.y), "Arcade");
     sf::View view(sf::Vector2f(windowSize.x / 2, windowSize.y/ 2), sf::Vector2f(windowSize.x, windowSize.y));
@@ -53,7 +53,7 @@ void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)//DONE
     return;
 }
 
-bool ArcadeSfml::isButtonPressed(IDisplayModule::Button button)//DONE IN THEORY
+bool ArcadeSfml::isButtonPressed(IDisplayModule::Button button)
 {
     std::map<sf::Keyboard::Key, bool>::iterator it = _keyPressedMap.find(keyToSfmlKey.at(button));
 
@@ -66,7 +66,7 @@ bool ArcadeSfml::isButtonPressed(IDisplayModule::Button button)//DONE IN THEORY
     return (false);
 }
 
-IDisplayModule::MouseButtonReleaseEvent ArcadeSfml::getMouseButtonReleaseEvent() //DONE IN THEORY (test needed)
+IDisplayModule::MouseButtonReleaseEvent ArcadeSfml::getMouseButtonReleaseEvent()
 {
     MouseButtonReleaseEvent event;
 
@@ -83,32 +83,31 @@ IDisplayModule::MouseButtonReleaseEvent ArcadeSfml::getMouseButtonReleaseEvent()
     return (event);
 }
 
-void ArcadeSfml::startTextInput() //DONE
+void ArcadeSfml::startTextInput()
 {
     _isTextInputOn = true;
     return;
 }
 
-std::string ArcadeSfml::getTextInput() //DONE
+std::string ArcadeSfml::getTextInput()
 {
     return (_textInput);
 }
 
-void ArcadeSfml::endTextInput() //DONE
+void ArcadeSfml::endTextInput()
 {
     _isTextInputOn = false;
     _textInput = "";
     return;
 }
 
-//First is background then foreground
-void ArcadeSfml::clearScreen(IDisplayModule::Color color) //DONE
+void ArcadeSfml::clearScreen(IDisplayModule::Color color)
 {
     _win.clear(colorToSfmlColor.at(color));
     return;
 }
 
-void ArcadeSfml::renderSprite(IDisplayModule::Sprite sprite) //DONE
+void ArcadeSfml::renderSprite(IDisplayModule::Sprite sprite)
 {
     RawTextureSfml *rawTexture = dynamic_cast<RawTextureSfml *>(sprite.texture);
     const sf::Texture &texture = rawTexture->getTexture();
@@ -118,18 +117,18 @@ void ArcadeSfml::renderSprite(IDisplayModule::Sprite sprite) //DONE
     return;
 }
 
-void ArcadeSfml::display() //DONE
+void ArcadeSfml::display()
 {
     _win.display();
     return;
 }
 
-bool ArcadeSfml::isClosing() //DONE
+bool ArcadeSfml::isClosing()
 {
     return (_isClosing);
 }
 
-void ArcadeSfml::update(void) //DONE
+void ArcadeSfml::update(void)
 {
     sf::Event event;
     _keyPressedMap.clear();

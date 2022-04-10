@@ -21,28 +21,28 @@ ArcadeNcurses::~ArcadeNcurses()
     endwin();
 }
 
-std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void) //DONE
+std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void)
 {
     return (std::make_unique<ArcadeNcurses>());
 }
 
-void ArcadeNcurses::setPixelsPerCell(std::uint32_t pixelsPerCell) //DONE
+void ArcadeNcurses::setPixelsPerCell(std::uint32_t pixelsPerCell)
 {
     _pixelsPerCell = pixelsPerCell;
 }
 
-std::uint32_t ArcadeNcurses::getPixelsPerCell(void) //DONE
+std::uint32_t ArcadeNcurses::getPixelsPerCell(void)
 {
     return (_pixelsPerCell);
 }
 
-std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
+std::unique_ptr<IDisplayModule::RawTexture> ArcadeNcurses::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height)
 {
     UNUSED(pngFilename);
     return (std::make_unique<RawTextureNcurses>(character, characterColor, backgroundColor, width, height));
 }
 
-void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THEORY (test needed)
+void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)
 {
     UNUSED(windowSize);
     initscr();
@@ -62,14 +62,14 @@ void ArcadeNcurses::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THE
     return;
 }
 
-bool ArcadeNcurses::isButtonPressed(IDisplayModule::Button button)//DONE IN THEORY (test needed)
+bool ArcadeNcurses::isButtonPressed(IDisplayModule::Button button)
 {
     if (_input == keyToCursesKey.at(button))
         return (true);
     return (false);
 }
 
-IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEvent() //DONE IN THEORY (test needed)
+IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEvent()
 {
     MouseButtonReleaseEvent event;
     MEVENT eventNcurses;
@@ -105,15 +105,14 @@ void ArcadeNcurses::endTextInput()
     return;
 }
 
-//First is background then foreground
-void ArcadeNcurses::clearScreen(IDisplayModule::Color color) //DONE
+void ArcadeNcurses::clearScreen(IDisplayModule::Color color)
 {
     werase(_win);
     wbkgd(_win, COLOR_PAIR(findPair(color, color)));
     return;
 }
 
-void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite) //DONE
+void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite)
 {
     RawTextureNcurses *texture = dynamic_cast<RawTextureNcurses *>(sprite.texture);
     char character = texture->getCharacter();
@@ -126,7 +125,7 @@ void ArcadeNcurses::renderSprite(IDisplayModule::Sprite sprite) //DONE
     return;
 }
 
-void ArcadeNcurses::display() //DONE
+void ArcadeNcurses::display()
 {
     wattron(_win, COLOR_PAIR(findPair(IDisplayModule::Color::black, IDisplayModule::Color::white)));
     box(_win, 0, 0);
@@ -140,7 +139,7 @@ bool ArcadeNcurses::isClosing()
     return (false);
 }
 
-void ArcadeNcurses::update(void) //DONE
+void ArcadeNcurses::update(void)
 {
     _textInput = "";
     _input = getch();
@@ -155,17 +154,17 @@ void ArcadeNcurses::update(void) //DONE
     return;
 }
 
-WINDOW *ArcadeNcurses::getWindow() //DONE
+WINDOW *ArcadeNcurses::getWindow()
 {
     return (_win);
 }
 
-void ArcadeNcurses::setWindow(WINDOW *win) //DONE
+void ArcadeNcurses::setWindow(WINDOW *win)
 {
     _win = win;
 }
 
-void ArcadeNcurses::initAllColorPair(void) //DONE
+void ArcadeNcurses::initAllColorPair(void)
 {
     int i = 1;
 

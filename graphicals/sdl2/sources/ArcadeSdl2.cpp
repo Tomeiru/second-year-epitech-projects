@@ -23,30 +23,30 @@ ArcadeSdl2::~ArcadeSdl2()
     SDL_Quit();
 }
 
-std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void) //DONE
+std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle(void)
 {
     return (std::make_unique<ArcadeSdl2>());
 }
 
-void ArcadeSdl2::setPixelsPerCell(std::uint32_t pixelsPerCell) //DONE
+void ArcadeSdl2::setPixelsPerCell(std::uint32_t pixelsPerCell)
 {
     _pixelsPerCell = pixelsPerCell;
 }
 
-std::uint32_t ArcadeSdl2::getPixelsPerCell(void) //DONE
+std::uint32_t ArcadeSdl2::getPixelsPerCell(void)
 {
     return (_pixelsPerCell);
 }
 
 
-std::unique_ptr<IDisplayModule::RawTexture> ArcadeSdl2::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
+std::unique_ptr<IDisplayModule::RawTexture> ArcadeSdl2::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height)
 {
     UNUSED(width);
     UNUSED(height);
     return (std::make_unique<RawTextureSdl2>(pngFilename, character, characterColor, backgroundColor, _pixelsPerCell, _renderer));
 }
 
-void ArcadeSdl2::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THEORY
+void ArcadeSdl2::openWindow(IDisplayModule::Vector2u windowSize)
 {
     if (_win != NULL) {
         SDL_DestroyRenderer(_renderer);
@@ -61,7 +61,7 @@ void ArcadeSdl2::openWindow(IDisplayModule::Vector2u windowSize)//DONE IN THEORY
     return;
 }
 
-bool ArcadeSdl2::isButtonPressed(IDisplayModule::Button button)//TODO IN THEORY
+bool ArcadeSdl2::isButtonPressed(IDisplayModule::Button button)
 {
     std::map<SDL_Scancode, bool>::iterator it = _keyPressedMap.find(keystoSdl2keys.at(button));
 
@@ -74,31 +74,30 @@ bool ArcadeSdl2::isButtonPressed(IDisplayModule::Button button)//TODO IN THEORY
     return (false);
 }
 
-IDisplayModule::MouseButtonReleaseEvent ArcadeSdl2::getMouseButtonReleaseEvent() //TODO IN THEORY (test needed)
+IDisplayModule::MouseButtonReleaseEvent ArcadeSdl2::getMouseButtonReleaseEvent()
 {
     return (_mouseEvent);
 }
 
-void ArcadeSdl2::startTextInput() //DONE
+void ArcadeSdl2::startTextInput()
 {
     _isTextInputOn = true;
     return;
 }
 
-std::string ArcadeSdl2::getTextInput() //DONE
+std::string ArcadeSdl2::getTextInput()
 {
     return (_textInput);
 }
 
-void ArcadeSdl2::endTextInput() //DONE
+void ArcadeSdl2::endTextInput()
 {
     _isTextInputOn = false;
     _textInput = "";
     return;
 }
 
-//First is background then foreground
-void ArcadeSdl2::clearScreen(IDisplayModule::Color color) //DONE IN THEORY
+void ArcadeSdl2::clearScreen(IDisplayModule::Color color)
 {
     SDL_SetRenderDrawColor(_renderer,
     std::get<0>(colorToSdl2Color[(int)color]),
@@ -108,7 +107,7 @@ void ArcadeSdl2::clearScreen(IDisplayModule::Color color) //DONE IN THEORY
     return;
 }
 
-void ArcadeSdl2::renderSprite(IDisplayModule::Sprite sprite) //DONE
+void ArcadeSdl2::renderSprite(IDisplayModule::Sprite sprite)
 {
     RawTextureSdl2 *rawTexture = dynamic_cast<RawTextureSdl2 *>(sprite.texture);
     SDL_Texture *texture = rawTexture->getTexture();
@@ -120,18 +119,18 @@ void ArcadeSdl2::renderSprite(IDisplayModule::Sprite sprite) //DONE
     return;
 }
 
-void ArcadeSdl2::display() //DONE
+void ArcadeSdl2::display()
 {
     SDL_RenderPresent(_renderer);
     return;
 }
 
-bool ArcadeSdl2::isClosing() //DONE
+bool ArcadeSdl2::isClosing()
 {
     return (_isClosing);
 }
 
-void ArcadeSdl2::update(void) //TODO
+void ArcadeSdl2::update(void)
 {
     SDL_Event event;
     _keyPressedMap.clear();

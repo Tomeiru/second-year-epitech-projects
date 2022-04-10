@@ -8,7 +8,6 @@
 #include "Arcade.hpp"
 #include "Texture.hpp"
 
-// ICore Functions
 Arcade::Arcade()
 {
     _graphical = nullptr;
@@ -41,7 +40,7 @@ void Arcade::setFramerate(unsigned framerate)
     _framerate = framerate;
 }
 
-ICore::Texture *Arcade::loadTexture(const std::string &pngFilename, char character, ICore::Color characterColor, ICore::Color backgroundColor, std::size_t width, std::size_t height)//TODO
+ICore::Texture *Arcade::loadTexture(const std::string &pngFilename, char character, ICore::Color characterColor, ICore::Color backgroundColor, std::size_t width, std::size_t height)
 {
     ICore::Texture texture(pngFilename, character, characterColor, backgroundColor, width, height, std::move(_graphical->loadTexture(pngFilename, character, characterColor, backgroundColor, width, height)));
 
@@ -87,7 +86,7 @@ void Arcade::clearScreen(ICore::Color color)
     return (_graphical->clearScreen(color));
 }
 
-void Arcade::renderSprite(ICore::Sprite sprite)//TODO
+void Arcade::renderSprite(ICore::Sprite sprite)
 {
     IDisplayModule::Sprite displaySprite;
 
@@ -141,7 +140,6 @@ void Arcade::setPlayerName(std::string name)
     _playerName = name;
 }
 
-// Personal Functions
 void Arcade::changeLibraryByPath(std::string path, bool graphical)
 {
     void *dl;

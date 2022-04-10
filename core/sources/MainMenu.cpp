@@ -179,7 +179,6 @@ void MainMenu::init(Arcade *coreHandle)
     _cursorActualMajAlphabet = createActualCursorMajAlphabet();
     _cursorActualMinAlphabet = createActualCursorMinAlphabet();
     _cursorActualNumbers = createActualCursorNumbers();
-    //_pac = _core->loadTexture("assets/pac.png", ' ', ICore::Color::yellow, ICore::Color::black, 16, 16);
 }
 
 void MainMenu::activateCursor(void)

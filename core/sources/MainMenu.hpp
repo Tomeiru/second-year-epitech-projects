@@ -10,6 +10,8 @@
 
 #include "ArcadeMain.hpp"
 
+#define UNUSED(x) (void)(x)
+
 class Arcade;
 
 class MainMenu {

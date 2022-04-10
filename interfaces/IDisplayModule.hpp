@@ -142,5 +142,3 @@ inline IDisplayModule::RawTexture::~RawTexture()
 
 // Note: This should return a pointer to some IDisplayModuleImpl (please do not make that an actual class name), which should then be deleted when we're done with the module
 extern "C" std::unique_ptr<IDisplayModule> gEpitechArcadeGetDisplayModuleHandle();
-
-#define UNUSED(x) (void)(x)

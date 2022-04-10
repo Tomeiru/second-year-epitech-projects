@@ -15,7 +15,6 @@ class Arcade : public ICore {
     public:
         Arcade();
         ~Arcade();
-        // ICore Functions
         void setPixelsPerCell(std::uint32_t pixelsPerCell);
         void setFramerate(unsigned framerate);
         ICore::Texture *loadTexture(const std::string &pngFilename, char character, ICore::Color characterColor, ICore::Color backgroundColor, std::size_t width, std::size_t height);
@@ -30,7 +29,6 @@ class Arcade : public ICore {
         void addNewScore(std::uint32_t score);
         const std::string &getPlayerName(void);
 
-        // Personal Functions
         void setPlayerName(std::string name);
         void setDlGraphical(void *graphical);
         void changeLibraryByPath(std::string path, bool graphical);

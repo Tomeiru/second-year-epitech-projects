@@ -9,6 +9,8 @@
 #ifndef ARCADESFML_HPP_
 #define ARCADESFML_HPP_
 
+#define UNUSED(x) (void)(x)
+
 #include "ICore.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>

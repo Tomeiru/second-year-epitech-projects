@@ -324,10 +324,9 @@ void arcadeNibbler::update_over() {
 
 void arcadeNibbler::draw_tutorial() {
     _core->clearScreen(ICore::Color::black);
-    print_string("PLAYER1", {0, 0}); // LIGNE 1
+    print_string("PLAYER1", {0, 0});
     print_string("  0", {(_width / 2)  - (6 * 40), 0});
-    //print_string("LEFT  0", {(_width  / 4) * 3 , 0});
-    print_string("HIGHSCORE", {0, 80}); // LIGNE 4
+    print_string("HIGHSCORE", {0, 80});
     print_string("  5000", {(_width / 2) - (6 * 40), 80});
     print_string("INSTRUCTIONS:", {(_width / 2) - ((14 / 2) * 40), 240});
     print_string("TRY TO SURVIVE AS", {(_width / 2) - ((18 / 2) * 40), 280});
@@ -346,10 +345,9 @@ void arcadeNibbler::draw_game() {
     tmp << _score;
     tmp >> score;
     _core->clearScreen(ICore::Color::black);
-    print_string("PLAYER1", {0, 0}); // LIGNE 1
+    print_string("PLAYER1", {0, 0});
     print_string("  " + score, {(_width / 2) - (6 * 40), 0});
-    //print_string("LEFT  0", {(_width  / 4) * 3 , 0});
-    print_string("HIGHSCORE", {0, 80}); // L*IGNE 4
+    print_string("HIGHSCORE", {0, 80});
     print_string("  " + (_score > 5000 ? score : "5000"), {(_width / 2) - ((6 * 40)), 80});
     print_ground();
     print_wall();
@@ -404,13 +402,13 @@ void arcadeNibbler::draw_over() {
     tmp >> score;
     _core->clearScreen(ICore::Color::black);
     print_string("YOU LOSE !", {(_width / 2) - ((11 / 2) * 40), 240});
-    print_string("PLAYER1 :", {(_width / 2) - ((14 / 2) * 40), 320}); // LIGNE 1
+    print_string("PLAYER1 :", {(_width / 2) - ((14 / 2) * 40), 320});
     print_string("  " + score, {(_width / 2) + (3 * 40), 320});
-    print_string("PRESS C", {(_width / 2) - ((8 / 2) * 40), 640}); // LIGNE 1
+    print_string("PRESS C", {(_width / 2) - ((8 / 2) * 40), 640});
     print_string("TO TRY AGAIN", {(_width / 2) - (13 / 2) * 40, 680});
 }
 
-std::unique_ptr<IGameModule> gEpitechArcadeGetGameModuleHandle(void) { //DONE
+std::unique_ptr<IGameModule> gEpitechArcadeGetGameModuleHandle(void) {
     return (std::make_unique<arcadeNibbler>());
 }
 void arcadeNibbler::draw() {
