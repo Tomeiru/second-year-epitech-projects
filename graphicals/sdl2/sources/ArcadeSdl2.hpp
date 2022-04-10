@@ -2,24 +2,25 @@
 ** EPITECH PROJECT, 2022
 ** Arcade
 ** File description:
-** ArcadeSfml
+** ArcadeSdl2
 */
 
-
-#ifndef ARCADESFML_HPP_
-#define ARCADESFML_HPP_
+#ifndef ARCADESDL2_HPP_
+#define ARCADESDL2_HPP_
 
 #include "ICore.hpp"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include <vector>
 #include <map>
-#include <deque>
 
-class ArcadeSfml : public IDisplayModule {
+class ArcadeSdl2 : public IDisplayModule {
     public:
-        ArcadeSfml();
-        ~ArcadeSfml();
-        void setPixelsPerCell(std::uint32_t pixelsPerCell);
+        ArcadeSdl2();
+        ~ArcadeSdl2();
+        void setPixelsPerCell(std::uint32_t PixelsPerCell);
         std::uint32_t getPixelsPerCell(void);
         std::unique_ptr<IDisplayModule::RawTexture> loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height);
         void openWindow(IDisplayModule::Vector2u pixelsWantedWindowSize);
@@ -36,17 +37,17 @@ class ArcadeSfml : public IDisplayModule {
 
     protected:
         std::uint32_t _pixelsPerCell;
-        sf::RenderWindow _win;
-        sf::View _view;
+        SDL_Window *_win;
+        SDL_Renderer *_renderer;
         bool _isTextInputOn;
         bool _isClosing;
         std::string _textInput;
-        std::deque<sf::Event> _evtQueue;
-        std::map<sf::Keyboard::Key, bool> _keyPressedMap;
+        IDisplayModule::MouseButtonReleaseEvent _mouseEvent;
+        std::map<SDL_Scancode, bool> _keyPressedMap;
     private:
 };
 
-extern const std::map<IDisplayModule::Color, sf::Color> colorToSfmlColor;
-extern const std::map<IDisplayModule::Button, sf::Keyboard::Key> keyToSfmlKey;
+extern const std::vector<std::tuple<uint8_t, uint8_t, uint8_t>> colorToSdl2Color;
+extern const std::unordered_map<IDisplayModule::Button, SDL_Scancode> keystoSdl2keys;
 
-#endif /* !ARCADESFML_HPP_ */
+#endif /* !ARCADESDL2_HPP_ */

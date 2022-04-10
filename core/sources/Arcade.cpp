@@ -121,7 +121,7 @@ void Arcade::addNewScore(std::uint32_t score)
 
 std::string Arcade::getNameOfGame(void)
 {
-    if (_actualGamePath == -1)
+    if (_gamePathDeque.size() == 0)
         return ("");
     std::string ret(_gamePathDeque[_actualGamePath]);
 
@@ -268,6 +268,8 @@ void Arcade::checkFunctionButton(void)
     if (_inMenu == true)
         return;
     if (isButtonPressed(IDisplayModule::Button::F3)) {
+        if (_gamePathDeque.size() == 1)
+            return;
         changeLibraryByPath(getPrevLibrary(false), false);
         _textureDeque.clear();
         _game->init(this);
@@ -275,6 +277,8 @@ void Arcade::checkFunctionButton(void)
         throw ArcadeError("change game library", "previous");
     }
     if (isButtonPressed(IDisplayModule::Button::F4)) {
+        if (_gamePathDeque.size() == 1)
+            return;
         changeLibraryByPath(getNextLibrary(false), false);
         _textureDeque.clear();
         _game->init(this);
@@ -324,7 +328,6 @@ void Arcade::gameLoop(void)
 
 void Arcade::launchGame(void)
 {
-    std::cout << _actualGraphPath << std::endl;
     if (_inMenu)
         _menu->init(this);
     else
@@ -399,7 +402,7 @@ void Arcade::initActualGraphGraphical(std::string lib)
     std::filesystem::path libPath(lib);
 
     for (size_t i = 0; _graphPathDeque.size(); i++)
-        if (libPath.root_path() == std::filesystem::path(_graphPathDeque[i]).root_path()) {
+        if (libPath.filename() == std::filesystem::path(_graphPathDeque[i]).filename()) {
             _actualGraphPath = i;
             return;
         }
@@ -411,7 +414,7 @@ void Arcade::initActualGameGraphical(std::string lib)
     std::filesystem::path libPath(lib);
 
     for (size_t i = 0; _gamePathDeque.size(); i++)
-        if (libPath.root_path() == std::filesystem::path(_gamePathDeque[i]).root_path()) {
+        if (libPath.filename() == std::filesystem::path(_gamePathDeque[i]).filename()) {
             _actualGamePath = i;
             return;
         }

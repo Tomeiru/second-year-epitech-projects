@@ -307,7 +307,6 @@ void MainMenu::checkPressedButton(void)
                     event.cellPosition.y >= 1 && event.cellPosition.y <= 3) {
                     _textInput = true;
                     _core->startTextInput();
-                    std::cout << "I start TextInput" << std::endl;
                 }
             }
         }
@@ -535,7 +534,7 @@ void MainMenu::scoreList(void)
     file.open(filename, std::fstream::in);
     if (!file) {
         writeText("No ./score exists for", {464, 112});
-        writeText("this game", {576, 112});
+        writeText("this game", {576, 128});
         return;
     }
     while (std::getline(file, line) && i++ < 7) {

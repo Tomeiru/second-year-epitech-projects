@@ -5,9 +5,11 @@
 ## Makefile
 ##
 
-SRC =	sources/arcadeSdl2.cpp
+SRC =	sources/ArcadeSdl2.cpp	\
+		sources/CorrespSdl2.cpp	\
+		sources/RawTextureSdl2.cpp
 
-CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces
+CPPFLAGS = -Wall -Wextra -fpic -I../../interfaces -I/usr/local/include/SDL2 -D_REENTRANT
 
 OBJ = 	$(SRC:.cpp=.o)
 
@@ -17,7 +19,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 		mkdir -p ../../lib
-		g++ -shared -o $(NAME) $(OBJ)
+		g++ -shared -o $(NAME) $(OBJ) -lSDL2 -lSDL2_image -lSDL2_ttf
 		mv $(NAME) ../../lib
 
 clean:
