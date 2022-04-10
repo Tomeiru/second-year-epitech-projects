@@ -41,7 +41,6 @@ std::uint32_t ArcadeSdl2::getPixelsPerCell(void) //DONE
 
 std::unique_ptr<IDisplayModule::RawTexture> ArcadeSdl2::loadTexture(const std::string &pngFilename, char character, IDisplayModule::Color characterColor, IDisplayModule::Color backgroundColor, std::size_t width, std::size_t height) //DONE
 {
-    std::cerr << "SDL2: I've loaded a texture in SDL2" << std::endl;
     UNUSED(width);
     UNUSED(height);
     return (std::make_unique<RawTextureSdl2>(pngFilename, character, characterColor, backgroundColor, _pixelsPerCell, _renderer));
@@ -68,7 +67,6 @@ bool ArcadeSdl2::isButtonPressed(IDisplayModule::Button button)//TODO IN THEORY
 
     if (it != _keyPressedMap.end()) {
         if (it->second == true) {
-            std::cout << it->first << std::endl;
             it->second = false;
             return (true);
         }

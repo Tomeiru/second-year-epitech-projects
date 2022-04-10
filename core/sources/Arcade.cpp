@@ -146,7 +146,6 @@ void Arcade::changeLibraryByPath(std::string path, bool graphical)
 {
     void *dl;
 
-    std::cerr << path << std::endl;
     if (!(dl = dlopen(path.c_str(), RTLD_LAZY))) {
         std::cerr << "dlopen error: " << dlerror() << std::endl;
         return;
@@ -238,30 +237,18 @@ void Arcade::goBackToMenu(void)
 void Arcade::checkFunctionButton(void)
 {
     if (isButtonPressed(IDisplayModule::Button::F1)) {
-        std::cerr << "switch F1" << std::endl;
         destroyRawTexture();
-        std::cerr << "switch 1" << std::endl;
         changeLibraryByPath(getPrevLibrary(true), true);
-        std::cerr << "switch 2" << std::endl;
         setPixelsPerCell(_pixelsPerCell);
-        std::cerr << "switch 3" << std::endl;
         openWindow(_windowSize);
-        std::cerr << "switch 4" << std::endl;
         reloadAllTexture();
-        std::cerr << "switch 5" << std::endl;
     }
     if (isButtonPressed(IDisplayModule::Button::F2)) {
-        std::cerr << "switch F2" << std::endl;
         destroyRawTexture();
-        std::cerr << "switch 1" << std::endl;
         changeLibraryByPath(getNextLibrary(true), true);
-        std::cerr << "switch 2" << std::endl;
         setPixelsPerCell(_pixelsPerCell);
-        std::cerr << "switch 3" << std::endl;
         openWindow(_windowSize);
-        std::cerr << "switch 4" << std::endl;
         reloadAllTexture();
-        std::cerr << "switch 5" << std::endl;
     }
     if (isButtonPressed(IDisplayModule::Button::F7) || _graphical->isClosing() == true)
         exitArcade();

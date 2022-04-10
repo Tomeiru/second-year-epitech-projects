@@ -270,18 +270,15 @@ void MainMenu::moveUp(void)
 
 void MainMenu::checkPressedButton(void)
 {
-    std::cerr << "Player name is: " << _textInputStr << std::endl;
     if (_textInput) {
         std::string input = _core->getTextInput();
         for (int i = 0; input[i]; i++) {
-            std::cerr << "Input[i] is equivalent of " << input[i] << std::endl;
             if (input[i] == '\b') {
                 if (_textInputStr.size() != 0)
                     _textInputStr.resize(_textInputStr.size() - 1);
                 continue;
             }
             if (input[i] == '\n') {
-                std::cerr << "I've detected a newline" << std::endl;
                 _core->endTextInput();
                 _textInput = false;
                 break;
@@ -310,7 +307,6 @@ void MainMenu::checkPressedButton(void)
                 }
             }
         }
-        std::cerr << (int)event.type << " at " << event.cellPosition.x << " " << event.cellPosition.y << std::endl;
     }
 }
 
@@ -489,7 +485,6 @@ void MainMenu::graphicalList(void)
     ICore::Vector2u pos = {16, 112};
 
     for (size_t i = 0; i < copy.size() && i < 8; i++) {
-        std::cerr << "Printing name : " << copy[i] << " i value : " << i << " _cursor value : " << _cursor << " _actual value : " << actual << std::endl;
         if ((long)i == actual && _cursor == (int)(i))
             writeActualCursorText(copy[i], pos);
         else if ((long)i == actual)
@@ -509,7 +504,6 @@ void MainMenu::gameList(void)
     ICore::Vector2u pos = {864, 112};
 
     for (size_t i = 0; i < copy.size() && i < 8; i++) {
-        std::cerr << "Printing name : " << copy[i] << " i value : " << i << " _cursor value : " << _cursor << " _actual value : " << actual << std::endl;
         if ((long)i == actual && _cursor == (int)(i + 10))
             writeActualCursorText(copy[i], pos);
         else if ((long)i == actual)

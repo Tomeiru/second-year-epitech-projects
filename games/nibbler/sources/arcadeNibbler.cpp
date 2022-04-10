@@ -27,7 +27,6 @@ void arcadeNibbler::init(ICore *corehandle) {
     _height = 960;
     _core->openWindow({_width, _height});
 
-    std::cerr << "loading texture" << std::endl;
     _texture->snake_front_up = _core->loadTexture("assets/head_up.png", 'A', ICore::Color::white, ICore::Color::blue, 40, 40);
     _texture->snake_front_left = _core->loadTexture("assets/head_left.png", '<', ICore::Color::white, ICore::Color::blue, 40, 40);
     _texture->snake_front_down = _core->loadTexture("assets/head_down.png", 'V', ICore::Color::white, ICore::Color::blue, 40, 40);
@@ -102,7 +101,6 @@ void arcadeNibbler::update() {
 }
 
 void arcadeNibbler::update_tutorial() {
-    std::cerr << "yey update tutorial" << std::endl;
     _score = 0;
     _end = 0;
     if (_snake.size() != 5) {
@@ -117,18 +115,13 @@ void arcadeNibbler::update_tutorial() {
     for (int i = 0; i <= 3; i++) {
         if (_core->isButtonPressed((ICore::Button)i)) {
             _phase = arcadeNibbler::PHASE::GAME;
-            std::cerr << "key pressed game" << std::endl;
             return;
         }
     }
-    std::cerr << "yey end update tutorial" << std::endl;
 }
 
 void arcadeNibbler::update_game() {
-    std::cerr << "yey update game" << std::endl;
-
     get_input();
-    std::cerr << "HEEEEEEEEEEEY " << _end << std::endl;
     if (_tick % 10 != 0)
         return;
     if (!_end) {
@@ -140,18 +133,15 @@ void arcadeNibbler::update_game() {
         _phase = PHASE::OVER;
     else
         _end++;
-    std::cerr << "yey end update game" << std::endl;
 }
 
 void arcadeNibbler::eat_snake() {
     auto tail = _snake.at(0);
 
     if (_snake.at(_snake.size() - 2)._x == _fruit.at(0)._x && _snake.at(_snake.size() - 2)._y == _fruit.at(0)._y) {
-        std::cerr << "eating fruit omg" << std::endl;
         _fruit.pop_front();
         _score += 100;
         _snake.pop_front();
-        std::cerr << "eating fruit omg tail at " << tail._x << " " << tail._y << std::endl;
         _snake.push_front({tail._x, tail._y, tail.direction, tail._texture});
         _snake.push_front(tail);
     }
@@ -327,7 +317,6 @@ void arcadeNibbler::update_over() {
         _snake.pop_front();
     if (_core->isButtonPressed(ICore::Button::Start)) {
         _phase = arcadeNibbler::PHASE::TUTORIEL;
-        std::cerr << "key pressed over" << std::endl;
         return;
     }
 }

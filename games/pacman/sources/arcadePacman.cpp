@@ -88,7 +88,6 @@ void Pacman::init(ICore *coreHandle)
 
 std::unique_ptr<IGameModule> gEpitechArcadeGetGameModuleHandle(void)
 {
-    std::cerr << "pacman: I'm creating the Pacman class" << std::endl;
     return (std::make_unique<Pacman>());
 }
 
@@ -869,7 +868,6 @@ void Pacman::allghost()
             dead4 = 1;
     }
     if (_ghost1pos.first < 16*9 || _ghost1pos.first > 16*41 || _ghost1pos.second < 16*6 ||  _ghost1pos.second > 16*30){
-		std::cout << "reset\n";
 		_ghost1pos.first = 16*25;
         _ghost1pos.second = 16*17;
 		_prev1.first = 0;
