@@ -31,6 +31,7 @@ class Arcade : public ICore {
         const std::string &getPlayerName(void);
 
         // Personal Functions
+        void setPlayerName(std::string name);
         void setDlGraphical(void *graphical);
         void changeLibraryByPath(std::string path, bool graphical);
         void initClassFromDl(bool graphical);

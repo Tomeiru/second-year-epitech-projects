@@ -60,8 +60,14 @@ void ArcadeSfml::openWindow(IDisplayModule::Vector2u windowSize)//DONE
 bool ArcadeSfml::isButtonPressed(IDisplayModule::Button button)//DONE IN THEORY
 {
     std::cerr << "SFML: I'm in isButtonPressed for " << keyToSfmlKey.at(button) << std::endl;
-    if (sf::Keyboard::isKeyPressed(keyToSfmlKey.at(button)))
-        return (true);
+    std::map<sf::Keyboard::Key, bool>::iterator it = _keyPressedMap.find(keyToSfmlKey.at(button));
+
+    if (it != _keyPressedMap.end()) {
+        if (it->second == true) {
+            it->second = false;
+            return (true);
+        }
+    }
     return (false);
 }
 
@@ -140,14 +146,23 @@ void ArcadeSfml::update(void) //DONE
 {
     sf::Event event;
     std::cerr << "SFML: I'm gonna update" << std::endl;
+    _keyPressedMap.clear();
+    _evtQueue.clear();
+    _textInput = "";
     while (_win.pollEvent(event)) {
         if (event.type == sf::Event::KeyPressed) {
-            if (_isTextInputOn && (event.key.code >= 0 && event.key.code <= 35)) {
-                if (event.key.code > 25)
+            if (_isTextInputOn && ((event.key.code >= 0 && event.key.code <= 35) || event.key.code == sf::Keyboard::Backspace || event.key.code == sf::Keyboard::Enter)) {
+                if (event.key.code > 25 && event.key.code <= 35)
                     _textInput.push_back((char) event.key.code + 22);
-                else
+                else if (event.key.code <= 25)
                     _textInput.push_back((char) event.key.code + 97);
+                else if (event.key.code == sf::Keyboard::Backspace)
+                    _textInput.push_back('\b');
+                else
+                    _textInput.push_back('\n');
             }
+            else if (!_isTextInputOn)
+                _keyPressedMap.insert(std::make_pair(event.key.code, true));
         }else if (event.type == sf::Event::Closed)
             _isClosing = true;
         else if (event.type == sf::Event::MouseButtonReleased)

@@ -16,6 +16,8 @@ MainMenu::MainMenu()
     _pixelPerCells = 16;
     _framerate = 30;
     _cursor = 0;
+    _textInput = false;
+    _textInputStr = "";
 }
 
 MainMenu::~MainMenu()
@@ -203,6 +205,8 @@ void MainMenu::activateCursor(void)
         _core->changeLibraryByPath(_core->getGamePathDeque()[_core->getActualGamePath()], false);
         _core->clearTextureDeque();
         _core->invertInBool();
+        if (_textInputStr.find_first_not_of(' ') != std::string::npos)
+            _core->setPlayerName(_textInputStr);
         _core->initGame();
         _core->gameLoop();
         throw ArcadeError("start!", "good luck!");
@@ -266,16 +270,49 @@ void MainMenu::moveUp(void)
 
 void MainMenu::checkPressedButton(void)
 {
-    if (_core->isButtonPressed(ICore::Button::A) ||
-        _core->isButtonPressed(ICore::Button::Start) ||
-        _core->isButtonPressed(ICore::Button::Select))
-        activateCursor();
-    if (_core->isButtonPressed(ICore::Button::Left) || _core->isButtonPressed(ICore::Button::Right))
-        moveLeft();
-    if (_core->isButtonPressed(ICore::Button::Up))
-        moveUp();
-    if (_core->isButtonPressed(ICore::Button::Down))
-        moveDown();
+    std::cerr << "Player name is: " << _textInputStr << std::endl;
+    if (_textInput) {
+        std::string input = _core->getTextInput();
+        for (int i = 0; input[i]; i++) {
+            std::cerr << "Input[i] is equivalent of " << input[i] << std::endl;
+            if (input[i] == '\b') {
+                if (_textInputStr.size() != 0)
+                    _textInputStr.resize(_textInputStr.size() - 1);
+                continue;
+            }
+            if (input[i] == '\n') {
+                std::cerr << "I've detected a newline" << std::endl;
+                _core->endTextInput();
+                _textInput = false;
+                break;
+            }
+            _textInputStr.push_back(input[i]);
+        }
+    }
+    else {
+        if (_core->isButtonPressed(ICore::Button::A) ||
+            _core->isButtonPressed(ICore::Button::Start) ||
+            _core->isButtonPressed(ICore::Button::Select))
+            activateCursor();
+        if (_core->isButtonPressed(ICore::Button::Left) || _core->isButtonPressed(ICore::Button::Right))
+            moveLeft();
+        if (_core->isButtonPressed(ICore::Button::Up))
+            moveUp();
+        if (_core->isButtonPressed(ICore::Button::Down))
+            moveDown();
+        ICore::MouseButtonReleaseEvent event = _core->getMouseButtonReleaseEvent();
+        if (event.type != ICore::MouseButtonReleaseEvent::Type::None) {
+            if (event.type == ICore::MouseButtonReleaseEvent::Type::Left) {
+                if (event.cellPosition.x >= 1 && event.cellPosition.x <= 78 &&
+                    event.cellPosition.y >= 1 && event.cellPosition.y <= 3) {
+                    _textInput = true;
+                    _core->startTextInput();
+                    std::cout << "I start TextInput" << std::endl;
+                }
+            }
+        }
+        std::cerr << (int)event.type << " at " << event.cellPosition.x << " " << event.cellPosition.y << std::endl;
+    }
 }
 
 void MainMenu::update(void)
@@ -486,14 +523,44 @@ void MainMenu::gameList(void)
     }
 }
 
+void MainMenu::scoreList(void)
+{
+    std::string filename = "./score";
+    filename.append(_core->getNameOfGame());
+    std::ifstream file;
+    std::string line;
+    ICore::Vector2u pos = {432, 112};
+    int i = 0;
+
+    file.open(filename, std::fstream::in);
+    if (!file) {
+        writeText("No ./score exists for", {464, 112});
+        writeText("this game", {576, 112});
+        return;
+    }
+    while (std::getline(file, line) && i++ < 7) {
+        if (line.length() >= 24)
+            writeText(line, pos);
+        else
+            writeText(line, {640 - ((uint32_t) line.length() * 16 / 2), pos.y});
+        pos.y += 16;
+    }
+
+}
+
 void MainMenu::draw(void)
 {
     _core->clearScreen(ICore::Color::black);
     drawBox();
-    writeText("Player Name:", {544, 16});
+    if (_textInput)
+        writeActualText("Player Name:", {544, 16});
+    else
+        writeText("Player Name:", {544, 16});
+    writeActualText(_textInputStr, {640 - ((uint32_t) _textInputStr.length() * 16 / 2), 32});
     writeText("Graphical", {144, 80});
     graphicalList();
     writeText("Score:", {592, 80});
+    scoreList();
     writeText("Games", {1024, 80});
     gameList();
     if (_cursor == 20)

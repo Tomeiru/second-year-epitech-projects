@@ -127,13 +127,18 @@ std::string Arcade::getNameOfGame(void)
 
     ret.resize(ret.size() - 3);
     if (ret.find_last_of('/') != std::string::npos)
-        ret.erase(0, ret.find_last_of('/'));
+        ret.erase(0, ret.find_last_of('/') + 1);
     return (ret);
 }
 
 const std::string &Arcade::getPlayerName(void)
 {
     return (_playerName);
+}
+
+void Arcade::setPlayerName(std::string name)
+{
+    _playerName = name;
 }
 
 // Personal Functions

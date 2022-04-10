@@ -91,7 +91,7 @@ IDisplayModule::MouseButtonReleaseEvent ArcadeNcurses::getMouseButtonReleaseEven
                 event.type = MouseButtonReleaseEvent::Type::Left;
             if (eventNcurses.bstate & BUTTON2_RELEASED)
                 event.type = MouseButtonReleaseEvent::Type::Right;
-            event.cellPosition = (IDisplayModule::Vector2u){(uint32_t)eventNcurses.x, (uint32_t)eventNcurses.y};
+            event.cellPosition = (IDisplayModule::Vector2u){(uint32_t)eventNcurses.x - 1, (uint32_t)eventNcurses.y - 1};
         }
     return (event);
 }
@@ -159,9 +159,16 @@ bool ArcadeNcurses::isClosing()
 void ArcadeNcurses::update(void) //DONE
 {
     std::cerr << "ncurses: I'm gonna update" << std::endl;
+    _textInput = "";
     _input = getch();
-    if (_isTextInputOn && isalnum(_input))
-        _textInput.push_back((char)_input);
+    if (_isTextInputOn && (isalnum(_input) || _input == KEY_BACKSPACE || _input == '\n')) {
+        if (_input == KEY_BACKSPACE)
+            _textInput.push_back('\b');
+        else if (_input == '\n')
+            _textInput.push_back('\n');
+        else
+            _textInput.push_back((char)_input);
+    }
     return;
 }
 

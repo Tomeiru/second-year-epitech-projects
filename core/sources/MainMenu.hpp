@@ -38,6 +38,7 @@ class MainMenu {
         void drawSeparators(void);
         void graphicalList(void);
         void gameList(void);
+        void scoreList(void);
         void writeText(std::string text, ICore::Vector2u startingPos);
         void writeActualText(std::string text, ICore::Vector2u startingPos);
         void writeCursorText(std::string text, ICore::Vector2u startingPos);
@@ -97,6 +98,8 @@ class MainMenu {
         u_int32_t _pixelPerCells;
         u_int32_t _framerate;
         int _cursor;
+        bool _textInput;
+        std::string _textInputStr;
     private:
 };
 

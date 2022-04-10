@@ -41,6 +41,7 @@ class ArcadeSfml : public IDisplayModule {
         bool _isClosing;
         std::string _textInput;
         std::deque<sf::Event> _evtQueue;
+        std::map<sf::Keyboard::Key, bool> _keyPressedMap;
     private:
 };
 
