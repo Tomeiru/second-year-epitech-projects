@@ -514,7 +514,7 @@ void MainMenu::gameList(void)
             writeActualCursorText(copy[i], pos);
         else if ((long)i == actual)
             writeActualText(copy[i], pos);
-        else if ((int)i == _cursor)
+        else if ((int)(i + 10) == _cursor)
             writeCursorText(copy[i], pos);
         else
             writeText(copy[i], pos);
