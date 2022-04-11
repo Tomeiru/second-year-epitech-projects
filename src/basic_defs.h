@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2022
-** strace
+** ftrace
 ** File description:
 ** Defines basic_defs
 */
