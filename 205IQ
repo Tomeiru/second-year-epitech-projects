@@ -1,0 +1,88 @@
+#!/usr/bin/perl
+
+use Math::Trig;
+use Math::BigFloat;
+
+sub checkIfInt {
+    my ($arg) = @_;
+
+    if ($arg =~ /\D/) {
+        return ("false");
+    }else {
+        return (int($arg));
+    }
+}
+
+sub densityFunction {
+    my $mu = checkIfInt($ARGV[0]);
+    my $sigma = checkIfInt($ARGV[1]);
+
+    if ($mu eq "false" || $sigma eq "false" || $sigma == 0) {
+        print STDERR "205IQ: Wrong argument\n";
+        exit(84);
+    }
+    for ($i = 0; $i < 201; $i = $i + 1) {
+        $answer = (1 / ($sigma * sqrt(2 * pi()))) * exp((-(($i - $mu)**2)) / (2 * ($sigma ** 2)));
+        $str = sprintf("%i %.5f", $i, $answer);
+        print ("$str\n");
+    }
+}
+
+sub getInferiorFor {
+    my ($mu, $sigma, $IQ) = @_;
+    my $result = Math::BigFloat->new(q{0.0});
+
+    for ($i = 0; $i < $IQ; $i = $i + 1) {
+        $answer = (1 / ($sigma * sqrt(2 * pi()))) * exp((-(($i - $mu)**2)) / (2 * ($sigma ** 2)));
+        $result = $result + $answer;
+    }
+    return ($result * 100);
+}
+
+sub inferiorIQ {
+    my $mu = checkIfInt($ARGV[0]);
+    my $sigma = checkIfInt($ARGV[1]);
+    my $IQ = checkIfInt($ARGV[2]);
+
+    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $sigma == 0 || $IQ > 200) {
+        print STDERR "205IQ: Wrong argument\n";
+        exit(84);
+    }
+    my $result = getInferiorFor($mu, $sigma, $IQ);
+    $str = sprintf("%.1f%% of people have an IQ inferior to %i", $result, $IQ);
+    print ("$str\n");
+}
+
+sub betweenIQ {
+    my $mu = checkIfInt($ARGV[0]);
+    my $sigma = checkIfInt($ARGV[1]);
+    my $IQ = checkIfInt($ARGV[2]);
+    my $IQ2 = checkIfInt($ARGV[3]);
+
+    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $sigma == 0 || $IQ > 200 || $IQ2 > 200) {
+        print STDERR "205IQ: Wrong argument\n";
+        exit(84);
+    }
+    my $result = getInferiorFor($mu, $sigma, $IQ2) - getInferiorFor($mu, $sigma, $IQ);
+    $str = sprintf("%.1f%% of people have an IQ between %i and %i", $result, $IQ, $IQ2);
+    print ("$str\n");
+}
+
+sub main {
+    my $argNum = @ARGV;
+    if ($argNum < 2 || $argNum > 4) {
+        print STDERR "205IQ: Wrong number of argument\n";
+        exit(84);
+    }
+    if ($argNum == 2) {
+        densityFunction();
+    }
+    if ($argNum == 3) {
+        inferiorIQ();
+    }
+    if ($argNum == 4) {
+        betweenIQ();
+    }
+}
+
+main()
