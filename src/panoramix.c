@@ -40,7 +40,8 @@ void *villager_thread(void *args)
             pthread_mutex_unlock(&vil->info->mutex);
         }
         vil->nb_fights_left -= 1;
-        printf("Villager %lu: Take that roman scum! Only %lu left.\n", vil->id, vil->nb_fights_left);
+        printf("Villager %lu: Take that roman scum! Only %lu left.\n",
+        vil->id, vil->nb_fights_left);
         vil->drink = 0;
     }
     printf("Villager %lu: I'm going to sleep now.\n", vil->id);
@@ -55,8 +56,8 @@ void *druid_thread(void *args)
     while (info->nb_refills) {
         sem_wait(&info->pano_sem);
         info->nb_refills -= 1;
-        printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can only\
- make %lu more refills after this one.\n", info->nb_refills);
+        printf("Druid: Ah! Yes, yes, I'm awake! Working on it! Beware I can \
+only make %lu more refills after this one.\n", info->nb_refills);
         POT_QUAN = POT_SIZE;
         sem_post(&info->vil_sem);
     }
@@ -71,7 +72,8 @@ int panoramix(panoramix_t *info)
 
     pthread_create(&thread_id_pano, NULL, druid_thread, (void*)info);
     for (unsigned long i = 0; info->villagers[i]; i++) {
-        pthread_create(&thread_id_vil, NULL, villager_thread, (void*)info->villagers[i]);
+        pthread_create(&thread_id_vil, NULL, villager_thread,
+        (void*)info->villagers[i]);
         info->villagers[i]->thread_id = thread_id_vil;
     }
     for (unsigned long i = 0; info->villagers[i]; i++)

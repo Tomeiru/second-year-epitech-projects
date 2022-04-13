@@ -9,12 +9,13 @@
 
 static int is_array_number(char **args)
 {
+    int ret = 1;
+
     for (int i = 0; args[i]; i++) {
         for (int ii = 0; args[i][ii]; ii++)
-            if (!isdigit(args[i][ii]))
-                return (0);
+            ret = (!isdigit(args[i][ii])) ? 0 : ret;
     }
-    return (1);
+    return (ret);
 }
 
 static int check_zero(panoramix_t *info)
@@ -26,7 +27,8 @@ static int check_zero(panoramix_t *info)
 
 void create_villagers_array(panoramix_t **info)
 {
-    (*info)->villagers = malloc(sizeof(villager_t *) * ((*info)->nb_villagers + 1));
+    (*info)->villagers = malloc(sizeof(villager_t *) *
+    ((*info)->nb_villagers + 1));
 
     for (unsigned long i = 0; i < (*info)->nb_villagers; i++) {
         (*info)->villagers[i] = malloc(sizeof(villager_t));
