@@ -32,11 +32,11 @@ sub getInferiorFor {
     my ($mu, $sigma, $IQ) = @_;
     my $result = Math::BigFloat->new(q{0.0});
 
-    for ($i = 0; $i < $IQ; $i = $i + 1) {
+    for ($i = 0; $i < $IQ; $i = $i + 0.01) {
         $answer = (1 / ($sigma * sqrt(2 * pi()))) * exp((-(($i - $mu)**2)) / (2 * ($sigma ** 2)));
         $result = $result + $answer;
     }
-    return ($result * 100);
+    return ($result);
 }
 
 sub inferiorIQ {
