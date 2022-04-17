@@ -1,0 +1,5 @@
+- name: (POSTGRESQL) Install postgre 12
+  apt:
+    name: postgresql
+    state: present
+    update_cache: yes

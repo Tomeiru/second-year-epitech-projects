@@ -1,0 +1,24 @@
+- name: copy the .tar
+  become: yes
+  copy:
+    src: poll.tar
+    dest: /root/poll.tar
+
+- name: unzip the .tar
+  become: yes
+  unarchive:
+    src: /root/poll.tar
+    dest: /root
+    remote_src: yes
+
+- name: install pip
+  become: yes
+  apt:
+    name: python3-pip
+    update_cache: yes
+
+- name: install dependencies
+  become: yes
+  pip:
+    requirements: /root/poll/requirements.txt
+    executable: pip3

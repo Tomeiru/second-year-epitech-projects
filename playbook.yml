@@ -1,0 +1,24 @@
+- name: base installation
+  hosts: all
+  roles:
+    - base
+
+- name: postgresql installatio,
+  hosts: postgresql
+  roles:
+    - postgresql
+
+- name: redis installation
+  hosts: redis
+  roles:
+    - redis
+
+- name: result installation
+  hosts: result
+  roles:
+    - result
+
+- name: worker installation
+  hosts: worker
+  roles:
+    - worker
