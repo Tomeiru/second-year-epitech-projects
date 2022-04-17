@@ -3,7 +3,13 @@
   roles:
     - base
 
-- name: postgresql installatio,
+- name: poll installation
+  hosts: poll
+  roles:
+    - poll
+
+
+- name: postgresql installation
   hosts: postgresql
   roles:
     - postgresql

@@ -8,18 +8,11 @@
   become: yes
   copy:
     src: roles/redis/files/redis.conf
-    dest: /etc/redis
-
-- name: Secure redis with a password
-  become: yes
-  lineinfile:
     dest: /etc/redis/redis.conf
-    regexp: '^(# )?requirepass \w*$'
-    line: 'requirepass {{ REDIS_PASSWORD }}'
-    state: present
 
-- name: Restart redis
+- name: restart redis
   become: yes
   systemd:
     name: redis-server
     state: restarted
+    enabled: yes

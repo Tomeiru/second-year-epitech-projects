@@ -1,5 +1,55 @@
 - name: (POSTGRESQL) Install postgre 12
+  become: yes
   apt:
-    name: postgresql
+    name: "{{ item }}"
     state: present
     update_cache: yes
+  with_items:
+    - postgresql
+    - postgresql-client
+    - python-psycopg2
+    - libpq-dev
+
+- name: (POSTGRESQL) Install python packages
+  become: yes
+  pip:
+    name: psycopg2-binary
+    state: present
+    executable: pip3
+
+- name: Start and enable service
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: create databse
+  postgresql_db:
+    state: present
+    name: "{{ DB_NAME }}"
+  become: yes
+  become_user: postgres
+
+- name: create user in database
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    state: present
+    db: "{{ DB_NAME }}"
+    name: "{{ DB_USER }}"
+    password: "{{ DB_PASSWORD }}"
+    priv: all
+
+- name: Copy schema.sql
+  become: yes
+  copy:
+    src: roles/postgresql/files/schema.sql
+    dest: /tmp/schema.sql
+
+- name: Create paul schema using schema.sql
+  become: yes
+  become_user: postgres
+  postgresql_query:
+    db: "{{ DB_NAME }}"
+    path_to_script: /tmp/schema.sql
+    as_single_query: no

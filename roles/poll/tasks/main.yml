@@ -10,15 +10,18 @@
     src: /root/poll.tar
     dest: /root
     remote_src: yes
-
-- name: install pip
-  become: yes
-  apt:
-    name: python3-pip
-    update_cache: yes
+  register: is_require_needed
 
 - name: install dependencies
   become: yes
   pip:
     requirements: /root/poll/requirements.txt
     executable: pip3
+    state: forcereinstall
+  when: not is_require_needed
+
+- name: copy service
+  become: yes
+  copy:
+    src: roles/poll/files/poll.service
+    dest: /etc/systemd/system/poll.service

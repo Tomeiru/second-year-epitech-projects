@@ -1,0 +1,29 @@
+- name: install node prerequis
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - nodejs
+    - npm
+
+- name: copy the .tar
+  become: yes
+  copy:
+    src: result.tar
+    dest: /root/result.tar
+
+- name: unzip the .tar
+  become: yes
+  unarchive:
+    src: /root/result.tar
+    dest: /root
+    remote_src: yes
+
+- name: install requirement json
+  become: yes
+  npm:
+    path: /root/result
+
+

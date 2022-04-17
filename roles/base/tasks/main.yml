@@ -6,3 +6,4 @@
     update_cache: yes
   with_items:
     - git
+    - python3-pip

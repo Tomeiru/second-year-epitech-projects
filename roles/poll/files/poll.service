@@ -1,0 +1,9 @@
+[Unit]
+Description=launching the web app
+
+[Service]
+User=octopus
+WorkingDirectory=/root/poll
+Environment
+ExecStart="python3 app.py"
+Restart=always
