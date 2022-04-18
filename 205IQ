@@ -17,7 +17,7 @@ sub densityFunction {
     my $mu = checkIfInt($ARGV[0]);
     my $sigma = checkIfInt($ARGV[1]);
 
-    if ($mu eq "false" || $sigma eq "false" || $sigma == 0) {
+    if ($mu eq "false" || $sigma eq "false" || $sigma == 0 || $mu > 200) {
         print STDERR "205IQ: Wrong argument\n";
         exit(84);
     }
@@ -44,7 +44,7 @@ sub inferiorIQ {
     my $sigma = checkIfInt($ARGV[1]);
     my $IQ = checkIfInt($ARGV[2]);
 
-    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $sigma == 0 || $IQ > 200) {
+    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $sigma == 0 || $IQ > 200 || $mu > 200) {
         print STDERR "205IQ: Wrong argument\n";
         exit(84);
     }
@@ -59,7 +59,7 @@ sub betweenIQ {
     my $IQ = checkIfInt($ARGV[2]);
     my $IQ2 = checkIfInt($ARGV[3]);
 
-    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $sigma == 0 || $IQ > 200 || $IQ2 > 200) {
+    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $IQ2 eq "false" || $sigma == 0 || $IQ > 200 || $IQ2 > 200 || $mu > 200 || $IQ < $IQ2) {
         print STDERR "205IQ: Wrong argument\n";
         exit(84);
     }
