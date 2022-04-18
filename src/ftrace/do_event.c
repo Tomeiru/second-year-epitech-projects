@@ -54,7 +54,7 @@ static bool sde_part4(sde_state_t *s)
 static bool sde_part3(sde_state_t *s)
 {
     if (s->event_type == STRACE_EVENT_SIGNAL_GROUP_STOPPED) {
-        ftrace_print_signal_stop(s->self, s->self->current_process, NULL,
+        ftrace_print_signal_stop(s->self, s->self->current_process,
             s->restart_signal);
         s->restart_operation = PTRACE_LISTEN;
         s->restart_signal = 0;
@@ -80,7 +80,7 @@ static bool sde_part2(sde_state_t *s)
     if (s->event_type == STRACE_EVENT_SIGNAL_DELIVERY_STOPPED) {
         s->restart_signal = WSTOPSIG(s->wait_status);
         ftrace_print_signal_stop(s->self, s->self->current_process,
-            &s->event_data->signal_info, s->restart_signal);
+            s->restart_signal);
     }
     if (s->event_type == STRACE_EVENT_SIGNALLED) {
         ftrace_print_signalled(s->self, s->self->current_process,
