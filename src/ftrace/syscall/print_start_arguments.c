@@ -12,5 +12,5 @@
 void ftrace_syscall_print_start_arguments(
     struct ftrace *self, const char *syscall_name)
 {
-    ftrace_printf(self, "%s(", syscall_name);
+    ftrace_printf(self, "Syscall %s(", syscall_name);
 }

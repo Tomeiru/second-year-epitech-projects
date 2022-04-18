@@ -11,6 +11,7 @@
 #include "print_start_arguments.h"
 #include "get_arguments.h"
 #include "../process/get_syscall_entry.h"
+#include "../printf.h"
 
 static bool get_args(struct ftrace *self, struct ftrace_process *proc, int *r)
 {

@@ -10,7 +10,6 @@
 #include "print_raw_arguments.h"
 #include "print_start_arguments.h"
 #include "../process/get_syscall_entry.h"
-#include "../process/is_raw.h"
 #include <stdio.h>
 #include <sys/syscall.h>
 
@@ -21,9 +20,7 @@ static int sset_part2(struct ftrace *self, struct ftrace_process *proc)
     ftrace_syscall_print_leader(self, proc);
     ftrace_syscall_print_start_arguments(
         self, ftrace_process_get_syscall_entry(proc)->name);
-    result = ftrace_process_is_raw(self, proc) ?
-        ftrace_syscall_print_raw_arguments(self, proc) :
-        ftrace_process_get_syscall_entry(proc)->function(self, proc);
+    result = ftrace_syscall_print_raw_arguments(self, proc);
     fflush(stderr);
     return (result);
 }

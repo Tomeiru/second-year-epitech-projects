@@ -20,7 +20,6 @@ static const char STRACE_DEFAULT_NAME[] = "ftrace";
 static const struct option STRACE_OPTIONS[] = {
     {"help", no_argument, NULL, 'h'},
     {"attach", required_argument, NULL, 'p'},
-    {"pretty-print", no_argument, NULL, 's'},
     {NULL, 0, NULL, '\0'},
 };
 
@@ -70,15 +69,12 @@ static void si_part2(struct ftrace *self, int argc, char **argv)
 
     while (true) {
         current_character =
-            getopt_long(argc, argv, "+hp:s", STRACE_OPTIONS, NULL);
+            getopt_long(argc, argv, "+hp:", STRACE_OPTIONS, NULL);
         if (current_character == EOF)
             break;
         switch (current_character) {
         case 'h':
             usage(self);
-            break;
-        case 's':
-            self->print_raw_arguments = false;
             break;
         case 'p':
             do_attach_list(self, optarg);
@@ -91,7 +87,6 @@ static void si_part2(struct ftrace *self, int argc, char **argv)
 void ftrace_init(struct ftrace *self, int argc, char **argv)
 {
     memset(self, 0, sizeof(*self));
-    self->print_raw_arguments = true;
     self->gne_pending_procs = (struct ftrace_list_item){
         &self->gne_pending_procs, &self->gne_pending_procs
     };

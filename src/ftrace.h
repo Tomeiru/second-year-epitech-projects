@@ -24,24 +24,6 @@ union ftrace_long_innards {
     char innards[sizeof(long)];
 };
 
-enum ftrace_hex_string_style {
-    STRACE_HEX_STRING_NONE,
-    STRACE_HEX_STRING_ALL,
-};
-
-enum ftrace_syscall_print_quote_style {
-    STRACE_SYSCALL_PRINT_QUOTE_0_TERM = 0x1,
-    STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING = 0x80,
-    STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT = 8,
-    STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_MASK = 3
-        << STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT,
-    STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_ALL = STRACE_HEX_STRING_ALL
-        << STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT,
-    STRACE_SYSCALL_PRINT_QUOTE_FORCE_HEX =
-        STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING |
-        STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_ALL,
-};
-
 struct ftrace_list_item {
     struct ftrace_list_item *prev;
     struct ftrace_list_item *next;
@@ -60,15 +42,10 @@ enum ftrace_process_flags {
 };
 
 enum ftrace_syscall_retval_format {
-    STRACE_SYSCALL_RETVAL_UNSIGNED_DECIMAL = 0x0,
-    STRACE_SYSCALL_RETVAL_HEX = 0x1,
-    STRACE_SYSCALL_RETVAL_FD = 0x2,
-    STRACE_SYSCALL_RETVAL_FORMAT_MASK = 0xF,
     STRACE_SYSCALL_RETVAL_DECODED = 0x40,
 };
 
 struct ftrace_syscall_entry {
-    int (*function)(struct ftrace *self, struct ftrace_process *proc);
     int number;
     const char *name;
     unsigned num_arguments;
@@ -127,18 +104,7 @@ struct ftrace_event_data {
     unsigned long message;
 };
 
-struct ftrace_enum_data {
-    uintmax_t value;
-    const char *string;
-};
-
-struct ftrace_enum {
-    const struct ftrace_enum_data *data;
-    size_t size;
-};
-
 struct ftrace {
-    bool print_raw_arguments;
     const char *program_invocation_name;
     bool is_fd_placeholder[2];
     int exit_status;

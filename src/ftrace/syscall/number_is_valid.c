@@ -13,5 +13,5 @@
 bool ftrace_syscall_number_is_valid(__kernel_ulong_t syscall_number)
 {
     return (ftrace_syscall_number_is_in_range(syscall_number) &&
-        STRACE_SYSCALL_ENTRIES[syscall_number].function != NULL);
+        STRACE_SYSCALL_ENTRIES[syscall_number].name != NULL);
 }
