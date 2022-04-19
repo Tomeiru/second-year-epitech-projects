@@ -5,7 +5,9 @@
 ## Makefile
 ##
 
-SRC =	
+SRC =	src/check_and_get_args.c	\
+		src/myftp.c	\
+		src/utils.c
 
 MAIN =	src/main.c
 
