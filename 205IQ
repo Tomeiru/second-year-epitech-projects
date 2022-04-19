@@ -59,7 +59,7 @@ sub betweenIQ {
     my $IQ = checkIfInt($ARGV[2]);
     my $IQ2 = checkIfInt($ARGV[3]);
 
-    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $IQ2 eq "false" || $sigma == 0 || $IQ > 200 || $IQ2 > 200 || $mu > 200 || $IQ < $IQ2) {
+    if ($mu eq "false" || $sigma eq "false" || $IQ eq "false" || $IQ2 eq "false" || $sigma == 0 || $IQ > 200 || $IQ2 > 200 || $mu > 200 || $IQ > $IQ2) {
         print STDERR "205IQ: Wrong argument\n";
         exit(84);
     }
