@@ -1,3 +1,3 @@
-# Changelog for compressor
+# Changelog for imageCompressor
 
 ## Unreleased changes
