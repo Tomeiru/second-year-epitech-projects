@@ -42,7 +42,7 @@ void exec_command(fd_node_t **list, int index, char *buffer)
         if (!strcmp(command_arr[i], command))
             ret = command_func[i](list, index, args);
     if (ret == -1)
-        dprintf(this->fd, "502 Wrong command or command is not implemented\n");
+        dprintf(this->fd, "500 Wrong command or command is not implemented\n");
     return (ret != 2 ? free_and_set_command_to_null(this) : 0);
 }
 

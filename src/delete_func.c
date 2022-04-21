@@ -21,16 +21,16 @@ void delete_absolute_path(char *args, fd_node_t *this)
 void delete_relative_path(char *args, fd_node_t *this)
 {
     char *cat = strdup(this->wd);
-    char *filepath;
+    char *filepath = NULL;
     char *pos;
+    struct stat statbuffer;
 
-    cat = realloc(cat, strlen(cat + strlen(args) + 2));
+    cat = realloc(cat, strlen(cat) + strlen(args) + 2);
     cat = strcat(cat, "/");
     cat = strcat(cat, args);
     filepath = realpath(cat, NULL);
-    free(cat);
     if ((pos = strstr(cat, this->home)) != NULL && pos == cat
-    && !remove(filepath)) {
+    && stat(filepath, &statbuffer) != -1 && !remove(filepath)) {
         free(cat);
         dprintf(this->fd, "250 Successfully removed file\r\n");
         free(filepath);

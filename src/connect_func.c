@@ -53,16 +53,10 @@ int quit_func(fd_node_t **list, int index, char *args)
     fd_node_t *this = list_get_element_at(*list, index);
 
     if (!strcmp(args, "\n")) {
-        if (!this->authentified) {
-            dprintf(this->fd, "221 Connection closed\r\n");
-            close(this->fd);
-            list_remove_index(list, index);
-            return (2);
-        }
-        dprintf(this->fd, "221 Logged out\r\n");
-        this->authentified = 0;
-        this->uname_entered = 0;
-        return (0);
+        dprintf(this->fd, "221 Connection closed\r\n");
+        close(this->fd);
+        list_remove_index(list, index);
+        return (2);
     }
     dprintf(this->fd, "501 QUIT doesn't take any argument\r\n");
     return (0);

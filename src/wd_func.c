@@ -34,7 +34,7 @@ void cwd_absolute_path(char *args, fd_node_t *this)
     && pos == real) {
         free(this->wd);
         this->wd = real;
-        dprintf(this->fd, "200 Successfully changed WD\r\n");
+        dprintf(this->fd, "250 Successfully changed WD\r\n");
         return;
     }
     dprintf(this->fd, "550 %s isn't a valid directory\r\n", args);
@@ -56,7 +56,7 @@ void cwd_relative_path(char *args, fd_node_t *this)
         free(this->wd);
         free(filepath);
         this->wd = real;
-        dprintf(this->fd, "200 Successfully changed WD\r\n");
+        dprintf(this->fd, "250 Successfully changed WD\r\n");
         return;
     }
     free(filepath);
@@ -72,7 +72,7 @@ int cwd_func(fd_node_t **list, int index, char *args)
         return (0);
     }
     if (!strcmp(args, "\n") || strlen(args) == 2) {
-        dprintf(this->fd, "501 CWD needs a path to work\r\n");
+        dprintf(this->fd, "550 CWD needs a path to work\r\n");
         return (0);
     }
     args[strlen(args) - 2] = '\0';
