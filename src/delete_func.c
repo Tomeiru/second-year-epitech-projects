@@ -15,7 +15,7 @@ void delete_absolute_path(char *args, fd_node_t *this)
         dprintf(this->fd, "250 Successfully removed file\r\n");
         return;
     }
-    dprintf(this->fd, "503 Couldn't remove %s\r\n", args);
+    dprintf(this->fd, "550 Couldn't remove %s\r\n", args);
 }
 
 void delete_relative_path(char *args, fd_node_t *this)
@@ -37,7 +37,7 @@ void delete_relative_path(char *args, fd_node_t *this)
         return;
     }
     free(cat);
-    dprintf(this->fd, "503 Couldn't remove %s\r\n", args);
+    dprintf(this->fd, "550 Couldn't remove %s\r\n", args);
     free(filepath);
 }
 

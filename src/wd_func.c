@@ -37,7 +37,7 @@ void cwd_absolute_path(char *args, fd_node_t *this)
         dprintf(this->fd, "200 Successfully changed WD\r\n");
         return;
     }
-    dprintf(this->fd, "503 %s isn't a valid directory\r\n", args);
+    dprintf(this->fd, "550 %s isn't a valid directory\r\n", args);
 }
 
 void cwd_relative_path(char *args, fd_node_t *this)
@@ -60,7 +60,7 @@ void cwd_relative_path(char *args, fd_node_t *this)
         return;
     }
     free(filepath);
-    dprintf(this->fd, "503 %s isn't a valid directory\r\n", args);
+    dprintf(this->fd, "550 %s isn't a valid directory\r\n", args);
 }
 
 int cwd_func(fd_node_t **list, int index, char *args)
@@ -95,7 +95,7 @@ int cdup_func(fd_node_t **list, int index, char *args)
     }
     if (!strcmp(args, "\n")) {
         if (!strcmp(this->wd, this->home)) {
-            dprintf(this->fd, "503 Can't leave the scope of the ftp\r\n");
+            dprintf(this->fd, "550 Can't leave the scope of the ftp\r\n");
             return (0);
         }this->wd = realloc(this->wd, strlen(this->wd + 4));
         this->wd = strcat(this->wd, "/..");
