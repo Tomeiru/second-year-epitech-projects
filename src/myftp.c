@@ -19,7 +19,7 @@ int start_server(int port)
     server_addr.sin_addr.s_addr = INADDR_ANY;
     if (bind(server_sock, (struct sockaddr *)&server_addr, sizeof(server_addr)))
         return (-print_error("bind() call failed"));
-    if (listen(server_sock, 1))
+    if (listen(server_sock, 15))
         return (-print_error("listen() call failed"));
     return (server_sock);
 }

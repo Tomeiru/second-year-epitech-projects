@@ -43,7 +43,18 @@ void exec_command(fd_node_t **list, int index, char *buffer)
             ret = command_func[i](list, index, args);
     if (ret == -1)
         dprintf(this->fd, "502 Wrong command or command is not implemented\n");
-    free_and_set_command_to_null(this);
+    return (ret != 2 ? free_and_set_command_to_null(this) : 0);
+}
+
+void append_to_command(fd_node_t *this, char *buffer)
+{
+    if (this->command == NULL) {
+        this->command = strdup(buffer);
+        return;
+    }
+    this->command = realloc(this->command, strlen(this->command) +
+    strlen(buffer) + 1);
+    strcat(this->command, buffer);
 }
 
 void client_activity(fd_node_t **list, int index)
@@ -62,8 +73,7 @@ void client_activity(fd_node_t **list, int index)
     if (buffer[ret_read - 1] == '\n' &&
     buffer[ret_read - 2] == '\r' && this->command == NULL)
         return (exec_command(list, index, buffer));
-    this->command = realloc(this->command, strlen(this->command) + ret_read + 1);
-    strcat(this->command, buffer);
+    append_to_command(this, buffer);
     if (this->command[strlen(this->command) - 1] == '\n' &&
     this->command[strlen(this->command) - 2] == '\r')
         return (exec_command(list, index, this->command));
@@ -72,8 +82,10 @@ void client_activity(fd_node_t **list, int index)
 void check_clients(fd_set set_read, fd_node_t **list)
 {
     int i = 0;
+    fd_node_t *next = NULL;
 
-    for (fd_node_t *temp = *list; temp; temp = temp->next) {
+    for (fd_node_t *temp = *list; temp; temp = next) {
+        next = temp == NULL ? NULL : temp->next;
         if (FD_ISSET(temp->fd, &set_read))
             client_activity(list, i);
         i++;
@@ -83,15 +95,14 @@ void check_clients(fd_set set_read, fd_node_t **list)
 int client_loop(int server_sock, char *path)
 {
     fd_set set_read;
-    fd_set set_write;
     int select_ret = 0;
     fd_node_t *list = NULL;
     int fd_max = server_sock + 1;
 
     while (1) {
-        ftp_reset_fd(&set_read, &set_write);
-        ftp_set_fd(server_sock, list, &set_read, &set_write);
-        select_ret = select(fd_max, &set_read, &set_write, NULL, NULL);
+        ftp_reset_fd(&set_read);
+        ftp_set_fd(server_sock, list, &set_read, &fd_max);
+        select_ret = select(fd_max, &set_read, NULL, NULL, NULL);
         if (select_ret == -1)
             return (print_error("select() call failed"));
         if (!select_ret)

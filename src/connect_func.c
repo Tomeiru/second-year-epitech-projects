@@ -57,7 +57,7 @@ int quit_func(fd_node_t **list, int index, char *args)
             dprintf(this->fd, "221 Connection closed\r\n");
             close(this->fd);
             list_remove_index(list, index);
-            return (0);
+            return (2);
         }
         dprintf(this->fd, "221 Logged out\r\n");
         this->authentified = 0;

@@ -14,6 +14,9 @@ void list_add_at_end(fd_node_t **list, int fd, char *wd)
 
     new->fd = fd;
     new->uname_entered = 0;
+    new->passive = 0;
+    new->server_fd = 0;
+    new->active = 0;
     new->authentified = 0;
     new->wd = strdup(wd);
     new->home = strdup(wd);
@@ -23,8 +26,7 @@ void list_add_at_end(fd_node_t **list, int fd, char *wd)
     if (*list == NULL) {
         *list = new;
         return;
-    }
-    for (; temp->next; temp = temp->next);
+    }for (; temp->next; temp = temp->next);
     temp->next = new;
 }
 
@@ -45,11 +47,15 @@ void list_remove_index(fd_node_t **list, int index)
     int i = 0;
 
     if (index == 0) {
-        free(*list);
-        *list = (*list)->next;
+        if ((*list)->next) {
+            bef = (*list)->next;
+            free(*list);
+            *list = bef;
+            return;
+        }free(*list);
+        *list = NULL;
         return;
-    }
-    for (fd_node_t *temp = *list; temp; temp = temp->next) {
+    }for (fd_node_t *temp = *list; temp; temp = temp->next) {
         if (i++ == index) {
             bef->next = temp->next;
             free(temp);
@@ -57,7 +63,6 @@ void list_remove_index(fd_node_t **list, int index)
         }
         bef = temp;
     }
-    return;
 }
 
 void list_erase_all_and_free(fd_node_t **list)

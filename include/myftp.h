@@ -24,6 +24,9 @@ typedef struct fd_node_s {
     int fd;
     int uname_entered;
     int authentified;
+    int passive;
+    int server_fd;
+    int active;
     char *wd;
     char *home;
     char *uname;
@@ -54,12 +57,13 @@ int noop_func(fd_node_t **list, int index, char *buffer);
 int retr_func(fd_node_t **list, int index, char *buffer);
 int stor_func(fd_node_t **list, int index, char *buffer);
 int list_func(fd_node_t **list, int index, char *buffer);
-void ftp_set_fd(int server_sock, fd_node_t *list, fd_set *set_read,
-fd_set *set_write);
-void ftp_reset_fd(fd_set *set_read, fd_set *set_write);
 int client_loop(int server_sock, char *path);
 void list_erase_all_and_free(fd_node_t **list);
 void free_and_set_command_to_null(fd_node_t *this);
+void ftp_set_fd(int server_sock, fd_node_t *list, fd_set *set_read,
+int *fd_max);
+void ftp_reset_fd(fd_set *set_read);
+int start_server(int port);
 
 //DEFINES
 
