@@ -22,5 +22,6 @@ char *check_and_get_path(char *path)
 
     if (stat(path, &statbuffer) == -1 || S_ISREG(statbuffer.st_mode))
         return (NULL);
+    path = realpath(path, NULL);
     return (path);
 }
