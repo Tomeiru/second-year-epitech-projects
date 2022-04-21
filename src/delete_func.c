@@ -50,7 +50,7 @@ int dele_func(fd_node_t **list, int index, char *args)
         return (0);
     }
     if (!strcmp(args, "\n") || strlen(args) == 2) {
-        dprintf(this->fd, "501 DELE needs a path to work\r\n");
+        dprintf(this->fd, "550 DELE needs a path to work\r\n");
         return (0);
     }
     args[strlen(args) - 2] = '\0';
