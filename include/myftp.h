@@ -25,7 +25,9 @@ typedef struct fd_node_s {
     int uname_entered;
     int authentified;
     char *wd;
+    char *home;
     char *uname;
+    char *command;
     struct fd_node_s *next;
 } fd_node_t;
 
@@ -57,6 +59,7 @@ fd_set *set_write);
 void ftp_reset_fd(fd_set *set_read, fd_set *set_write);
 int client_loop(int server_sock, char *path);
 void list_erase_all_and_free(fd_node_t **list);
+void free_and_set_command_to_null(fd_node_t *this);
 
 //DEFINES
 

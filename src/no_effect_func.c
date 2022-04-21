@@ -34,9 +34,9 @@ directory");
 
 void display_all_help(fd_node_t *this, char **help_array)
 {
-    dprintf(this->fd, "214 Command list:\n");
+    dprintf(this->fd, "214 Command list: ");
     for (int i = 0; i < 13; i++)
-        dprintf(this->fd, "%s\n", help_array[i]);
+        dprintf(this->fd, "%s, ", help_array[i]);
     dprintf(this->fd, "%s\r\n", help_array[13]);
     for (int i = 0; i < 14; i++)
         free(help_array[i]);
@@ -54,8 +54,8 @@ int display_singular_help(fd_node_t *this, char *args, char **help_array)
     args[strlen(args) - 2] = '\0';
     for (int i = 0; i < 14; i++)
         if (!strcmp(command_arr[i], args)) {
-            dprintf(this->fd, "214 Help for command %s:\n", args);
-            dprintf(this->fd, "%s\r\n", help_array[i]);
+            dprintf(this->fd, "214 Help for command %s: %s\r\n", args,
+            help_array[i]);
             ret = 0;
         }
     for (int i = 0; i < 14; i++)

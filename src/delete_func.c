@@ -9,7 +9,9 @@
 
 void delete_absolute_path(char *args, fd_node_t *this)
 {
-    if (!remove(args)) {
+    char *pos = strstr(args, this->home);
+
+    if (pos != NULL && pos == args && !remove(args)) {
         dprintf(this->fd, "250 Successfully removed file\r\n");
         return;
     }
@@ -20,17 +22,21 @@ void delete_relative_path(char *args, fd_node_t *this)
 {
     char *cat = strdup(this->wd);
     char *filepath;
+    char *pos;
 
     cat = realloc(cat, strlen(cat + strlen(args) + 2));
     cat = strcat(cat, "/");
     cat = strcat(cat, args);
     filepath = realpath(cat, NULL);
     free(cat);
-    if (!remove(filepath)) {
+    if ((pos = strstr(cat, this->home)) != NULL && pos == cat
+    && !remove(filepath)) {
+        free(cat);
         dprintf(this->fd, "250 Successfully removed file\r\n");
         free(filepath);
         return;
     }
+    free(cat);
     dprintf(this->fd, "503 Couldn't remove %s\r\n", args);
     free(filepath);
 }

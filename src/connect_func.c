@@ -38,7 +38,7 @@ int pass_func(fd_node_t **list, int index, char *args)
         dprintf(this->fd, "332 Username not entered (see USER in HELP)\r\n");
         return (0);
     }
-    if (!strcmp(args, "\r\n") && strcmp(this->uname, "Anonymous\r\n")) {
+    if (!strcmp(args, "\r\n") && !strcmp(this->uname, "Anonymous\r\n")) {
         dprintf(this->fd, "230 User successfully logged in. Welcome Anonymous!\
 \r\n");
         this->authentified = 1;

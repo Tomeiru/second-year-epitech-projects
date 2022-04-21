@@ -15,8 +15,11 @@ void list_add_at_end(fd_node_t **list, int fd, char *wd)
     new->fd = fd;
     new->uname_entered = 0;
     new->authentified = 0;
-    new->wd = wd;
+    new->wd = strdup(wd);
+    new->home = strdup(wd);
+    new->uname = NULL;
     new->next = NULL;
+    new->command = NULL;
     if (*list == NULL) {
         *list = new;
         return;

@@ -29,3 +29,9 @@ int print_error(char *err)
     fprintf(stderr, "myftp: %s\n", err);
     return (84);
 }
+
+void free_and_set_command_to_null(fd_node_t *this)
+{
+    free(this->command);
+    this->command = NULL;
+}

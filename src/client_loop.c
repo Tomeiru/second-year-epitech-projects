@@ -43,7 +43,7 @@ void exec_command(fd_node_t **list, int index, char *buffer)
             ret = command_func[i](list, index, args);
     if (ret == -1)
         dprintf(this->fd, "502 Wrong command or command is not implemented\n");
-    return;
+    free_and_set_command_to_null(this);
 }
 
 void client_activity(fd_node_t **list, int index)
@@ -52,14 +52,21 @@ void client_activity(fd_node_t **list, int index)
     char buffer[1024];
     int ret_read = read(this->fd, buffer, 1024);
 
-    if (ret_read == 0) {
+    if (ret_read < 2) {
         printf("Communication closed with %i\n", this->fd);
         close(this->fd);
         list_remove_index(list, index);
         return;
     }
     buffer[ret_read] = '\0';
-    exec_command(list, index, buffer);
+    if (buffer[ret_read - 1] == '\n' &&
+    buffer[ret_read - 2] == '\r' && this->command == NULL)
+        return (exec_command(list, index, buffer));
+    this->command = realloc(this->command, strlen(this->command) + ret_read + 1);
+    strcat(this->command, buffer);
+    if (this->command[strlen(this->command) - 1] == '\n' &&
+    this->command[strlen(this->command) - 2] == '\r')
+        return (exec_command(list, index, this->command));
 }
 
 void check_clients(fd_set set_read, fd_node_t **list)
