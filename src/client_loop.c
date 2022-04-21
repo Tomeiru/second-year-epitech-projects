@@ -46,17 +46,6 @@ void exec_command(fd_node_t **list, int index, char *buffer)
     return (ret != 2 ? free_and_set_command_to_null(this) : 0);
 }
 
-void append_to_command(fd_node_t *this, char *buffer)
-{
-    if (this->command == NULL) {
-        this->command = strdup(buffer);
-        return;
-    }
-    this->command = realloc(this->command, strlen(this->command) +
-    strlen(buffer) + 1);
-    strcat(this->command, buffer);
-}
-
 void client_activity(fd_node_t **list, int index)
 {
     fd_node_t *this = list_get_element_at(*list, index);

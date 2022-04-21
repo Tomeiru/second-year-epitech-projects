@@ -27,6 +27,7 @@ typedef struct fd_node_s {
     int passive;
     int server_fd;
     int active;
+    int client_fd;
     char *wd;
     char *home;
     char *uname;
@@ -64,7 +65,11 @@ void ftp_set_fd(int server_sock, fd_node_t *list, fd_set *set_read,
 int *fd_max);
 void ftp_reset_fd(fd_set *set_read);
 int start_server(int port);
+int parse_port_args(char *args, char **ip, char **port);
+int check_elements_port_args(char *args);
+void append_to_command(fd_node_t *this, char *buffer);
 
 //DEFINES
 
 #define UNUSED(x) (void)(x)
+#define D(x, y) a[x] = strdup(y)

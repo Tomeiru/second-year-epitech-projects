@@ -12,6 +12,8 @@ SRC =	src/check_and_get_args.c	\
 		src/list_manip.c	\
 		src/myftp.c	\
 		src/no_effect_func.c	\
+		src/parse_port_args.c	\
+		src/pass_act_func.c	\
 		src/transfer_func.c	\
 		src/utils.c	\
 		src/wd_func.c

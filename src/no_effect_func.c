@@ -7,8 +7,6 @@
 
 #include "myftp.h"
 
-#define D(x, y) a[x] = strdup(y)
-
 char **create_help_array(void)
 {
     char **a = malloc(sizeof(char *) * 14);

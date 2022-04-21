@@ -25,3 +25,14 @@ char *check_and_get_path(char *path)
     path = realpath(path, NULL);
     return (path);
 }
+
+void append_to_command(fd_node_t *this, char *buffer)
+{
+    if (this->command == NULL) {
+        this->command = strdup(buffer);
+        return;
+    }
+    this->command = realloc(this->command, strlen(this->command) +
+    strlen(buffer) + 1);
+    strcat(this->command, buffer);
+}
