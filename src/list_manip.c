@@ -56,3 +56,11 @@ void list_remove_index(fd_node_t **list, int index)
     }
     return;
 }
+
+void list_erase_all_and_free(fd_node_t **list)
+{
+    while (*list) {
+        close((*list)->fd);
+        list_remove_index(list, 0);
+    }
+}

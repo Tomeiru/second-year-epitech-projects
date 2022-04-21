@@ -92,7 +92,7 @@ int client_loop(int server_sock, char *path)
         check_clients(set_read, &list);
         if (FD_ISSET(server_sock, &set_read))
             add_new_client(server_sock, &list, &fd_max, path);
-    }
-    close(server_sock);
+    }close(server_sock);
+    list_erase_all_and_free(&list);
     return (0);
 }
