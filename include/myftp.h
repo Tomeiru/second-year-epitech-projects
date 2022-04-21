@@ -54,6 +54,7 @@ int list_func(fd_node_t **list, int index, char *buffer);
 void ftp_set_fd(int server_sock, fd_node_t *list, fd_set *set_read,
 fd_set *set_write);
 void ftp_reset_fd(fd_set *set_read, fd_set *set_write);
+int client_loop(int server_sock, char *path);
 
 //DEFINES
 
