@@ -79,5 +79,12 @@ int panoramix(panoramix_t *info)
     for (unsigned long i = 0; info->villagers[i]; i++)
         pthread_join(info->villagers[i]->thread_id, NULL);
     pthread_join(thread_id_pano, NULL);
+    for (unsigned long i = 0; info->villagers[i]; i++)
+        free(info->villagers[i]);
+    free(info->villagers);
+    pthread_mutex_destroy(&info->mutex);
+    sem_destroy(&info->vil_sem);
+    sem_destroy(&info->pano_sem);
+    free(info);
     return (0);
 }
