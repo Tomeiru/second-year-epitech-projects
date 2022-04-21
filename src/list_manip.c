@@ -43,7 +43,7 @@ void list_remove_index(fd_node_t **list, int index)
 
     if (index == 0) {
         free(*list);
-        *list = NULL;
+        *list = (*list)->next;
         return;
     }
     for (fd_node_t *temp = *list; temp; temp = temp->next) {

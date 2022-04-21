@@ -25,6 +25,7 @@ typedef struct fd_node_s {
     int uname_entered;
     int authentified;
     char *wd;
+    char *uname;
     struct fd_node_s *next;
 } fd_node_t;
 
