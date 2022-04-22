@@ -24,6 +24,7 @@ void villager_drink(villager_t *vil)
         vil->id);
         sem_post(&vil->info->pano_sem);
         sem_wait(&vil->info->vil_sem);
+        vil->info->pot_quantity = vil->info->pot_quantity - 1;
     }
     vil->drink = 1;
 }
