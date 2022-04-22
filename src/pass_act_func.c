@@ -18,22 +18,21 @@ int pasv_func(fd_node_t **list, int index, char *args)
     fd_node_t *this = list_get_element_at(*list, index);
     struct sockaddr_in addr;
     socklen_t len = sizeof(addr);
-    int port = 0;
+    int prt = 0;
 
     if (!this->authentified)
         return (dp_ret(this->fd, "530 Not logged in!\r\n"));
-    if (this->active || this->passive)
-        return (dp_ret(this->fd, "503 Already opened a connection"));
     if (!strcmp(args, "\n")) {
-        this->passive = 1;
-        this->server_fd = start_server(-1);
+        if (this->active) {
+            this->active = 0;
+            close(this->client_fd);
+        }this->passive = 1;
+        this->server_fd = start_server(0);
         getsockname(this->server_fd, (struct sockaddr *)&addr, &len);
-        port = ntohs(addr.sin_port);
-        dprintf(this->fd, "227 (127,0,0,1,%i,%i)\r\n", port / 1000,
-        port % 1000);
+        prt = ntohs(addr.sin_port);
+        dprintf(this->fd, "227 (127,0,0,1,%i,%i)\r\n", prt / 1000, prt % 1000);
         return (0);
-    }
-    return (dp_ret(this->fd, "501 PASV doesn't take any argument\r\n"));
+    }return (dp_ret(this->fd, "550 PASV doesn't take any argument\r\n"));
 }
 
 int check_elements_port_args(char *args)
@@ -82,14 +81,16 @@ int port_func(fd_node_t **list, int index, char *args)
 
     if (!this->authentified)
         return (dp_ret(this->fd, "530 Not logged in!\r\n"));
-    if (this->active || this->passive)
-        return (dp_ret(this->fd, "503 Already opened a connection"));
     if (!strcmp(args, "\n"))
         return (dp_ret(this->fd, "550 PORT needs a IP-Port to work\r\n"));
     args[strlen(args) - 2] = '\0';
     if (parse_port_args(args, &ip, &port))
         return (dp_ret(this->fd, "550 Invalid IP-Port\r\n"));
+    if (launch_client(this, ip, port))
+        return (dp_ret(this->fd, "425 Couldn't connect"));
     this->active = 1;
-    dprintf(this->fd, "200 Active mode toggled on\r\n");
-    return (launch_client(this, ip, port));
+    if (this->passive = 1) {
+        this->passive = 0;
+        close(this->server_fd);
+    }return (dp_ret(this->fd, "200 Active mode toggled on\r\n"));
 }

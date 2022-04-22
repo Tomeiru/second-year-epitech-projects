@@ -21,7 +21,7 @@ int user_func(fd_node_t **list, int index, char *args)
         this->uname = strdup(args);
         return (0);
     }
-    dprintf(this->fd, "501 Username provided is not handled or wrongly form\
+    dprintf(this->fd, "550 Username provided is not handled or wrongly form\
 atted\r\n");
     return (0);
 }
@@ -58,6 +58,6 @@ int quit_func(fd_node_t **list, int index, char *args)
         list_remove_index(list, index);
         return (2);
     }
-    dprintf(this->fd, "501 QUIT doesn't take any argument\r\n");
+    dprintf(this->fd, "550 QUIT doesn't take any argument\r\n");
     return (0);
 }

@@ -19,7 +19,7 @@ int pwd_func(fd_node_t **list, int index, char *args)
         dprintf(this->fd, "257 %s\r\n", this->wd);
         return (0);
     }
-    dprintf(this->fd, "501 PWD doesn't take any argument\r\n");
+    dprintf(this->fd, "550 PWD doesn't take any argument\r\n");
     return (0);
 }
 
@@ -104,6 +104,6 @@ int cdup_func(fd_node_t **list, int index, char *args)
         this->wd = temp;
         dprintf(this->fd, "200 Successfully changed WD\r\n");
         return (0);
-    }dprintf(this->fd, "501 CDUP doesn't take any argument\r\n");
+    }dprintf(this->fd, "550 CDUP doesn't take any argument\r\n");
     return (0);
 }

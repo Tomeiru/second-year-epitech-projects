@@ -72,7 +72,7 @@ int help_func(fd_node_t **list, int index, char *args)
         return (0);
     }
     if (display_singular_help(this, args, help_array)) {
-        dprintf(this->fd, "501 Command provided as argument does \
+        dprintf(this->fd, "550 Command provided as argument does \
 not exist\r\n");
     }
     return (0);
@@ -86,6 +86,6 @@ int noop_func(fd_node_t **list, int index, char *args)
         dprintf(this->fd, "200 Nothing has been done successfully\r\n");
         return (0);
     }
-    dprintf(this->fd, "501 NOOP doesn't take any argument\r\n");
+    dprintf(this->fd, "550 NOOP doesn't take any argument\r\n");
     return (0);
 }
