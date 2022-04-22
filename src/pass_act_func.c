@@ -89,7 +89,7 @@ int port_func(fd_node_t **list, int index, char *args)
     if (launch_client(this, ip, port))
         return (dp_ret(this->fd, "425 Couldn't connect"));
     this->active = 1;
-    if (this->passive = 1) {
+    if (this->passive == 1) {
         this->passive = 0;
         close(this->server_fd);
     }return (dp_ret(this->fd, "200 Active mode toggled on\r\n"));
