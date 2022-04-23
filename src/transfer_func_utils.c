@@ -11,12 +11,15 @@ void close_correct_ft(fd_node_t *this)
 {
     if (this->active) {
         this->active = 0;
+        shutdown(this->client_fd, SHUT_RDWR);
         this->client_fd = 0;
     }
     if (this->passive) {
         this->passive = 0;
-        this->server_fd = 0;
+        shutdown(this->pasv_connected, SHUT_RDWR);
         this->pasv_connected = 0;
+        shutdown(this->server_fd, SHUT_RDWR);
+        this->server_fd = 0;
     }
 }
 

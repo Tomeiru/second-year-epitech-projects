@@ -26,7 +26,7 @@ void do_retr(char *filename, fd_node_t *this, int online_fd)
         strcat(write_in_file, buffer);
         len += read_ret;
     }close(fd);
-    dprintf(online_fd, write_in_file);//, len);
+    dprintf(online_fd, write_in_file);
     close_correct_ft(this);
     exit(dp_ret(this->fd, "226 File transfer done\r\n"));
 }

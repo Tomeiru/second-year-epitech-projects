@@ -10,20 +10,21 @@
 void do_file(char *filename, fd_node_t *this, int online_fd)
 {
     char *write_in_file = NULL;
-    DIR *fd = 0;
+    DIR *fd = opendir(filename);
     struct dirent *dir;
     int len = 0;
-    int i = 0;
 
-    fd = opendir(filename);
     while ((dir = readdir(fd)) != NULL) {
         write_in_file = realloc(write_in_file, (write_in_file == NULL ? 0
         : (strlen(write_in_file))) + strlen(dir->d_name) + 2);
-        write_in_file[0] = (i++ == 0 ? '\0' : write_in_file[0]);
+        write_in_file[0] = (len == 0 ? '\0' : write_in_file[0]);
         strcat(write_in_file, dir->d_name);
         strcat(write_in_file, " ");
         len += strlen(dir->d_name) + 1;
-    }write_in_file[len] = '\0';
+    }write_in_file = realloc(write_in_file, (write_in_file == NULL ? 0
+    : (strlen(write_in_file))) + 3);
+    strcat(write_in_file, "\r\n");
+    len += 2;
     write(online_fd, write_in_file, len);
     dp_ret(this->fd, "226 File transfer done\r\n");
     close_correct_ft(this);
