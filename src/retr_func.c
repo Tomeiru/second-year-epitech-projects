@@ -18,15 +18,15 @@ void do_retr(char *filename, fd_node_t *this, int online_fd)
     fd = open(filename, O_RDONLY);
     read_ret = read(fd, buffer, 1024);
     buffer[read_ret] = '\0';
-    write_in_file = strdup(buffer);
+    write_in_file = malloc(sizeof(char) * (read_ret + 1));
+    memcpy(write_in_file + len, buffer, read_ret + 1);
     len += read_ret;
     while ((read_ret = read(fd, buffer, 1024)) > 0) {
-        write_in_file = realloc(write_in_file, (strlen(write_in_file) +
-        read_ret + 1));
-        strcat(write_in_file, buffer);
+        write_in_file = realloc(write_in_file, (len + read_ret + 1));
+        memcpy(write_in_file + len, buffer, read_ret);
         len += read_ret;
     }close(fd);
-    dprintf(online_fd, write_in_file);
+    write(online_fd, write_in_file, len);
     close_correct_ft(this);
     exit(dp_ret(this->fd, "226 File transfer done\r\n"));
 }

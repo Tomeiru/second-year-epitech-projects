@@ -15,20 +15,17 @@ void do_file(char *filename, fd_node_t *this, int online_fd)
     int len = 0;
 
     while ((dir = readdir(fd)) != NULL) {
-        write_in_file = realloc(write_in_file, (write_in_file == NULL ? 0
-        : (strlen(write_in_file))) + strlen(dir->d_name) + 2);
+        write_in_file = realloc(write_in_file, len + strlen(dir->d_name) + 2);
         write_in_file[0] = (len == 0 ? '\0' : write_in_file[0]);
         strcat(write_in_file, dir->d_name);
         strcat(write_in_file, " ");
         len += strlen(dir->d_name) + 1;
-    }write_in_file = realloc(write_in_file, (write_in_file == NULL ? 0
-    : (strlen(write_in_file))) + 3);
+    }write_in_file = realloc(write_in_file, len + 3);
     strcat(write_in_file, "\r\n");
     len += 2;
     write(online_fd, write_in_file, len);
-    dp_ret(this->fd, "226 File transfer done\r\n");
     close_correct_ft(this);
-    exit(0);
+    exit(dp_ret(this->fd, "226 File transfer done\r\n"));
 }
 
 int file_active(char *filename, fd_node_t *this)
