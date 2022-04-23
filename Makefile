@@ -9,12 +9,15 @@ SRC =	src/check_and_get_args.c	\
 		src/client_loop.c	\
 		src/connect_func.c	\
 		src/delete_func.c	\
+		src/list_func.c	\
 		src/list_manip.c	\
 		src/myftp.c	\
 		src/no_effect_func.c	\
 		src/parse_port_args.c	\
 		src/pass_act_func.c	\
-		src/transfer_func.c	\
+		src/retr_func.c	\
+		src/stor_func.c	\
+		src/transfer_func_utils.c	\
 		src/utils.c	\
 		src/wd_func.c
 
