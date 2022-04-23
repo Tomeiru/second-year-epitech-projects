@@ -16,6 +16,7 @@ void list_add_at_end(fd_node_t **list, int fd, char *wd)
     new->uname_entered = 0;
     new->passive = 0;
     new->server_fd = 0;
+    new->pasv_connected = 0;
     new->active = 0;
     new->authentified = 0;
     new->wd = strdup(wd);

@@ -12,13 +12,15 @@ int *get_len_array(char *args)
     int *len_arr = malloc(sizeof(int) * 6);
     int iii = 0;
 
+    for (int i = 0; i < 6; i++)
+        len_arr[i] = 0;
     for (int i = 0; i < 6;) {
         if (isdigit(args[iii])) {
             iii++;
-            len_arr[i]++;
+            len_arr[i] = len_arr[i] + 1;
             continue;
         }
-        len_arr[i]++;
+        len_arr[i] = len_arr[i] + 1;
         i++;
         iii++;
     }
@@ -57,6 +59,8 @@ int free_number_array(char **number_arr)
 
 void fill_ip_port(char **number_arr, char **ip, char **port)
 {
+    int a = 0;
+
     *ip = malloc(sizeof(char) * (strlen(number_arr[0]) + strlen(number_arr[1]) +
     strlen(number_arr[2]) + strlen(number_arr[3]) + 4));
     *ip[0] = '\0';
@@ -65,11 +69,9 @@ void fill_ip_port(char **number_arr, char **ip, char **port)
         if (i != 3)
             *ip = strcat(*ip, ".");
     }
-    *port = malloc(sizeof(char) * (strlen(number_arr[4]) +
-    strlen(number_arr[5]) + 1));
-    *port[0] = '\0';
-    *port = strcat(*port, number_arr[4]);
-    *port = strcat(*port, number_arr[5]);
+    *port = malloc(sizeof(char) * 6);
+    a = atoi(number_arr[4]) * 256 + atoi(number_arr[5]);
+    sprintf(*port, "%i", a);
 }
 
 int parse_port_args(char *args, char **ip, char **port)
@@ -78,18 +80,10 @@ int parse_port_args(char *args, char **ip, char **port)
 
     if (check_elements_port_args(args))
         return (1);
-    args++;
-    args[strlen(args - 1)] = '\0';
     number_arr = port_to_array(args);
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 6; i++)
         if (atoi(number_arr[i]) > 255)
             return (free_number_array(number_arr));
-    if (atoi(number_arr[4]) > 65)
-        return (free_number_array(number_arr));
-    if (atoi(number_arr[4]) == 65 && atoi(number_arr[5]) > 535)
-        return (free_number_array(number_arr));
-    if (atoi(number_arr[5]) > 999)
-        return (free_number_array(number_arr));
     fill_ip_port(number_arr, ip, port);
     free_number_array(number_arr);
     return (0);

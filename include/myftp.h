@@ -11,6 +11,8 @@
 
 #include <arpa/inet.h>
 #include <ctype.h>
+#include <dirent.h>
+#include <fcntl.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +28,7 @@ typedef struct fd_node_s {
     int authentified;
     int passive;
     int server_fd;
+    int pasv_connected;
     int active;
     int client_fd;
     char *wd;
@@ -68,6 +71,9 @@ int start_server(int port);
 int parse_port_args(char *args, char **ip, char **port);
 int check_elements_port_args(char *args);
 void append_to_command(fd_node_t *this, char *buffer);
+void close_correct_ft(fd_node_t *this);
+int dp_ret(int fd, char *str);
+char *rel_to_abs(char *args, fd_node_t *this);
 
 //DEFINES
 

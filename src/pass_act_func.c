@@ -23,35 +23,31 @@ int pasv_func(fd_node_t **list, int index, char *args)
     if (!this->authentified)
         return (dp_ret(this->fd, "530 Not logged in!\r\n"));
     if (!strcmp(args, "\n")) {
-        if (this->active) {
-            this->active = 0;
-            close(this->client_fd);
-        }this->passive = 1;
+        if (this->active == 1)
+            close_correct_ft(this);
+        this->passive = 1;
         this->server_fd = start_server(0);
         getsockname(this->server_fd, (struct sockaddr *)&addr, &len);
         prt = ntohs(addr.sin_port);
-        dprintf(this->fd, "227 (127,0,0,1,%i,%i)\r\n", prt / 1000, prt % 1000);
+        dprintf(this->fd, "227 127,0,0,1,%i,%i\r\n", prt / 256, prt % 256);
         return (0);
-    }return (dp_ret(this->fd, "550 PASV doesn't take any argument\r\n"));
+    }return (dp_ret(this->fd, "425 PASV doesn't take any argument\r\n"));
 }
 
 int check_elements_port_args(char *args)
 {
     int count = 0;
-    int i = 1;
+    int i = 0;
 
     if (strlen(args) < 11)
-        return (1);
-    if (args[0] != '(')
         return (1);
     for ( ; args[i]; i++) {
         if (args[i] == ',' && isdigit(args[i - 1]))
             count++;
     }
-    if (count != 5 || args[--i] != ')' || !isdigit(args[--i]))
+    if (count != 5 || !isdigit(args[--i]))
         return (1);
     return (0);
-
 }
 
 int launch_client(fd_node_t *this, char *ip, char *port)
@@ -79,18 +75,18 @@ int port_func(fd_node_t **list, int index, char *args)
     char *ip;
     char *port;
 
+    printf("%s\n", args);
     if (!this->authentified)
         return (dp_ret(this->fd, "530 Not logged in!\r\n"));
     if (!strcmp(args, "\n"))
-        return (dp_ret(this->fd, "550 PORT needs a IP-Port to work\r\n"));
+        return (dp_ret(this->fd, "425 PORT needs a IP-Port to work\r\n"));
     args[strlen(args) - 2] = '\0';
     if (parse_port_args(args, &ip, &port))
-        return (dp_ret(this->fd, "550 Invalid IP-Port\r\n"));
+        return (dp_ret(this->fd, "425 Invalid IP-Port\r\n"));
     if (launch_client(this, ip, port))
         return (dp_ret(this->fd, "425 Couldn't connect"));
+    if (this->passive == 1)
+        close_correct_ft(this);
     this->active = 1;
-    if (this->passive == 1) {
-        this->passive = 0;
-        close(this->server_fd);
-    }return (dp_ret(this->fd, "200 Active mode toggled on\r\n"));
+    return (dp_ret(this->fd, "200 Active mode toggled on\r\n"));
 }

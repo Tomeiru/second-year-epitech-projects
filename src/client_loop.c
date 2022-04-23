@@ -81,6 +81,18 @@ void check_clients(fd_set set_read, fd_node_t **list)
     }
 }
 
+void check_clients_passive(fd_set set_read, fd_node_t **list)
+{
+    struct sockaddr_in client_addr;
+    socklen_t size = sizeof(client_addr);
+
+    for (fd_node_t *temp = *list; temp; temp = temp->next) {
+        if (FD_ISSET(temp->server_fd, &set_read))
+            temp->pasv_connected = accept(temp->server_fd,
+            (struct sockaddr *)&client_addr, &size);
+    }
+}
+
 int client_loop(int server_sock, char *path)
 {
     fd_set set_read;
@@ -96,6 +108,7 @@ int client_loop(int server_sock, char *path)
             return (print_error("select() call failed"));
         if (!select_ret)
             continue;
+        check_clients_passive(set_read, &list);
         check_clients(set_read, &list);
         if (FD_ISSET(server_sock, &set_read))
             add_new_client(server_sock, &list, &fd_max, path);

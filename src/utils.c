@@ -21,7 +21,7 @@ void check_fd_max(int server_sock, fd_node_t *list, int *fd_max)
     for (fd_node_t *temp = list; temp; temp = temp->next) {
         if (temp->fd > max)
             max = temp->fd;
-        if (temp->server_fd > max)
+        if (temp->passive && temp->server_fd > max)
             max = temp->server_fd;
     }
     *fd_max = max + 1;
@@ -32,7 +32,7 @@ void ftp_set_fd(int server_sock, fd_node_t *list, fd_set *set_read, int *fd_max)
     FD_SET(server_sock, set_read);
     for (fd_node_t *temp = list; temp; temp = temp->next) {
         FD_SET(temp->fd, set_read);
-        if (temp->active == 1)
+        if (temp->passive == 1)
             FD_SET(temp->server_fd, set_read);
     }
     check_fd_max(server_sock, list, fd_max);
