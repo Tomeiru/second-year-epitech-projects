@@ -25,9 +25,9 @@ void do_stor(char *filename, fd_node_t *this, int online_fd)
         write_in_file = realloc(write_in_file, (len + read_ret + 1));
         memcpy(write_in_file + len, buffer, read_ret);
         len += read_ret;
-    }close(fd);
-    write(fd, write_in_file, len);
+    }write(fd, write_in_file, len);
     close_correct_ft(this);
+    close(fd);
     exit(dp_ret(this->fd, "226 File transfer done\r\n"));
 }
 
@@ -37,8 +37,12 @@ int stor_active(char *filename, fd_node_t *this)
 
     if (fork_ret == -1)
         return (print_error("fork() error"));
-    if (fork_ret == 0)
+    if (fork_ret == 0) {
+        if (launch_client(this, this->ip_act, this->port_act))
+            return (dp_ret(this->fd, "425 Couldn't connect"));
+        printf("%i\n", this->client_fd);
         do_stor(filename, this, this->client_fd);
+    }
     return (0);
 }
 

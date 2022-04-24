@@ -30,6 +30,8 @@ typedef struct fd_node_s {
     int server_fd;
     int pasv_connected;
     int active;
+    char *ip_act;
+    char *port_act;
     int client_fd;
     char *wd;
     char *home;
@@ -74,6 +76,7 @@ void append_to_command(fd_node_t *this, char *buffer);
 void close_correct_ft(fd_node_t *this);
 int dp_ret(int fd, char *str);
 char *rel_to_abs(char *args, fd_node_t *this);
+int launch_client(fd_node_t *this, char *ip, char *port);
 
 //DEFINES
 

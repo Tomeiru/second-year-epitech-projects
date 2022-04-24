@@ -37,8 +37,11 @@ int retr_active(char *filename, fd_node_t *this)
 
     if (fork_ret == -1)
         return (print_error("fork() error"));
-    if (fork_ret == 0)
+    if (fork_ret == 0) {
+        if (launch_client(this, this->ip_act, this->port_act))
+            return (dp_ret(this->fd, "425 Couldn't connect"));
         do_retr(filename, this, this->client_fd);
+    }
     return (0);
 }
 

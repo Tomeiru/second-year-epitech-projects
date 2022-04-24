@@ -66,6 +66,8 @@ int launch_client(fd_node_t *this, char *ip, char *port)
     this->client_fd = client_sock;
     free(ip);
     free(port);
+    ip = NULL;
+    port = NULL;
     return (0);
 }
 
@@ -83,10 +85,10 @@ int port_func(fd_node_t **list, int index, char *args)
     args[strlen(args) - 2] = '\0';
     if (parse_port_args(args, &ip, &port))
         return (dp_ret(this->fd, "425 Invalid IP-Port\r\n"));
-    if (launch_client(this, ip, port))
-        return (dp_ret(this->fd, "425 Couldn't connect"));
     if (this->passive == 1)
         close_correct_ft(this);
     this->active = 1;
+    this->ip_act = ip;
+    this->port_act = port;
     return (dp_ret(this->fd, "200 Active mode toggled on\r\n"));
 }

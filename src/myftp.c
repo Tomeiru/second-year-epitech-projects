@@ -20,7 +20,7 @@ int start_server(int port)
     server_addr.sin_addr.s_addr = INADDR_ANY;
     if (setsockopt(server_sock, SOL_SOCKET, SO_REUSEADDR, &one, sizeof(int))
     < 0)
-        return (-print_error("setsocketopr() call failed"));
+        return (-print_error("setsockopt() call failed"));
     if (bind(server_sock, (struct sockaddr *)&server_addr, sizeof(server_addr)))
         return (-print_error("bind() call failed"));
     if (listen(server_sock, 15))
