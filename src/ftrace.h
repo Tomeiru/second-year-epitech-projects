@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <libelf.h>
 #include <signal.h>
 #include <sys/user.h>
 #include <sys/uio.h>
@@ -39,6 +40,7 @@ enum ftrace_process_flags {
     STRACE_PROCESS_HIDE_LOG = 0x40,
     STRACE_PROCESS_CHECK_EXEC_SUCCESS = 0x80,
     STRACE_PROCESS_FILTERED_SYSCALL = 0x100,
+    STRACE_PROCESS_IN_CALL = 0x20,
 };
 
 enum ftrace_syscall_retval_format {
@@ -123,4 +125,6 @@ struct ftrace {
     struct ftrace_list_item gne_pending_procs;
     struct iovec x86_io;
     struct user_regs_struct x86_regs;
+    int child_fd;
+    Elf *child_elf_handle;
 };

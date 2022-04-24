@@ -93,12 +93,12 @@ SOURCE_FILES += ftrace/copy_str_from_pid
 SOURCE_FILES += ftrace/is_printable
 SOURCE_FILES += ftrace/sprint_byte_octal
 SOURCE_FILES += ftrace/appendf_string_get_position_difference
-SOURCE_FILES += ftrace/sprint_byte_hex
+SOURCE_FILES += ftrace/sprint_byte_hex ftrace/do_trace_call
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 
 $(BINARY_NAME): $(OBJECT_FILES)
-> $(CC) $(LDFLAGS) -o $@ $^
+> $(CC) $(LDFLAGS) -o $@ $^ -lelf
 
 obj/src/%.o: src/%.c
 > @mkdir --parents obj/src/ftrace/print_error_message

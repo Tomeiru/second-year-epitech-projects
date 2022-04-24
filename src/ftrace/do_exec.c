@@ -15,6 +15,7 @@
 // to see us do the execve)
 void ftrace_do_exec(struct ftrace *self)
 {
+    close(self->child_fd);
     if (geteuid() != 0)
         if (setreuid(self->traced_process_uid, self->traced_process_uid) < 0)
             ftrace_print_error_message_errno_and_die(self, "setreuid");
