@@ -68,10 +68,10 @@ int stor_absolute_path(char *args, fd_node_t *this)
         return (dp_ret(this->fd, "550 Out of FTP Scope\r\n"));
     }if (ret_val != -1 && !S_ISREG(statbuffer.st_mode)) {
         close_correct_ft(this);
-        return (dp_ret(this->fd, "425 Already exist and is a Directory\r\n"));
+        return (dp_ret(this->fd, "550 Already exist and is a Directory\r\n"));
     }if (ret_val != -1 && access(args, W_OK) == -1) {
         close_correct_ft(this);
-        return (dp_ret(this->fd, "425 No permission to write here\r\n"));
+        return (dp_ret(this->fd, "550 No permission to write here\r\n"));
     }dprintf(this->fd, "150 File status okay!\r\n");
     if (this->active)
         return (stor_active(args, this));

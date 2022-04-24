@@ -68,7 +68,7 @@ int retr_absolute_path(char *args, fd_node_t *this)
     }if (ret_val == -1 || access(args, R_OK) == -1 ||
     !S_ISREG(statbuffer.st_mode)) {
         close_correct_ft(this);
-        return (dp_ret(this->fd, "425 No permission to read here\r\n"));
+        return (dp_ret(this->fd, "550 No permission to read here\r\n"));
     }dprintf(this->fd, "150 File status okay!\r\n");
     if (this->active)
         return (retr_active(args, this));

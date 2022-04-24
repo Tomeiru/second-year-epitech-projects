@@ -64,7 +64,7 @@ int file_absolute_path(char *args, fd_node_t *this)
         return (dp_ret(this->fd, "550 Out of FTP Scope\r\n"));
     }if (ret_val != -1 && S_ISREG(statbuffer.st_mode)) {
         close_correct_ft(this);
-        return (dp_ret(this->fd, "425 Isn't a directory\r\n"));
+        return (dp_ret(this->fd, "550 Isn't a directory\r\n"));
     }dprintf(this->fd, "150 File status okay!\r\n");
     if (this->active)
         return (file_active(args, this));
