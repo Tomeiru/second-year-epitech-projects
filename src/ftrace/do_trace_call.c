@@ -9,6 +9,7 @@
 #include "get_regs.h"
 #include "print_error_message.h"
 #include "syscall/print_leader.h"
+#include "call/do_exit.h"
 #include "printf.h"
 #include <sys/ptrace.h>
 
@@ -30,6 +31,8 @@ static bool check_call(struct ftrace *self, struct ftrace_process *proc)
 
 int ftrace_do_trace_call(struct ftrace *self, struct ftrace_process *proc)
 {
+    if (proc->flags & STRACE_PROCESS_HIDE_LOG)
+        return (0);
     if (!(proc->flags & STRACE_PROCESS_IN_CALL)) {
         if (ftrace_get_regs(self, proc) < 0)
             return (-1);
@@ -38,12 +41,6 @@ int ftrace_do_trace_call(struct ftrace *self, struct ftrace_process *proc)
         ftrace_syscall_print_leader(self, proc);
         proc->flags |= STRACE_PROCESS_IN_CALL;
         return (1);
-    } else {
-        if (ftrace_get_regs(self, proc) < 0)
-            return (-1);
-        ftrace_printf(self, "Entering function at %p\n",
-            (void *)self->x86_regs.rip);
-        proc->flags &= ~STRACE_PROCESS_IN_CALL;
-        return (1);
-    }
+    } else
+        return (ftrace_call_do_exit(self, proc));
 }

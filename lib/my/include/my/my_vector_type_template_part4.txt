@@ -1,0 +1,81 @@
+/*
+** EPITECH PROJECT, 2022
+** libmy
+** File description:
+** Part 4 of my_vector_type_template
+*/
+
+#pragma once
+
+#include "my/cpp-like/algorithm.h"
+#include "my/stdlib.h"
+#include "my/features.h"
+INCLUDE_FOR_VECTOR_TYPE
+#include <string.h>
+#include <stddef.h>
+
+struct MY_INTERNAL_TYPE_TOKEN {
+    size_t size;
+    size_t allocated_size;
+    MY_VECTOR_TYPE *data;
+};
+
+// Guarantees that there will be at least self->length + length bytes available
+// in the vector
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _guarantee_can_expand(
+    struct MY_INTERNAL_TYPE_TOKEN *self,
+    size_t size)
+{
+    size_t current_allocated_size = self->allocated_size;
+
+    if (self->size + size >= current_allocated_size) {
+        self->allocated_size = MY_MAX(self->size + size + 16,
+            self->size * 3 / 2);
+        self->data = (MY_VECTOR_TYPE *)my_xrealloc(self->data,
+            self->allocated_size * sizeof(*self->data));
+    }
+    return self;
+}
+
+// Creates a new, empty, vector
+MY_ATTR_WARN_UNUSED_RESULT static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _new(void)
+{
+    struct MY_INTERNAL_TYPE_TOKEN *self =
+        (struct MY_INTERNAL_TYPE_TOKEN *)my_xmalloc(sizeof(*self));
+
+    self->size = 0;
+    self->allocated_size = 0;
+    self->data = NULL;
+    return MY_REM_SPACE_AFTER_TYPE_TOKEN _guarantee_can_expand(self, 1);
+}
+
+// Inserts size bytes from data to self at position. data may not part of self
+// (i.e. directly located within self->data)
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _insert(
+    struct MY_INTERNAL_TYPE_TOKEN *self,
+    MY_CONST_VECTOR_TYPE *data,
+    size_t size, size_t position)
+{
+    if (self == NULL || data == NULL || size == 0 || (position > self->size))
+        return self;
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _guarantee_can_expand(self, size);
+    memmove(self->data + position + size, self->data + position,
+        (self->size - position) * sizeof(*self->data));
+    memcpy(self->data + position, data, size * sizeof(*self->data));
+    self->size += size;
+    return self;
+}
+
+// Same as insert, but for a single item
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _insert_single(
+    struct MY_INTERNAL_TYPE_TOKEN *self,
+    MY_VECTOR_TYPE item,
+    size_t position)
+{
+    return MY_REM_SPACE_AFTER_TYPE_TOKEN _insert(self, &item, 1, position);
+}
+

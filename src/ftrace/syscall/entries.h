@@ -52,11 +52,13 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_execve,
         .name = "execve",
         .num_arguments = 3,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_execveat] = {
         .number = SYS_execveat,
         .name = "execveat",
         .num_arguments = 5,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_exit] = {
         .number = SYS_exit,
@@ -72,6 +74,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_brk,
         .name = "brk",
         .num_arguments = 1,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_arch_prctl] = {
         .number = SYS_arch_prctl,
@@ -97,6 +100,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_mmap,
         .name = "mmap",
         .num_arguments = 6,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_close] = {
         .number = SYS_close,
@@ -137,6 +141,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_munmap,
         .name = "munmap",
         .num_arguments = 2,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_getrandom] = {
         .number = SYS_getrandom,
@@ -242,6 +247,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_mremap,
         .name = "mremap",
         .num_arguments = 0,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_msync] = {
         .number = SYS_msync,
@@ -267,6 +273,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_shmat,
         .name = "shmat",
         .num_arguments = 3,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_shmctl] = {
         .number = SYS_shmctl,
@@ -442,6 +449,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_shmdt,
         .name = "shmdt",
         .num_arguments = 1,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_msgget] = {
         .number = SYS_msgget,
@@ -1172,6 +1180,7 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .number = SYS_remap_file_pages,
         .name = "remap_file_pages",
         .num_arguments = 5,
+        .flags = STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE,
     },
     [SYS_getdents64] = {
         .number = SYS_getdents64,

@@ -1,0 +1,44 @@
+What you need to do to get this working:
+- example script to help:
+
+
+TYPE_vector=char_ptr_vector
+my_TYPE_vector=my_"${TYPE_vector}"
+TYPE_WITH_SPACE_AFTER='char *' # This is in case the type needs to have its rightmost character right next to the next token such as with pointers. This would be something like 'int ' for normal types
+CONST_TYPE_WITH_SPACE_AFTER='char *const ' # Same but the type is const qualified (needed for pointers. shoud be something like 'const int ' for other etypes)
+INCLUDE_FOR_VECTOR_TYPE='#include <stddef.h>' # Add whatever include might be needed to make it so that TYPE_WITH_SPACE_AFTER compiles properly (say, stdint.h for int32_t, for example)
+
+for i in my_vector_type_template*.txt; do cp "$i" "$i".tmp; done
+rename "my_vector_type_template" "${TYPE_vector}" *.txt.tmp
+rename ".txt.tmp" ".h" *.txt.tmp
+
+sed -e "s/MY_INTERNAL_FILENAME_COMPOSER/${TYPE_vector}/" -i "${TYPE_vector}"*.h
+sed -e "s/MY_INTERNAL_TYPE_TOKEN/${my_TYPE_vector}/" -i "${TYPE_vector}"*.h
+sed -e "s/MY_REM_SPACE_AFTER_TYPE_TOKEN /${my_TYPE_vector}/" -i "${TYPE_vector}"*.h
+sed -e "s/MY_VECTOR_TYPE /${TYPE_WITH_SPACE_AFTER}/" -i "${TYPE_vector}"*.h
+sed -e "s/MY_CONST_VECTOR_TYPE /${CONST_TYPE_WITH_SPACE_AFTER}/" -i "${TYPE_vector}"*.h
+sed -e "s/INCLUDE_FOR_VECTOR_TYPE/${INCLUDE_FOR_VECTOR_TYPE}/" -i "${TYPE_vector}"*.h
+sed -n '/^\/\*$/,$p' -i "${TYPE_vector}".h
+
+Btw, I know this is ridiculous. Go complain to the idiots who made the norm if you're annoyed by this
+
+/*
+** EPITECH PROJECT, 2022
+** libmy
+** File description:
+** Defines a my_vector type
+*/
+
+#pragma once
+
+#include "MY_INTERNAL_FILENAME_COMPOSER_part2.h"
+
+// Destructs the passed vector and the associated data. If you instead want to
+// free the vector but gain ownership of self->data, use my_vector_move_buffer
+static inline void MY_REM_SPACE_AFTER_TYPE_TOKEN _free(
+    struct MY_INTERNAL_TYPE_TOKEN *self)
+{
+    if (self == NULL)
+        return;
+    free(MY_REM_SPACE_AFTER_TYPE_TOKEN _move_buffer(self));
+}

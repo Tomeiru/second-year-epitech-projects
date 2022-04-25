@@ -17,6 +17,12 @@ void ftrace_process_drop(struct ftrace *st, struct ftrace_process *self)
 {
     if (self->pid == 0)
         return;
+    for (size_t i = 0; i < self->retrieved_symbols->size; ++i)
+        free(self->retrieved_symbols->data[i].name);
+    my_ftrace_symbol_vector_free(self->retrieved_symbols);
+    for (size_t i = 0; i < self->mmap_entries->size; ++i)
+        free(self->mmap_entries->data[i].binary_filename);
+    my_ftrace_mmap_entry_vector_free(self->mmap_entries);
     ftrace_process_free_private_data(self);
     st->has_traced_process = false;
     if (st->printing_process == self && self->current_column != 0)

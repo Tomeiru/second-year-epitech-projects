@@ -62,10 +62,6 @@ static void ssc_part3(ssc_state_t *s)
     if (elf_version(EV_CURRENT) == EV_NONE)
         ftrace_print_error_message_and_die(s->self, "Elf library "
             "initialization failed: %s", elf_errmsg(-1));
-    s->self->child_elf_handle = elf_begin(s->self->child_fd, ELF_C_READ, NULL);
-    if (s->self->child_elf_handle == NULL)
-        ftrace_print_error_message_and_die(s->self, "elf_begin failed: %s",
-            elf_errmsg(-1));
     ssc_part3_2(s);
 }
 
@@ -83,8 +79,7 @@ static void ssc_part2(ssc_state_t *s)
         if (s->path == NULL || *s->path == '\0')
             s->pathname[0] = '\0';
     }
-    s->self->child_fd = open(s->pathname, O_RDONLY);
-    if (s->self->child_fd < 0 || fstat(s->self->child_fd, &s->stat_buffer) != 0)
+    if (stat(s->pathname, &s->stat_buffer) != 0)
         ftrace_print_error_message_errno_and_die(
             s->self, "Can't stat '%s'", s->pathname);
     s->pid = fork();

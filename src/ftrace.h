@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "my/ftrace_mmap_entry_vector_part4.h"
+#include <gelf.h>
 #include <libelf.h>
 #include <signal.h>
 #include <sys/user.h>
@@ -16,6 +18,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "basic_defs.h"
+#include "my/ftrace_symbol_vector.h"
+#include "my/ftrace_mmap_entry_vector.h"
 
 struct ftrace;
 struct ftrace_process;
@@ -47,10 +51,15 @@ enum ftrace_syscall_retval_format {
     STRACE_SYSCALL_RETVAL_DECODED = 0x40,
 };
 
+enum ftrace_syscall_entry_flags {
+    STRACE_SYSCALL_ENTRY_MEMORY_MAPPING_CHANGE = 0x1,
+};
+
 struct ftrace_syscall_entry {
     int number;
     const char *name;
     unsigned num_arguments;
+    int flags;
 };
 
 struct ftrace_syscall_entry_buffer {
@@ -78,6 +87,9 @@ struct ftrace_process {
     enum ftrace_qualifier_flags qualifier_flags;
     void *private_data;
     void (*private_data_free_func_ptr)(void *);
+    struct my_ftrace_mmap_entry_vector *mmap_entries;
+    bool proc_maps_up_to_date;
+    struct my_ftrace_symbol_vector *retrieved_symbols;
 };
 
 struct ftrace_process_params {
@@ -125,6 +137,4 @@ struct ftrace {
     struct ftrace_list_item gne_pending_procs;
     struct iovec x86_io;
     struct user_regs_struct x86_regs;
-    int child_fd;
-    Elf *child_elf_handle;
 };

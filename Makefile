@@ -34,11 +34,17 @@ MAKEFLAGS += --warn-undefined-variables --no-builtin-rules
 # header-related dependency problems we could have had
 override CFLAGS += -MMD -MP -MF $@.d
 
+# We need to be able to include the libmy include files
+override CFLAGS += -Iinclude
+
 # LDFLAGS should contain CFLAGS (seperate so command-line can add to it, and
 # to correspond to usual practice)
 override LDFLAGS += $(CFLAGS)
 
-.PHONY: all clean fclean re
+# We need to be able to link to libmy, and link to it
+override LDFLAGS += -Llib
+
+.PHONY: all clean fclean re libmy
 
 .PREVIOUS: obj/%.o
 
@@ -93,14 +99,16 @@ SOURCE_FILES += ftrace/copy_str_from_pid
 SOURCE_FILES += ftrace/is_printable
 SOURCE_FILES += ftrace/sprint_byte_octal
 SOURCE_FILES += ftrace/appendf_string_get_position_difference
-SOURCE_FILES += ftrace/sprint_byte_hex ftrace/do_trace_call
+SOURCE_FILES += ftrace/sprint_byte_hex ftrace/do_trace_call ftrace/call/do_exit
+SOURCE_FILES += ftrace/get_symbol_from_addr ftrace/get_filename_from_addr
+SOURCE_FILES += ftrace/process/update_proc_maps
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 
-$(BINARY_NAME): $(OBJECT_FILES)
-> $(CC) $(LDFLAGS) -o $@ $^ -lelf
+$(BINARY_NAME): $(OBJECT_FILES) libmy
+> $(CC) $(LDFLAGS) -o $@ $(OBJECT_FILES) -lmy -lelf
 
-obj/src/%.o: src/%.c
+obj/src/%.o: src/%.c libmy
 > @mkdir --parents obj/src/ftrace/print_error_message
 > @mkdir --parents obj/src/ftrace/process
 > @mkdir --parents obj/src/ftrace/list
@@ -108,7 +116,12 @@ obj/src/%.o: src/%.c
 > @mkdir --parents obj/src/ftrace/standard_fds
 > @mkdir --parents obj/src/ftrace/syscall/print_sys
 > @mkdir --parents obj/src/ftrace/fd
+> @mkdir --parents obj/src/ftrace/call
 > $(CC) -c $< -o $@ $(CFLAGS) -D_GNU_SOURCE
+
+# Just build libmy when we need these headers
+libmy:
+> $(MAKE) --directory=lib/my
 
 # Include dependencies for the object files
 include $(shell [ -d obj ] && find obj/ -type f -name '*.d')
@@ -116,10 +129,12 @@ include $(shell [ -d obj ] && find obj/ -type f -name '*.d')
 # Remove all object files
 clean:
 > rm --recursive --force obj
+> $(MAKE) --directory=lib/my clean
 
 # Remove all object, binary and other produced files
 fclean: clean
 > rm --recursive --force $(BINARY_NAME)
+> $(MAKE) --directory=lib/my fclean
 
 # "Remakes" the project.
 re:

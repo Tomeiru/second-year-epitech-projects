@@ -1,0 +1,56 @@
+/*
+** EPITECH PROJECT, 2022
+** libmy
+** File description:
+** Part 2 of my_vector_type_template
+*/
+
+#pragma once
+
+#include "MY_INTERNAL_FILENAME_COMPOSER_part3.h"
+
+// Removes all the items in the vector, as if by using my_vector_resize(self, 0)
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _clear(
+    struct MY_INTERNAL_TYPE_TOKEN *self)
+{
+    return MY_REM_SPACE_AFTER_TYPE_TOKEN _resize(self, 0);
+}
+
+// Copies source into self
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _assign(
+    struct MY_INTERNAL_TYPE_TOKEN *self,
+    const struct MY_INTERNAL_TYPE_TOKEN *source)
+{
+    if (self == NULL)
+        return NULL;
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _resize(self, source->size);
+    memcpy(self->data, source->data, self->size * sizeof(*self->data));
+    return self;
+}
+
+// Remove size items starting at position
+static inline struct MY_INTERNAL_TYPE_TOKEN *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _erase(
+    struct MY_INTERNAL_TYPE_TOKEN *self,
+    size_t position, size_t size)
+{
+    if (self == NULL || position > self->size || (position + size) > self->size)
+        return self;
+    memmove(self->data + position, self->data + position + size,
+        (self->size - (position + size)) * sizeof(*self->data));
+    self->size -= size;
+    return self;
+}
+
+// Destructs the passed vector but returns the underlying buffer
+static inline MY_VECTOR_TYPE *
+    MY_REM_SPACE_AFTER_TYPE_TOKEN _move_buffer(
+    struct MY_INTERNAL_TYPE_TOKEN *self)
+{
+    MY_VECTOR_TYPE *result = self->data;
+
+    free(self);
+    return result;
+}

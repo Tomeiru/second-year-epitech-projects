@@ -1,3 +1,7 @@
 # Files produced by us
 /obj/
 /ftrace
+
+# Files produced by libmy
+/include/
+/lib/libmy.a

@@ -1,0 +1,9 @@
+Search in historical stuff - Last done: Research-PDP7
+halt
+
+(from publib)
+xmemdup
+memdup
+getaline
+
+(perhaps get stuff from gnulib/libiberty)

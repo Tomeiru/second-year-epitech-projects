@@ -1,0 +1,10 @@
+##
+## EPITECH PROJECT, 2020
+## libmy
+## File description:
+## .gitignore for libmy
+##
+
+# Ignore files produced during compilation
+obj/
+tests_binary
