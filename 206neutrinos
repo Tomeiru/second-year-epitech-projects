@@ -1,0 +1,118 @@
+#!/usr/bin/env ruby
+
+def custom_abort(error)
+    STDERR.puts(error);
+    exit(84);
+end
+
+class String
+    def is_integer?
+        !!((/(\D+)/.match(self)).nil?);
+    end
+end
+
+class Neutrinos
+    def initialize(no_values, arithmetic_mean, harmonic_mean, standard_deviation)
+        @no_values = no_values.to_i;
+        if (@no_values == 0)
+            custom_abort("Number of values must be superior to 0");
+        end
+        @arithmetic_mean = arithmetic_mean.to_f;
+        @harmonic_mean = harmonic_mean.to_f;
+        @standard_deviation = standard_deviation.to_f;
+        @root_mean_square = Math.sqrt(@standard_deviation ** 2  + @arithmetic_mean ** 2);
+    end
+    def set_actual(actual_val)
+        if (actual_val == "END")
+            exit(0);
+        end
+        if (!actual_val.is_integer?)
+            custom_abort("Field is not a number!");
+        end
+        @actual_val = actual_val.to_f;
+    end
+    def calc_std_dev
+        @standard_deviation = Math.sqrt(@root_mean_square ** 2 - @arithmetic_mean ** 2);
+    end
+    def calc_arith_mean
+        @arithmetic_mean = (@no_values.to_f / (@no_values + 1)) * @arithmetic_mean  + ((@actual_val.to_f) / (@no_values + 1));
+    end
+    def calc_rms
+        @root_mean_square = Math.sqrt((@no_values.to_f / (@no_values + 1)) * (@root_mean_square ** 2)  + (((@actual_val.to_f) ** 2) / (@no_values + 1)));
+    end
+    def calc_har_mean
+        @harmonic_mean = 1.0 / (((@no_values.to_f / (@no_values + 1)) * (1.0 / @harmonic_mean)) + 1 / ((@no_values + 1) * @actual_val))
+    end
+    def calc_in_order
+        calc_rms;
+        calc_arith_mean;
+        calc_std_dev;
+        calc_har_mean;
+        @no_values += 1;
+    end
+    def get_no_values
+        return (@no_values);
+    end
+    def get_std_dev
+        return (@standard_deviation);
+    end
+    def get_arith_mean
+        return (@arithmetic_mean);
+    end
+    def get_rms
+        return (@root_mean_square);
+    end
+    def get_har_mean
+        return (@harmonic_mean);
+    end
+end
+
+# error handling related functions
+def check_number(argv)
+    if (argv.length != 4)
+        custom_abort("Wrong number of argument, #{argv.length} instead of 4");
+    end
+end
+
+def check_content(argv)
+    if (!(argv[0].is_integer?) || !(argv[1].is_integer?) || !(argv[2].is_integer?) || !(argv[3].is_integer?))
+        custom_abort("One of the four argument is not a number!");
+    end
+end
+
+def basic_arg_checker(argv)
+    check_number(argv);
+    check_content(argv);
+end
+
+def print_usage()
+    puts("USAGE\n    ./206neutrinos n a h sd\n\nDESCRIPTION\n    n       number of values\n    a       arithmetic mean\n    h       harmonic mean\n    sd      standard deviation\n");
+    return (0);
+end
+
+def check_usage(argv)
+    if (argv.length == 1 && argv[0] == "-h")
+        exit(print_usage())
+    end
+end
+# end of error related functions
+
+def start_program(neutrinos)
+    $\ = ''
+    print("Enter next value: ");
+    neutrinos.set_actual(STDIN.gets.chop);
+    neutrinos.calc_in_order;
+    puts("    Number of values:   #{neutrinos.get_no_values}");
+    puts("    Standard deviation: #{sprintf('%.2f', neutrinos.get_std_dev.round(2))}");
+    puts("    Arithmetic mean:    #{sprintf('%.2f', neutrinos.get_arith_mean.round(2))}");
+    puts("    Root mean square:   #{sprintf('%.2f', neutrinos.get_rms.round(2))}")
+    puts("    Harmonic mean:      #{sprintf('%.2f', neutrinos.get_har_mean.round(2))}")
+    puts("");
+    start_program(neutrinos);
+end
+
+argv = ARGV;
+check_usage(argv);
+basic_arg_checker(argv);
+neutrinos = Neutrinos.new(argv[0], argv[1], argv[2], argv[3]);
+start_program(neutrinos);
