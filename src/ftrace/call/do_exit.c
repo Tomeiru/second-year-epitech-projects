@@ -6,6 +6,7 @@
 */
 
 #include "do_exit.h"
+#include "print_symbol.h"
 #include "../get_regs.h"
 #include "../printf.h"
 #include "../get_symbol_from_addr.h"
@@ -19,12 +20,11 @@ int ftrace_call_do_exit(struct ftrace *self, struct ftrace_process *proc)
     if (ftrace_get_regs(self, proc) < 0)
         return (-1);
     symbol = ftrace_get_symbol_from_addr(self, proc, address);
+    ftrace_printf(self, "Entering ");
+    ftrace_call_print_symbol(self, proc, symbol, address);
     if (symbol != NULL)
-        ftrace_printf(self, "Entering function %s at %p\n", symbol->name,
-            address);
-    else
-        ftrace_printf(self, "Entering func_%p@%s\n", address,
-            ftrace_get_filename_from_addr(self, proc, address));
+        ftrace_printf(self, " at %p", address);
+    ftrace_printf(self, "\n");
     proc->flags &= ~STRACE_PROCESS_IN_CALL;
     return (1);
 }

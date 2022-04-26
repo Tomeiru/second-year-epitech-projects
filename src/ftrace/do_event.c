@@ -9,6 +9,7 @@
 #include "do_event_part2.h"
 #include "do_trace_syscall.h"
 #include "do_trace_call.h"
+#include "do_trace_ret.h"
 #include "print_error_message.h"
 #include "print_signal_stop.h"
 #include "print_signalled.h"
@@ -77,7 +78,8 @@ static bool sde_part2(sde_state_t *s)
         return (true);
     if (s->event_type == STRACE_EVENT_SINGLESTEP_STOPPED &&
         (ftrace_do_trace_syscall(s->self, s->self->current_process) < 0 ||
-        ftrace_do_trace_call(s->self, s->self->current_process) < 0))
+        ftrace_do_trace_call(s->self, s->self->current_process) < 0 ||
+        ftrace_do_trace_ret(s->self, s->self->current_process) < 0))
         return (true);
     if (s->event_type == STRACE_EVENT_SIGNAL_DELIVERY_STOPPED) {
         s->restart_signal = WSTOPSIG(s->wait_status);

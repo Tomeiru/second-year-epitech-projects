@@ -101,7 +101,8 @@ SOURCE_FILES += ftrace/sprint_byte_octal
 SOURCE_FILES += ftrace/appendf_string_get_position_difference
 SOURCE_FILES += ftrace/sprint_byte_hex ftrace/do_trace_call ftrace/call/do_exit
 SOURCE_FILES += ftrace/get_symbol_from_addr ftrace/get_filename_from_addr
-SOURCE_FILES += ftrace/process/update_proc_maps
+SOURCE_FILES += ftrace/process/update_proc_maps ftrace/do_trace_ret
+SOURCE_FILES += ftrace/call/print_symbol
 
 OBJECT_FILES := $(addprefix obj/src/, $(addsuffix .o, $(SOURCE_FILES)))
 
