@@ -44,7 +44,8 @@ enum ftrace_process_flags {
     STRACE_PROCESS_HIDE_LOG = 0x40,
     STRACE_PROCESS_CHECK_EXEC_SUCCESS = 0x80,
     STRACE_PROCESS_FILTERED_SYSCALL = 0x100,
-    STRACE_PROCESS_IN_CALL = 0x20,
+    STRACE_PROCESS_IN_CALL = 0x200,
+    STRACE_PROCESS_HIDE_CALL_LOG = 0x400,
 };
 
 enum ftrace_syscall_retval_format {
@@ -90,6 +91,7 @@ struct ftrace_process {
     struct my_ftrace_mmap_entry_vector *mmap_entries;
     bool proc_maps_up_to_date;
     struct my_ftrace_symbol_vector *retrieved_symbols;
+    struct ftrace_symbol *symbol_main;
 };
 
 struct ftrace_process_params {

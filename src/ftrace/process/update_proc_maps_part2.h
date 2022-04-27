@@ -27,6 +27,8 @@ typedef struct fpupm_state {
     GElf_Shdr *shdr;
     GElf_Shdr shdr_stack;
     Elf_Data *sym_data;
+    size_t program_header_count;
+    GElf_Phdr *program_headers;
     size_t symbol_count;
     struct ftrace_symbol new_symbol;
 } fpupm_state_t;
@@ -50,6 +52,8 @@ static void do_loop(fpupm_state_t *s)
 static void do_one_entry_loop_it(fpupm_state_t *s,
     struct ftrace_mmap_entry *entry, size_t i)
 {
+    GElf_Phdr *symbol_phdr = NULL;
+
     if (gelf_getsym(s->sym_data, i, &s->new_symbol.symbol) == NULL)
         return;
     free(s->new_symbol.name);
@@ -57,12 +61,13 @@ static void do_one_entry_loop_it(fpupm_state_t *s,
         s->new_symbol.symbol.st_name));
     if (s->new_symbol.name == NULL || (s->new_symbol.name[0] == '\0'))
         return;
-    if (s->new_symbol.symbol.st_value < (entry->mmap_offset) ||
-        s->new_symbol.symbol.st_value > (entry->mmap_offset +
-       (entry->address_end - entry->address_start)))
-        return;
+    for (size_t i = 0; i < s->program_header_count; ++i)
+        if (s->program_headers[i].p_vaddr < s->new_symbol.symbol.st_value &&
+            s->program_headers[i].p_vaddr + s->program_headers[i].p_memsz >
+            s->new_symbol.symbol.st_value)
+            symbol_phdr = &s->program_headers[i];
     s->new_symbol.symbol.st_value += entry->address_start -
-        entry->mmap_offset;
+        (symbol_phdr != NULL ? symbol_phdr->p_vaddr : entry->mmap_offset);
     my_ftrace_symbol_vector_append_single(s->self->retrieved_symbols,
         s->new_symbol);
     s->new_symbol.name = NULL;
@@ -73,6 +78,14 @@ static void do_one_entry_part3(fpupm_state_t *s,
 {
     s->symbol_count = (s->shdr->sh_size / gelf_fsize(s->elf_handle, ELF_T_SYM,
         1, s->sym_data->d_version));
+    if (elf_getphdrnum(s->elf_handle, &s->program_header_count) != 0)
+        return ((void)elf_end(s->elf_handle));
+    s->program_headers = my_xmalloc(sizeof(*s->program_headers) *
+        s->program_header_count);
+    for (size_t i = 0; i < s->program_header_count; ++i)
+        if (gelf_getphdr(s->elf_handle, i, &s->program_headers[i]) !=
+            &s->program_headers[i])
+            return ((void)elf_end(s->elf_handle));
     for (size_t i = 0; i < s->symbol_count; ++i)
         do_one_entry_loop_it(s, entry, i);
     free(s->new_symbol.name);

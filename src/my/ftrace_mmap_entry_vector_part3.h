@@ -27,10 +27,13 @@ static inline struct my_ftrace_mmap_entry_vector *
 
 // Creates a new vector from the given data (which has size items)
 MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_ACCESS((read_only, 1, 2)) static inline
-    struct my_ftrace_mmap_entry_vector *my_ftrace_mmap_entry_vector_new_from_data
+    struct my_ftrace_mmap_entry_vector *
+    my_ftrace_mmap_entry_vector_new_from_data
     (const struct ftrace_mmap_entry *data, size_t size)
 {
-    struct my_ftrace_mmap_entry_vector *self = my_ftrace_mmap_entry_vector_new();
+    struct my_ftrace_mmap_entry_vector *self =
+        my_ftrace_mmap_entry_vector_new();
+
     if (data)
         my_ftrace_mmap_entry_vector_append(self, data, size);
     return self;

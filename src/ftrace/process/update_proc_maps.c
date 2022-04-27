@@ -18,13 +18,15 @@ static void do_one_entry(fpupm_state_t *s,
     s->section = NULL;
     s->found_section = NULL;
     s->shdr = NULL;
+    s->program_headers = NULL;
     s->new_symbol = (struct ftrace_symbol){};
     if (s->fd < 0)
         return;
     s->elf_handle = elf_begin(s->fd, ELF_C_READ_MMAP, NULL);
-    if (s->elf_handle == NULL)
-        return;
-    do_one_entry_part2(s, entry);
+    if (s->elf_handle != NULL)
+        do_one_entry_part2(s, entry);
+    free(s->program_headers);
+    close(s->fd);
 }
 
 static void do_symbols(fpupm_state_t *s)
@@ -36,6 +38,9 @@ static void do_symbols(fpupm_state_t *s)
     my_ftrace_symbol_vector_resize(s->self->retrieved_symbols, 0);
     for (size_t i = 0; i < s->self->mmap_entries->size; ++i)
         do_one_entry(s, &s->self->mmap_entries->data[i]);
+    for (size_t i = 0; i < s->self->retrieved_symbols->size; ++i)
+        if (strcmp(s->self->retrieved_symbols->data[i].name, "main") == 0)
+            s->self->symbol_main = &s->self->retrieved_symbols->data[i];
 }
 
 void fpupm_part2(fpupm_state_t *s)

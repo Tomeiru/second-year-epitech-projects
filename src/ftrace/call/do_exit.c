@@ -20,6 +20,11 @@ int ftrace_call_do_exit(struct ftrace *self, struct ftrace_process *proc)
     if (ftrace_get_regs(self, proc) < 0)
         return (-1);
     symbol = ftrace_get_symbol_from_addr(self, proc, address);
+    if ((proc->flags & STRACE_PROCESS_HIDE_CALL_LOG) &&
+        proc->symbol_main != NULL && (symbol == NULL || strcmp(symbol->name,
+        "main") != 0))
+        return (0);
+    proc->flags &= ~STRACE_PROCESS_HIDE_CALL_LOG;
     ftrace_printf(self, "Entering ");
     ftrace_call_print_symbol(self, proc, symbol, address);
     if (symbol != NULL)

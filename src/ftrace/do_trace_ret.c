@@ -47,7 +47,7 @@ int ftrace_do_trace_ret(struct ftrace *self, struct ftrace_process *proc)
 {
     struct ftrace_symbol *symbol;
 
-    if (proc->flags & STRACE_PROCESS_HIDE_LOG)
+    if (proc->flags & (STRACE_PROCESS_HIDE_LOG | STRACE_PROCESS_HIDE_CALL_LOG))
         return (0);
     if (ftrace_get_regs(self, proc) < 0)
         return (-1);

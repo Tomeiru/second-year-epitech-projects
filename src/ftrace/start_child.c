@@ -33,7 +33,8 @@ static void ssc_part4(ssc_state_t *s)
     kill(s->self->child_pid, SIGCONT);
     s->process = ftrace_process_add(s->self, s->self->child_pid);
     ftrace_process_do_post_attach(s->self, s->process,
-        STRACE_PROCESS_NO_DETACH_FIRST_EXEC | STRACE_PROCESS_HIDE_LOG);
+        STRACE_PROCESS_NO_DETACH_FIRST_EXEC | STRACE_PROCESS_HIDE_LOG |
+        STRACE_PROCESS_HIDE_CALL_LOG);
     ftrace_standard_fds_redirect(s->self);
 }
 
