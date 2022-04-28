@@ -7,10 +7,16 @@
 
 #pragma once
 
+#include "IProcessCom.hpp"
+
 namespace plazza {
+    class ForkException {};
+
     class IProcess {
         public:
             ~IProcess() = default;
+
+            virtual const IProcessCom &getCom() = 0;
 
         protected:
         private:
