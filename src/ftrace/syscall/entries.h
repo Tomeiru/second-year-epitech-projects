@@ -12,40 +12,40 @@
 #include <sys/syscall.h>
 #include <stddef.h>
 
-int ftrace_syscall_print_arguments_decimal(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_execve(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_write(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_brk(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_arch_prctl(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_access(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_openat(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_newfstatat(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_mmap(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_close(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_read(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_pread(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_mprotect(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_munmap(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_prlimit64(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_getrandom(
-    struct ftrace *self, struct ftrace_process *proc);
-int ftrace_syscall_print_sys_futex(
-    struct ftrace *self, struct ftrace_process *proc);
+int ftrace_syscall_print_arguments_decimal(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_execve(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_write(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_brk(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_arch_prctl(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_access(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_openat(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_newfstatat(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_mmap(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_close(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_read(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_pread(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_mprotect(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_munmap(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_prlimit64(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_getrandom(struct ftrace *self,
+    struct ftrace_process *proc);
+int ftrace_syscall_print_sys_futex(struct ftrace *self,
+    struct ftrace_process *proc);
 
 static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
     [SYS_execve] = {
@@ -1708,5 +1708,6 @@ static const struct ftrace_syscall_entry STRACE_SYSCALL_ENTRIES[] = {
         .num_arguments = 1,
     },
 };
+
 static const size_t STRACE_SYSCALL_ENTRIES_COUNT =
     (sizeof(STRACE_SYSCALL_ENTRIES) / sizeof(STRACE_SYSCALL_ENTRIES[0]));

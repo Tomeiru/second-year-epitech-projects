@@ -78,4 +78,3 @@ static inline struct MY_INTERNAL_TYPE_TOKEN *
 {
     return MY_REM_SPACE_AFTER_TYPE_TOKEN _insert(self, &item, 1, position);
 }
-

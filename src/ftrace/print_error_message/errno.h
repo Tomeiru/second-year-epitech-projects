@@ -9,5 +9,5 @@
 
 #include "../../ftrace.h"
 
-void ftrace_print_error_message_errno(
-    struct ftrace *self, const char *format, ...);
+void ftrace_print_error_message_errno(struct ftrace *self, const char *format,
+    ...);

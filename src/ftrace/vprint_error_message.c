@@ -10,8 +10,8 @@
 #include <string.h>
 
 // We flush stderr just in case
-void ftrace_vprint_error_message(
-    struct ftrace *self, int errno, const char *format, va_list arguments)
+void ftrace_vprint_error_message(struct ftrace *self, int errno,
+    const char *format, va_list arguments)
 {
     fflush(NULL);
     fprintf(stderr, "%s: ", self->program_invocation_name);

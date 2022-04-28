@@ -9,5 +9,5 @@
 
 #include "../ftrace.h"
 
-int ftrace_do_ptrace_seize(
-    struct ftrace *self, pid_t pid, const char **ptrace_command);
+int ftrace_do_ptrace_seize(struct ftrace *self, pid_t pid,
+    const char **ptrace_command);

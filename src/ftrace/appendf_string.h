@@ -10,8 +10,8 @@
 #include "snprintf.h"
 #include "build_bug_on_non_array.h"
 
-size_t ftrace_appendf_string_get_position_difference(
-    struct ftrace *self, char *string, size_t size, char *position);
+size_t ftrace_appendf_string_get_position_difference(struct ftrace *self,
+    char *string, size_t size, char *position);
 
 #define STRACE_APPENDF_STRING(self, str, position, format, ...) \
     (ftrace_snprintf(self, position,                            \

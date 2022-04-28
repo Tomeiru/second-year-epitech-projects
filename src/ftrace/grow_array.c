@@ -13,8 +13,8 @@
 
 static const size_t ALLOC_SIZE_DEFAULT = 256;
 
-void *ftrace_grow_array(
-    struct ftrace *self, void *ptr, size_t *num_members, size_t member_size)
+void *ftrace_grow_array(struct ftrace *self, void *ptr, size_t *num_members,
+    size_t member_size)
 {
     size_t members_added;
 

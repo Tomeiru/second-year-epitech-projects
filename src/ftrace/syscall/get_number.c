@@ -49,11 +49,11 @@ static int ssgn_part2(struct ftrace *self, struct ftrace_process *proc)
         p->proc = proc;
         p->entry = STRACE_SYSCALL_STUB_ENTRY;
         p->entry.name = p->buffer;
-        STRACE_ARR_SPRINTF(
-            self, p->buffer, "syscall_%#jx", (intmax_t)proc->syscall_number);
+        STRACE_ARR_SPRINTF(self, p->buffer, "syscall_%#jx",
+            (intmax_t)proc->syscall_number);
         proc->syscall_entry = &p->entry;
-        ftrace_process_set_private_data(
-            proc, p, ftrace_syscall_entry_buffer_free);
+        ftrace_process_set_private_data(proc, p,
+            ftrace_syscall_entry_buffer_free);
     }
     if (proc->flags & STRACE_PROCESS_RECOVERING)
         proc->qualifier_flags &= STRACE_QUALIFIER_RAW;

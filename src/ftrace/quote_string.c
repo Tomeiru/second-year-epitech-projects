@@ -54,7 +54,7 @@ int ftrace_quote_string(sqs_opts_t *o)
         .uc_in_string = (const unsigned char *)o->in_string,
         .hex_style = (o->style & STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING) ?
             ((o->style & STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_MASK) >>
-                STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT) :
+            STRACE_SYSCALL_PRINT_QUOTE_HEX_STRING_SHIFT) :
             STRACE_HEX_STRING_NONE,
     };
 

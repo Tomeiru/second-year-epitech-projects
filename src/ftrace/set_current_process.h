@@ -9,5 +9,5 @@
 
 #include "../ftrace.h"
 
-void ftrace_set_current_process(
-    struct ftrace *self, struct ftrace_process *proc);
+void ftrace_set_current_process(struct ftrace *self,
+    struct ftrace_process *proc);

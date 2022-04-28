@@ -9,8 +9,8 @@
 #include "../vprint_error_message.h"
 #include "../die.h"
 
-void ftrace_print_error_message_and_die(
-    struct ftrace *self, const char *format, ...)
+void ftrace_print_error_message_and_die(struct ftrace *self, const char *format,
+    ...)
 {
     va_list arguments;
 

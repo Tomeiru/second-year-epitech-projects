@@ -75,4 +75,3 @@ static inline struct my_ftrace_symbol_vector *
 {
     return my_ftrace_symbol_vector_insert(self, &item, 1, position);
 }
-

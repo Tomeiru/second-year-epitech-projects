@@ -18,8 +18,8 @@ static int sset_part2(struct ftrace *self, struct ftrace_process *proc)
     int result;
 
     ftrace_syscall_print_leader(self, proc);
-    ftrace_syscall_print_start_arguments(
-        self, ftrace_process_get_syscall_entry(proc)->name);
+    ftrace_syscall_print_start_arguments(self,
+        ftrace_process_get_syscall_entry(proc)->name);
     result = ftrace_syscall_print_raw_arguments(self, proc);
     fflush(stderr);
     return (result);

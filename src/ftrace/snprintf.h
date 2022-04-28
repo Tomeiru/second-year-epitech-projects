@@ -9,5 +9,5 @@
 
 #include "../ftrace.h"
 
-int ftrace_snprintf(
-    struct ftrace *self, char *buffer, size_t size, const char *format, ...);
+int ftrace_snprintf(struct ftrace *self, char *buffer, size_t size,
+    const char *format, ...);

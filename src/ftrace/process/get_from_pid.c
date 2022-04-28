@@ -8,8 +8,8 @@
 #include "get_from_pid.h"
 #include <stddef.h>
 
-struct ftrace_process *ftrace_process_get_from_pid(
-    struct ftrace *self, pid_t pid)
+struct ftrace_process *ftrace_process_get_from_pid(struct ftrace *self,
+    pid_t pid)
 {
     if (pid <= 0)
         return (NULL);

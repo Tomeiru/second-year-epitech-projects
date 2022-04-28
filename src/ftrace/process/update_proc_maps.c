@@ -11,8 +11,7 @@
 #include "../print_error_message/errno.h"
 #include <fcntl.h>
 
-static void do_one_entry(fpupm_state_t *s,
-    struct ftrace_mmap_entry *entry)
+static void do_one_entry(fpupm_state_t * s, struct ftrace_mmap_entry *entry)
 {
     s->fd = open(entry->binary_filename, O_RDONLY);
     s->section = NULL;

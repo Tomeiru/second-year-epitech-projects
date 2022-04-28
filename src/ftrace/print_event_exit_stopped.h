@@ -9,5 +9,5 @@
 
 #include "../ftrace.h"
 
-void ftrace_print_event_exit_stopped(
-    struct ftrace *self, struct ftrace_process *proc);
+void ftrace_print_event_exit_stopped(struct ftrace *self,
+    struct ftrace_process *proc);

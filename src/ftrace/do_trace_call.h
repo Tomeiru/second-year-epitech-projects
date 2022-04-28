@@ -10,5 +10,3 @@
 #include "../ftrace.h"
 
 int ftrace_do_trace_call(struct ftrace *self, struct ftrace_process *proc);
-
-

@@ -8,8 +8,8 @@
 #include "do_ptrace_seize.h"
 #include <sys/ptrace.h>
 
-int ftrace_do_ptrace_seize(
-    struct ftrace *self, pid_t pid, const char **ptrace_command)
+int ftrace_do_ptrace_seize(struct ftrace *self, pid_t pid,
+    const char **ptrace_command)
 {
     int result = ptrace(PTRACE_SEIZE, pid, 0L,
         (unsigned long)(PTRACE_O_TRACEEXEC | PTRACE_O_TRACEEXIT));

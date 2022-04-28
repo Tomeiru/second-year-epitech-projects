@@ -9,5 +9,5 @@
 
 #include "../../ftrace.h"
 
-void ftrace_process_do_post_attach(
-    struct ftrace *self, struct ftrace_process *process, unsigned flags);
+void ftrace_process_do_post_attach(struct ftrace *self,
+    struct ftrace_process *process, unsigned flags);

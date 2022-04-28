@@ -7,8 +7,8 @@
 
 # Makefiles are prettier like this
 ifeq ($(origin .RECIPEPREFIX), undefined)
-  $(error This Make does not support .RECIPEPREFIX. \
-	Please use GNU Make 3.82 or later)
+    $(error This Make does not support .RECIPEPREFIX. \
+        Please use GNU Make 3.82 or later)
 endif
 .RECIPEPREFIX = >
 

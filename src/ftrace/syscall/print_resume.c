@@ -10,8 +10,8 @@
 #include "../process/get_syscall_entry.h"
 #include "../printf.h"
 
-void ftrace_syscall_print_resume(
-    struct ftrace *self, struct ftrace_process *proc)
+void ftrace_syscall_print_resume(struct ftrace *self,
+    struct ftrace_process *proc)
 {
     if (self->printing_process != proc) {
         ftrace_syscall_print_leader(self, proc);

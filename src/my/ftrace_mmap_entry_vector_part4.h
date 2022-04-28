@@ -75,4 +75,3 @@ static inline struct my_ftrace_mmap_entry_vector *
 {
     return my_ftrace_mmap_entry_vector_insert(self, &item, 1, position);
 }
-

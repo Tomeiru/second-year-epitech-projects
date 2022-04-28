@@ -9,5 +9,5 @@
 
 #include "../../ftrace.h"
 
-int ftrace_syscall_exit_decode(
-    struct ftrace *self, struct ftrace_process *proc);
+int ftrace_syscall_exit_decode(struct ftrace *self,
+    struct ftrace_process *proc);

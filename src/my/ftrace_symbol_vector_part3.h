@@ -47,8 +47,7 @@ static inline struct my_ftrace_symbol_vector *
     if (self == NULL)
         return NULL;
     if (size >= self->allocated_size)
-        my_ftrace_symbol_vector_guarantee_can_expand(self,
-            size - self->size);
+        my_ftrace_symbol_vector_guarantee_can_expand(self, size - self->size);
     self->size = size;
     return self;
 }

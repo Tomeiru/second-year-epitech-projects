@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stddef.h>
 
-void ftrace_print_event_exit_stopped(
-    struct ftrace *self, struct ftrace_process *proc)
+void ftrace_print_event_exit_stopped(struct ftrace *self,
+    struct ftrace_process *proc)
 {
     if (!(proc->flags & STRACE_PROCESS_IN_SYSCALL) || (proc->flags &
         (STRACE_PROCESS_FILTERED_SYSCALL | STRACE_PROCESS_HIDE_LOG)))

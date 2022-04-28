@@ -10,8 +10,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int ftrace_snprintf(
-    struct ftrace *self, char *buffer, size_t size, const char *format, ...)
+int ftrace_snprintf(struct ftrace *self, char *buffer, size_t size,
+    const char *format, ...)
 {
     va_list arguments;
     int result;

@@ -33,11 +33,11 @@ static void do_attach_list(struct ftrace *self, char *attach_list)
     while (*attach_list != '\0') {
         do_attach_list_loop_start(attach_list, &delimiter, &current_char, &pid);
         if (pid <= 0)
-            ftrace_print_error_message_and_die(
-                self, "Invalid process id: '%s'", attach_list);
+            ftrace_print_error_message_and_die(self, "Invalid process id: '%s'",
+                attach_list);
         if (pid == self->tracer_pid)
-            ftrace_print_error_message_and_die(
-                self, "I'm sorry, I can't let you do that, Dave.");
+            ftrace_print_error_message_and_die(self,
+                "I'm sorry, I can't let you do that, Dave.");
         *delimiter = current_char;
         ftrace_process_add(self, pid);
         if (current_char == '\0')
@@ -51,8 +51,8 @@ static void si_part3(struct ftrace *self, int argc, char **argv)
     argv += optind;
     argc -= optind;
     if (argc < 0 || (!self->has_traced_process && argc == 0))
-        ftrace_print_error_message_help_and_die(
-            self, "must have PROG [ARGS] or -p PID");
+        ftrace_print_error_message_help_and_die(self,
+            "must have PROG [ARGS] or -p PID");
     sigaction(SIGCHLD, &((struct sigaction){.sa_handler = SIG_DFL}),
         &self->traced_process_params.sigchld_sigaction);
     self->traced_process_uid = getuid();

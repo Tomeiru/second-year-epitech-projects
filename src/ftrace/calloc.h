@@ -9,5 +9,5 @@
 
 #include "../ftrace.h"
 
-void *ftrace_calloc(
-    struct ftrace *self, size_t num_members, size_t member_size);
+void *ftrace_calloc(struct ftrace *self, size_t num_members,
+    size_t member_size);

@@ -10,6 +10,6 @@
 
 const char *ftrace_get_errno_name(uint64_t err_number)
 {
-    return (err_number < STRACE_ERRNOSTRS_COUNT ?
-        STRACE_ERRNOSTRS[err_number] : NULL);
+    return (err_number < STRACE_ERRNOSTRS_COUNT ? STRACE_ERRNOSTRS[err_number] :
+        NULL);
 }

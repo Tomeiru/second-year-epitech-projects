@@ -17,15 +17,14 @@
 #include <linux/errno.h>
 #include <stdint.h>
 
-static int sset_part2(
-    struct ftrace *self, struct ftrace_process *proc)
+static int sset_part2(struct ftrace *self, struct ftrace_process *proc)
 {
     ftrace_syscall_print_end_arguments(self);
     ftrace_printf(self, " ");
     ftrace_syscall_print_tab(self);
     if (proc->syscall_error != 0)
-        ftrace_syscall_print_error_return(
-            self, proc->syscall_retval, proc->syscall_error);
+        ftrace_syscall_print_error_return(self, proc->syscall_retval,
+            proc->syscall_error);
     else
         ftrace_printf(self, "= %#jx", (intmax_t)proc->syscall_retval);
     ftrace_printf(self, "\n");
@@ -33,8 +32,8 @@ static int sset_part2(
     return (0);
 }
 
-int ftrace_syscall_exit_trace(
-    struct ftrace *self, struct ftrace_process *proc, int r)
+int ftrace_syscall_exit_trace(struct ftrace *self, struct ftrace_process *proc,
+    int r)
 {
     ftrace_syscall_print_resume(self, proc);
     self->printing_process = proc;

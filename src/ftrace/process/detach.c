@@ -20,8 +20,8 @@
 static void drop(struct ftrace *st, struct ftrace_process *self)
 {
     if (self->flags & STRACE_PROCESS_ATTACHED)
-        ftrace_print_error_message(
-            st, "Process %ju detached", (uintmax_t)self->pid);
+        ftrace_print_error_message(st, "Process %ju detached",
+            (uintmax_t) self->pid);
     ftrace_process_drop(st, self);
 }
 
@@ -55,7 +55,8 @@ static void spd_part2(struct ftrace *st, struct ftrace_process *self)
 
     if (syscall(SYS_tkill, self->pid, 0) < 0) {
         if (errno != ESRCH)
-            ftrace_print_error_message_errno(st, "tkill(%u,0)", self->pid);
+            ftrace_print_error_message_errno(st, "tkill(%ju,0)",
+                (uintmax_t)self->pid);
         drop(st, self);
         return;
     }
@@ -65,8 +66,8 @@ static void spd_part2(struct ftrace *st, struct ftrace_process *self)
         return;
     }
     if (errno != ESRCH)
-        ftrace_print_error_message_errno(
-            st, "ptrace(PTRACE_INTERRUPT,%u)", self->pid);
+        ftrace_print_error_message_errno(st, "ptrace(PTRACE_INTERRUPT,%ju)",
+            (uintmax_t)self->pid);
     drop(st, self);
 }
 
@@ -84,8 +85,8 @@ void ftrace_process_detach(struct ftrace *st, struct ftrace_process *self)
         return;
     }
     if (errno != ESRCH) {
-        ftrace_print_error_message_errno(
-            st, "ptrace(PTRACE_DETACH,%u)", self->pid);
+        ftrace_print_error_message_errno(st, "ptrace(PTRACE_DETACH,%ju)",
+            (uintmax_t)self->pid);
         drop(st, self);
         return;
     }

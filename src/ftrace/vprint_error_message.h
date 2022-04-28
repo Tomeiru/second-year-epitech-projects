@@ -10,5 +10,5 @@
 #include "../ftrace.h"
 #include <stdarg.h>
 
-void ftrace_vprint_error_message(
-    struct ftrace *self, int errno, const char *format, va_list arguments);
+void ftrace_vprint_error_message(struct ftrace *self, int errno,
+    const char *format, va_list arguments);

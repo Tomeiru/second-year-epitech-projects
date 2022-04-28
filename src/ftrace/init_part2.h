@@ -20,8 +20,8 @@ static inline void usage(struct ftrace *self)
     exit(0);
 }
 
-static inline void do_attach_list_loop_start(
-    char *attach_list, char **delimiter, char *current_char, pid_t *pid)
+static inline void do_attach_list_loop_start(char *attach_list,
+    char **delimiter, char *current_char, pid_t *pid)
 {
     *delimiter = attach_list + strcspn(attach_list, "\n\t ,");
     *current_char = **delimiter;

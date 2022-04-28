@@ -14,5 +14,5 @@
     ((type)(uintptr_t)(const volatile void *)(ptr))
 
 #define STRACE_LIST_GET_ELEMENT(list, element_struct, element_field) \
-    STRACE_LIST_PTR_TYPE_CAST(element_struct *, \
+    STRACE_LIST_PTR_TYPE_CAST(element_struct *,                      \
         (const volatile char *)(list)-offsetof(element_struct, element_field))

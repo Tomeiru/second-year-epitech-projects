@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <stddef.h>
 
-void ftrace_print_error_message_help_and_die(
-    struct ftrace *self, const char *format, ...)
+void ftrace_print_error_message_help_and_die(struct ftrace *self,
+    const char *format, ...)
 {
     va_list arguments;
 

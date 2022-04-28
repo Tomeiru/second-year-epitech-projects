@@ -10,8 +10,8 @@
 #include "print_next_argument.h"
 #include "print_hex.h"
 
-int ftrace_syscall_print_raw_arguments(
-    struct ftrace *self, struct ftrace_process *proc)
+int ftrace_syscall_print_raw_arguments(struct ftrace *self,
+    struct ftrace_process *proc)
 {
     const unsigned num_args =
         ftrace_process_get_syscall_entry(proc)->num_arguments;

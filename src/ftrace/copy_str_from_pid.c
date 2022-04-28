@@ -31,8 +31,8 @@ static bool check_errno(scsfp_opts_t *o, size_t num_read)
     return (true);
 }
 
-static void scsfp_finish_loop(
-    scsfp_opts_t *o, size_t *r, size_t x, size_t *num_read)
+static void scsfp_finish_loop(scsfp_opts_t *o, size_t *r, size_t x,
+    size_t *num_read)
 {
     *r = 0;
     o->address += sizeof(long);

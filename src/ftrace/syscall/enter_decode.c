@@ -19,8 +19,8 @@ static bool get_args(struct ftrace *self, struct ftrace_process *proc, int *r)
     return (*r == 1);
 }
 
-int ftrace_syscall_enter_decode(
-    struct ftrace *self, struct ftrace_process *proc)
+int ftrace_syscall_enter_decode(struct ftrace *self,
+    struct ftrace_process *proc)
 {
     int r = ftrace_syscall_get_number(self, proc);
 
@@ -28,8 +28,8 @@ int ftrace_syscall_enter_decode(
         return (0);
     if (r != 1 || !get_args(self, proc, &r)) {
         ftrace_syscall_print_leader(self, proc);
-        ftrace_syscall_print_start_arguments(
-            self, ftrace_process_get_syscall_entry(proc)->name);
+        ftrace_syscall_print_start_arguments(self,
+            ftrace_process_get_syscall_entry(proc)->name);
         return (r);
     }
     return (1);

@@ -11,8 +11,8 @@
 #include <string.h>
 #include <stdint.h>
 
-void ftrace_syscall_print_error_return(
-    struct ftrace *self, __kernel_ulong_t result, unsigned long error)
+void ftrace_syscall_print_error_return(struct ftrace *self,
+    __kernel_ulong_t result, unsigned long error)
 {
     const char *error_string = ftrace_get_errno_name(error);
 

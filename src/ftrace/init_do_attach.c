@@ -19,8 +19,8 @@ void ftrace_init_do_attach(struct ftrace *self)
             return;
         if (self->traced_process.pid == self->tracer_pid) {
             errno = EPERM;
-            ftrace_print_error_message_errno(
-                self, "attach: pid %jd", (intmax_t)self->traced_process.pid);
+            ftrace_print_error_message_errno(self, "attach: pid %jd",
+                (intmax_t) self->traced_process.pid);
             ftrace_process_drop(self, &self->traced_process);
             return;
         }

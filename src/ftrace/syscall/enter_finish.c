@@ -7,8 +7,8 @@
 
 #include "enter_finish.h"
 
-void ftrace_syscall_enter_finish(
-    struct ftrace *self, struct ftrace_process *proc, int r)
+void ftrace_syscall_enter_finish(struct ftrace *self,
+    struct ftrace_process *proc, int r)
 {
     (void)self;
     proc->flags |= STRACE_PROCESS_IN_SYSCALL;

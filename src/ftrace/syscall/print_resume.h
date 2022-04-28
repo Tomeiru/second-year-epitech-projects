@@ -9,5 +9,5 @@
 
 #include "../../ftrace.h"
 
-void ftrace_syscall_print_resume(
-    struct ftrace *self, struct ftrace_process *proc);
+void ftrace_syscall_print_resume(struct ftrace *self,
+    struct ftrace_process *proc);

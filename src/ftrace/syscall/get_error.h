@@ -9,5 +9,5 @@
 
 #include "../../ftrace.h"
 
-void ftrace_syscall_get_error(
-    struct ftrace *self, struct ftrace_process *proc, bool check_errno);
+void ftrace_syscall_get_error(struct ftrace *self, struct ftrace_process *proc,
+    bool check_errno);
