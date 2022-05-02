@@ -16,12 +16,12 @@
 /// in C++ (use std::size instead)
     #define MY_ARRAY_SIZE(array)                               \
         (__extension__({                                       \
-            size_t result;                                     \
-            _Pragma("GCC diagnostic push");                    \
-            _Pragma("GCC diagnostic ignored \"-Wc++-compat\"") \
-                result = (sizeof(array) / sizeof((array)[0]) + \
-                    MY_BUILD_BUG_ON_NON_ARRAY(array));         \
-            _Pragma("GCC diagnostic pop");                     \
-            result;                                            \
+        size_t result;                                     \
+        _Pragma("GCC diagnostic push");                    \
+        _Pragma("GCC diagnostic ignored \"-Wc++-compat\"") \
+        result = (sizeof(array) / sizeof((array)[0]) + \
+        MY_BUILD_BUG_ON_NON_ARRAY(array));         \
+        _Pragma("GCC diagnostic pop");                     \
+        result;                                            \
         }))
 #endif

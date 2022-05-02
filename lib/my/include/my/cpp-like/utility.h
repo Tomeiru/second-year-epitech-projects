@@ -12,9 +12,9 @@
 /// Exchanges the given values
 #define MY_SWAP(a, b)                                               \
     do {                                                            \
-        __extension__({                                             \
-            __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp) = (a); \
-            (a) = (b);                                              \
-            (b) = MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp);             \
-        });                                                         \
+    __extension__({                                             \
+    __auto_type MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp) = (a); \
+    (a) = (b);                                              \
+    (b) = MY_MAKE_UNIQUE_IDENTIFIER(_swap_tmp);             \
+    });                                                         \
     } while (0)

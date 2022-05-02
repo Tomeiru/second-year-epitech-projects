@@ -5,6 +5,8 @@
 ** Defines print_octal_03
 */
 
+#pragma once
+
 #include "../printf.h"
 #include "../zero_extend_signed_to_umax.h"
 

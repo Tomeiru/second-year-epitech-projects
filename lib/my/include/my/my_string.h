@@ -72,9 +72,9 @@ struct my_string *my_string_append_vprintf(struct my_string *self,
     const char *format, va_list arguments) MY_ATTR_FORMAT(printf, 2, 0);
 
 /// Same as above, but takes ... instead of va_list
-MY_ATTR_FORMAT(printf, 2, 3)
-static inline struct my_string *my_string_append_printf(struct my_string *self,
-    const char *format, ...)
+__attribute__((format(printf, 2, 3)))
+static inline struct my_string *
+    my_string_append_printf(struct my_string *self, const char *format, ...)
 {
     va_list arguments;
 

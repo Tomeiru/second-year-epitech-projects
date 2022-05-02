@@ -15,11 +15,11 @@
 /// Version of vasprintf that either succeeds or doesn't return
 int my_xvasprintf(char **MY_RESTRICT result_string_ptr,
     const char *MY_RESTRICT format, va_list arguments)
-    MY_ATTR_FORMAT(printf, 2, 0);
+    __attribute__((format(printf, 2, 0)));
 
 /// Version of asprintf that either succeeds or doesn't return
 int my_xasprintf(char **MY_RESTRICT result_string_ptr,
-    const char *MY_RESTRICT format, ...) MY_ATTR_FORMAT(printf, 2, 3);
+    const char *MY_RESTRICT format, ...) __attribute__((format(printf, 2, 3)));
 
 /// Version of fopen that either succeeds or doesn't return
 FILE *my_xfopen(const char *MY_RESTRICT filename,

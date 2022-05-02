@@ -26,7 +26,7 @@ static inline struct my_ftrace_mmap_entry_vector *
 }
 
 // Creates a new vector from the given data (which has size items)
-MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_ACCESS((read_only, 1, 2)) static inline
+MY_ATTR_WARN_UNUSED_RESULT static inline
     struct my_ftrace_mmap_entry_vector *
     my_ftrace_mmap_entry_vector_new_from_data
     (const struct ftrace_mmap_entry *data, size_t size)

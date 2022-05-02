@@ -5,6 +5,8 @@
 ** Declares do_event
 */
 
+#pragma once
+
 #include "../ftrace.h"
 
 bool ftrace_do_event(struct ftrace *self,

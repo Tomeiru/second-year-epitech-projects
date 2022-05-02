@@ -7,5 +7,6 @@
 
 #pragma once
 
-#define STRACE_DIV_ROUND_UP(dividend, divisor) (((dividend) + (divisor) - 1) \
-    / (divisor))
+// dend = dividend
+// dsor = disivor
+#define STRACE_DIV_ROUND_UP(dend, dsor) (((dend) + (dsor) - 1) / (dsor))
