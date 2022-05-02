@@ -25,11 +25,13 @@ int ftrace_call_do_exit(struct ftrace *self, struct ftrace_process *proc)
         "main") != 0))
         return (0);
     proc->flags &= ~STRACE_PROCESS_HIDE_CALL_LOG;
-    ftrace_printf(self, "Entering ");
-    ftrace_call_print_symbol(self, proc, symbol, address);
-    if (symbol != NULL)
-        ftrace_printf(self, " at %p", address);
-    ftrace_printf(self, "\n");
-    proc->flags &= ~STRACE_PROCESS_IN_CALL;
+    if (symbol != NULL || !(proc->flags & STRACE_PROCESS_CALL_IS_JMP)) {
+        ftrace_printf(self, "Entering ");
+        ftrace_call_print_symbol(self, proc, symbol, address);
+        if (symbol != NULL)
+            ftrace_printf(self, " at %p", address);
+        ftrace_printf(self, "\n");
+    }
+    proc->flags &= ~(STRACE_PROCESS_IN_CALL | STRACE_PROCESS_CALL_IS_JMP);
     return (1);
 }

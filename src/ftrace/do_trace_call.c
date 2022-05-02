@@ -15,10 +15,15 @@
 
 static bool check_call(struct ftrace *self, struct ftrace_process *proc)
 {
-    long instruction = ptrace(PTRACE_PEEKTEXT, proc->pid,
+    unsigned long instruction = ptrace(PTRACE_PEEKTEXT, proc->pid,
         (void *)self->x86_regs.rip, (void *)NULL);
 
-    if ((instruction & 0xFF) != 0xE8 && (instruction & 0xFF) != 0xFF &&
+    while ((instruction & 0xFF) == 0xF2 || (instruction & 0xFF) == 0x41)
+        instruction >>= 8;
+    if ((instruction & 0xFF) == 0xEB || (instruction & 0xFF) == 0xE9 ||
+        (instruction & 0xFF) == 0xEA || (instruction & 0xFF) == 0xEA)
+        proc->flags |= STRACE_PROCESS_CALL_IS_JMP;
+    else if ((instruction & 0xFF) != 0xE8 && (instruction & 0xFF) != 0xFF &&
         (instruction & 0xFF) != 0x9A)
         return (false);
     if (self->x86_io.iov_len != sizeof(self->x86_regs)) {

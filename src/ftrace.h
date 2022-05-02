@@ -46,6 +46,7 @@ enum ftrace_process_flags {
     STRACE_PROCESS_FILTERED_SYSCALL = 0x100,
     STRACE_PROCESS_IN_CALL = 0x200,
     STRACE_PROCESS_HIDE_CALL_LOG = 0x400,
+    STRACE_PROCESS_CALL_IS_JMP = 0x800,
 };
 
 enum ftrace_syscall_retval_format {

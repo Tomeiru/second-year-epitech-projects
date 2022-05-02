@@ -10,6 +10,7 @@
 #include "printf.h"
 #include "syscall/print_leader.h"
 #include "print_error_message.h"
+#include "translate_symbol_name.h"
 #include <sys/ptrace.h>
 
 static bool check_ret(struct ftrace *self, struct ftrace_process *proc)
@@ -57,7 +58,7 @@ int ftrace_do_trace_ret(struct ftrace *self, struct ftrace_process *proc)
     symbol = find_symbol(proc, self->x86_regs.rip);
     ftrace_printf(self, "Leaving function");
     if (symbol != NULL)
-        ftrace_printf(self, " %s", symbol->name);
+        ftrace_printf(self, " %s", ftrace_translate_symbol_name(symbol->name));
     ftrace_printf(self, "\n");
     return (1);
 }
