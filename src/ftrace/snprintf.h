@@ -9,5 +9,11 @@
 
 #include "../ftrace.h"
 
-int ftrace_snprintf(struct ftrace *self, char *buffer, size_t size,
-    const char *format, ...);
+typedef struct fs_opts {
+    struct ftrace *self;
+    char *buffer;
+    size_t size;
+    const char *format;
+} fs_opts_t;
+
+int ftrace_snprintf(fs_opts_t *o, ...);

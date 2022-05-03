@@ -10,19 +10,18 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-int ftrace_snprintf(struct ftrace *self, char *buffer, size_t size,
-    const char *format, ...)
+int ftrace_snprintf(fs_opts_t *o, ...)
 {
     va_list arguments;
     int result;
 
-    va_start(arguments, format);
-    result = vsnprintf(buffer, size, format, arguments);
+    va_start(arguments, o);
+    result = vsnprintf(o->buffer, o->size, o->format, arguments);
     va_end(arguments);
 
-    if (result < 0 || (unsigned)result >= size)
-        ftrace_print_error_message_and_die(self, "ftrace_snprintf: got"
+    if (result < 0 || (unsigned)result >= o->size)
+        ftrace_print_error_message_and_die(o->self, "ftrace_snprintf: got"
             "unexpected return value %d for snprintf(buffer, %zu, \?\?\?\?)",
-            result, size);
+            result, o->size);
     return (result);
 }

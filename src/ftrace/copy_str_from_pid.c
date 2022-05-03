@@ -41,6 +41,14 @@ static void scsfp_finish_loop(scsfp_opts_t *o, size_t *r, size_t x,
     o->length -= x;
 }
 
+static bool do_loop(union ftrace_long_innards v, size_t *r)
+{
+    while (*r < sizeof(long))
+        if (v.innards[(*r)++] == '\0')
+            return (false);
+    return (true);
+}
+
 int ftrace_copy_str_from_pid(scsfp_opts_t *o)
 {
     union ftrace_long_innards v;
@@ -57,10 +65,8 @@ int ftrace_copy_str_from_pid(scsfp_opts_t *o)
             return (-1);
         x = ((sizeof(long) - r) < o->length) ? (sizeof(long) - r) : o->length;
         memcpy(o->output_address, &v.innards[r], x);
-        while (r < sizeof(long))
-            if (v.innards[r++] == '\0')
-                return (((char *)o->output_address - original_output_address) +
-                    r);
+        if (!do_loop(v, &r))
+            return (((char *)o->output_address - original_output_address) + r);
         scsfp_finish_loop(o, &r, x, &num_read);
     }
     return (0);

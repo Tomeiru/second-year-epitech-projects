@@ -22,25 +22,32 @@ static bool sgne_do_loop_part2(sgne_state_t *s)
     return (true);
 }
 
+static int sgne_do_loop_it(sgne_state_t *s)
+{
+    if (s->pid < 0) {
+        if (s->wait_errno == EINTR || s->wait_no_hang)
+            return (1);
+        if (!s->self->has_traced_process && s->wait_errno == ECHILD)
+            return (2);
+        errno = s->wait_errno;
+        ftrace_print_error_message_errno_and_die(s->self, "wait4(0)");
+    }
+    if (s->pid == 0)
+        return (1);
+    if (!sgne_do_loop_part2(s))
+        return (1);
+    return (0);
+}
+
 static struct ftrace_event_data *sgne_do_loop(sgne_state_t *s)
 {
-    while (true) {
-        if (s->pid < 0) {
-            if (s->wait_errno == EINTR)
-                break;
-            if (s->wait_no_hang)
-                break;
-            if (!s->self->has_traced_process && s->wait_errno == ECHILD)
-                return (NULL);
-            errno = s->wait_errno;
-            ftrace_print_error_message_errno_and_die(s->self, "wait4(0)");
+    while (true)
+        switch (sgne_do_loop_it(s)) {
+        case 1:
+            return (sgne_get_proc(s));
+        case 2:
+            return (NULL);
         }
-        if (s->pid == 0)
-            break;
-        if (!sgne_do_loop_part2(s))
-            break;
-    }
-    return (sgne_get_proc(s));
 }
 
 static struct ftrace_event_data *sgne_part2(sgne_state_t *s)

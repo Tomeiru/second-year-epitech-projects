@@ -31,22 +31,20 @@ static void wait_loop(struct ftrace *st, struct ftrace_process *self)
     int wait_status;
     unsigned event;
 
-    while (true) {
-        if (waitpid(self->pid, &wait_status, 0) < 0) {
-            if (errno == EINTR)
-                continue;
-            ftrace_print_error_message_errno(st, "waitpid(%u)", self->pid);
-            break;
-        }
-        if (!WIFSTOPPED(wait_status))
-            break;
-        signal = WSTOPSIG(wait_status);
-        event = (unsigned)wait_status >> 16;
-        if (event == PTRACE_EVENT_STOP || signal == SIGTRAP)
-            signal = 0;
-        ftrace_do_ptrace_restart(st, PTRACE_DETACH, self, signal);
-        break;
+    errno = 0;
+    while (waitpid(self->pid, &wait_status, 0) < 0 && errno == EINTR)
+        continue;
+    if (errno != 0 && errno != EINTR) {
+        ftrace_print_error_message_errno(st, "waitpid(%u)", self->pid);
+        return;
     }
+    if (!WIFSTOPPED(wait_status))
+            return;
+    signal = WSTOPSIG(wait_status);
+    event = (unsigned)wait_status >> 16;
+    if (event == PTRACE_EVENT_STOP || signal == SIGTRAP)
+        signal = 0;
+    ftrace_do_ptrace_restart(st, PTRACE_DETACH, self, signal);
 }
 
 static void spd_part2(struct ftrace *st, struct ftrace_process *self)

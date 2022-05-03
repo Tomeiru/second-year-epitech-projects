@@ -29,7 +29,7 @@ static inline struct MY_INTERNAL_TYPE_TOKEN *
 }
 
 // Creates a new vector from the given data (which has size items)
-MY_ATTR_WARN_UNUSED_RESULT MY_ATTR_ACCESS((read_only, 1, 2)) static inline
+MY_ATTR_WARN_UNUSED_RESULT static inline
     struct MY_INTERNAL_TYPE_TOKEN *
     MY_REM_SPACE_AFTER_TYPE_TOKEN _new_from_data
     (MY_CONST_VECTOR_TYPE *data,

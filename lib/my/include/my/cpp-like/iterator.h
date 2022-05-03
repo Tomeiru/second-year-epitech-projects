@@ -14,8 +14,7 @@
 #ifndef __cplusplus
 /// Ignore the C++ compatibility warning here, we aren't even enabling this
 /// in C++ (use std::size instead)
-    #define MY_ARRAY_SIZE(array)                               \
-        (__extension__({                                       \
+    #define MY_ARRAY_SIZE(array) (__extension__({ \
         size_t result;                                     \
         _Pragma("GCC diagnostic push");                    \
         _Pragma("GCC diagnostic ignored \"-Wc++-compat\"") \

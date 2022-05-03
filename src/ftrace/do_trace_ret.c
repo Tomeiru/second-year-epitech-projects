@@ -35,12 +35,12 @@ static struct ftrace_symbol *find_symbol(struct ftrace_process *proc,
     struct ftrace_symbol *result = NULL;
 
     for (size_t i = 0; i < proc->retrieved_symbols->size; ++i)
-        if (address > proc->retrieved_symbols->data[i].symbol.st_value &&
+        if ((address > proc->retrieved_symbols->data[i].symbol.st_value &&
             address < proc->retrieved_symbols->data[i].symbol.st_value +
-            proc->retrieved_symbols->data[i].symbol.st_size)
-            if (result == NULL || result->symbol.st_value <
-                proc->retrieved_symbols->data[i].symbol.st_value)
-                result = &proc->retrieved_symbols->data[i];
+            proc->retrieved_symbols->data[i].symbol.st_size) &&
+            (result == NULL || result->symbol.st_value <
+            proc->retrieved_symbols->data[i].symbol.st_value))
+            result = &proc->retrieved_symbols->data[i];
     return (result);
 }
 
