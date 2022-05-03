@@ -7,13 +7,12 @@
 
 #pragma once
 
+#include <cstddef>
+
 class IProcessCom {
     public:
         ~IProcessCom() = default;
 
-        virtual void send() = 0;
-        virtual void recv() = 0;
-
-    protected:
-    private:
+        virtual void send(void *data, std::size_t size) = 0;
+        virtual int recv(void *buf, std::size_t size) = 0;
 };

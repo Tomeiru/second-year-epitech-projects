@@ -2,17 +2,16 @@
 ** EPITECH PROJECT, 2022
 ** B-CCP-400-STG-4-1-theplazza-jeffrey.winkler
 ** File description:
-** IConditionVar
+** IThread
 */
 
 #pragma once
 
 namespace plazza {
-    class IConditionVar {
+    class IThread {
         public:
-            ~IConditionVar() = default;
+            ~IThread() = default;
 
-        protected:
-        private:
+            virtual void join() = 0;
     };
 }
