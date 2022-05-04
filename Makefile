@@ -11,7 +11,7 @@ BINARY_PATH	:=	$(shell stack path --local-install-root)
 
 all:
 	stack build
-	cp $(BINARY_PATH)/bin/$(NAME)-exe ./$(NAME)
+	cp "$(BINARY_PATH)/bin/$(NAME)-exe" ./$(NAME)
 
 clean:
 	stack clean
