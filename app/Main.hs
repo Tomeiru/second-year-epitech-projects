@@ -39,26 +39,32 @@ getOpts conf a = go conf a where
     go conf ("-f" : x : val) = go conf{path' = Just x} val
     go conf _ = Nothing
 
-createRandomMeanList :: [((Int, Int),(Int, Int, Int))] -> [Int] -> [(Int, Int, Int)]
+createRandomMeanList :: [((Int, Int),(Int, Int, Int))] -> [Int] ->
+    [(Int, Int, Int)]
 createRandomMeanList list [] = []
 createRandomMeanList list (actual:next) = ((snd (list !! actual)):(
     createRandomMeanList (take actual list ++ drop (1 + actual) list) next))
 
-initListOfListWithMeans :: [(Int, Int, Int)] -> [[((Int, Int),(Int, Int, Int))]]
-initListOfListWithMeans ((a,b,c):[]) = [[((0,0),(a,b,c))]]
-initListOfListWithMeans ((a,b,c):means) = ([((0,0),(a,b,c))]:initListOfListWithMeans means)
+initListOListWMeans :: [(Int, Int, Int)] -> [[((Int, Int),(Int, Int, Int))]]
+initListOListWMeans ((a,b,c):[]) = [[((0,0),(a,b,c))]]
+initListOListWMeans ((a,b,c):means) = ([((
+    0,0),(a,b,c))]:initListOListWMeans means)
 
-calculateDistance :: (Double, Double, Double) -> (Double, Double, Double) -> Double
-calculateDistance (r1, g1, b1) (r2, g2, b2) = sqrt (((r1 - r2) ** 2) + ((g1 - g2) ** 2) + ((b1 - b2) ** 2))
+calculateDistance :: (Double, Double, Double) -> (Double, Double, Double) ->
+    Double
+calculateDistance (r1, g1, b1) (r2, g2, b2) = sqrt (((r1 - r2) ** 2) + ((
+    g1 - g2) ** 2) + ((b1 - b2) ** 2))
 
-colorToDouble :: (Int, Int, Int) -> (Double, Double, Double)
-colorToDouble (a, b, c) = ((fromIntegral a), (fromIntegral b), (fromIntegral c))
+colToDouble :: (Int, Int, Int) -> (Double, Double, Double)
+colToDouble (a, b, c) = ((fromIntegral a), (fromIntegral b), (fromIntegral c))
 
-getClosest :: [(Int, Int, Int)] -> (Int, Int, Int) -> Int -> Int -> Double -> Int
+getClosest :: [(Int, Int, Int)] -> (Int, Int, Int) -> Int -> Int -> Double ->
+    Int
 getClosest [] _ index _ _ = index
-getClosest (mean:means) point index 0 value = getClosest means point 0 1 (calculateDistance (colorToDouble mean) (colorToDouble point))
+getClosest (mean:means) point index 0 value = getClosest means point 0 1 (
+    calculateDistance (colToDouble mean) (colToDouble point))
 getClosest (mean:means) point index actual value =
-    let distance = calculateDistance (colorToDouble mean) (colorToDouble point)
+    let distance = calculateDistance (colToDouble mean) (colToDouble point)
     in if (distance < value)
         then getClosest means point actual (actual + 1) distance
         else getClosest means point index (actual + 1) value
@@ -68,14 +74,19 @@ addAtBeginningOfListIndex index list element =
     let (a,b) = splitAt (index + 1) list
     in init a ++ [(element:last a)] ++ b
 
-generateRelatedPoints :: [(Int, Int, Int)] -> [((Int, Int),(Int, Int, Int))] -> [[((Int, Int),(Int, Int, Int))]] -> [[((Int, Int),(Int, Int, Int))]]
-generateRelatedPoints _ [] sortedPoints = sortedPoints
-generateRelatedPoints means (point:allPoints) sortedPoints =
+genRelPoints :: [(Int, Int, Int)] -> [((Int, Int),(Int, Int, Int))] ->
+    [[((Int, Int),(Int, Int, Int))]] -> [[((Int, Int),(Int, Int, Int))]]
+genRelPoints _ [] sortedPoints = sortedPoints
+genRelPoints means (point:allPoints) sortedPoints =
     let index = (getClosest means (snd point) (-1) 0 0)
-    in generateRelatedPoints means allPoints (addAtBeginningOfListIndex index sortedPoints point)
+    in genRelPoints means allPoints (addAtBeginningOfListIndex index
+    sortedPoints point)
 
 calculateIndMean :: ([Int],[Int],[Int]) -> (Int, Int, Int)
-calculateIndMean (a, b, c) = ((round ((fromIntegral (sum a)) / (fromIntegral (length a)))), (round ((fromIntegral (sum b)) / (fromIntegral (length b)))), (round ((fromIntegral (sum c)) / (fromIntegral (length c)))))
+calculateIndMean (a, b, c) = ((round ((fromIntegral (sum a)) / (
+    fromIntegral (length a)))), (round ((fromIntegral (sum b)) / (
+        fromIntegral (length b)))), (round ((fromIntegral (sum c)) / (
+            fromIntegral (length c)))))
 
 calculateNewMeans :: [[((Int, Int),(Int, Int, Int))]] -> [(Int, Int, Int)]
 calculateNewMeans [] = []
@@ -85,7 +96,7 @@ calculateNewMeans (actual:next) = let (a,b) = unzip actual
 isLastIt :: [(Int, Int, Int)] -> [(Int, Int, Int)] -> Double -> Bool
 isLastIt [] [] _ = True
 isLastIt (mean:means) (newMean:newMeans) limit =
-    let distance = calculateDistance (colorToDouble mean) (colorToDouble newMean)
+    let distance = calculateDistance (colToDouble mean) (colToDouble newMean)
     in if (distance <= limit)
         then isLastIt means newMeans limit
         else False
@@ -109,9 +120,10 @@ printResult [] [] = exitWith (ExitSuccess)
 printResult (result:results) (mean:means) = printCluster result mean >>
     printResult results means
 
-iteration :: [(Int, Int, Int)] -> [((Int, Int),(Int, Int, Int))] -> Double -> IO ()
+iteration :: [(Int, Int, Int)] -> [((Int, Int),(Int, Int, Int))] -> Double ->
+    IO ()
 iteration means allPoints limit =
-    let relatedPoints = generateRelatedPoints means allPoints (initListOfListWithMeans means)
+    let relatedPoints = genRelPoints means allPoints (initListOListWMeans means)
     in let newMeans = calculateNewMeans relatedPoints
     in let lastIt = isLastIt means newMeans limit
     in if (lastIt == True)
@@ -127,7 +139,8 @@ generateRandomIndexList max k = do
 
 compressor :: Conf -> [((Int, Int),(Int, Int, Int))] -> IO ()
 compressor conf list = do
-    randomIndexList <- generateRandomIndexList ((length list) - 1) (nbColor conf)
+    randomIndexList <- generateRandomIndexList ((length list) - 1) (
+        nbColor conf)
     iteration (createRandomMeanList list randomIndexList) list (limit conf)
 
 checkLineFromFile :: [String] -> Bool
@@ -152,13 +165,15 @@ lineToContent [first, second] = ((read first ::(Word, Word)), (
     read second :: (Word8, Word8, Word8)))
 lineToContent _ = ((0,0),(0,0,0))
 
-wordContentToInt :: ((Word, Word),(Word8, Word8, Word8)) -> ((Int, Int), (Int, Int, Int))
+wordContentToInt :: ((Word, Word),(Word8, Word8, Word8)) -> ((Int, Int), (
+    Int, Int, Int))
 wordContentToInt ((a, b),(c, d, e)) = ((fromIntegral a, fromIntegral b),(
     fromIntegral c, fromIntegral d, fromIntegral e))
 
 fileToContent :: [String] -> [((Int, Int),(Int, Int, Int))]
 fileToContent [] = []
-fileToContent (line:lines) = (wordContentToInt (lineToContent (words line)):fileToContent lines)
+fileToContent (line:lines) = (wordContentToInt (lineToContent (
+    words line)):fileToContent lines)
 
 checkFilePath :: Conf -> IO ()
 checkFilePath conf = do
