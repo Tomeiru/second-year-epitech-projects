@@ -34,9 +34,9 @@ validateConf _ = Nothing
 getOpts :: TempConf -> [String] -> Maybe TempConf
 getOpts conf a = go conf a where
     go conf [] = Just conf
-    go conf ("-n" : x : val) = go conf{nbColor' = readMaybe x :: Maybe Int} val
-    go conf ("-l" : x : val) = go conf{limit' = readMaybe x :: Maybe Double} val
-    go conf ("-f" : x : val) = go conf{path' = Just x} val
+    go conf ("-n":x:val) = go conf{nbColor' = readMaybe x :: Maybe Int} val
+    go conf ("-l":x:val) = go conf{limit' = readMaybe x :: Maybe Double} val
+    go conf ("-f":x:val) = go conf{path' = Just x} val
     go conf _ = Nothing
 
 createRandomMeanList :: [((Int, Int),(Int, Int, Int))] -> [Int] ->
@@ -45,10 +45,10 @@ createRandomMeanList list [] = []
 createRandomMeanList list (actual:next) = ((snd (list !! actual)):(
     createRandomMeanList (take actual list ++ drop (1 + actual) list) next))
 
-initListOListWMeans :: [(Int, Int, Int)] -> [[((Int, Int),(Int, Int, Int))]]
-initListOListWMeans ((a,b,c):[]) = [[((0,0),(a,b,c))]]
-initListOListWMeans ((a,b,c):means) = ([((
-    0,0),(a,b,c))]:initListOListWMeans means)
+initListOListMeans :: [(Int, Int, Int)] -> [[((Int, Int),(Int, Int, Int))]]
+initListOListMeans ((a,b,c):[]) = [[((0,0),(a,b,c))]]
+initListOListMeans ((a,b,c):means) = ([((
+    0,0),(a,b,c))]:initListOListMeans means)
 
 calculateDistance :: (Double, Double, Double) -> (Double, Double, Double) ->
     Double
@@ -123,7 +123,7 @@ printResult (result:results) (mean:means) = printCluster result mean >>
 iteration :: [(Int, Int, Int)] -> [((Int, Int),(Int, Int, Int))] -> Double ->
     IO ()
 iteration means allPoints limit =
-    let relatedPoints = genRelPoints means allPoints (initListOListWMeans means)
+    let relatedPoints = genRelPoints means allPoints (initListOListMeans means)
     in let newMeans = calculateNewMeans relatedPoints
     in let lastIt = isLastIt means newMeans limit
     in if (lastIt == True)
