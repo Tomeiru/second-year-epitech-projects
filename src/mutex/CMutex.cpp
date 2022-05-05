@@ -6,7 +6,7 @@
 */
 
 #include <stdexcept>
-#include "mutex/CMutex.hpp"
+#include "CMutex.hpp"
 
 plazza::CMutex::CMutex()
 {

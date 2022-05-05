@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <stdexcept>
-#include "com/UnixSocket.hpp"
+#include "UnixSocket.hpp"
 
 plazza::UnixSocket::UnixSocket()
 {
