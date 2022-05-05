@@ -103,10 +103,10 @@ def start_program(neutrinos)
     neutrinos.set_actual(STDIN.gets.chop);
     neutrinos.calc_in_order;
     puts("    Number of values:   #{neutrinos.get_no_values}");
-    puts("    Standard deviation: #{sprintf('%.2f', neutrinos.get_std_dev.round(2))}");
-    puts("    Arithmetic mean:    #{sprintf('%.2f', neutrinos.get_arith_mean.round(2))}");
-    puts("    Root mean square:   #{sprintf('%.2f', neutrinos.get_rms.round(2))}")
-    puts("    Harmonic mean:      #{sprintf('%.2f', neutrinos.get_har_mean.round(2))}")
+    puts("    Standard deviation: #{sprintf('%.2f', neutrinos.get_std_dev)}");
+    puts("    Arithmetic mean:    #{sprintf('%.2f', neutrinos.get_arith_mean)}");
+    puts("    Root mean square:   #{sprintf('%.2f', neutrinos.get_rms)}")
+    puts("    Harmonic mean:      #{sprintf('%.2f', neutrinos.get_har_mean)}")
     puts("");
     start_program(neutrinos);
 end
