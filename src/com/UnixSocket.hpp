@@ -8,7 +8,7 @@
 #pragma once
 
 #include <aio.h>
-#include "com/IProcessCom.hpp"
+#include "IProcessCom.hpp"
 
 namespace plazza {
     class UnixSocket : public IProcessCom {

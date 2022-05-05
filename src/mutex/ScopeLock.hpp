@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "mutex/IMutex.hpp"
+#include "IMutex.hpp"
 
 namespace plazza {
     class ScopeLock {

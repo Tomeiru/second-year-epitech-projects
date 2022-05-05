@@ -8,7 +8,7 @@
 #pragma once
 
 #include <pthread.h>
-#include "thread/IThread.hpp"
+#include "IThread.hpp"
 
 namespace plazza {
     using CThreadFct = void *(*)(void*);

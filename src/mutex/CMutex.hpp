@@ -8,7 +8,7 @@
 #pragma once
 
 #include <pthread.h>
-#include "mutex/IMutex.hpp"
+#include "IMutex.hpp"
 
 namespace plazza {
     class CMutex {

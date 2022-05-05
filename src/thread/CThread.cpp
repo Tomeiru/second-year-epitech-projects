@@ -6,7 +6,7 @@
 */
 
 #include <stdexcept>
-#include "thread/CThread.hpp"
+#include "CThread.hpp"
 
 plazza::CThread::CThread(CThreadFct fct, void *arg)
 {

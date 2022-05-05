@@ -8,7 +8,7 @@
 #pragma once
 
 #include <pthread.h>
-#include "cond/ICondVar.hpp"
+#include "ICondVar.hpp"
 
 namespace plazza {
     class CCondVar : public ICondVar {
