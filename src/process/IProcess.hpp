@@ -10,10 +10,16 @@
 #include "IProcessCom.hpp"
 
 namespace plazza {
-    class ForkException {};
-
     class IProcess {
         public:
+            using ProcessStartFct = void (*)(IProcessCom &com, void *args);
+
+            typedef enum ProcessType_e {
+                UNDEFINED,
+                PARENT,
+                CHILD,
+            } ProcessType;
+
             ~IProcess() = default;
 
             virtual const IProcessCom &getCom() = 0;
