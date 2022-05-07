@@ -10,7 +10,8 @@
 
 const char *ftrace_translate_symbol_name(const char *name)
 {
-    if (strcmp(name, "__printf") == 0)
+    if (strcmp(name, "__printf") == 0 ||
+        strcmp(name, "_IO_printf") == 0)
         return ("printf");
     return (name);
 }

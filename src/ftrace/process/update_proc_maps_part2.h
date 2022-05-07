@@ -49,6 +49,20 @@ static void do_loop(fpupm_state_t *s)
     fclose(s->file);
 }
 
+static void do_one_entry_loop_it_part2(fpupm_state_t *s,
+    struct ftrace_mmap_entry *entry, GElf_Phdr *symbol_phdr)
+{
+    s->new_symbol.symbol.st_value += entry->address_start -
+        (symbol_phdr != NULL ? symbol_phdr->p_vaddr - symbol_phdr->p_offset :
+        0) - entry->mmap_offset;
+    if (s->new_symbol.symbol.st_value < entry->address_start ||
+        s->new_symbol.symbol.st_value > entry->address_end)
+        return;
+    my_ftrace_symbol_vector_append_single(s->self->retrieved_symbols,
+        s->new_symbol);
+    s->new_symbol.name = NULL;
+}
+
 static void do_one_entry_loop_it(fpupm_state_t *s,
     struct ftrace_mmap_entry *entry, size_t i)
 {
@@ -64,13 +78,10 @@ static void do_one_entry_loop_it(fpupm_state_t *s,
     for (size_t i = 0; i < s->program_header_count; ++i)
         if (s->program_headers[i].p_vaddr < s->new_symbol.symbol.st_value &&
             s->program_headers[i].p_vaddr + s->program_headers[i].p_memsz >
-            s->new_symbol.symbol.st_value)
+            s->new_symbol.symbol.st_value && s->program_headers[i].p_type ==
+            PT_LOAD)
             symbol_phdr = &s->program_headers[i];
-    s->new_symbol.symbol.st_value += entry->address_start -
-        (symbol_phdr != NULL ? symbol_phdr->p_vaddr : entry->mmap_offset);
-    my_ftrace_symbol_vector_append_single(s->self->retrieved_symbols,
-        s->new_symbol);
-    s->new_symbol.name = NULL;
+    do_one_entry_loop_it_part2(s, entry, symbol_phdr);
 }
 
 static void do_one_entry_part3(fpupm_state_t *s,
