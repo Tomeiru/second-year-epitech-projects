@@ -5,8 +5,7 @@
 ** Regina
 */
 
-#ifndef REGINA_HPP_
-#define REGINA_HPP_
+#pragma once
 
 #include "APizza.hpp"
 
@@ -20,5 +19,3 @@ namespace plazza {
         private:
     };
 }
-
-#endif /* !REGINA_HPP_ */

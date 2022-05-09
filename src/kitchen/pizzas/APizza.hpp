@@ -5,8 +5,7 @@
 ** APizza
 */
 
-#ifndef APIZZA_HPP_
-#define APIZZA_HPP_
+#pragma once
 
 #include "IPizza.hpp"
 #include <string>
@@ -40,5 +39,3 @@ namespace plazza {
         private:
     };
 }
-
-#endif /* !APIZZA_HPP_ */

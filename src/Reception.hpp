@@ -5,8 +5,7 @@
 ** Reception
 */
 
-#ifndef RECEPTION_HPP_
-#define RECEPTION_HPP_
+#pragma once
 
 #include <iostream>
 #include <exception>
@@ -33,5 +32,3 @@ class Reception {
         std::vector<std::unique_ptr<plazza::IPizza>> _order;
     private:
 };
-
-#endif /* !RECEPTION_HPP_ */

@@ -5,8 +5,7 @@
 ** Margarita
 */
 
-#ifndef MARGARITA_HPP_
-#define MARGARITA_HPP_
+#pragma once
 
 #include "APizza.hpp"
 
@@ -19,5 +18,3 @@ namespace plazza {
         private:
     };
 }
-
-#endif /* !MARGARITA_HPP_ */

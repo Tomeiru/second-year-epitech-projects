@@ -5,8 +5,7 @@
 ** Americana
 */
 
-#ifndef AMERICANA_HPP_
-#define AMERICANA_HPP_
+#pragma once
 
 #include "APizza.hpp"
 
@@ -19,5 +18,3 @@ namespace plazza {
         private:
     };
 }
-
-#endif /* !AMERICANA_HPP_ */

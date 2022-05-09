@@ -5,8 +5,7 @@
 ** Fantasia
 */
 
-#ifndef FANTASIA_HPP_
-#define FANTASIA_HPP_
+#pragma once
 
 #include "APizza.hpp"
 
@@ -19,5 +18,3 @@ namespace plazza {
         private:
     };
 }
-
-#endif /* !FANTASIA_HPP_ */
