@@ -8,11 +8,19 @@
 #pragma once
 
 #include <cstddef>
+#include "../process/ProcessType.hpp"
 
-class IProcessCom {
-    public:
-        ~IProcessCom() = default;
+namespace plazza {
+    class ProcessComSideUndef {};
+    class ProcessComSideAlreadySet {};
 
-        virtual void send(void *data, std::size_t size) = 0;
-        virtual int recv(void *buf, std::size_t size) = 0;
-};
+    class IProcessCom {
+        public:
+            ~IProcessCom() = default;
+
+            virtual void send(void *data, std::size_t size) = 0;
+            virtual int recv(void *buf, std::size_t size) = 0;
+
+            virtual void setComSide(ProcessType type) = 0;
+    };
+}

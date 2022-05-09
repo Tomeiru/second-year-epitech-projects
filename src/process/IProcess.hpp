@@ -7,15 +7,15 @@
 
 #pragma once
 
-#include "IProcessCom.hpp"
+#include "../com/IProcessCom.hpp"
 
 namespace plazza {
-    class ForkException {};
-
     class IProcess {
         public:
+            using ProcessStartFct = void (*)(IProcessCom &com, void *args);
+
             ~IProcess() = default;
 
-            virtual const IProcessCom &getCom() = 0;
+            virtual IProcessCom &getCom() = 0;
     };
 }

@@ -2,24 +2,26 @@
 ** EPITECH PROJECT, 2022
 ** B-CCP-400-STG-4-1-theplazza-jeffrey.winkler
 ** File description:
-** UnixSocket
+** Pipes
 */
 
 #pragma once
 
-#include <aio.h>
 #include "IProcessCom.hpp"
 
 namespace plazza {
-    class UnixSocket : public IProcessCom {
-        int _socket = -1;
-        pid_t target = 0;
+    class Pipes : public IProcessCom {
+        int _parentToChild[2];
+        int _childToParent[2];
+        ProcessType _side = ProcessType::UNDEFINED;
 
         public:
-            UnixSocket();
-            ~UnixSocket();
+            Pipes();
+            ~Pipes();
 
             void send(void *data, std::size_t size);
             int recv(void *buf, std::size_t size);
+
+            void setComSide(ProcessType type);
     };
 }

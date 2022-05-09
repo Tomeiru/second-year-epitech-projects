@@ -5,7 +5,7 @@ project(plazza CXX)
 add_executable(plazza
     "src/main.cpp"
     "src/Reception.cpp"
-#    "src/com/UnixSocket.cpp"
+    "src/com/NamedPipes.cpp"
 #    "src/cond/CCondVar.cpp"
 #    "src/kitchen/Cook.cpp"
 #    "src/kitchen/Kitchen.cpp"
@@ -15,8 +15,9 @@ add_executable(plazza
     "src/kitchen/pizzas/Margarita.cpp"
     "src/kitchen/pizzas/Regina.cpp"
 #    "src/kitchen/pizzas/Serializer.cpp"
-#    "src/mutex/CMutex.cpp"
-#    "src/thread/CThread.cpp"
+    "src/mutex/CMutex.cpp"
+    "src/process/CProcess.cpp"
+    "src/thread/CThread.cpp"
 #    "src/thread/ThreadPool.cpp"
 )
 
