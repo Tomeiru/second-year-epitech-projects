@@ -4,6 +4,20 @@ project(plazza CXX)
 
 add_executable(plazza
     "src/main.cpp"
+    "src/Reception.cpp"
+#    "src/com/UnixSocket.cpp"
+#    "src/cond/CCondVar.cpp"
+#    "src/kitchen/Cook.cpp"
+#    "src/kitchen/Kitchen.cpp"
+    "src/kitchen/pizzas/Americana.cpp"
+    "src/kitchen/pizzas/APizza.cpp"
+    "src/kitchen/pizzas/Fantasia.cpp"
+    "src/kitchen/pizzas/Margarita.cpp"
+    "src/kitchen/pizzas/Regina.cpp"
+#    "src/kitchen/pizzas/Serializer.cpp"
+#    "src/mutex/CMutex.cpp"
+#    "src/thread/CThread.cpp"
+#    "src/thread/ThreadPool.cpp"
 )
 
 target_include_directories(plazza PRIVATE "${CMAKE_SOURCE_DIR}/include")
