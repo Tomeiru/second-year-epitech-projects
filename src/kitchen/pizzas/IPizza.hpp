@@ -8,6 +8,8 @@
 #pragma once
 
 #include <vector>
+#include <ostream>
+#include <memory>
 
 namespace plazza {
     class IPizza {
@@ -30,16 +32,30 @@ namespace plazza {
                 TOMATO,
                 GRUYERE,
                 HAM,
+                MUSHROOMS,
                 STEAK,
-                GOAT_CHEESE,
                 EGGPLANT,
+                GOAT_CHEESE,
                 CHIEF_LOVE,
             };
             ~IPizza() = default;
 
-            virtual PizzaType getType() = 0;
-            virtual PizzaSize getSize() = 0;
-            virtual const std::vector<Ingredient> &getIngrediants() = 0;
-            virtual float getCookTime() = 0;
+            virtual PizzaType getType() const = 0;
+            virtual std::string getStringType() const = 0;
+            virtual PizzaSize getSize() const = 0;
+            virtual std::string getStringSize() const = 0;
+            virtual const std::vector<Ingredient> &getIngredients() const = 0;
+            virtual std::string getIngredientList() const = 0;
+            virtual float getCookTime() const= 0;
     };
+}
+
+inline std::ostream &operator<<(std::ostream &os, const plazza::IPizza &pizza) {
+    os << "The pizza is a " << (pizza.getStringType()) << " in size " << (pizza.getStringSize()) << ". The cook time without the multiplier is " << (pizza.getCookTime()) << " seconds." << std::endl << "The ingredient list is as follow: " << std::endl << pizza.getIngredientList();
+    return os;
+}
+
+inline std::ostream &operator<<(std::ostream &os, const std::unique_ptr<plazza::IPizza> &pizza) {
+    os << "The pizza is a " << (pizza->getStringType()) << " in size " << (pizza->getStringSize()) << ". The cook time without the multiplier is " << (pizza->getCookTime()) << " seconds." << std::endl << "The ingredient list is as follow: " << std::endl << pizza->getIngredientList();
+    return os;
 }
