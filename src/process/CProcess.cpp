@@ -29,3 +29,8 @@ plazza::CProcess::~CProcess()
 {
     waitpid(_pid, nullptr, 0);
 }
+
+plazza::IProcessCom &plazza::CProcess::getCom()
+{
+    return _com;
+}

@@ -9,16 +9,18 @@
 
 #include <aio.h>
 #include "IProcess.hpp"
-#include "Pipes.hpp"
+#include "../com/NamedPipes.hpp"
 
 namespace plazza {
     class CProcess : public IProcess {
         pid_t _pid = 0;
-        Pipes _com;
+        NamedPipes _com;
 
         public:
             CProcess(ProcessStartFct fct, void *args);
             ~CProcess();
+
+            IProcessCom &getCom();
 
         protected:
         private:
