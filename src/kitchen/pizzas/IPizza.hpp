@@ -40,12 +40,17 @@ namespace plazza {
             };
             ~IPizza() = default;
 
+            virtual uint64_t getId() const = 0;
+
             virtual PizzaType getType() const = 0;
             virtual std::string getStringType() const = 0;
+
             virtual PizzaSize getSize() const = 0;
             virtual std::string getStringSize() const = 0;
+
             virtual const std::vector<Ingredient> &getIngredients() const = 0;
             virtual std::string getIngredientList() const = 0;
+
             virtual float getCookTime() const= 0;
     };
 }

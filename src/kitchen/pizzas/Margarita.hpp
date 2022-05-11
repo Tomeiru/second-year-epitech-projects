@@ -12,8 +12,14 @@
 namespace plazza {
     class Margarita : public APizza {
         public:
-            Margarita(PizzaSize size);
-            ~Margarita();
+            Margarita(uint64_t id, PizzaSize size) : APizza(id, size) {
+                _type = MARGARITA;
+                _cookTime = 1;
+                _ingredients.push_back(DOE);
+                _ingredients.push_back(TOMATO);
+                _ingredients.push_back(GRUYERE);
+            }
+            ~Margarita() = default;
         protected:
         private:
     };

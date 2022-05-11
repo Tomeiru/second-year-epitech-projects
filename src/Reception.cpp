@@ -44,6 +44,7 @@ std::string Reception::removeSpacesBeforeAndAfter(std::string string)
 
 void Reception::handleOrders()
 {
+    static uint64_t pizzaId = 0;
     std::cout << _input << std::endl;
     std::string line;
     std::stringstream ss(_input);
@@ -66,7 +67,7 @@ void Reception::handleOrders()
                 throw std::exception();
         }
         for (int i = 0; i < std::stol(match[6].str()); i++)
-            _order.push_back(plazza::APizza::pizzaFactory(match[1].str(), match[3].str()));
+            _order.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
         std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
     for (unsigned int i = 0; i < _order.size(); i++)

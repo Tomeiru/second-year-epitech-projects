@@ -6,13 +6,19 @@
 */
 
 #include "Serializer.hpp"
+#include "APizza.hpp"
 
 plazza::Serializer::PizzaSerialized plazza::Serializer::serialize(IPizza &pizza)
 {
-    (void)pizza;
+    PizzaSerialized serialized;
+    serialized.id = pizza.getId();
+    serialized.type = pizza.getType();
+    serialized.size = pizza.getSize();
+
+    return serialized;
 }
 
 std::unique_ptr<plazza::IPizza> plazza::Serializer::deserialize(PizzaSerialized &pizza)
 {
-    (void)pizza;
+    return APizza::pizzaFactory(pizza.id, pizza.type, pizza.size);
 }

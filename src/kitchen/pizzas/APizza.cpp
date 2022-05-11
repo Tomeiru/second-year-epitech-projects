@@ -11,13 +11,13 @@
 #include "Americana.hpp"
 #include "Fantasia.hpp"
 
-plazza::APizza::APizza(plazza::IPizza::PizzaSize size)
+plazza::APizza::APizza(uint64_t id, plazza::IPizza::PizzaSize size)
+    : _id(id), _type(PizzaType::MARGARITA), _size(size), _cookTime(1)
 {
+    _id = id;
     _type = MARGARITA;
     _size = size;
     _cookTime = 1;
-    _ingredients.push_back(DOE);
-    _ingredients.push_back(TOMATO);
 }
 
 plazza::APizza::~APizza()
@@ -149,19 +149,25 @@ std::string plazza::APizza::ingredientToString(plazza::IPizza::Ingredient ingred
     throw std::exception();
 }
 
-std::unique_ptr<plazza::IPizza> plazza::APizza::pizzaFactory(std::string typeStr, std::string sizeStr)
+std::unique_ptr<plazza::IPizza> plazza::APizza::pizzaFactory(uint64_t id, PizzaType type, PizzaSize size)
+{
+    static std::map<PizzaType, std::function<std::unique_ptr<IPizza>(uint64_t, PizzaSize)>> factoryList {
+        std::make_pair(REGINA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);}),
+        std::make_pair(MARGARITA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Margarita>(id, sizeArg);}),
+        std::make_pair(AMERICANA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);}),
+        std::make_pair(FANTASIA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);})
+    };
+    std::map<PizzaType, std::function<std::unique_ptr<IPizza>(uint64_t, PizzaSize)>>::iterator it = factoryList.find(type);
+
+    if (it != factoryList.end())
+        return ((it->second)(id, size));
+    throw std::exception();
+}
+
+std::unique_ptr<plazza::IPizza> plazza::APizza::pizzaFactory(uint64_t id, std::string typeStr, std::string sizeStr)
 {
     PizzaType type = plazza::APizza::stringToPizzaType(typeStr);
     PizzaSize size  = plazza::APizza::stringToPizzaSize(sizeStr);
-    static std::map<plazza::IPizza::PizzaType, std::function<std::unique_ptr<plazza::IPizza>(plazza::IPizza::PizzaSize)>> factoryList {
-        std::make_pair(plazza::IPizza::REGINA, [](plazza::IPizza::PizzaSize sizeArg) {return std::make_unique<plazza::Regina>(sizeArg);}),
-        std::make_pair(plazza::IPizza::MARGARITA, [](plazza::IPizza::PizzaSize sizeArg) {return std::make_unique<plazza::Margarita>(sizeArg);}),
-        std::make_pair(plazza::IPizza::AMERICANA, [](plazza::IPizza::PizzaSize sizeArg) {return std::make_unique<plazza::Regina>(sizeArg);}),
-        std::make_pair(plazza::IPizza::FANTASIA, [](plazza::IPizza::PizzaSize sizeArg) {return std::make_unique<plazza::Regina>(sizeArg);})
-    };
-    std::map<plazza::IPizza::PizzaType, std::function<std::unique_ptr<plazza::IPizza>(plazza::IPizza::PizzaSize)>>::iterator it = factoryList.find(type);
 
-    if (it != factoryList.end())
-        return ((it->second)(size));
-    throw std::exception();
+    return pizzaFactory(id, type, size);
 }
