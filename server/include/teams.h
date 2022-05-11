@@ -21,22 +21,25 @@
     #include <unistd.h>
     #include "chained_list.h"
 
+typedef void (*command_execute_fct_t)(client_t *client, void *data);
+
 typedef struct  server_s {
     int fd;
     struct sockaddr_in socket;
-    char *actual_path;
-    char *allowed_path;
 } server_t;
+
+typedef struct command_s {
+    int id;
+    int size_args;
+    command_execute_fct_t fct;
+} command_t;
 
 typedef struct client_s {
     int fd;
     struct sockaddr_in socket;
     char *ip;
     int port;
-    char *user;
-    char *password;
-    char *request;
-    int connected;
+    command_t *request;
 } client_t;
 
     int my_teams(int ac, char **av);
