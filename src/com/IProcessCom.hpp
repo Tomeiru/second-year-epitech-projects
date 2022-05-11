@@ -18,8 +18,11 @@ namespace plazza {
         public:
             ~IProcessCom() = default;
 
-            virtual void send(void *data, std::size_t size) = 0;
+            // Return 0 if nothing to read
+            // Return -1 if error occured
             virtual int recv(void *buf, std::size_t size) = 0;
+            virtual void send(void *data, std::size_t size) = 0;
+            virtual bool canRead() = 0;
 
             virtual void setComSide(ProcessType type) = 0;
     };

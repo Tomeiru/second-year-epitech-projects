@@ -27,6 +27,10 @@ plazza::CProcess::CProcess(ProcessStartFct fct, void *args) : _com{}
 
 plazza::CProcess::~CProcess()
 {
+}
+
+void plazza::CProcess::close()
+{
     waitpid(_pid, nullptr, 0);
 }
 

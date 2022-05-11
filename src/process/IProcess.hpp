@@ -16,6 +16,8 @@ namespace plazza {
 
             ~IProcess() = default;
 
+            virtual void close() = 0;
+
             virtual IProcessCom &getCom() = 0;
     };
 }

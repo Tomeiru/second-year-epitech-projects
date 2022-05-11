@@ -20,6 +20,8 @@ namespace plazza {
             CProcess(ProcessStartFct fct, void *args);
             ~CProcess();
 
+            void close();
+
             IProcessCom &getCom();
 
         protected:

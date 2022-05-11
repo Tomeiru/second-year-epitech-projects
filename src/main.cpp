@@ -5,6 +5,8 @@
 ** main
 */
 
+#include "process/CProcess.hpp"
+#include "kitchen/Kitchen.hpp"
 #include "Reception.hpp"
 
 int main(int ac, char **av)

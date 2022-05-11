@@ -15,8 +15,8 @@ namespace plazza {
         int _id = -1;
         int _readFd = -1;
         int _writeFd = -1;
-        std::ostringstream _ptcPath;
-        std::ostringstream _ctpPath;
+        std::string _ptcPath;
+        std::string _ctpPath;
         ProcessType _side = ProcessType::UNDEFINED;
 
         public:
@@ -25,6 +25,7 @@ namespace plazza {
 
             void send(void *data, std::size_t size);
             int recv(void *buf, std::size_t size);
+            bool canRead();
 
             void setComSide(ProcessType type);
     };

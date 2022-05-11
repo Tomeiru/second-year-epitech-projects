@@ -11,18 +11,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <poll.h>
 #include "NamedPipes.hpp"
 
 plazza::NamedPipes::NamedPipes()
 {
     static int id = 0;
+    std::ostringstream ptcPathBuf;
+    std::ostringstream ctpPathBuf;
 
     _id = id++;
-    _ptcPath << "/tmp/kitchen" << id << "_ptc";
-    _ctpPath << "/tmp/kitchen" << id << "_ctp";
-    if (mkfifo(_ptcPath.str().c_str(), 0666) == -1 && errno != EEXIST)
+    ptcPathBuf << "/tmp/kitchen" << id << "_ptc";
+    ctpPathBuf << "/tmp/kitchen" << id << "_ctp";
+    _ptcPath = ptcPathBuf.str();
+    _ctpPath = ctpPathBuf.str();
+    if (mkfifo(_ptcPath.c_str(), 0666) == -1 && errno != EEXIST)
         throw std::runtime_error("Could not create FIFO files");
-    if (mkfifo(_ctpPath.str().c_str(), 0666) == -1 && errno != EEXIST)
+    if (mkfifo(_ctpPath.c_str(), 0666) == -1 && errno != EEXIST)
         throw std::runtime_error("Could not create FIFO files");
 }
 
@@ -32,6 +37,8 @@ plazza::NamedPipes::~NamedPipes()
         close(_readFd);
     if (_writeFd != -1)
         close(_writeFd);
+    remove(_ptcPath.c_str());
+    remove(_ctpPath.c_str());
 }
 
 void plazza::NamedPipes::send(void *data, std::size_t size)
@@ -43,9 +50,21 @@ void plazza::NamedPipes::send(void *data, std::size_t size)
 
 int plazza::NamedPipes::recv(void *buf, std::size_t size)
 {
+    int bytes_read;
+
     if (_side == ProcessType::UNDEFINED)
         throw ProcessComSideUndef();
-    return read(_readFd, buf, size);
+    bytes_read = read(_readFd, buf, size);
+    if (bytes_read == -1 && errno == EAGAIN)
+        return 0;
+    return bytes_read;
+}
+
+bool plazza::NamedPipes::canRead()
+{
+    struct pollfd data = { .fd = _readFd, .events = POLLIN, .revents = 0};
+
+    return poll(&data, 1, 1) == 1;
 }
 
 // NOTE : order of opening is important
@@ -58,10 +77,10 @@ void plazza::NamedPipes::setComSide(ProcessType side)
         throw ProcessComSideUndef();
     _side = side;
     if (_side == ProcessType::PARENT) {
-        _readFd = open(_ctpPath.str().c_str(), O_RDONLY);
-        _writeFd = open(_ptcPath.str().c_str(), O_WRONLY);
+        _readFd = open(_ctpPath.c_str(), O_RDONLY);
+        _writeFd = open(_ptcPath.c_str(), O_WRONLY);
     } else if (_side == ProcessType::CHILD) {
-        _writeFd = open(_ctpPath.str().c_str(), O_WRONLY);
-        _readFd = open(_ptcPath.str().c_str(), O_RDONLY);
+        _writeFd = open(_ctpPath.c_str(), O_WRONLY);
+        _readFd = open(_ptcPath.c_str(), O_RDONLY);
     }
 }

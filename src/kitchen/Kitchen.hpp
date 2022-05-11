@@ -7,17 +7,27 @@
 
 #pragma once
 
-#include "Cook.hpp"
-#include <deque>
-#include <iostream>
+#include "../com/IProcessCom.hpp"
+#include "../com/ComProtocol.hpp"
+#include "./pizzas/IPizza.hpp"
+#include "./pizzas/Serializer.hpp"
 
 namespace plazza {
+    void startKitchen(IProcessCom &com, void *args);
+
     class Kitchen {
-        unsigned int _cookNbr;
-        std::deque<Cook> _cooks;
+        IProcessCom &_com;
+        KitchenConfig &_config;
+        bool _open = true;
+
+        using Serialized = Serializer::PizzaSerialized;
 
         public:
-            Kitchen(unsigned int cookNbr);
+            Kitchen(IProcessCom &com, KitchenConfig *config);
             ~Kitchen();
+            void run();
+            void handleCom(ComType type);
+            void cookNewPizza();
+            void sendStatus();
     };
 }
