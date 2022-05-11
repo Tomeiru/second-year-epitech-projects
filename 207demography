@@ -239,28 +239,29 @@ function lin_fit(x, y, first)
     if (first == 1) then
         print("Fit1")
         print(string.format("    Y = %.2f X - %.2f", result[2][1] / 1000000, result[1][1] / 1000000 * -1))
-        local a = result[2][1] / 1000000;
-        local b = result[1][1] / 1000000;
+        local a = result[2][1];
+        local b = result[1][1];
         local MSE = 0.0
         for i = 1, #x do
-            MSE = MSE + (((a * x[i] + b - y[i]) ^ 2) / i)
+            MSE = MSE + (((x[i] * a + b) - y[i]) ^ 2) / #x
         end
-        print(string.format("    Root-mean-square deviation: %.2f", MSE))
+        print(string.format("    Root-mean-square deviation: %.2f", math.sqrt(MSE) / 1000000))
         local value = a * 2050 + b
-        print(string.format("    Population in 2050: %.2f", value))
+        print(string.format("    Population in 2050: %.2f", value / 1000000))
         return (0)
     end
     print("Fit2")
     print(string.format("    X = %.2f Y + %.2f", result[2][1] * 1000000, result[1][1]))
-    local a = result[2][1] * 1000000
+    local a = result[2][1]
     local b = result[1][1]
     local MSE = 0.0
     for i = 1, #x do
-        MSE = MSE + (((a * x[i] + b - y[i]) ^ 2) / i)
+            MSE = MSE + ((((y[i] - b) / a) - x[i]) ^ 2) / 58
+            --MSE = MSE + ((((y[i] - b) / a) - x[i]) ^ 2) / 58
     end
-    print(string.format("    Root-mean-square deviation: %.2f", MSE))
+    print(string.format("    Root-mean-square deviation: %.2f", math.sqrt(MSE) / 1000000))
     local value = (2050 - b) / a
-    print(string.format("    Population in 2050: %.2f", value))
+    print(string.format("    Population in 2050: %.2f", value / 1000000))
 end
 
 function create_x(csv_lines)
@@ -285,6 +286,56 @@ function create_y(csv_lines)
     return y;
 end
 
+function summarize(list)
+    local sum = 0.0;
+
+    for i = 1, #list do
+        sum = sum + list[i]
+    end
+    sum = sum / #list
+    return (sum)
+end
+
+function minus_sum(list, sum)
+    local ret = {}
+
+    for i = 1, #list do
+        ret[i] = list[i] - sum
+    end
+    return (ret)
+end
+
+function calc_sum(x_minus_sum, y_minus_sum)
+    local value = 0.0;
+
+    for i = 1, #x_minus_sum do
+        value = value + (x_minus_sum[i] * y_minus_sum[i])
+    end
+    return (value)
+end
+
+function square_sum(minus_sum)
+    local value = 0.0
+
+    for i = 1, #minus_sum do
+        value = value + (minus_sum[i] ^ 2)
+    end
+    return (value)
+end
+
+function correlation(x, y)
+    local sum_x = summarize(x)
+    local sum_y = summarize(y)
+    local x_minus_sum = minus_sum(x, sum_x)
+    local y_minus_sum = minus_sum(y, sum_y)
+    local top = calc_sum(x_minus_sum, y_minus_sum)
+    local x_square_sum = square_sum(x_minus_sum)
+    local y_square_sum = square_sum(y_minus_sum)
+    local bottom = math.sqrt(x_square_sum * y_square_sum)
+    local final = top/bottom
+    print(string.format("Correlation: %.4f", final))
+end
+
 function main(csv_lines)
     local x = create_x(csv_lines)
     local y = create_y(csv_lines)
@@ -292,6 +343,7 @@ function main(csv_lines)
     print_first_line(csv_lines)
     lin_fit(x, y, 1)
     lin_fit(y, x, 0)
+    correlation(x, y)
 end
 
 local csv_lines = before_main()
