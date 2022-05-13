@@ -15,10 +15,11 @@
 #include <regex>
 #include <string>
 #include "kitchen/pizzas/APizza.hpp"
+#include "thread/CThread.hpp"
 
 class Reception {
     public:
-        Reception();
+        Reception(std::vector<std::unique_ptr<plazza::IPizza>> *queue);
         ~Reception();
         void console();
         void getInput();
@@ -26,9 +27,11 @@ class Reception {
         bool checkEmpty();
         std::string removeSpacesBeforeAndAfter(std::string);
         void handleOrders();
+        void *handleReceivedPizza(void *arg);
     protected:
         std::string _input;
         std::string _delims;
         std::vector<std::unique_ptr<plazza::IPizza>> _order;
+        std::vector<std::unique_ptr<plazza::IPizza>> *_queue;
     private:
 };

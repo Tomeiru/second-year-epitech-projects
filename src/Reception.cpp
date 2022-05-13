@@ -7,10 +7,11 @@
 
 #include "Reception.hpp"
 
-Reception::Reception()
+Reception::Reception(std::vector<std::unique_ptr<plazza::IPizza>> *queue)
 {
     _input = "";
     _delims = " \t";
+    _queue = queue;
 }
 
 Reception::~Reception()
@@ -70,8 +71,10 @@ void Reception::handleOrders()
             _order.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
         std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
-    for (unsigned int i = 0; i < _order.size(); i++)
+    for (unsigned int i = 0; i < _order.size(); i++) {
         std::cout << _order[i] << std::endl;
+        _queue->push_back(std::move(_order[i]));
+    }
 }
 
 void Reception::handleInput()
@@ -104,4 +107,9 @@ void Reception::console()
         _input = "";
         _order.clear();
     }
+}
+
+void *Reception::handleReceivedPizza(void *arg)
+{
+    return (nullptr);
 }
