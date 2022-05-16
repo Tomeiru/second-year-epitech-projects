@@ -7,10 +7,9 @@
 
 #pragma once
 
+#include <uuid/uuid.h>
 #include "buffer_sizes.h"
 #include "chained_list.h"
-
-typedef unsigned char uuid_t[16];
 
 typedef struct save_s {
     list_t users;
@@ -75,3 +74,7 @@ typedef struct message_s {
 bool save_infos(save_t *save, char *path);
 void save_uuids(uuid_list_t uuids, int fd);
 void save_teams(list_t teams, int fd);
+
+void load_infos(save_t *save, char *path);
+void load_uuids(uuid_list_t *uuids, uint n, int fd);
+void load_teams(save_t *save, int fd);

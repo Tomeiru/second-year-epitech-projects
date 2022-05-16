@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <uuid/uuid.h>
 #include "cmd_args.h"
 
 #define NULL_COMMAND_ID 255

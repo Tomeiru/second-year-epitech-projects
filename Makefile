@@ -23,7 +23,9 @@ SRC_SRV			=	server/src/main.c 				\
 					server/src/commands/pm.c		\
 					server/src/commands/utils.c		\
 					server/src/save/save.c	 		\
-					server/src/save/save_teams.c
+					server/src/save/save_teams.c	\
+					server/src/save/load.c	 		\
+					server/src/save/load_teams.c
 
 SRC_CLI			=	client/src/main.c
 

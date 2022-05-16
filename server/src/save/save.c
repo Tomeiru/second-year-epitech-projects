@@ -12,8 +12,10 @@
 
 static void save_users(list_t users, int fd)
 {
+    uint len = node_len(users);
     user_t *user;
 
+    write(fd, &len, sizeof(uint));
     for (list_t list = users; list; list = list->next) {
         user = (user_t*) list->data;
         write(fd, user, sizeof(user_t));
@@ -24,8 +26,10 @@ static void save_users(list_t users, int fd)
 
 static void save_discussions(list_t discussions, int fd)
 {
+    uint len = node_len(discussions);
     discussion_t *discussion;
 
+    write(fd, &len, sizeof(uint));
     for (list_t list = discussions; list; list = list->next) {
         discussion = (discussion_t*) list->data;
         write(fd, discussion, sizeof(user_t));
@@ -37,21 +41,19 @@ static void save_discussions(list_t discussions, int fd)
 
 bool save_infos(save_t *save, char *path)
 {
-    int fd = open(path, O_WRONLY);
+    int fd = open(path, O_WRONLY | O_CREAT);
 
     if (fd == -1)
         return true;
     save_users(save->users, fd);
     save_discussions(save->discussions, fd);
     save_teams(save->teams, fd);
+    close(fd);
     return false;
 }
 
 void save_uuids(uuid_list_t uuids, int fd)
 {
-    uint len = node_len((list_t) uuids);
-
-    write(fd, &len, sizeof(uint));
     for (uuid_list_t list = uuids; list; list = (uuid_list_t) list->next)
         write(fd, uuids->uuid, sizeof(uuid_t));
 }

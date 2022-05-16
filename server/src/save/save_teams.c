@@ -42,8 +42,10 @@ static void save_channels(list_t channels, int fd)
 
 void save_teams(list_t teams, int fd)
 {
+    uint len = node_len(teams);
     team_t *team;
 
+    write(fd, &len, sizeof(uint));
     for (list_t list = teams; list; list = list->next) {
         team = (team_t*) list->data;
         write(fd, team, sizeof(team_t));

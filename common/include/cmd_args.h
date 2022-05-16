@@ -7,9 +7,8 @@
 
 #pragma once
 
+#include <uuid/uuid.h>
 #include "buffer_sizes.h"
-
-typedef unsigned char uuid_t[16];
 
 typedef struct login_cmd_arg_s {
     char name[MAX_NAME_LENGTH];
