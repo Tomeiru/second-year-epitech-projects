@@ -1,0 +1,7 @@
+/myteams_server
+/myteams_cli
+
+**/*.o
+**/*.txt
+
+.vscode
