@@ -9,10 +9,12 @@
 
 void send_pm_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }
 
 void get_pm_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }

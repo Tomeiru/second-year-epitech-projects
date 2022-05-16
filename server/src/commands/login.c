@@ -5,7 +5,7 @@
 ** login
 */
 
-#include "commands.h"
+#include "teams.h"
 
 void login_cmd(client_t *client, server_t *srv, void *data)
 {
@@ -14,5 +14,7 @@ void login_cmd(client_t *client, server_t *srv, void *data)
 
 void logout_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
+    client->quit = true;
 }

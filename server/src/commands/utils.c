@@ -9,11 +9,9 @@
 
 const command_t *get_command_from_id(command_id_t id)
 {
+    for (int i = 0; i < COMMANDS_NB; i++) {
+        if (COMMANDS[i].id == id)
+            return &COMMANDS[i];
+    }
     return NULL;
-}
-
-void execute_cmd(client_t *client, server_t *server,
-command_id_t id, void *arg)
-{
-
 }

@@ -25,20 +25,17 @@ void delete_node(node_t **root, int index)
     free(tmp);
 }
 
-int node_len(node_t **root)
+int node_len(list_t list)
 {
     int count = 0;
-    node_t *tmp = *root;
 
-    for (; tmp; tmp = tmp->next)
-        count++;
-
+    for (list_t tmp = list; tmp; tmp = tmp->next, count++);
     return (count);
 }
 
 void delete_list(node_t **root)
 {
-    int len = node_len(root);
+    int len = node_len(*root);
 
     for (int i = 0; i < len; i++)
         delete_node(root, 0);

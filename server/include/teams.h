@@ -22,6 +22,7 @@
 #include "commands.h"
 #include "chained_list.h"
 #include "safe_malloc.h"
+#include "logging_server.h"
 
 typedef unsigned int uint;
 typedef struct sockaddr sockaddr_t;
@@ -37,6 +38,8 @@ typedef struct client_s {
     int fd;
     sockaddr_in_t sockaddr;
     bool quit;
+    bool logged;
+    uuid_t uuid;
 } client_t;
 
 server_t *init_server(int port);
@@ -50,5 +53,15 @@ bool accept_new_clients(int socket, list_t *list);
 client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list);
 void client_delete(client_t *client);
 void client_update(client_t *client, server_t *srv);
+
+void client_send_array(client_t *client, void *data, size_t size, size_t n);
+void client_send_linked_list(client_t *client, list_t list, size_t size);
+void client_send_data(client_t *client, void *data, size_t size);
+void client_send_value(client_t *client, size_t value, size_t size);
+
+void client_send_error(client_t *client, char *msg);
+void client_send_unknown_cmd(client_t *client);
+
+bool client_check_logged(client_t *client);
 
 int is_not_number(char *s);

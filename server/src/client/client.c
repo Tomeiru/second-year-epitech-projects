@@ -13,7 +13,9 @@ client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list)
 
     client->fd = fd;
     client->quit = false;
+    client->logged = true;
     memcpy(&client->sockaddr, sockaddr, sizeof(sockaddr_in_t));
+    memset(client->uuid, 0, sizeof(uuid_t));
     push_back(list, client);
     printf("Connection from %s with port %d\n",
     inet_ntoa(sockaddr->sin_addr), htons(sockaddr->sin_port));
@@ -37,8 +39,10 @@ void client_update(client_t *client, server_t *srv)
         return;
     }
     cmd = get_command_from_id(cmd_id);
-    if (cmd == NULL
-    || (size_t) read(client->fd, buf, cmd->size_args) != cmd->size_args)
+    if (cmd == NULL || (cmd->size_args
+    && (size_t) read(client->fd, buf, cmd->size_args) != cmd->size_args)) {
+        client_send_unknown_cmd(client);
         return;
-    execute_cmd(client, srv, cmd_id, buf);
+    }
+    cmd->fct(client, srv, buf);
 }

@@ -36,7 +36,5 @@ void send_pm_cmd(client_t *client, server_t *srv, void *data);
 void get_pm_cmd(client_t *client, server_t *srv, void *data);
 
 const command_t *get_command_from_id(command_id_t id);
-void execute_cmd(client_t *client, server_t *server,
-command_id_t id, void *arg);
 
 extern const command_t COMMANDS[COMMANDS_NB];

@@ -14,7 +14,7 @@ server_t *init_server(int port)
     if (!server)
         return (NULL);
     if (listen(server->fd, 3) < 0) {
-        perror("listen");
+        puts("listen");
         return (NULL);
     }
     return (server);
@@ -26,11 +26,11 @@ server_t *init_serv_struct(int port, int opt)
     struct sockaddr_in address;
 
     if ((server->fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
-        perror("socket failed");
+        puts("socket failed");
         return (NULL);
     }
     if (setsockopt(server->fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
-        perror("setsocketopt");
+        puts("setsocketopt");
         return (NULL);
     }
     address.sin_family = AF_INET;
@@ -38,7 +38,7 @@ server_t *init_serv_struct(int port, int opt)
     address.sin_port = htons(port);
     server->socket = address;
     if (bind(server->fd, (struct sockaddr*) &address, sizeof(address)) < 0) {
-        perror("bind failed");
+        puts("bind failed");
         return (NULL);
     }
     return (server);
@@ -65,7 +65,7 @@ void server_update(server_t *srv, list_t *list, fd_set *readfds, int max)
     client_t *client;
 
     if ((activity < 0) && (errno != EINTR))
-        printf("select error");
+        puts("select error");
     if (FD_ISSET(srv->fd, readfds))
         accept_new_clients(srv->fd, list);
     for (node_t *node = *list; node; node = node->next) {

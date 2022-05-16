@@ -9,20 +9,24 @@
 
 void create_team_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }
 
 void create_channel_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }
 
 void create_thread_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }
 
 void create_comment_cmd(client_t *client, server_t *srv, void *data)
 {
-
+    if (!client_check_logged(client))
+        return;
 }
