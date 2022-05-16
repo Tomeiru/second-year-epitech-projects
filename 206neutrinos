@@ -1,17 +1,21 @@
 #!/usr/bin/env ruby
 
+#Function that writes an error on STDERR then exit the program with the correct
+#error code
 def custom_abort(error)
     STDERR.puts(error);
     exit(84);
 end
 
 class String
+    #Addition of a method in the String class to check if a number is a integer
     def is_integer?
         !!((/(\D+)/.match(self)).nil?);
     end
 end
 
 class Neutrinos
+    #Constructor of the Neutrinos Class
     def initialize(no_values, arithmetic_mean, harmonic_mean, standard_deviation)
         @no_values = no_values.to_i;
         if (@no_values == 0)
@@ -22,6 +26,7 @@ class Neutrinos
         @standard_deviation = standard_deviation.to_f;
         @root_mean_square = Math.sqrt(@standard_deviation ** 2  + @arithmetic_mean ** 2);
     end
+    #Setter of actual_val
     def set_actual(actual_val)
         if (actual_val == "END")
             exit(0);
@@ -31,18 +36,24 @@ class Neutrinos
         end
         @actual_val = actual_val.to_f;
     end
+    #Method that calculates:
+    #Standard deviation
     def calc_std_dev
         @standard_deviation = Math.sqrt(@root_mean_square ** 2 - @arithmetic_mean ** 2);
     end
+    #Arithmetic mean
     def calc_arith_mean
         @arithmetic_mean = (@no_values.to_f / (@no_values + 1)) * @arithmetic_mean  + ((@actual_val.to_f) / (@no_values + 1));
     end
+    #Root mean square
     def calc_rms
         @root_mean_square = Math.sqrt((@no_values.to_f / (@no_values + 1)) * (@root_mean_square ** 2)  + (((@actual_val.to_f) ** 2) / (@no_values + 1)));
     end
+    #Harmonic mean
     def calc_har_mean
         @harmonic_mean = 1.0 / (((@no_values.to_f / (@no_values + 1)) * (1.0 / @harmonic_mean)) + 1 / ((@no_values + 1) * @actual_val))
     end
+    #Make sures that it calculates in order
     def calc_in_order
         calc_rms;
         calc_arith_mean;
@@ -50,6 +61,7 @@ class Neutrinos
         calc_har_mean;
         @no_values += 1;
     end
+    #Getters
     def get_no_values
         return (@no_values);
     end
@@ -67,36 +79,40 @@ class Neutrinos
     end
 end
 
-# error handling related functions
+#Function that checks the number of argument
 def check_number(argv)
     if (argv.length != 4)
         custom_abort("Wrong number of argument, #{argv.length} instead of 4");
     end
 end
 
+#Check argument content
 def check_content(argv)
     if (!(argv[0].is_integer?) || !(argv[1].is_integer?) || !(argv[2].is_integer?) || !(argv[3].is_integer?))
         custom_abort("One of the four argument is not a number!");
     end
 end
 
+#Call the functions needed to check arguments
 def basic_arg_checker(argv)
     check_number(argv);
     check_content(argv);
 end
 
+#Print the usage
 def print_usage()
     puts("USAGE\n    ./206neutrinos n a h sd\n\nDESCRIPTION\n    n       number of values\n    a       arithmetic mean\n    h       harmonic mean\n    sd      standard deviation\n");
     return (0);
 end
 
+#Check if args corresponds to usage
 def check_usage(argv)
     if (argv.length == 1 && argv[0] == "-h")
         exit(print_usage())
     end
 end
-# end of error related functions
 
+#Starts the program
 def start_program(neutrinos)
     $\ = ''
     print("Enter next value: ");
