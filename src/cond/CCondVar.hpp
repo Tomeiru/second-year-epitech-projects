@@ -20,8 +20,9 @@ namespace plazza {
             ~CCondVar();
 
             void wait();
-
             void signal();
             void broadcast();
+            void lock();
+            void unlock();
     };
 }

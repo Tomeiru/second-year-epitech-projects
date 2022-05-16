@@ -36,3 +36,13 @@ void plazza::CCondVar::broadcast()
 {
     pthread_cond_broadcast(&this->_cond);
 }
+
+void plazza::CCondVar::lock()
+{
+    pthread_mutex_lock(&this->_mutex);
+}
+
+void plazza::CCondVar::unlock()
+{
+    pthread_mutex_unlock(&this->_mutex);
+}
