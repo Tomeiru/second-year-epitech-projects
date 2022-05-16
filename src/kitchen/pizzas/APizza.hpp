@@ -32,6 +32,9 @@ namespace plazza {
 
             float getCookTime() const;
 
+            bool getStatus() const;
+            void toggleStatus();
+
             static PizzaType stringToPizzaType(std::string type);
             static PizzaSize stringToPizzaSize(std::string size);
 
@@ -48,6 +51,7 @@ namespace plazza {
             PizzaSize _size;
             std::vector<Ingredient> _ingredients;
             float _cookTime;
+            bool _cooked;
         private:
     };
 }

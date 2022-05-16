@@ -7,11 +7,12 @@
 
 #include "Reception.hpp"
 
-Reception::Reception(std::vector<std::unique_ptr<plazza::IPizza>> *queue)
+Reception::Reception(std::vector<std::unique_ptr<plazza::Order>> *queue)
 {
     _input = "";
     _delims = " \t";
     _queue = queue;
+    _order = nullptr;
 }
 
 Reception::~Reception()
@@ -45,6 +46,7 @@ std::string Reception::removeSpacesBeforeAndAfter(std::string string)
 
 void Reception::handleOrders()
 {
+    static uint64_t orderId = 0;
     static uint64_t pizzaId = 0;
     std::cout << _input << std::endl;
     std::string line;
@@ -68,13 +70,15 @@ void Reception::handleOrders()
                 throw std::exception();
         }
         for (int i = 0; i < std::stol(match[6].str()); i++)
-            _order.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
+            _pizzas.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
         std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
-    for (unsigned int i = 0; i < _order.size(); i++) {
-        std::cout << _order[i] << std::endl;
-        _queue->push_back(std::move(_order[i]));
+    _order = std::make_unique<plazza::Order>(orderId++);
+    for (unsigned int i = 0; i < _pizzas.size(); i++) {
+        std::cout << _pizzas[i] << std::endl;
+        _order->addPizzaToOrder(std::move(_pizzas[i]));
     }
+    _queue->push_back(std::move(_order));
 }
 
 void Reception::handleInput()
@@ -105,7 +109,9 @@ void Reception::console()
         }
         handleInput();
         _input = "";
-        _order.clear();
+        _order = nullptr;
+        _pizzas.clear();
+        sleep(1);
     }
 }
 

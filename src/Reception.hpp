@@ -14,12 +14,13 @@
 #include <sstream>
 #include <regex>
 #include <string>
-#include "kitchen/pizzas/APizza.hpp"
+#include <unistd.h>
+#include "Order.hpp"
 #include "thread/CThread.hpp"
 
 class Reception {
     public:
-        Reception(std::vector<std::unique_ptr<plazza::IPizza>> *queue);
+        Reception(std::vector<std::unique_ptr<plazza::Order>> *queue);
         ~Reception();
         void console();
         void getInput();
@@ -31,7 +32,8 @@ class Reception {
     protected:
         std::string _input;
         std::string _delims;
-        std::vector<std::unique_ptr<plazza::IPizza>> _order;
-        std::vector<std::unique_ptr<plazza::IPizza>> *_queue;
+        std::unique_ptr<plazza::Order> _order;
+        std::vector<std::unique_ptr<plazza::IPizza>> _pizzas;
+        std::vector<std::unique_ptr<plazza::Order>> *_queue;
     private:
 };

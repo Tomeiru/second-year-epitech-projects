@@ -18,6 +18,7 @@ plazza::APizza::APizza(uint64_t id, plazza::IPizza::PizzaSize size)
     _type = MARGARITA;
     _size = size;
     _cookTime = 1;
+    _cooked = false;
 }
 
 plazza::APizza::~APizza()
@@ -64,6 +65,16 @@ std::string plazza::APizza::getIngredientList() const
         ret.append(".\n");
     }
     return (ret);
+}
+
+bool plazza::APizza::getStatus() const
+{
+    return (_cooked);
+}
+
+void plazza::APizza::toggleStatus()
+{
+    _cooked = (_cooked == true ? false : true);
 }
 
 plazza::IPizza::PizzaType plazza::APizza::stringToPizzaType(std::string type)

@@ -5,6 +5,7 @@ project(plazza CXX)
 add_executable(plazza
     "src/main.cpp"
     "src/Reception.cpp"
+    "src/Order.cpp"
     "src/com/NamedPipes.cpp"
     "src/cond/CCondVar.cpp"
 #    "src/kitchen/Cook.cpp"

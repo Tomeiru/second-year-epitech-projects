@@ -52,6 +52,9 @@ namespace plazza {
             virtual std::string getIngredientList() const = 0;
 
             virtual float getCookTime() const= 0;
+
+            virtual bool getStatus() const = 0;
+            void toggleStatus();
     };
 }
 
