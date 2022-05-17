@@ -85,14 +85,13 @@ void plazza::Kitchen::pizzaHasBeenCooked(std::unique_ptr<IPizza> &pizza)
 void plazza::Kitchen::sendStatus()
 {
     ScopeLock{(IMutex&) _cookingLock};
-    KitchenStateHeader header;
+    KitchenState state;
     uint tmp;
 
-    header.nbPizzasWaitingToBeCooked = _pizzaWaiting;
-    header.nbPizzasBeignCooked = _pizzaBeingCooked;
-    _com.send(&header, sizeof(KitchenStateHeader));
-    for (size_t i = 0; i < IPizza::MAX_INGREDIENT; i += 1) {
-        tmp = _ingredients[(IPizza::Ingredient) i];
-        _com.send(&tmp, sizeof(uint));
-    }
+    state.kitchenId = _config.kitchenId;
+    state.nbPizzasWaitingToBeCooked = _pizzaWaiting;
+    state.nbPizzasBeignCooked = _pizzaBeingCooked;
+    for (size_t i = 0; i < IPizza::MAX_INGREDIENT; i += 1)
+        state.stocks[i] = _ingredients[(IPizza::Ingredient) i];
+    sendData(_com, SEND_KITCHEN_STATE, &state, sizeof(KitchenState));
 }

@@ -7,26 +7,14 @@
 
 #include "Reception.hpp"
 
-Reception::Reception(Logistic *logistic)
-{
-    _input = "";
-    _delims = " \t";
-    _logistic = logistic;
-    _order = nullptr;
-}
-
-Reception::~Reception()
-{
-}
-
-void Reception::getInput()
+void plazza::Reception::getInput()
 {
     std::getline(std::cin, _input);
     if (std::cin.eof())
         throw std::exception();
 }
 
-bool Reception::checkEmpty()
+bool plazza::Reception::checkEmpty()
 {
     if (_input == "")
         return (true);
@@ -35,7 +23,7 @@ bool Reception::checkEmpty()
     return (false);
 }
 
-std::string Reception::removeSpacesBeforeAndAfter(std::string string)
+std::string plazza::Reception::removeSpacesBeforeAndAfter(std::string string)
 {
     string.resize(string.find_last_not_of(_delims) + 1);
     std::size_t pos = string.find_first_not_of(_delims);
@@ -44,7 +32,7 @@ std::string Reception::removeSpacesBeforeAndAfter(std::string string)
     return (string);
 }
 
-void Reception::handleOrders()
+void plazza::Reception::handleOrders()
 {
     static uint64_t orderId = 0;
     static uint64_t pizzaId = 0;
@@ -78,18 +66,16 @@ void Reception::handleOrders()
         std::cout << _pizzas[i] << std::endl;
         _order->addPizzaToOrder(std::move(_pizzas[i]));
     }
-    _logistic->pushBackQueue(std::move(_order));
+    _logistic->addNewOrder(std::move(_order));
 }
 
-void Reception::handleInput()
+void plazza::Reception::handleInput()
 {
     if (checkEmpty())
         return;
     _input = removeSpacesBeforeAndAfter(_input);
-    if (_input == "status") {
-        _logistic->lockMutex();
+    if (_input == "status")
         return (_logistic->toggleStatus());
-    }
     try {
         handleOrders();
     }catch (...) {
@@ -98,7 +84,7 @@ void Reception::handleInput()
     }
 }
 
-void Reception::console()
+void plazza::Reception::console()
 {
     while (1) {
         std::cout << "Enter a command or an order: ";
@@ -116,7 +102,7 @@ void Reception::console()
     }
 }
 
-void *Reception::handleReceivedPizza(void *arg)
+void *plazza::Reception::handleReceivedPizza(void *arg)
 {
     return (nullptr);
 }

@@ -8,6 +8,7 @@
 #pragma once
 
 #include "IProcessCom.hpp"
+#include "../kitchen/pizzas/IPizza.hpp"
 
 namespace plazza {
     enum ComType : unsigned char {
@@ -19,15 +20,18 @@ namespace plazza {
     };
 
     typedef struct KitchenConfig_s {
+        unsigned int kitchenId;
         unsigned int nbCooks;
         float cookFactor;
         unsigned int refillTimer;
     } KitchenConfig;
 
-    typedef struct KitchenStateHeader_s {
+    typedef struct KitchenState_s {
+        unsigned int kitchenId;
         unsigned int nbPizzasBeignCooked;
         unsigned int nbPizzasWaitingToBeCooked;
-    } KitchenStateHeader;
+        size_t stocks[IPizza::MAX_INGREDIENT];
+    } KitchenState;
 
     inline void sendData(IProcessCom &com, ComType type, void *data, size_t size)
     {

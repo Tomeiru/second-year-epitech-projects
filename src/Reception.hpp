@@ -19,22 +19,24 @@
 #include "thread/CThread.hpp"
 #include "Logistic.hpp"
 
-class Reception {
-    public:
-        Reception(Logistic *queue);
-        ~Reception();
-        void console();
-        void getInput();
-        void handleInput();
-        bool checkEmpty();
-        std::string removeSpacesBeforeAndAfter(std::string);
-        void handleOrders();
-        void *handleReceivedPizza(void *arg);
-    protected:
-        std::string _input;
-        std::string _delims;
-        std::unique_ptr<plazza::Order> _order;
+namespace plazza {
+    class Reception {
+        std::string _input = "";
+        std::string _delims = " \t";
+        std::unique_ptr<plazza::Order> _order = nullptr;
         std::vector<std::unique_ptr<plazza::IPizza>> _pizzas;
         Logistic *_logistic;
-    private:
-};
+
+        public:
+            Reception(Logistic *logistic) : _logistic(logistic) {};
+            ~Reception() = default;
+
+            void console();
+            void getInput();
+            void handleInput();
+            bool checkEmpty();
+            std::string removeSpacesBeforeAndAfter(std::string);
+            void handleOrders();
+            void *handleReceivedPizza(void *arg);
+    };
+}
