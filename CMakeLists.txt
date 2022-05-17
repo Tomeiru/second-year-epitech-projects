@@ -5,6 +5,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(plazza
     "src/main.cpp"
+    "src/ArgHandler.cpp"
     "src/Logistic.cpp"
     "src/Order.cpp"
     "src/Reception.cpp"
