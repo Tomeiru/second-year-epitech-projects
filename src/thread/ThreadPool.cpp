@@ -7,44 +7,29 @@
 
 #include "ThreadPool.hpp"
 
-plazza::SecuredThread::SecuredThread(CThreadFct fct, void *arg)
-    : CThread(fct, arg), _joined(false)
+void *worker_main(void *arg)
 {
-}
+    plazza::PoolArg *args = (plazza::PoolArg*) arg;
+    plazza::Job toDo;
 
-plazza::SecuredThread::~SecuredThread()
-{
-}
-
-bool plazza::SecuredThread::isJoined() const
-{
-    return _joined;
-}
-
-void plazza::SecuredThread::join()
-{
-    pthread_join(this->_thread, nullptr);
-    _joined = true;
-}
-
-plazza::ThreadPool::ThreadPool()
-    : _lastThread(0)
-{
-}
-
-plazza::ThreadPool::~ThreadPool()
-{
-}
-
-void plazza::ThreadPool::join()
-{
-    for (unsigned int i = 0; i < _threadTab.size(); i++) {
-        if (_threadTab[i].isJoined() == false)
-            _threadTab[i].join();
+    while (true) {
+        while (args->jobs.getSize() == 0)
+            args->condToDo.wait();
+        toDo = args->jobs.getJob();
+        toDo.func(toDo.arg);
     }
+    return nullptr;
 }
 
-void plazza::ThreadPool::add_thread(CThreadFct fct, void *arg)
+plazza::ThreadPool::ThreadPool(unsigned int threadNbr)
+    : _size(threadNbr), _pollArgs((PoolArg) {_jobs, _condToDo})
 {
-    _threadTab.push_back(SecuredThread(fct, arg));
+    for (unsigned int i = 0; i != _size; i++)
+        _threadTab.push_back({(plazza::CThreadFct) worker_main, &_pollArgs});
+}
+
+void plazza::ThreadPool::addJob(Job &job)
+{
+    _jobs.addJob(job);
+    _condToDo.signal();
 }
