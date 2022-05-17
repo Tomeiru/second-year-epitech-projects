@@ -61,11 +61,11 @@ void load_infos(save_t *save, char *path)
 {
     int fd = open(path, O_RDONLY);
 
-    if (fd == -1)
-        return;
     save->users = NULL;
     save->discussions = NULL;
     save->teams = NULL;
+    if (fd == -1)
+        return;
     load_users(save, fd);
     load_discussions(save, fd);
     load_teams(save, fd);

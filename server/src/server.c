@@ -13,6 +13,7 @@ server_t *init_server(int port)
 
     if (!server)
         return (NULL);
+    load_infos(server->save, "./teams.dat");
     if (listen(server->fd, 3) < 0) {
         puts("listen");
         return (NULL);

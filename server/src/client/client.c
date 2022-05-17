@@ -44,5 +44,5 @@ void client_update(client_t *client, server_t *srv)
         client_send_unknown_cmd(client);
         return;
     }
-    cmd->fct(client, srv, buf);
+    cmd->fct(client, srv->save, buf);
 }

@@ -25,7 +25,10 @@ SRC_SRV			=	server/src/main.c 				\
 					server/src/save/save.c	 		\
 					server/src/save/save_teams.c	\
 					server/src/save/load.c	 		\
-					server/src/save/load_teams.c
+					server/src/save/load_teams.c	\
+					server/src/save/create.c		\
+					server/src/save/create_teams.c	\
+					server/src/save/find.c
 
 SRC_CLI			=	client/src/main.c
 
@@ -44,7 +47,7 @@ LIB_NAME		=	myteams
 NAME_SRV		=	myteams_server
 NAME_CLI		=	myteams_cli
 
-CFLAGS			+=	-W -Wall -L$(LIB_DIR) -l$(LIB_NAME)
+CFLAGS			+=	-W -Wall -L$(LIB_DIR) -l$(LIB_NAME) -luuid
 
 all: server client
 

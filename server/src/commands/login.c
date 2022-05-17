@@ -6,13 +6,15 @@
 */
 
 #include "teams.h"
+#include "logging_server.h"
 
-void login_cmd(client_t *client, server_t *srv, void *data)
+
+void login_cmd(client_t *client, save_t *save, void *data)
 {
-
+    login_cmd_arg_t *arg = data;
 }
 
-void logout_cmd(client_t *client, server_t *srv, void *data)
+void logout_cmd(client_t *client, save_t *save, void *data)
 {
     if (!client_check_logged(client))
         return;

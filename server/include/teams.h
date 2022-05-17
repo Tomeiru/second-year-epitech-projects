@@ -23,6 +23,7 @@
 #include "chained_list.h"
 #include "safe_malloc.h"
 #include "logging_server.h"
+#include "save.h"
 
 typedef unsigned int uint;
 typedef struct sockaddr sockaddr_t;
@@ -32,6 +33,7 @@ typedef struct timeval timeval_t;
 typedef struct  server_s {
     int fd;
     struct sockaddr_in socket;
+    save_t *save;
 } server_t;
 
 typedef struct client_s {
