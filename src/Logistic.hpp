@@ -15,13 +15,10 @@
 #include <chrono>
 #include "Order.hpp"
 #include "mutex/CMutex.hpp"
-<<<<<<< HEAD
 #include "ArgHandler.hpp"
-=======
 #include "mutex/ScopeLock.hpp"
 #include "process/CProcess.hpp"
 #include "com/ComProtocol.hpp"
->>>>>>> e9d57c4 (feat: implement logisitics)
 
 namespace plazza {
     void *logistic_main(void *arg);
