@@ -37,8 +37,11 @@ static void *handler(void *arg)
 
 int main(int ac, char **av)
 {
-    if (ac != 4)
-        return 84;
+    try {
+        std::tuple<double,int,int> args = ArgHandler::getArgs(ac, av);
+    }catch (std::invalid_argument &e) {
+        std::cerr << "Invalid argument: " << e.what() << std::endl;
+    }
     Logistic logistic;
     std::unique_ptr<plazza::IThread> thread = std::make_unique<plazza::CThread>(handler, &logistic);
     Reception reception(&logistic);

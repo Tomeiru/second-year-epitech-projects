@@ -11,6 +11,7 @@
 #include <memory>
 #include "Order.hpp"
 #include "mutex/CMutex.hpp"
+#include "ArgHandler.hpp"
 
 class Logistic {
     public:
