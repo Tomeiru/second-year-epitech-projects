@@ -7,11 +7,11 @@
 
 #include "Reception.hpp"
 
-Reception::Reception(std::vector<std::unique_ptr<plazza::Order>> *queue)
+Reception::Reception(Logistic *logistic)
 {
     _input = "";
     _delims = " \t";
-    _queue = queue;
+    _logistic = logistic;
     _order = nullptr;
 }
 
@@ -78,7 +78,7 @@ void Reception::handleOrders()
         std::cout << _pizzas[i] << std::endl;
         _order->addPizzaToOrder(std::move(_pizzas[i]));
     }
-    _queue->push_back(std::move(_order));
+    _logistic->pushBackQueue(std::move(_order));
 }
 
 void Reception::handleInput()
@@ -87,9 +87,10 @@ void Reception::handleInput()
         return;
     _input = removeSpacesBeforeAndAfter(_input);
     if (_input == "status") {
-        std::cout << "TODO: Call the status function" << std::endl;
-        return;
-    }try {
+        _logistic->lockMutex();
+        return (_logistic->toggleStatus());
+    }
+    try {
         handleOrders();
     }catch (...) {
         std::cerr << "Command does not exist or Order is ill-formated" << std::endl;
@@ -105,13 +106,13 @@ void Reception::console()
             getInput();
         }
         catch (...) {
+            _logistic->toggleEnd();
             break;
         }
         handleInput();
         _input = "";
         _order = nullptr;
         _pizzas.clear();
-        sleep(1);
     }
 }
 

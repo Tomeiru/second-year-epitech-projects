@@ -17,10 +17,11 @@
 #include <unistd.h>
 #include "Order.hpp"
 #include "thread/CThread.hpp"
+#include "Logistic.hpp"
 
 class Reception {
     public:
-        Reception(std::vector<std::unique_ptr<plazza::Order>> *queue);
+        Reception(Logistic *queue);
         ~Reception();
         void console();
         void getInput();
@@ -34,6 +35,6 @@ class Reception {
         std::string _delims;
         std::unique_ptr<plazza::Order> _order;
         std::vector<std::unique_ptr<plazza::IPizza>> _pizzas;
-        std::vector<std::unique_ptr<plazza::Order>> *_queue;
+        Logistic *_logistic;
     private:
 };

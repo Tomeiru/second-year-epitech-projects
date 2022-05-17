@@ -10,7 +10,7 @@
 namespace plazza {
     class IThread {
         public:
-            ~IThread() = default;
+            virtual ~IThread() = default;
 
             virtual void join() = 0;
     };

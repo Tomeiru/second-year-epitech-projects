@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(plazza CXX)
+set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(plazza
     "src/main.cpp"
-    "src/Reception.cpp"
+    "src/Logistic.cpp"
     "src/Order.cpp"
+    "src/Reception.cpp"
     "src/com/NamedPipes.cpp"
     "src/cond/CCondVar.cpp"
 #    "src/kitchen/Cook.cpp"
@@ -17,6 +19,5 @@ add_executable(plazza
     "src/thread/CThread.cpp"
 #    "src/thread/ThreadPool.cpp"
 )
-
 target_include_directories(plazza PRIVATE "${CMAKE_SOURCE_DIR}/include")
 set_target_properties(plazza PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/")
