@@ -13,8 +13,9 @@ namespace plazza {
             ~ICondVar() = default;
 
             virtual void wait() = 0;
-
             virtual void signal() = 0;
             virtual void broadcast() = 0;
+            virtual void lock() = 0;
+            virtual void unlock() = 0;
     };
 }
