@@ -9,23 +9,24 @@
 
 #include <queue>
 #include <iostream>
+#include <memory>
 #include "CThread.hpp"
 #include "../mutex/CMutex.hpp"
 #include "../mutex/ScopeLock.hpp"
 
 namespace plazza {
-    struct Job {
-        CThreadFct func;
-        void *arg;
+    class Job {
+        public:
+        virtual void execute() = 0;
     };
 
     class Jobs {
-        std::queue<Job> _jobs;
+        std::queue<std::unique_ptr<Job>> _jobs;
         CMutex _lock;
 
         public:
-        void addJob(Job &job);
-        Job getJob();
+        void addJob(std::unique_ptr<Job> &job);
+        std::unique_ptr<Job> getJob();
         size_t getSize() const;
     };
 }

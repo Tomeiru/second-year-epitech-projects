@@ -10,13 +10,13 @@
 void *worker_main(void *arg)
 {
     plazza::PoolArg *args = (plazza::PoolArg*) arg;
-    plazza::Job toDo;
+    std::unique_ptr<plazza::Job> toDo;
 
     while (true) {
         while (args->jobs.getSize() == 0)
             args->condToDo.wait();
-        toDo = args->jobs.getJob();
-        toDo.func(toDo.arg);
+        toDo = std::move(args->jobs.getJob());
+        toDo->execute();
     }
     return nullptr;
 }
@@ -28,7 +28,7 @@ plazza::ThreadPool::ThreadPool(unsigned int threadNbr)
         _threadTab.push_back({(plazza::CThreadFct) worker_main, &_pollArgs});
 }
 
-void plazza::ThreadPool::addJob(Job &job)
+void plazza::ThreadPool::addJob(std::unique_ptr<Job> &job)
 {
     _jobs.addJob(job);
     _condToDo.signal();

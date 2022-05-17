@@ -32,8 +32,8 @@ namespace plazza {
 
         public:
             ThreadPool(unsigned int threadNbr);
-            ~ThreadPool();
+            ~ThreadPool() = default;
 
-            void addJob(Job &job);
+            void addJob(std::unique_ptr<Job> &job);
     };
 }

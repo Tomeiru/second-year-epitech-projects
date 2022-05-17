@@ -5,6 +5,7 @@
 ** CThread
 */
 
+#include <unistd.h>
 #include <stdexcept>
 #include "CThread.hpp"
 
@@ -22,4 +23,9 @@ plazza::CThread::~CThread()
 void plazza::CThread::join()
 {
     pthread_join(this->_thread, nullptr);
+}
+
+void plazza::CThread::sleep(float sec)
+{
+    usleep(sec * 1000000);
 }

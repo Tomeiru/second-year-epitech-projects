@@ -22,5 +22,7 @@ namespace plazza {
 
             void join();
             pthread_t getThread();
+
+            static void sleep(float sec);
     };
 }
