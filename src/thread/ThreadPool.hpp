@@ -8,32 +8,32 @@
 #pragma once
 
 #include <iostream>
-#include <deque>
-#include "CThread.hpp"
+#include <vector>
+#include <memory>
+#include "../thread/CThread.hpp"
+#include "../mutex/IMutex.hpp"
+#include "../cond/CCondVar.hpp"
+#include "Jobs.hpp"
 
 namespace plazza {
-    class SecuredThread : public CThread {
-        pthread_t _thread;
-        bool _joined;
-
-        public:
-            SecuredThread(CThreadFct fct, void *arg);
-            ~SecuredThread();
-
-            bool isJoined() const;
-            void join();
+    struct PoolArg
+    {
+        Jobs &jobs;
+        ICondVar &condToDo;
     };
 
     class ThreadPool {
-        std::deque<SecuredThread> _threadTab;
-        unsigned int _lastThread;
+        Jobs _jobs;
+        PoolArg _pollArgs;
+
+        unsigned int _size;
+        CCondVar _condToDo;
+        std::vector<CThread> _threadTab;
 
         public:
-            ThreadPool();
-            ~ThreadPool();
+            ThreadPool(unsigned int threadNbr);
+            ~ThreadPool() = default;
 
-            void join();
-            void add_thread(CThreadFct fct, void *arg);
-            void goNext() {if ((_lastThread+1) < _threadTab.size()) _lastThread++;};
+            void addJob(std::unique_ptr<Job> &job);
     };
 }

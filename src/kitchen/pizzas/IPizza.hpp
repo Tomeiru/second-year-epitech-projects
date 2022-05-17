@@ -37,6 +37,7 @@ namespace plazza {
                 EGGPLANT,
                 GOAT_CHEESE,
                 CHIEF_LOVE,
+                MAX_INGREDIENT,
             };
             ~IPizza() = default;
 
