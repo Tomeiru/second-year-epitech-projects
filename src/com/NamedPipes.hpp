@@ -19,7 +19,6 @@ namespace plazza {
         std::string _ptcPath;
         std::string _ctpPath;
         ProcessType _side = ProcessType::UNDEFINED;
-        bool _closed = false;
 
         public:
             NamedPipes();
@@ -28,9 +27,7 @@ namespace plazza {
             void send(void *data, std::size_t size);
             int recv(void *buf, std::size_t size);
             bool canRead();
-            void closeCom() {
-    std::cout << " WERE CLOSED " << std::endl;_closed = true; };
-            bool isClosed() { return _closed; };
+            void closeCom();
 
             void setComSide(ProcessType type);
     };

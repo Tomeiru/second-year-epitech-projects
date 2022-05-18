@@ -27,9 +27,22 @@ void plazza::Kitchen::run()
 {
     ComType type;
     int bytes_read;
+    auto previousRefill = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    size_t *total;
 
     while (_open) {
-        if (_com.recv(&type, sizeof(ComType)) == 0)
+        CThread::sleep(0.1);
+        if (std::chrono::high_resolution_clock::now().time_since_epoch().count() - previousRefill >= _config.refillTimer * 1000000) {
+            _cookingLock.lock();
+            for (size_t i = 0; i < IPizza::MAX_INGREDIENT; i++) {
+                total = &_ingredients[(IPizza::Ingredient) i];
+                if (*total < 5)
+                    *total += 1;
+            }
+            _cookingLock.unlock();
+            previousRefill = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+        }
+        if (_com.canRead() && _com.recv(&type, sizeof(ComType)) == 0)
             return;
         handleCom(type);
     }

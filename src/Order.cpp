@@ -14,10 +14,7 @@ void plazza::Order::addPizzaToOrder(std::unique_ptr<plazza::IPizza> pizza)
 
 bool plazza::Order::checkCompletion() const
 {
-    for (unsigned int i = 0; i <_pizzas.size(); i++)
-        if (!_pizzas[i])
-            return (false);
-    return (true);
+    return _pizzas.size() == _pizzaCooked.size();
 }
 
 void plazza::Order::addPizzaCooked(uint64_t id)

@@ -40,10 +40,6 @@ plazza::NamedPipes::NamedPipes()
 plazza::NamedPipes::~NamedPipes()
 {
     closeCom();
-    if (_readFd != -1)
-        close(_readFd);
-    if (_writeFd != -1)
-        close(_writeFd);
     remove(_ptcPath.c_str());
     remove(_ctpPath.c_str());
 }
@@ -52,8 +48,6 @@ void plazza::NamedPipes::send(void *data, std::size_t size)
 {
     if (_side == ProcessType::UNDEFINED)
         throw ProcessComSideUndef();
-    if (_closed)
-        return;
     write(_writeFd, data, size);
 }
 
@@ -74,6 +68,16 @@ bool plazza::NamedPipes::canRead()
     struct pollfd data = { .fd = _readFd, .events = POLLIN, .revents = 0};
 
     return poll(&data, 1, 1) == 1;
+}
+
+void plazza::NamedPipes::closeCom()
+{
+    if (_readFd != -1)
+        close(_readFd);
+    if (_writeFd != -1)
+        close(_writeFd);
+    _readFd = -1;
+    _writeFd = -1;
 }
 
 // NOTE : order of opening is important

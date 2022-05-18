@@ -23,10 +23,16 @@
 namespace plazza {
     void *logistic_main(void *arg);
 
+    struct LogisticKitchen {
+        uint64_t id;
+        std::unique_ptr<IProcess> process;
+        KitchenState state;
+        std::chrono::high_resolution_clock::rep slackTime;
+        bool quit;
+    };
+
     class Logistic {
-        std::unordered_map<uint64_t, std::unique_ptr<IProcess>> _kitchens;
-        std::map<uint64_t, KitchenState> _latestStates;
-        std::unordered_map<uint8_t, std::chrono::high_resolution_clock::rep> _slackingTime;
+        std::map<uint64_t, LogisticKitchen> _kitchens;
         std::vector<std::unique_ptr<plazza::Order>> _orders;
         plazza::CMutex _ordersLock;
         plazza::CMutex _toggleLock;
@@ -42,12 +48,13 @@ namespace plazza {
 
         void printKitchenStatus();
         void handleResponses();
-        bool handleResponse(std::unique_ptr<IProcess> &kitchen);
+        bool handleResponse(LogisticKitchen &kitchen);
         void updateSlacking();
         void askKitchenStates();
 
         bool canThisKitchenCookThisPizza(uint64_t kitchenId, const std::unique_ptr<IPizza> &pizza);
         void assignPizzaToKitchen(uint64_t kitchenId, const std::unique_ptr<IPizza> &pizza);
+        void pizzaHashBeenCooked(LogisticKitchen &kitchen);
 
         void toggleStatus();
         void toggleEnd();
