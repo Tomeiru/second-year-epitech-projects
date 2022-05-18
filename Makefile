@@ -26,10 +26,12 @@ NAME		=	plazza
 
 CPPFLAGS	=	-std=c++17
 
+OBJ			=	$(SRC:.cpp=.o)
+
 all:			$(NAME)
 
-$(NAME):
-	g++ -o $(NAME) $(SRC) $(CPPFLAGS)
+$(NAME): $(OBJ)
+	g++ -o $(NAME) $(OBJ) $(CPPFLAGS)
 
 clean:
 	rm -f *.o

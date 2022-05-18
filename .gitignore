@@ -4,3 +4,4 @@ build/
 vgcore*
 plazza
 run.sh
+**/*.o
