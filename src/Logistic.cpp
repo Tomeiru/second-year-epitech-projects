@@ -30,6 +30,7 @@ void *plazza::logistic_main(void *arg)
 
 void plazza::Logistic::printKitchenStatus()
 {
+    std::cout << "Open kitchens : " << _kitchens.size() << std::endl;
     for (auto &[id, state] : _latestStates) {
         std::cout << "Kitchen #" << id << "\n";
         std::cout << "Pizzas being cooked: " << state.nbPizzasBeignCooked << "\n";
@@ -44,19 +45,22 @@ void plazza::Logistic::printKitchenStatus()
 void plazza::Logistic::handleResponses()
 {
     for (auto &[id, kitchen] : _kitchens) {
-        while (kitchen->getCom().canRead())
-            handleResponse(kitchen);
+        while (kitchen->getCom().canRead() && handleResponse(kitchen));
     }
 }
 
 // TODO : CHECK ORDER COMPLETION
-void plazza::Logistic::handleResponse(std::unique_ptr<IProcess> &kitchen)
+bool plazza::Logistic::handleResponse(std::unique_ptr<IProcess> &kitchen)
 {
-    ComType type;
+    ComType type = UNDEF_COM;
     KitchenState state;
     Serialized pizzaData;
+    size_t read = kitchen->getCom().recv(&type, sizeof(ComType));
 
-    kitchen->getCom().recv(&type, sizeof(ComType));
+    if (read == 0) {
+        std::cout << "INVALID READ !!" << std::endl;
+        return false;
+    }
     switch (type) {
         case PIZZA_COOKED:
         kitchen->getCom().recv(&pizzaData, sizeof(Serialized));
@@ -71,7 +75,11 @@ void plazza::Logistic::handleResponse(std::unique_ptr<IProcess> &kitchen)
         kitchen->getCom().recv(&state, sizeof(KitchenState));
         _latestStates[state.kitchenId] = state;
         break;
+        default:
+        throw std::runtime_error(std::string("Invalid ComType received : ") + std::to_string(type));
+        break;
     }
+    return true;
 }
 
 void plazza::Logistic::updateSlacking()
@@ -122,6 +130,7 @@ void plazza::Logistic::closeKitchen(uint64_t id)
 
     std::cout << "Close kitchen " << id << std::endl;
     sendData(kitchen->getCom(), CLOSING_KITCHEN, nullptr, 0);
+    kitchen->getCom().closeCom();
     _kitchens.erase(id);
     _slackingTime.erase(id);
     _latestStates.erase(id);
@@ -135,7 +144,7 @@ void plazza::Logistic::askKitchenStates()
 
 void plazza::Logistic::addNewOrder(std::unique_ptr<plazza::Order> order)
 {
-    ScopeLock{(IMutex&) _ordersLock};
+    ScopeLock lock{(IMutex&) _ordersLock};
     bool assigned = false;
     uint64_t id;
 
@@ -182,7 +191,7 @@ void plazza::Logistic::assignPizzaToKitchen(uint64_t kitchenId, const std::uniqu
 
 unsigned int plazza::Logistic::getQueueSize() const
 {
-    ScopeLock{(IMutex&) _ordersLock};
+    ScopeLock lock{(IMutex&) _ordersLock};
 
     if (_orders.empty())
         return (0);
@@ -191,28 +200,28 @@ unsigned int plazza::Logistic::getQueueSize() const
 
 void plazza::Logistic::toggleStatus()
 {
-    ScopeLock{(IMutex&) _toggleLock};
+    ScopeLock lock{(IMutex&) _toggleLock};
 
     _status = (_status ? false : true);
 }
 
 void plazza::Logistic::toggleEnd()
 {
-    ScopeLock{(IMutex&) _toggleLock};
+    ScopeLock lock{(IMutex&) _toggleLock};
 
     _end = (_status ? false : true);
 }
 
 bool plazza::Logistic::getStatus() const
 {
-    ScopeLock{(IMutex&) _toggleLock};
+    ScopeLock lock{(IMutex&) _toggleLock};
 
     return (_status);
 }
 
 bool plazza::Logistic::getEnd() const
 {
-    ScopeLock{(IMutex&) _toggleLock};
+    ScopeLock lock{(IMutex&) _toggleLock};
 
     return (_end);
 }

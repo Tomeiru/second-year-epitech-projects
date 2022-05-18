@@ -25,14 +25,21 @@ plazza::NamedPipes::NamedPipes()
     ctpPathBuf << "/tmp/kitchen" << id << "_ctp";
     _ptcPath = ptcPathBuf.str();
     _ctpPath = ctpPathBuf.str();
-    if (mkfifo(_ptcPath.c_str(), 0666) == -1 && errno != EEXIST)
+
+    if (!access(_ptcPath.c_str(), F_OK))
+        remove(_ptcPath.c_str());
+    if (!access(_ctpPath.c_str(), F_OK))
+        remove(_ctpPath.c_str());
+
+    if (mkfifo(_ptcPath.c_str(), 0666) == -1)
         throw std::runtime_error("Could not create FIFO files");
-    if (mkfifo(_ctpPath.c_str(), 0666) == -1 && errno != EEXIST)
+    if (mkfifo(_ctpPath.c_str(), 0666) == -1)
         throw std::runtime_error("Could not create FIFO files");
 }
 
 plazza::NamedPipes::~NamedPipes()
 {
+    closeCom();
     if (_readFd != -1)
         close(_readFd);
     if (_writeFd != -1)
@@ -45,6 +52,8 @@ void plazza::NamedPipes::send(void *data, std::size_t size)
 {
     if (_side == ProcessType::UNDEFINED)
         throw ProcessComSideUndef();
+    if (_closed)
+        return;
     write(_writeFd, data, size);
 }
 

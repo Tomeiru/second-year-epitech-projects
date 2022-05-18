@@ -23,6 +23,8 @@ namespace plazza {
             virtual int recv(void *buf, std::size_t size) = 0;
             virtual void send(void *data, std::size_t size) = 0;
             virtual bool canRead() = 0;
+            virtual void closeCom() = 0;
+            virtual bool isClosed() = 0;
 
             virtual void setComSide(ProcessType type) = 0;
     };

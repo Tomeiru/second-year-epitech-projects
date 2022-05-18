@@ -28,16 +28,16 @@ namespace plazza {
                 XXL = 16
             };
             enum Ingredient {
-                DOE,
-                TOMATO,
-                GRUYERE,
-                HAM,
-                MUSHROOMS,
-                STEAK,
-                EGGPLANT,
-                GOAT_CHEESE,
-                CHIEF_LOVE,
-                MAX_INGREDIENT,
+                DOE = 0,
+                TOMATO = 1,
+                GRUYERE = 2,
+                HAM = 3,
+                MUSHROOMS = 4,
+                STEAK = 5,
+                EGGPLANT = 6,
+                GOAT_CHEESE = 7,
+                CHIEF_LOVE = 8,
+                MAX_INGREDIENT = 9,
             };
             virtual ~IPizza() = default;
 

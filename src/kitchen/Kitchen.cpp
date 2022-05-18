@@ -19,7 +19,6 @@ void plazza::startKitchen(IProcessCom &com, void *args)
 plazza::Kitchen::Kitchen(IProcessCom &com, KitchenConfig *config)
     : _com(com), _config(*config), _pool{config->nbCooks}
 {
-    std::cout << "Init kitchen " << config->kitchenId << std::endl;
     for (size_t i = 0; i < IPizza::MAX_INGREDIENT; i += 1)
         _ingredients.insert({(IPizza::Ingredient) i, 5});
 }
@@ -47,18 +46,18 @@ void plazza::Kitchen::handleCom(ComType type)
         break;
         case CLOSING_KITCHEN:
         _open = false;
+        _com.closeCom();
         break;
     }
 }
 
 void plazza::Kitchen::cookNewPizza()
 {
-    ScopeLock{(IMutex&) _cookingLock};
+    ScopeLock lock{(IMutex&) _cookingLock};
     Serialized serialized;
     std::unique_ptr<IPizza> pizza;
     std::unique_ptr<CookPizzaJob> job;
 
-    std::cout << "Cook new pizza, kitchen " << _config.kitchenId << std::endl;
     if (_com.recv(&serialized, sizeof(Serialized)) != sizeof(Serialized))
         return;
     pizza = Serializer::deserialize(serialized);
@@ -71,7 +70,7 @@ void plazza::Kitchen::cookNewPizza()
 
 void plazza::Kitchen::pizzaStartBeingCooked(std::unique_ptr<IPizza> &pizza)
 {
-    ScopeLock{(IMutex&) _cookingLock};
+    ScopeLock lock{(IMutex&) _cookingLock};
 
     (void) pizza;
     _pizzaWaiting--;
@@ -80,7 +79,7 @@ void plazza::Kitchen::pizzaStartBeingCooked(std::unique_ptr<IPizza> &pizza)
 
 void plazza::Kitchen::pizzaHasBeenCooked(std::unique_ptr<IPizza> &pizza)
 {
-    ScopeLock{(IMutex&) _cookingLock};
+    ScopeLock lock{(IMutex&) _cookingLock};
     Serialized data = Serializer::serialize(*pizza.get());
 
     _pizzaBeingCooked--;
@@ -89,7 +88,7 @@ void plazza::Kitchen::pizzaHasBeenCooked(std::unique_ptr<IPizza> &pizza)
 
 void plazza::Kitchen::sendStatus()
 {
-    ScopeLock{(IMutex&) _cookingLock};
+    ScopeLock lock{(IMutex&) _cookingLock};
     KitchenState state;
     uint tmp;
 

@@ -42,7 +42,7 @@ namespace plazza {
 
         void printKitchenStatus();
         void handleResponses();
-        void handleResponse(std::unique_ptr<IProcess> &kitchen);
+        bool handleResponse(std::unique_ptr<IProcess> &kitchen);
         void updateSlacking();
         void askKitchenStates();
 
