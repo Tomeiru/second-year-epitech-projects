@@ -13,6 +13,7 @@
 #include <map>
 #include <unordered_map>
 #include <chrono>
+#include <tuple>
 #include "Order.hpp"
 #include "mutex/CMutex.hpp"
 #include "ArgHandler.hpp"
@@ -38,8 +39,12 @@ namespace plazza {
         plazza::CMutex _toggleLock;
         bool _status = false;
         bool _end = false;
+        float _multiplier;
+        int _nbCooks;
+        int _stockTime;
 
         public:
+        Logistic(std::tuple<double,int,int> arg);
         void addNewOrder(std::unique_ptr<plazza::Order> order);
         unsigned int getQueueSize() const;
 

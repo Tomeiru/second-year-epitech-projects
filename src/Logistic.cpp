@@ -28,6 +28,13 @@ void *plazza::logistic_main(void *arg)
     return (nullptr);
 }
 
+plazza::Logistic::Logistic(std::tuple<double,int,int> arg)
+{
+    _multiplier = std::get<0>(arg);
+    _nbCooks = std::get<1>(arg);
+    _stockTime = std::get<2>(arg);
+}
+
 void plazza::Logistic::printKitchenStatus()
 {
     std::cout << "Open kitchens : " << _kitchens.size() << std::endl;
