@@ -17,7 +17,16 @@ plazza::CThread::CThread(CThreadFct fct, void *arg)
 
 plazza::CThread::~CThread()
 {
-    pthread_cancel(this->_thread);
+    if (valid) {
+        printf("nique sa mère la chauve\n");
+        pthread_cancel(this->_thread);
+    }
+}
+
+plazza::CThread::CThread(CThread &&other)
+{
+    this->_thread = other._thread;
+    other.valid = false;
 }
 
 void plazza::CThread::join()

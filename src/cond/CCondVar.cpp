@@ -5,6 +5,7 @@
 ** CCondVar
 */
 
+#include <iostream>
 #include <stdexcept>
 #include "CCondVar.hpp"
 

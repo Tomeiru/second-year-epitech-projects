@@ -46,7 +46,7 @@ namespace plazza {
             const KitchenConfig &getConfig() { return _config; };
     };
 
-    class CookPizzaJob : public Job {
+    class CookPizzaJob : public IJob {
         Kitchen &_kitchen;
         std::unique_ptr<IPizza> _pizza;
 

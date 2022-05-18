@@ -14,6 +14,7 @@ void *plazza::logistic_main(void *arg)
     Logistic *logistic = (Logistic*) arg;
 
     while (true) {
+        CThread::sleep(0.1);
         if (logistic->getEnd())
             break;
         logistic->handleResponses();
@@ -94,7 +95,8 @@ uint64_t plazza::Logistic::createKitchen()
     std::unique_ptr<CProcess> kitchen;
     KitchenState state;
 
-    config.kitchenId = id++;
+    std::cout << "Open kitchen " << id << std::endl;
+    config.kitchenId = id;
     config.cookFactor = 1;
     config.refillTimer = 1000;
     config.nbCooks = 3;
@@ -107,6 +109,7 @@ uint64_t plazza::Logistic::createKitchen()
     _kitchens[id] = std::move(kitchen);
     _slackingTime[id] = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     _latestStates[id] = state;
+    id++;
     return config.kitchenId;
 }
 
@@ -114,6 +117,7 @@ void plazza::Logistic::closeKitchen(uint64_t id)
 {
     std::unique_ptr<CProcess> &kitchen = _kitchens[id];
 
+    std::cout << "Close kitchen " << id << std::endl;
     sendData(kitchen->getCom(), CLOSING_KITCHEN, nullptr, 0);
     _kitchens.erase(id);
     _slackingTime.erase(id);

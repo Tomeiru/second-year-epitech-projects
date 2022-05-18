@@ -5,17 +5,20 @@
 ** ThreadPool
 */
 
+#include <memory>
 #include "ThreadPool.hpp"
 
 void *worker_main(void *arg)
 {
     plazza::PoolArg *args = (plazza::PoolArg*) arg;
-    std::unique_ptr<plazza::Job> toDo;
+    std::unique_ptr<plazza::IJob> toDo;
 
     while (true) {
+        args->condToDo.lock();
         while (args->jobs.getSize() == 0)
             args->condToDo.wait();
-        toDo = std::move(args->jobs.getJob());
+        args->condToDo.unlock();
+        toDo = args->jobs.getJob();
         toDo->execute();
     }
     return nullptr;
@@ -28,7 +31,7 @@ plazza::ThreadPool::ThreadPool(unsigned int threadNbr)
         _threadTab.push_back({(plazza::CThreadFct) worker_main, &_pollArgs});
 }
 
-void plazza::ThreadPool::addJob(std::unique_ptr<Job> &job)
+void plazza::ThreadPool::addJob(std::unique_ptr<IJob> &job)
 {
     _jobs.addJob(job);
     _condToDo.signal();

@@ -20,6 +20,8 @@
 #include "Logistic.hpp"
 
 namespace plazza {
+    class InvalidOrder {};
+
     class Reception {
         std::string _input = "";
         std::string _delims = " \t";

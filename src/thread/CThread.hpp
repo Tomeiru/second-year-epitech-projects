@@ -15,9 +15,12 @@ namespace plazza {
 
     class CThread : public IThread {
         pthread_t _thread;
+        bool valid = true;
 
         public:
             CThread(CThreadFct fct, void *arg);
+            CThread(CThread &other) = delete;
+            CThread(CThread &&other);
             ~CThread();
 
             void join();

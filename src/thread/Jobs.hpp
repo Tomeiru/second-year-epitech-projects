@@ -15,18 +15,18 @@
 #include "../mutex/ScopeLock.hpp"
 
 namespace plazza {
-    class Job {
+    class IJob {
         public:
         virtual void execute() = 0;
     };
 
     class Jobs {
-        std::queue<std::unique_ptr<Job>> _jobs;
+        std::queue<std::unique_ptr<IJob>> _jobs;
         CMutex _lock;
 
         public:
-        void addJob(std::unique_ptr<Job> &job);
-        std::unique_ptr<Job> getJob();
+        void addJob(std::unique_ptr<IJob> &job);
+        std::unique_ptr<IJob> getJob();
         size_t getSize() const;
     };
 }

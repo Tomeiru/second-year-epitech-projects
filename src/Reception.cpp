@@ -50,20 +50,20 @@ void plazza::Reception::handleOrders()
         words[i] = removeSpacesBeforeAndAfter(words[i]);
         std::smatch match;
         if (!std::regex_search(words[i], match, std::regex("([a-zA-Z]+)([ \t]+)(S|M|L|XL|XXL)([ \t]+)(x)([1-9][0-9]*)")))
-            throw std::exception();
+            throw InvalidOrder();
         for (unsigned int i = 0; i < pizzaList.size(); i++) {
             if (pizzaList[i] == match[1])
                 break;
             if (i + 1 == pizzaList.size())
-                throw std::exception();
+                throw InvalidOrder();
         }
         for (int i = 0; i < std::stol(match[6].str()); i++)
             _pizzas.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
-        std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
+        // std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
     _order = std::make_unique<plazza::Order>(orderId++);
     for (unsigned int i = 0; i < _pizzas.size(); i++) {
-        std::cout << _pizzas[i] << std::endl;
+        // std::cout << _pizzas[i] << std::endl;
         _order->addPizzaToOrder(std::move(_pizzas[i]));
     }
     _logistic->addNewOrder(std::move(_order));
@@ -78,7 +78,7 @@ void plazza::Reception::handleInput()
         return (_logistic->toggleStatus());
     try {
         handleOrders();
-    }catch (...) {
+    }catch (InvalidOrder &e) {
         std::cerr << "Command does not exist or Order is ill-formated" << std::endl;
         return;
     }

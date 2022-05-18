@@ -16,24 +16,23 @@
 #include "Jobs.hpp"
 
 namespace plazza {
-    struct PoolArg
-    {
+    struct PoolArg {
         Jobs &jobs;
         ICondVar &condToDo;
     };
 
     class ThreadPool {
         Jobs _jobs;
-        PoolArg _pollArgs;
-
         unsigned int _size;
         CCondVar _condToDo;
         std::vector<CThread> _threadTab;
+
+        PoolArg _pollArgs;
 
         public:
             ThreadPool(unsigned int threadNbr);
             ~ThreadPool() = default;
 
-            void addJob(std::unique_ptr<Job> &job);
+            void addJob(std::unique_ptr<IJob> &job);
     };
 }

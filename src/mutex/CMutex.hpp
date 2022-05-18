@@ -11,7 +11,7 @@
 #include "IMutex.hpp"
 
 namespace plazza {
-    class CMutex {
+    class CMutex : public IMutex {
         pthread_mutex_t _mutex;
 
         public:

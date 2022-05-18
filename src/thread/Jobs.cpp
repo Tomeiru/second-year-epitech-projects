@@ -7,14 +7,14 @@
 
 #include "Jobs.hpp"
 
-void plazza::Jobs::addJob(std::unique_ptr<Job> &job)
+void plazza::Jobs::addJob(std::unique_ptr<IJob> &job)
 {
     ScopeLock{(IMutex&) _lock};
 
     _jobs.push(std::move(job));
 }
 
-std::unique_ptr<plazza::Job> plazza::Jobs::getJob()
+std::unique_ptr<plazza::IJob> plazza::Jobs::getJob()
 {
     ScopeLock{(IMutex&) _lock};
     auto res = std::move(_jobs.front());
