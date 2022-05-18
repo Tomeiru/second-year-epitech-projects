@@ -50,7 +50,7 @@ void plazza::Logistic::handleResponses()
 }
 
 // TODO : CHECK ORDER COMPLETION
-void plazza::Logistic::handleResponse(std::unique_ptr<CProcess> &kitchen)
+void plazza::Logistic::handleResponse(std::unique_ptr<IProcess> &kitchen)
 {
     ComType type;
     KitchenState state;
@@ -77,14 +77,17 @@ void plazza::Logistic::handleResponse(std::unique_ptr<CProcess> &kitchen)
 void plazza::Logistic::updateSlacking()
 {
     std::chrono::high_resolution_clock::rep now = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    std::vector<size_t> toBeClosed;
 
     for (auto &[id, state] : _latestStates) {
         if (state.nbPizzasBeignCooked == 0 && state.nbPizzasWaitingToBeCooked == 0) {
             if (now - _slackingTime[id] >= 5000000000)
-                closeKitchen(id);
+                toBeClosed.push_back(id);
         } else
             _slackingTime[id] = now;
     }
+    for (size_t id : toBeClosed)
+        closeKitchen(id);
 }
 
 // TODO : CHANGE THIS TO ARGS GIVEN
@@ -92,7 +95,7 @@ uint64_t plazza::Logistic::createKitchen()
 {
     static uint64_t id = 0;
     KitchenConfig config;
-    std::unique_ptr<CProcess> kitchen;
+    std::unique_ptr<IProcess> kitchen;
     KitchenState state;
 
     std::cout << "Open kitchen " << id << std::endl;
@@ -115,7 +118,7 @@ uint64_t plazza::Logistic::createKitchen()
 
 void plazza::Logistic::closeKitchen(uint64_t id)
 {
-    std::unique_ptr<CProcess> &kitchen = _kitchens[id];
+    std::unique_ptr<IProcess> &kitchen = _kitchens[id];
 
     std::cout << "Close kitchen " << id << std::endl;
     sendData(kitchen->getCom(), CLOSING_KITCHEN, nullptr, 0);

@@ -25,7 +25,7 @@ namespace plazza {
         Jobs _jobs;
         unsigned int _size;
         CCondVar _condToDo;
-        std::vector<CThread> _threadTab;
+        std::vector<std::unique_ptr<CThread>> _threadTab;
 
         PoolArg _pollArgs;
 

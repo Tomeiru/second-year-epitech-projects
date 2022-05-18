@@ -16,7 +16,7 @@ namespace plazza {
 
     class IProcessCom {
         public:
-            ~IProcessCom() = default;
+            virtual ~IProcessCom() = default;
 
             // Return 0 if nothing to read
             // Return -1 if error occured

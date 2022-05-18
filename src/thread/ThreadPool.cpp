@@ -28,7 +28,7 @@ plazza::ThreadPool::ThreadPool(unsigned int threadNbr)
     : _size(threadNbr), _pollArgs((PoolArg) {_jobs, _condToDo})
 {
     for (unsigned int i = 0; i != _size; i++)
-        _threadTab.push_back({(plazza::CThreadFct) worker_main, &_pollArgs});
+        _threadTab.push_back(std::make_unique<CThread>((plazza::CThreadFct) worker_main, &_pollArgs));
 }
 
 void plazza::ThreadPool::addJob(std::unique_ptr<IJob> &job)

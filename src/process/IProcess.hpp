@@ -14,7 +14,7 @@ namespace plazza {
         public:
             using ProcessStartFct = void (*)(IProcessCom &com, void *args);
 
-            ~IProcess() = default;
+            virtual ~IProcess() = default;
 
             virtual void close() = 0;
 

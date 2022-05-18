@@ -39,7 +39,7 @@ namespace plazza {
                 CHIEF_LOVE,
                 MAX_INGREDIENT,
             };
-            ~IPizza() = default;
+            virtual ~IPizza() = default;
 
             virtual uint64_t getId() const = 0;
 

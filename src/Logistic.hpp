@@ -24,7 +24,7 @@ namespace plazza {
     void *logistic_main(void *arg);
 
     class Logistic {
-        std::unordered_map<uint64_t, std::unique_ptr<CProcess>> _kitchens;
+        std::unordered_map<uint64_t, std::unique_ptr<IProcess>> _kitchens;
         std::map<uint64_t, KitchenState> _latestStates;
         std::unordered_map<uint8_t, std::chrono::high_resolution_clock::rep> _slackingTime;
         std::vector<std::unique_ptr<plazza::Order>> _orders;
@@ -42,7 +42,7 @@ namespace plazza {
 
         void printKitchenStatus();
         void handleResponses();
-        void handleResponse(std::unique_ptr<CProcess> &kitchen);
+        void handleResponse(std::unique_ptr<IProcess> &kitchen);
         void updateSlacking();
         void askKitchenStates();
 

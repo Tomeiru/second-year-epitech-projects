@@ -17,6 +17,7 @@
 namespace plazza {
     class IJob {
         public:
+        virtual ~IJob() = default;
         virtual void execute() = 0;
     };
 

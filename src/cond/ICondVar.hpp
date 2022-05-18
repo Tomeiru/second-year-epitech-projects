@@ -10,7 +10,7 @@
 namespace plazza {
     class ICondVar {
         public:
-            ~ICondVar() = default;
+            virtual ~ICondVar() = default;
 
             virtual void wait() = 0;
             virtual void signal() = 0;
