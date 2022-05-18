@@ -65,17 +65,14 @@ void plazza::Logistic::handleResponses()
         closeKitchen(id);
 }
 
-// TODO : CHECK ORDER COMPLETION
 bool plazza::Logistic::handleResponse(LogisticKitchen &kitchen)
 {
     ComType type = UNDEF_COM;
     KitchenState state;
     size_t read = kitchen.process->getCom().recv(&type, sizeof(ComType));
 
-    if (read == 0) {
-        std::cout << "INVALID READ !!" << std::endl;
+    if (read == 0)
         return true;
-    }
     switch (type) {
         case PIZZA_COOKED:
         pizzaHashBeenCooked(kitchen);
@@ -125,7 +122,6 @@ void plazza::Logistic::updateSlacking()
     }
 }
 
-// TODO : CHANGE THIS TO ARGS GIVEN
 uint64_t plazza::Logistic::createKitchen()
 {
     static uint64_t id = 0;
@@ -135,9 +131,9 @@ uint64_t plazza::Logistic::createKitchen()
 
     std::cout << "Open kitchen " << id << std::endl;
     config.kitchenId = id;
-    config.cookFactor = 1;
-    config.refillTimer = 1000;
-    config.nbCooks = 3;
+    config.cookFactor = _multiplier;
+    config.refillTimer = _stockTime;
+    config.nbCooks = _nbCooks;
     state.kitchenId = id;
     state.nbPizzasBeignCooked = 0;
     state.nbPizzasWaitingToBeCooked = 0;
@@ -193,14 +189,13 @@ void plazza::Logistic::addNewOrder(std::unique_ptr<plazza::Order> order)
     _orders.push_back(std::move(order));
 }
 
-// TODO : USE ARGS GIVEN
 bool plazza::Logistic::canThisKitchenCookThisPizza(uint64_t kitchenId, const std::unique_ptr<IPizza> &pizza)
 {
     KitchenState &state = _kitchens[kitchenId].state;
 
     if (_kitchens[kitchenId].quit)
         return false;
-    if (state.nbPizzasBeignCooked + state.nbPizzasWaitingToBeCooked == 6 * 2)
+    if (state.nbPizzasBeignCooked + state.nbPizzasWaitingToBeCooked == _nbCooks * 2)
         return false;
     for (IPizza::Ingredient ingredient : pizza->getIngredients()) {
         if (state.stocks[ingredient] == 0)
