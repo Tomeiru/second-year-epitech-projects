@@ -61,6 +61,7 @@ void plazza::Reception::handleOrders()
             _pizzas.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
         // std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
+    std::cout << "Order " << orderId << " created" << std::endl;
     _order = std::make_unique<plazza::Order>(orderId++);
     for (unsigned int i = 0; i < _pizzas.size(); i++) {
         // std::cout << _pizzas[i] << std::endl;

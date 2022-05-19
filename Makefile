@@ -24,7 +24,7 @@ SRC			=	src/com/NamedPipes.cpp				\
 
 NAME		=	plazza
 
-CPPFLAGS	=	-std=c++17
+CPPFLAGS	+=	-std=c++17
 
 OBJ			=	$(SRC:.cpp=.o)
 

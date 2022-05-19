@@ -165,8 +165,8 @@ std::unique_ptr<plazza::IPizza> plazza::APizza::pizzaFactory(uint64_t id, PizzaT
     static std::map<PizzaType, std::function<std::unique_ptr<IPizza>(uint64_t, PizzaSize)>> factoryList {
         std::make_pair(REGINA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);}),
         std::make_pair(MARGARITA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Margarita>(id, sizeArg);}),
-        std::make_pair(AMERICANA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);}),
-        std::make_pair(FANTASIA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Regina>(id, sizeArg);})
+        std::make_pair(AMERICANA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Americana>(id, sizeArg);}),
+        std::make_pair(FANTASIA, [](uint64_t id, PizzaSize sizeArg) {return std::make_unique<Fantasia>(id, sizeArg);})
     };
     std::map<PizzaType, std::function<std::unique_ptr<IPizza>(uint64_t, PizzaSize)>>::iterator it = factoryList.find(type);
 
