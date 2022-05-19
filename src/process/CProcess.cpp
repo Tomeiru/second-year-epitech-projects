@@ -31,7 +31,9 @@ plazza::CProcess::~CProcess()
 
 void plazza::CProcess::close()
 {
-    waitpid(_pid, nullptr, 0);
+    int ret;
+
+    waitpid(_pid, &ret, 0);
 }
 
 plazza::IProcessCom &plazza::CProcess::getCom()

@@ -14,6 +14,7 @@ void plazza::startKitchen(IProcessCom &com, void *args)
     Kitchen kitchen{com, (KitchenConfig*) args};
 
     kitchen.run();
+    exit(0);
 }
 
 plazza::Kitchen::Kitchen(IProcessCom &com, KitchenConfig *config)

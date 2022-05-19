@@ -157,6 +157,7 @@ void plazza::Logistic::closeKitchen(uint64_t id)
 
     std::cout << "Close kitchen " << id << std::endl;
     kitchen.process->getCom().closeCom();
+    kitchen.process->close();
     _kitchens.erase(id);
 }
 
