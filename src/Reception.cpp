@@ -36,7 +36,6 @@ void plazza::Reception::handleOrders()
 {
     static uint64_t orderId = 0;
     static uint64_t pizzaId = 0;
-    std::cout << _input << std::endl;
     std::string line;
     std::stringstream ss(_input);
     std::vector<std::string> pizzaList = {
@@ -59,14 +58,11 @@ void plazza::Reception::handleOrders()
         }
         for (int i = 0; i < std::stol(match[6].str()); i++)
             _pizzas.push_back(plazza::APizza::pizzaFactory(pizzaId++, match[1].str(), match[3].str()));
-        // std::cout << match[1].str() << " " << match[3].str() << " " << match[6].str() << std::endl;
     }
     std::cout << "Order " << orderId << " created" << std::endl;
     _order = std::make_unique<plazza::Order>(orderId++);
-    for (unsigned int i = 0; i < _pizzas.size(); i++) {
-        // std::cout << _pizzas[i] << std::endl;
+    for (unsigned int i = 0; i < _pizzas.size(); i++)
         _order->addPizzaToOrder(std::move(_pizzas[i]));
-    }
     _logistic->addNewOrder(std::move(_order));
 }
 
