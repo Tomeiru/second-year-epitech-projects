@@ -91,8 +91,11 @@ bool plazza::Logistic::handleResponse(LogisticKitchen &kitchen)
 void plazza::Logistic::pizzaHashBeenCooked(LogisticKitchen &kitchen)
 {
     Serialized pizzaData;
+    std::unique_ptr<IPizza> pizza;
 
     kitchen.process->getCom().recv(&pizzaData, sizeof(Serialized));
+    pizza = Serializer::deserialize(pizzaData);
+    std::cout << "Pizza #" << pizza->getId() << " '" << pizza->getStringType() << " " << pizza->getStringSize() << "' has been cooked !" << std::endl;
     for (auto i = _orders.begin(); i != _orders.end(); i++) {
         if (i->get()->isPizzaInThisOrder(pizzaData.id)) {
             i->get()->addPizzaCooked(pizzaData.id);
