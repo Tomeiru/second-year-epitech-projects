@@ -34,7 +34,7 @@ $(NAME): $(OBJ)
 	g++ -o $(NAME) $(OBJ) $(CPPFLAGS) -lpthread
 
 clean:
-	rm -f *.o
+	rm -f $(OBJ)
 
 fclean:			clean
 	rm -f $(NAME)
