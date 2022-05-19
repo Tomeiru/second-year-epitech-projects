@@ -21,7 +21,7 @@ namespace plazza {
                 _ingredients.push_back(GOAT_CHEESE);
                 _ingredients.push_back(CHIEF_LOVE);
             };
-            ~Fantasia();
+            ~Fantasia() = default;
         protected:
         private:
     };
