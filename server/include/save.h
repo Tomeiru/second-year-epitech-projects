@@ -31,8 +31,8 @@ typedef struct team_s {
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
     char desc[MAX_DESCRIPTION_LENGTH];
-    uuid_list_t users;
-    uint users_nb;
+    uuid_list_t subscribers;
+    uint subscribers_nb;
     list_t channels;
     uint channels_nb;
 } team_t;

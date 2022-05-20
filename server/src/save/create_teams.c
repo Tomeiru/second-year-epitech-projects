@@ -12,7 +12,7 @@ team_t *team_create(char *name, char *desc, save_t *save)
     team_t *team = safe_malloc(sizeof(team_t));
 
     uuid_generate(team->uuid);
-    team->users = NULL;
+    team->subscribers = NULL;
     team->channels_nb = 0;
     team->channels = NULL;
     team->channels_nb = 0;

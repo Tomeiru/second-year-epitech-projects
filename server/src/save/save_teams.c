@@ -49,7 +49,7 @@ void save_teams(list_t teams, int fd)
     for (list_t list = teams; list; list = list->next) {
         team = (team_t*) list->data;
         write(fd, team, sizeof(team_t));
-        save_uuids(team->users, fd);
+        save_uuids(team->subscribers, fd);
         save_channels(team->channels, fd);
     }
 }

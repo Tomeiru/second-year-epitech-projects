@@ -54,9 +54,9 @@ void load_teams(save_t *save, int fd)
     for (uint i = 0; i < nb; i++) {
         team = safe_malloc(sizeof(team_t));
         read(fd, team, sizeof(team_t));
-        team->users = NULL;
+        team->subscribers = NULL;
         team->channels = NULL;
-        load_uuids(&team->users, team->users_nb, fd);
+        load_uuids(&team->subscribers, team->subscribers_nb, fd);
         load_channels(team, fd);
         push_back(&save->teams, team);
     }
