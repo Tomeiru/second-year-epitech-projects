@@ -17,7 +17,7 @@ function argsToNumArgs(myArgs) {
         total += num;
     }
     if (total != 100) {
-        console.log("Sumn of argument is not equal to 100 (%s), and a total of 100 is expected", i + 1, myArgs[i]);
+        console.log("Sumn of argument is not equal to 100 (" + total +"), and a total of 100 is expected");
         process.exit(84);
     }
     return (args);
