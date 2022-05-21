@@ -1,0 +1,211 @@
+#!/usr/bin/env node
+
+function argsToNumArgs(myArgs) {
+    let args = [];
+    let total = 0;
+    for (let i = 0; i < 9; i++) {
+        if (isNaN(myArgs[i])) {
+            console.log("Argument %d is not a number (%s), and a number is expected", i + 1, myArgs[i]);
+            process.exit(84);
+        }
+        let num = Number(myArgs[i]);
+        if (num % 1 != 0 || num < 0) {
+            console.log("Argument %d is not a positive decimal number (%s), and a positive decimal number is expected", i + 1, myArgs[i]);
+            process.exit(84);
+        }
+        args.push(num);
+        total += num;
+    }
+    if (total != 100) {
+        console.log("Sumn of argument is not equal to 100 (%s), and a total of 100 is expected", i + 1, myArgs[i]);
+        process.exit(84);
+    }
+    return (args);
+}
+
+function calculD (numArgs) {
+    let D = 0;
+
+    for (let i = 0; i < 9; i++)
+        D += i * numArgs[i];
+    return (D);
+}
+
+function factorial(a) {
+    if (a == 0 || a == 1)
+        return (1);
+    return (factorial(a - 1) * a);
+}
+
+function combinaison(n, k) {
+    return (factorial(n) / (factorial(k) * factorial (n - k)))
+}
+
+function calculTArray(p) {
+    let T = [];
+    let total = 0;
+    for (let i = 0; i < 8; i++) {
+        T[i] = 100 * combinaison(100, i) * (Math.pow(p, i)) * (Math.pow((1 - p), (100 - i)))
+        total += T[i];
+    }
+    T[8] = 100 - total;
+    return (T);
+}
+
+function createCluster(numArgs, TArr) {
+    let clusteredO = [];
+    let clusteredT = [];
+    let clusteredindex = [];
+    let O = 0;
+    let T = 0;
+    let index = 0;
+
+    for (let i = 8; i != -1; i--) {
+        O += numArgs[i];
+        T += TArr[i];
+        index++;
+        if (O >= 10 || i == 0) {
+            clusteredO.unshift(O);
+            clusteredT.unshift(T);
+            clusteredindex.unshift(index);
+            O = 0;
+            T = 0;
+            index = 0;
+        }
+    }
+    for (let i = 0; i < clusteredO.length; i++) {
+        if (clusteredO[i] < 10) {
+            if (i == clusteredO.length - 1) {
+                clusteredO[i - 1] += clusteredO[i];
+                clusteredT[i - 1] += clusteredT[i];
+                clusteredindex[i - 1] += clusteredindex[i];
+                clusteredO.pop();
+                clusteredT.pop();
+                clusteredindex.pop();
+            }
+            else {
+                clusteredO[i + 1] += clusteredO[i]
+                clusteredT[i + 1] += clusteredT[i]
+                clusteredindex[i + 1] += clusteredindex[i]
+                clusteredO.splice(i, 1);
+                clusteredT.splice(i, 1);
+                clusteredindex.splice(i, 1);
+            }
+        }
+    }
+    return ([clusteredO,clusteredT,clusteredindex])
+
+}
+
+function print_x(clusteredindex) {
+    let a = 0;
+    process.stdout.write("   x    |")
+    for (let i = 0; i < clusteredindex.length - 1; i++) {
+        if (clusteredindex[i] > 1) {
+            process.stdout.write((" " + a + "-" + (a + clusteredindex[i] - 1)).padEnd(7) + "|");
+            a += clusteredindex[i];
+        }
+        else
+            process.stdout.write((" " + a++).padEnd(7) + "|");
+    }
+    process.stdout.write((" " + a + "+").padEnd(7) + "|");
+    console.log(" Total");
+}
+
+function print_Ox(clusteredO) {
+    process.stdout.write("  Ox    |")
+    for (let i = 0; i < clusteredO.length; i++)
+        process.stdout.write((" " + clusteredO[i]).padEnd(7) + "|");
+    console.log(" 100");
+}
+
+function print_Tx(clusteredT) {
+    process.stdout.write("  Tx    |")
+    for (let i = 0; i < clusteredT.length; i++) {
+        process.stdout.write((" " + clusteredT[i].toFixed(1)).padEnd(7) + "|");
+    }
+    console.log(" 100");
+}
+
+function print_chi(chi) {
+    console.log("Chi-squared:            " + chi.toFixed(3));
+}
+
+function calculChi(clusteredO, clusteredT) {
+    let chi = 0.0;
+
+    for (let i = 0; i < clusteredO.length; i++) {
+        chi += (((clusteredO[i] - clusteredT[i]) ** 2) / clusteredT[i])
+    }
+    return (chi);
+}
+
+function print_dof(dof) {
+    console.log("Degrees of freedom:     " + dof);
+}
+
+function print_distribution(p) {
+    console.log("Distribution:           B(100, " + p.toFixed(4) + ")");
+}
+
+function print_fv(chi, dof, table) {
+    let a = 1;
+
+    for (let i = 1; i < table[dof].length - 1; i++) {
+        if (chi < table[dof][i])
+            break;
+        a++;
+    }
+    let validity = "";
+    if (a == 1)
+        validity = "P > 99%";
+    else if (a == 12)
+        validity = "P < 1%";
+    else {
+        let b = table[0][a - 1];
+        let c = table[0][a];
+        validity = c + "% < P < " + b + "%"
+    }
+    console.log("Fit validity:           " + validity);
+}
+
+function calculus (numArgs, table) {
+    let p = calculD(numArgs) / 10000;
+    let TArr = calculTArray(p)
+    let [clusteredO, clusteredT, clusteredindex] = createCluster(numArgs, TArr)
+    print_x(clusteredindex);
+    print_Ox(clusteredO);
+    print_Tx(clusteredT);
+    let chi = calculChi(clusteredO, clusteredT);
+    print_distribution(p);
+    print_chi(chi);
+    let dof = clusteredO.length - 2;
+    print_dof(dof);
+    print_fv(chi, dof, table)
+}
+
+function main(table) {
+    const myArgs = process.argv.slice(2);
+    if (myArgs.length !== 9) {
+        console.log("Wrong number of arg, got %d but expected 9", myArgs.length);
+        process.exit(84);
+    }
+    const numArgs = argsToNumArgs(myArgs);
+    calculus(numArgs, table);
+    //console.log(numArgs);
+}
+
+let table = [
+    [99, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5, 2, 1],
+    [0.00, 0.02, 0.06, 0.15, 0.27, 0.45, 0.71, 1.07, 1.64, 2.71, 3.84, 5.41, 6.63],
+    [0.02, 0.21, 0.45, 0.71, 1.02, 1.39, 1.83, 2.41, 3.22, 4.61, 5.99, 7.82, 9.21],
+    [0.11, 0.58, 1.01, 1.42, 1.87, 2.37, 2.95, 3.66, 4.64, 6.25, 7.81, 9.84, 11.34],
+    [0.30, 1.06, 1.65, 2.19, 2.75, 3.36, 4.04, 4.88, 5.99, 7.78, 9.49, 11.67, 13.28],
+    [0.55, 1.61, 2.34, 3.00, 3.66, 4.35, 5.13, 6.06, 7.29, 9.24, 11.07, 13.39, 15.09],
+    [0.87, 2.20, 3.07, 3.83, 4.57, 5.35, 6.21, 7.23, 8.56, 10.64, 12.59, 15.03, 16.81],
+    [1.24, 2.83, 3.82, 4.67, 5.49, 6.35, 7.28, 8.38, 9.80, 12.02, 14.07, 16.62, 18.48],
+    [1.65, 3.49, 4.59, 5.53, 6.42, 7.34, 8.35, 9.52, 11.03, 13.36, 15.51, 18.17, 20.09],
+    [2.09, 4.17, 5.38, 6.39, 7.36, 8.34, 9.41, 10.66, 12.24, 14.68, 16.92, 19.68, 21.67],
+    [2.56, 4.87, 6.18, 7.27, 8.30, 9.34, 10.47, 11.78, 13.44, 15.99, 18.31, 21.16, 23.21],
+]
+main(table)
