@@ -149,15 +149,15 @@ function print_distribution(p) {
 }
 
 function print_fv(chi, dof, table) {
-    let a = 1;
+    let a = 0;
 
-    for (let i = 1; i < table[dof].length - 1; i++) {
+    for (let i = 0; i < table[dof].length - 1; i++) {
         if (chi < table[dof][i])
             break;
         a++;
     }
     let validity = "";
-    if (a == 1)
+    if (a == 0)
         validity = "P > 99%";
     else if (a == 12)
         validity = "P < 1%";
