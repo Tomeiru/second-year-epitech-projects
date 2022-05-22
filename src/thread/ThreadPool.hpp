@@ -21,6 +21,8 @@ namespace plazza {
         ICondVar &condToDo;
     };
 
+    void *worker_main(void *arg);
+
     class ThreadPool {
         Jobs _jobs;
         unsigned int _size;

@@ -8,7 +8,7 @@
 #include <memory>
 #include "ThreadPool.hpp"
 
-void *worker_main(void *arg)
+void *plazza::worker_main(void *arg)
 {
     plazza::PoolArg *args = (plazza::PoolArg*) arg;
     std::unique_ptr<plazza::IJob> toDo;
