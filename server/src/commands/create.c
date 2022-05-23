@@ -10,7 +10,7 @@
 #include "macros.h"
 
 // TODO : check name
-void create_team_cmd(client_t *client, save_t *save, void *data)
+void create_team_cmd(client_t *client, server_t *server, void *data)
 {
     create_team_cmd_arg_t *arg = data;
     team_t *team;
@@ -19,7 +19,7 @@ void create_team_cmd(client_t *client, save_t *save, void *data)
 
     if (!check_client_logged(client, arg->transaction))
         return;
-    team = team_create(arg->name, arg->desc, save);
+    team = team_create(arg->name, arg->desc, server->save);
     uuid_unparse(team->uuid, team_uuid);
     uuid_unparse(client->uuid, user_uuid);
     server_event_team_created(team_uuid, team->name, user_uuid);
@@ -27,7 +27,7 @@ void create_team_cmd(client_t *client, save_t *save, void *data)
 }
 
 // TODO : check name
-void create_channel_cmd(client_t *client, save_t *save, void *data)
+void create_channel_cmd(client_t *client, server_t *server, void *data)
 {
     create_channel_cmd_arg_t *arg = data;
     team_t *team;
@@ -36,7 +36,7 @@ void create_channel_cmd(client_t *client, save_t *save, void *data)
     char channel_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
-    || !(team = GET_TEAM(client, arg, save)))
+    || !(team = GET_TEAM(client, arg, server->save)))
         return;
     channel = channel_create(arg->name, arg->desc, team);
     uuid_unparse(team->uuid, team_uuid);
@@ -45,7 +45,7 @@ void create_channel_cmd(client_t *client, save_t *save, void *data)
     client_send_success(client, arg->transaction);
 }
 
-void create_thread_cmd(client_t *client, save_t *save, void *data)
+void create_thread_cmd(client_t *client, server_t *server, void *data)
 {
     create_thread_cmd_arg_t *arg = data;
     team_t *team;
@@ -56,7 +56,7 @@ void create_thread_cmd(client_t *client, save_t *save, void *data)
     char user_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
-    || !(team = GET_TEAM(client, arg, save))
+    || !(team = GET_TEAM(client, arg, server->save))
     || !(channel = GET_CHANNEL(client, arg, team)))
         return;
     thread = thread_create(arg->title, arg->msg, client->uuid, channel);
@@ -68,7 +68,7 @@ void create_thread_cmd(client_t *client, save_t *save, void *data)
     client_send_success(client, arg->transaction);
 }
 
-void create_comment_cmd(client_t *client, save_t *save, void *data)
+void create_comment_cmd(client_t *client, server_t *server, void *data)
 {
     create_comment_cmd_arg_t *arg = data;
     team_t *team;
@@ -78,7 +78,7 @@ void create_comment_cmd(client_t *client, save_t *save, void *data)
     char user_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
-    || !(team = GET_TEAM(client, arg, save))
+    || !(team = GET_TEAM(client, arg, server->save))
     || !(channel = GET_CHANNEL(client, arg, team))
     || !(thread = GET_THREAD(client, arg, channel)))
         return;

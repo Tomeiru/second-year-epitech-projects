@@ -31,6 +31,7 @@ typedef struct  server_s {
     int fd;
     sockaddr_in_t socket;
     save_t *save;
+    list_t *clients;
 } server_t;
 
 typedef struct client_s {
