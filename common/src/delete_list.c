@@ -25,6 +25,24 @@ void delete_node(node_t **root, int index)
     free(tmp);
 }
 
+void delete_node_with_data(list_t *list, void *data)
+{
+    node_t *prev = NULL;
+
+    if (!(*list))
+        return;
+    for (list_t cpy = *list; cpy; prev = cpy, cpy = cpy->next) {
+        if (cpy->data != data)
+            continue;
+        if (prev)
+            prev->next = cpy->next;
+        else
+            *list = cpy->next;
+        free(cpy);
+        break;
+    }
+}
+
 int node_len(list_t list)
 {
     int count = 0;

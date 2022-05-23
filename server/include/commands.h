@@ -12,7 +12,6 @@
 #include "cmd_args.h"
 #include "save.h"
 
-#define NULL_COMMAND_ID 255
 #define COMMANDS_NB 8
 
 typedef struct client_s client_t;

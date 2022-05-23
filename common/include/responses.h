@@ -8,7 +8,15 @@
 #pragma once
 
 typedef unsigned char response_t;
+typedef unsigned char error_t;
 
 #define COMMAND_OK 0
 #define UNKNOWN_COMMAND 1
 #define ERROR_OCCURED 2
+
+#define ERROR_UNAUTHORIZED 0
+#define ERROR_ALREADY_EXISTS 1
+#define ERROR_UNKNOWN_TEAM 2
+#define ERROR_UNKNOWN_CHANNEL 2
+#define ERROR_UNKNOWN_THREAD 3
+#define ERROR_UNKNOWN_USER 4

@@ -6,6 +6,7 @@
 */
 
 #include "teams.h"
+#include "cmd_ids.h"
 
 client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list)
 {

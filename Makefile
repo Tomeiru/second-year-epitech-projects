@@ -5,32 +5,33 @@
 ## Makefile
 ##
 
-SRC_COMMON		=	common/src/adding_list.c		\
-					common/src/delete_list.c		\
+SRC_COMMON		=	common/src/adding_list.c				\
+					common/src/delete_list.c				\
 					common/src/safe_malloc.c
 
-SRC_SRV			=	server/src/main.c 				\
-					server/src/server.c 			\
-					server/src/server_utils.c 		\
-					server/src/utils.c				\
-					server/src/client/client.c 		\
-					server/src/client/send.c	 	\
-					server/src/client/responses.c 	\
-					server/src/client/utils.c	 	\
-					server/src/commands/list.c		\
-					server/src/commands/login.c		\
-					server/src/commands/create.c	\
-					server/src/commands/pm.c		\
-					server/src/commands/utils.c		\
-					server/src/save/save.c	 		\
-					server/src/save/save_teams.c	\
-					server/src/save/load.c	 		\
-					server/src/save/load_teams.c	\
-					server/src/save/create.c		\
-					server/src/save/create_teams.c	\
+SRC_SRV			=	server/src/main.c 						\
+					server/src/server.c 					\
+					server/src/server_utils.c 				\
+					server/src/utils.c						\
+					server/src/client/client.c 				\
+					server/src/client/send.c	 			\
+					server/src/client/responses.c 			\
+					server/src/commands/cmd_list.c			\
+					server/src/commands/login.c				\
+					server/src/commands/create.c			\
+					server/src/commands/pm.c				\
+					server/src/commands/utils.c				\
+					server/src/commands/get_or_error.c		\
+					server/src/save/save.c	 				\
+					server/src/save/save_teams.c			\
+					server/src/save/load.c	 				\
+					server/src/save/load_teams.c			\
+					server/src/save/create.c				\
+					server/src/save/create_teams.c			\
 					server/src/save/find.c
 
-SRC_CLI			=	client/src/main.c
+SRC_CLI			=	client/src/main.c						\
+					client/src/transaction.c
 
 INC_COMMON		=	common/include
 INC_SRV			=	server/include

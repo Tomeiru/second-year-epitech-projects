@@ -14,6 +14,7 @@ static void load_users(save_t *save, int fd)
 {
     user_t *user;
     uint nb;
+    char uuid[36];
 
     read(fd, &nb, sizeof(nb));
     for (uint i = 0; i < nb; i++) {
@@ -24,6 +25,8 @@ static void load_users(save_t *save, int fd)
         load_uuids(&user->teams, user->teams_nb, fd);
         load_uuids(&user->discussions, user->discussions_nb, fd);
         push_back(&save->users, user);
+        uuid_unparse(user->uuid, uuid);
+        server_event_user_loaded(uuid, user->name);
     }
 }
 

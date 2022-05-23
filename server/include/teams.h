@@ -24,11 +24,8 @@
 #include "safe_malloc.h"
 #include "logging_server.h"
 #include "save.h"
-
-typedef unsigned int uint;
-typedef struct sockaddr sockaddr_t;
-typedef struct sockaddr_in sockaddr_in_t;
-typedef struct timeval timeval_t;
+#include "typedefs.h"
+#include "responses.h"
 
 typedef struct  server_s {
     int fd;
@@ -61,9 +58,19 @@ void client_send_linked_list(client_t *client, list_t list, size_t size);
 void client_send_data(client_t *client, void *data, size_t size);
 void client_send_value(client_t *client, size_t value, size_t size);
 
-void client_send_error(client_t *client, char *msg);
+void client_send_success(client_t *client, uint64_t transaction);
+void client_send_error(client_t *client, uint64_t transaction, error_t error);
 void client_send_unknown_cmd(client_t *client);
 
-bool client_check_logged(client_t *client);
+bool check_client_logged(client_t *client, uint64_t transation);
+
+team_t *get_team_or_error(client_t *client,
+uuid_t uuid, save_t *save, uint64_t transaction);
+channel_t *get_channel_or_error(client_t *client,
+uuid_t uuid, team_t *team, uint64_t transaction);
+thread_t *get_thread_or_error(client_t *client,
+uuid_t uuid, channel_t *channel, uint64_t transaction);
+user_t *get_user_or_error(client_t *client,
+uuid_t uuid, save_t *save, uint64_t transaction);
 
 int is_not_number(char *s);
