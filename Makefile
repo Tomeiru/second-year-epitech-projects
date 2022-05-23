@@ -7,12 +7,12 @@
 
 SRC_COMMON		=	common/src/adding_list.c				\
 					common/src/delete_list.c				\
-					common/src/safe_malloc.c
+					common/src/safe_malloc.c				\
+					common/src/utils.c
 
 SRC_SRV			=	server/src/main.c 						\
 					server/src/server.c 					\
 					server/src/server_utils.c 				\
-					server/src/utils.c						\
 					server/src/client/client.c 				\
 					server/src/client/send.c	 			\
 					server/src/client/responses.c 			\

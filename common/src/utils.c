@@ -5,7 +5,7 @@
 ** utils
 */
 
-#include "teams.h"
+#include <ctype.h>
 
 int is_not_number(char *s)
 {

@@ -26,6 +26,7 @@
 #include "save.h"
 #include "typedefs.h"
 #include "responses.h"
+#include "utils.h"
 
 typedef struct  server_s {
     int fd;
