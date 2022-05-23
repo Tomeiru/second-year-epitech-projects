@@ -51,10 +51,12 @@ int node_len(list_t list)
     return (count);
 }
 
-void delete_list(node_t **root)
+void delete_list(list_t list)
 {
-    int len = node_len(*root);
+    list_t next;
 
-    for (int i = 0; i < len; i++)
-        delete_node(root, 0);
+    for (list_t cpy = list; cpy; cpy = next) {
+        next = cpy->next;
+        free(cpy);
+    }
 }

@@ -81,6 +81,8 @@ void load_infos(save_t *save, char *path);
 void load_uuids(uuid_list_t *uuids, uint n, int fd);
 void load_teams(save_t *save, int fd);
 
+void save_destroy(save_t *save);
+
 user_t *user_create(char *name, save_t *save);
 discussion_t *discussion_create(user_t *usr1, user_t *usr2, save_t *save);
 team_t *team_create(char *name, char *desc, save_t *save);

@@ -28,7 +28,8 @@ SRC_SRV			=	server/src/main.c 						\
 					server/src/save/load_teams.c			\
 					server/src/save/create.c				\
 					server/src/save/create_teams.c			\
-					server/src/save/find.c
+					server/src/save/find.c					\
+					server/src/save/destroy.c
 
 SRC_CLI			=	client/src/main.c						\
 					client/src/transaction.c

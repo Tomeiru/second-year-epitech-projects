@@ -29,7 +29,7 @@
 
 typedef struct  server_s {
     int fd;
-    struct sockaddr_in socket;
+    sockaddr_in_t socket;
     save_t *save;
 } server_t;
 

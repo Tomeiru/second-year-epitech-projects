@@ -24,8 +24,10 @@ server_t *init_server(int port)
 server_t *init_serv_struct(int port, int opt)
 {
     server_t *server = safe_malloc(sizeof(server_t));
-    struct sockaddr_in address;
+    sockaddr_in_t address = { .sin_family = AF_INET,
+    .sin_addr.s_addr = INADDR_ANY, .sin_port = htons(port)};
 
+    server->save = safe_malloc(sizeof(save_t));
     if ((server->fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         puts("socket failed");
         return (NULL);
@@ -34,10 +36,7 @@ server_t *init_serv_struct(int port, int opt)
         puts("setsocketopt");
         return (NULL);
     }
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(port);
-    server->socket = address;
+    memcpy(&server->socket, &address, sizeof(sockaddr_in_t));
     if (bind(server->fd, (struct sockaddr*) &address, sizeof(address)) < 0) {
         puts("bind failed");
         return (NULL);
@@ -58,6 +57,9 @@ int start_server(int port)
         max_fd = set_fd(&readfds, server, client_list);
         server_update(server, &client_list, &readfds, max_fd);
     }
+    save_infos(server->save, "./teams.dat");
+    save_destroy(server->save);
+    free(server);
 }
 
 void server_update(server_t *srv, list_t *list, fd_set *readfds, int max)

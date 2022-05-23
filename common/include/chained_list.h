@@ -33,4 +33,4 @@ void push_node_back(node_t **root, node_t *node);
 int node_len(list_t list);
 void delete_node(node_t **root, int index);
 void delete_node_with_data(list_t *list, void *data);
-void delete_list(node_t **root);
+void delete_list(list_t list);
