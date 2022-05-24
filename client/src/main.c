@@ -4,6 +4,8 @@
 ** File description:
 ** main
 */
+
+#include "chained_list.h"
 #include "conn.h"
 #include "safe_malloc.h"
 #include "utils.h"
@@ -31,22 +33,32 @@ conn_t *init_connect(char *ip, int port)
     return (connection);
 }
 
+void wait_for_input(fd_set *rdset, conn_t *connection)
+{
+    FD_ZERO(rdset);
+    FD_SET(0, rdset);
+    FD_SET(connection->serv_fd, rdset);
+    select(connection->serv_fd, rdset, NULL, NULL, NULL);
+}
+
 int start_cli(char *ip, int port)
 {
     conn_t *connection = init_connect(ip, port);
-    char sending[1024] = { 0 };
-    char received[1024] = { 0 };
-    int valread = 0;
+    list_t transations = NULL;
+    fd_set rdset;
 
     if (!connection)
         return (84);
     while (1) {
-        read(connection->serv_fd, sending, 1024);
-        write(connection->serv_fd, sending, 1024);
-        printf("Message sent\r\n");
-        valread = read(connection->serv_fd, received, 1024);
-        printf("Received : %s\n", received);
+        wait_for_input(&rdset, connection);
+        if (FD_ISSET(connection->serv_fd, &rdset)
+        && handle_server_msg(connection, &transations))
+            break;
+        if (FD_ISSET(0, &rdset)
+        && handle_user_cmd(connection, &transations))
+            break;
     }
+    return 0;
 }
 
 int main(int ac, char **av)
