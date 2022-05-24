@@ -7,8 +7,6 @@
 
 #pragma once
 
-typedef unsigned char command_id_t;
-
 #define RESPONSE_ID 0
 
 #define LOGIN_ID 1
