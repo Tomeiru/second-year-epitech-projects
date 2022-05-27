@@ -5,3 +5,8 @@
 ** cmd_list
 */
 
+#include "server_cmds.h"
+
+const serv_cmd_t SERV_CMDS[SERV_CMD_NB] = {
+    {RESPONSE_ID, reponse_serv_cmd},
+};

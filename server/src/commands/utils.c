@@ -19,8 +19,8 @@ const command_t *get_command_from_id(command_id_t id)
 bool check_client_logged(client_t *client, uint64_t transation)
 {
     if (!client->logged) {
-        client_send_error(client, transation, ERROR_UNAUTHORIZED);
-        return true;
+        client_send_error(client, transation, ERROR_UNAUTHORIZED, NULL);
+        return false;
     }
-    return false;
+    return true;
 }

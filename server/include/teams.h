@@ -61,7 +61,8 @@ void client_send_data(client_t *client, void *data, size_t size);
 void client_send_value(client_t *client, size_t value, size_t size);
 
 void client_send_success(client_t *client, uint64_t transaction);
-void client_send_error(client_t *client, uint64_t transaction, error_t error);
+void client_send_error(client_t *client,
+uint64_t transaction, error_t error, uuid_t *uuid);
 void client_send_unknown_cmd(client_t *client);
 
 bool check_client_logged(client_t *client, uint64_t transation);

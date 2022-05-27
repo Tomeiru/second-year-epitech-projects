@@ -13,7 +13,7 @@ uuid_t uuid, save_t *save, uint64_t transaction)
     team_t *team = get_team_by_uuid(uuid, save);
 
     if (!team)
-        client_send_error(client, transaction, ERROR_UNKNOWN_TEAM);
+        client_send_error(client, transaction, ERROR_UNKNOWN_TEAM, &uuid);
     return team;
 }
 
@@ -23,7 +23,7 @@ uuid_t uuid, team_t *team, uint64_t transaction)
     channel_t *channel = get_channel_by_uuid(uuid, team);
 
     if (!channel)
-        client_send_error(client, transaction, ERROR_UNKNOWN_CHANNEL);
+        client_send_error(client, transaction, ERROR_UNKNOWN_CHANNEL, &uuid);
     return channel;
 }
 
@@ -33,7 +33,7 @@ uuid_t uuid, channel_t *channel, uint64_t transaction)
     thread_t *thread = get_thread_by_uuid(uuid, channel);
 
     if (!thread)
-        client_send_error(client, transaction, ERROR_UNKNOWN_THREAD);
+        client_send_error(client, transaction, ERROR_UNKNOWN_THREAD, &uuid);
     return thread;
 }
 
@@ -43,6 +43,6 @@ uuid_t uuid, save_t *save, uint64_t transaction)
     user_t *user = get_user_by_uuid(uuid, save);
 
     if (!user)
-        client_send_error(client, transaction, ERROR_UNKNOWN_USER);
+        client_send_error(client, transaction, ERROR_UNKNOWN_USER, &uuid);
     return user;
 }

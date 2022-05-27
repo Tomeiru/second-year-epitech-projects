@@ -21,7 +21,6 @@
 #include "typedefs.h"
 
 typedef struct conn_s {
-    int cli_fd;
-    int serv_fd;
+    int socket;
     sockaddr_in_t sockaddr;
 } conn_t;
