@@ -10,7 +10,7 @@
 #include "chained_list.h"
 #include "cmd_ids.h"
 
-#define SERV_CMD_NB 1
+#define SERV_CMD_NB 3
 
 typedef struct client_s client_t;
 
@@ -22,5 +22,7 @@ typedef struct serv_cmd_s {
 } serv_cmd_t;
 
 void reponse_serv_cmd(client_t *client, list_t *transactions);
+void event_login_serv_cmd(client_t *client, list_t *transactions);
+void event_logout_serv_cmd(client_t *client, list_t *transactions);
 
 extern const serv_cmd_t SERV_CMDS[SERV_CMD_NB];

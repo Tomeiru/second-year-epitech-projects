@@ -28,11 +28,13 @@
 #include "responses.h"
 #include "utils.h"
 
+#define SAVEFILE_PATH "./teams.dat"
+
 typedef struct  server_s {
     int fd;
     sockaddr_in_t socket;
     save_t *save;
-    list_t *clients;
+    list_t clients;
 } server_t;
 
 typedef struct client_s {
@@ -46,10 +48,10 @@ typedef struct client_s {
 server_t *init_server(int port);
 server_t *init_serv_struct(int port, int opt);
 int start_server(int port);
-void server_update(server_t *srv, list_t *list, fd_set *readfds, int max);
+void server_update(server_t *srv, fd_set *readfds, int max);
 
-int set_fd(fd_set *readfds, server_t *server, list_t list);
-bool accept_new_clients(int socket, list_t *list);
+int set_fd(fd_set *readfds, server_t *server);
+bool accept_new_clients(server_t *server);
 
 client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list);
 void client_delete(client_t *client);

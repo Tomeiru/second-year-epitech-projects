@@ -8,6 +8,7 @@
 #include "cli_teams.h"
 #include "safe_malloc.h"
 #include "utils.h"
+#include "cli_cmds.h"
 
 conn_t *init_connect(char *ip, int port)
 {
@@ -48,6 +49,9 @@ int start_cli(char *ip, int port)
 
     if (!client.conn)
         return (84);
+    char *name = "JEFFREY";
+    login_cli_cmd(&client, 1, &name, &transactions);
+    logout_cli_cmd(&client, 0, NULL, &transactions);
     while (1) {
         wait_for_input(&rdset, client.conn);
         if (FD_ISSET(client.conn->socket, &rdset)
