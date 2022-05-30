@@ -13,7 +13,7 @@ server_t *init_server(int port)
 
     if (!server)
         return (NULL);
-    load_infos(server->save, "./teams.dat");
+    load_infos(server->save, SAVEFILE_PATH);
     if (listen(server->fd, 3) < 0) {
         puts("listen");
         return (NULL);
@@ -47,22 +47,21 @@ server_t *init_serv_struct(int port, int opt)
 int start_server(int port)
 {
     server_t *server = init_server(port);
-    list_t client_list = NULL;
     fd_set readfds;
     int max_fd = 0;
 
     if (!server)
         return (84);
     while (1) {
-        max_fd = set_fd(&readfds, server, client_list);
-        server_update(server, &client_list, &readfds, max_fd);
+        max_fd = set_fd(&readfds, server);
+        server_update(server, &readfds, max_fd);
     }
     save_infos(server->save, "./teams.dat");
     save_destroy(server->save);
     free(server);
 }
 
-void server_update(server_t *srv, list_t *list, fd_set *readfds, int max)
+void server_update(server_t *srv, fd_set *readfds, int max)
 {
     int activity = select(max + 1, readfds, NULL, NULL, NULL);
     client_t *client;
@@ -70,8 +69,8 @@ void server_update(server_t *srv, list_t *list, fd_set *readfds, int max)
     if ((activity < 0) && (errno != EINTR))
         puts("select error");
     if (FD_ISSET(srv->fd, readfds))
-        accept_new_clients(srv->fd, list);
-    for (node_t *node = *list; node; node = node->next) {
+        accept_new_clients(srv);
+    for (node_t *node = srv->clients; node; node = node->next) {
         client = (client_t*) node->data;
         if (!FD_ISSET(client->fd, readfds))
             continue;

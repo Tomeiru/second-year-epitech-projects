@@ -26,11 +26,27 @@ transaction_execute_fct_t execute, transaction_free_fct_t free, list_t *list)
 void transaction_destroy(transaction_t *transaction, list_t *list)
 {
     delete_node_with_data(list, transaction);
-    transaction->free(transaction->data);
+    if (transaction->free)
+        transaction->free(transaction->data);
     free(transaction);
 }
 
-bool handle_transaction_with_id(uint64_t id, conn_t *conn, list_t *list)
+void transaction_destroy_with_id(uint64_t id, list_t *list)
+{
+    transaction_t *transaction = NULL;
+
+    for (list_t cpy = *list; cpy; cpy = cpy->next) {
+        if (((transaction_t*) cpy->data)->id == id) {
+            transaction = cpy->data;
+            break;
+        }
+    }
+    if (!transaction)
+        return;
+    transaction_destroy(transaction, list);
+}
+
+bool handle_transaction_with_id(uint64_t id, client_t *client, list_t *list)
 {
     transaction_t *transaction = NULL;
 
@@ -42,7 +58,7 @@ bool handle_transaction_with_id(uint64_t id, conn_t *conn, list_t *list)
     }
     if (!transaction)
         return true;
-    transaction->execute(conn, transaction->data);
+    transaction->execute(client, transaction->data);
     transaction_destroy(transaction, list);
     return false;
 }

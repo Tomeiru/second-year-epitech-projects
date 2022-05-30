@@ -4,49 +4,64 @@
 ** File description:
 ** main
 */
-#include "conn.h"
+
+#include "cli_teams.h"
 #include "safe_malloc.h"
 #include "utils.h"
+#include "cli_cmds.h"
 
 conn_t *init_connect(char *ip, int port)
 {
-    conn_t *connection = safe_malloc(sizeof(conn_t));
+    conn_t *conn = safe_malloc(sizeof(conn_t));
     struct sockaddr_in serv_addr = {.sin_family = AF_INET,
     .sin_port = htons(port)};
 
-    if ((connection->serv_fd = socket(AF_INET, SOCK_STREAM, 0)) <  0) {
-        printf("Client ocket creation error\n");
+    if ((conn->socket = socket(AF_INET, SOCK_STREAM, 0)) <  0) {
+        puts("Client ocket creation error");
         return (NULL);
     }
     if (inet_pton(AF_INET, ip, &serv_addr.sin_addr) <= 0) {
-        printf("Invalid adress or adress not supported\n");
+        puts("Invalid adress or adress not supported");
         return (NULL);
     }
-    if ((connection->cli_fd = connect(connection->serv_fd,
-    (struct sockaddr*)&serv_addr, sizeof(serv_addr))) < 0) {
-        printf("Connection Failed\n");
+    if (connect(conn->socket,
+    (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+        puts("Connection Failed");
         return (NULL);
     }
-    connection->sockaddr = serv_addr;
-    return (connection);
+    conn->sockaddr = serv_addr;
+    return (conn);
+}
+
+void wait_for_input(fd_set *rdset, conn_t *conn)
+{
+    FD_ZERO(rdset);
+    FD_SET(0, rdset);
+    FD_SET(conn->socket, rdset);
+    select(conn->socket + 1, rdset, NULL, NULL, NULL);
 }
 
 int start_cli(char *ip, int port)
 {
-    conn_t *connection = init_connect(ip, port);
-    char sending[1024] = { 0 };
-    char received[1024] = { 0 };
-    int valread = 0;
+    client_t client = {.conn = init_connect(ip, port), .connected = false};
+    list_t transactions = NULL;
+    fd_set rdset;
 
-    if (!connection)
+    if (!client.conn)
         return (84);
+    char *name = "JEFFREY";
+    login_cli_cmd(&client, 1, &name, &transactions);
+    logout_cli_cmd(&client, 0, NULL, &transactions);
     while (1) {
-        read(connection->serv_fd, sending, 1024);
-        write(connection->serv_fd, sending, 1024);
-        printf("Message sent\r\n");
-        valread = read(connection->serv_fd, received, 1024);
-        printf("Received : %s\n", received);
+        wait_for_input(&rdset, client.conn);
+        if (FD_ISSET(client.conn->socket, &rdset)
+        && handle_server_msg(&client, &transactions))
+            break;
+        if (FD_ISSET(0, &rdset)
+        && handle_user_cmd(&client, &transactions))
+            break;
     }
+    return 0;
 }
 
 int main(int ac, char **av)

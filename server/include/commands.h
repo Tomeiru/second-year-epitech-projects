@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 #include <uuid/uuid.h>
+#include "cmd_ids.h"
 #include "cmd_args.h"
 #include "save.h"
 
@@ -17,7 +18,6 @@
 typedef struct client_s client_t;
 typedef struct server_s server_t;
 
-typedef unsigned char command_id_t;
 typedef void (*command_execute_fct_t)(client_t *client,
 server_t *server, void *data);
 

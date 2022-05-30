@@ -22,6 +22,7 @@ SRC_SRV			=	server/src/main.c 						\
 					server/src/commands/pm.c				\
 					server/src/commands/utils.c				\
 					server/src/commands/get_or_error.c		\
+					server/src/events/login.c				\
 					server/src/save/save.c	 				\
 					server/src/save/save_teams.c			\
 					server/src/save/load.c	 				\
@@ -32,7 +33,14 @@ SRC_SRV			=	server/src/main.c 						\
 					server/src/save/destroy.c
 
 SRC_CLI			=	client/src/main.c						\
-					client/src/transaction.c
+					client/src/transaction.c				\
+					client/src/cli_cmd/parser.c				\
+					client/src/cli_cmd/cmd_list.c			\
+					client/src/cli_cmd/login.c				\
+					client/src/cli_cmd/utils.c				\
+					client/src/serv_cmd/server.c			\
+					client/src/serv_cmd/cmd_list.c			\
+					client/src/serv_cmd/login.c
 
 INC_COMMON		=	common/include
 INC_SRV			=	server/include

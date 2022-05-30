@@ -35,11 +35,13 @@ void client_update(client_t *client, server_t *srv)
     const command_t *cmd;
     char buf[1024];
 
+    puts("Update client !");
     if (read(client->fd, &cmd_id, sizeof(command_id_t)) == 0) {
         client->quit = true;
         return;
     }
     cmd = get_command_from_id(cmd_id);
+    printf("Receive cmd %hhu\n", cmd_id);
     if (cmd == NULL || (cmd->size_args
     && (size_t) read(client->fd, buf, cmd->size_args) != cmd->size_args)) {
         client_send_unknown_cmd(client);
