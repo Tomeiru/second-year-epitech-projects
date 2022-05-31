@@ -9,6 +9,20 @@
 #include "safe_malloc.h"
 #include "utils.h"
 #include "cli_cmds.h"
+<<<<<<< HEAD
+=======
+
+use_t *init_use()
+{
+    use_t *use = safe_malloc(sizeof(use_t));
+
+    use->state = NO_USE_STATE;
+    memset(use->team, 0, 16);
+    memset(use->channel, 0, 16);
+    memset(use->thread, 0, 16);
+    return (use);
+}
+>>>>>>> master
 
 conn_t *init_connect(char *ip, int port)
 {
@@ -43,7 +57,8 @@ void wait_for_input(fd_set *rdset, conn_t *conn)
 
 int start_cli(char *ip, int port)
 {
-    client_t client = {.conn = init_connect(ip, port), .connected = false};
+    client_t client = {.conn = init_connect(ip, port),  .use = init_use(),
+    .connected = false};
     list_t transactions = NULL;
     fd_set rdset;
 
@@ -58,7 +73,7 @@ int start_cli(char *ip, int port)
         && handle_server_msg(&client, &transactions))
             break;
         if (FD_ISSET(0, &rdset)
-        && handle_user_cmd(&client, &transactions))
+        && !handle_user_cmd(&client, &transactions))
             break;
     }
     return 0;

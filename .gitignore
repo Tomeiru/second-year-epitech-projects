@@ -1,7 +1,9 @@
 /myteams_server
 /myteams_cli
+a.out
 
 **/*.o
 **/*.txt
 
 .vscode
+vgcore*

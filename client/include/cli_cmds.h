@@ -8,12 +8,16 @@
 #pragma once
 
 #include "chained_list.h"
+#include <stdbool.h>
 
-#define CLI_CMD_NB 2
+#define CLI_CMD_NB 14
+#define TEAMS_EOF false
+#define SUCCESS_CMD true
+#define ERROR_CMD -1
 
 typedef struct client_s client_t;
 
-typedef void (*cli_cmd_execute_fct_t)(client_t *client,
+typedef bool (*cli_cmd_execute_fct_t)(client_t *client,
 int ac, char **av, list_t *transations);
 
 typedef struct cli_cmd_s {
@@ -22,9 +26,22 @@ typedef struct cli_cmd_s {
     cli_cmd_execute_fct_t execute;
 } cli_cmd_t;
 
-void login_cli_cmd(client_t *client,
-int ac, char **av, list_t *transactions);
-void logout_cli_cmd(client_t *client,
-int ac, char **av, list_t *transactions);
+bool create_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool help_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool info_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool list_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool login_cli_cmd(client_t *client, int ac, char **av, list_t *transactions);
+bool logout_cli_cmd(client_t *client, int ac, char **av, list_t *transactions);
+bool messages_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool send_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool subscribe_parser(client_t *client, int ac, char **av,
+list_t *transactions);
+bool subscribed_parser(client_t *client, int ac, char **av,
+list_t *transactions);
+bool unsubscribe_parser(client_t *client, int ac, char **av,
+list_t *transactions);
+bool use_parse(client_t *client, int ac, char **av, list_t *transactions);
+bool user_parse(client_t *client, int ac, char **av, list_t *transactions);
+bool users_parse(client_t *client, int ac, char **av, list_t *transactions);
 
 extern const cli_cmd_t CLI_CMDS[CLI_CMD_NB];

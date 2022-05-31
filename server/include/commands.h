@@ -9,8 +9,8 @@
 
 #include <stdlib.h>
 #include <uuid/uuid.h>
-#include "cmd_args.h"
 #include "cmd_ids.h"
+#include "cmd_args.h"
 #include "save.h"
 
 #define COMMANDS_NB 8

@@ -31,6 +31,7 @@ typedef struct use_s {
 
 typedef struct client_s {
     conn_t *conn;
+    use_t *use;
     bool connected;
     uuid_t uuid;
 } client_t;
