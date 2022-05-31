@@ -74,7 +74,6 @@ bool use_parse(client_t *client, int ac, char **av, list_t *transactions)
         empty_use_handler, team_use_handler, channel_use_handler,
         thread_use_handler
     };
-    printf("Currently in use function parser");
     for (int i = 0; i < 4; i++)
         if (i == ac)
             return (use_handlers[i](av, client));

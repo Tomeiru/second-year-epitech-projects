@@ -18,7 +18,6 @@ static char **get_command(int *len)
     if (*len == 0)
         return (NULL);
     input[*len - 1] = '\0';
-    printf("%s\n", input);
     return (teams_cl_to_arr(input));
 }
 

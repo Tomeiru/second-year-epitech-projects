@@ -11,13 +11,13 @@
 
 static bool help_handler(void)
 {
-    printf("Successfully called help function");
+    puts("//TODO: Create a really helpful help\n");
     return (SUCCESS_CMD);
 }
 
 bool help_parser(client_t *client, int ac, char **av, list_t *transactions)
 {
-    printf("Currently in help function parser");
+    puts("Currently in help function parser\n");
     UNUSED(client);
     UNUSED(av);
     UNUSED(transactions);

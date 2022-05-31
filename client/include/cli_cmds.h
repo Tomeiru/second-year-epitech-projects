@@ -30,8 +30,8 @@ bool create_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool help_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool info_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool list_parser(client_t *client, int ac, char **av, list_t *transactions);
-bool login_cli_cmd(client_t *client, int ac, char **av, list_t *transactions);
-bool logout_cli_cmd(client_t *client, int ac, char **av, list_t *transactions);
+bool login_parser(client_t *client, int ac, char **av, list_t *transactions);
+bool logout_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool messages_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool send_parser(client_t *client, int ac, char **av, list_t *transactions);
 bool subscribe_parser(client_t *client, int ac, char **av,

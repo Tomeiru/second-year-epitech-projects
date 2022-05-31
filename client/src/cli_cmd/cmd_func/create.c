@@ -9,14 +9,78 @@
 #include "cli_cmds.h"
 #include "cmd_args.h"
 
+static void handle_create_transaction(client_t *client, void *data)
+{
+    UNUSED(client);
+    UNUSED(data);
+    puts("[INFO] Create transaction handle !");
+}
+
+static bool create_comment(client_t *client, char *comment_body, list_t *transactions)
+{
+    create_comment_cmd_arg_t cmd_arg;
+
+    memcpy(cmd_arg.team_uuid, client->use->team, 16);
+    memcpy(cmd_arg.channel_uuid, client->use->channel, 16);
+    memcpy(cmd_arg.thread_uuid, client->use->thread, 16);
+    memset(cmd_arg.comment, 0, MAX_BODY_LENGTH);
+    cmd_arg.transaction = transaction_create(NULL,
+    handle_create_transaction, NULL, transactions)->id;
+    memcpy(cmd_arg.comment, comment_body, MAX_BODY_LENGTH);
+    client_send_cmd(client->conn, CREATE_COMMENT_ID, &cmd_arg, sizeof(cmd_arg));
+    return (SUCCESS_CMD);
+}
+
+static bool create_thread(client_t *client, char *thread_title, char *thread_message, list_t *transactions)
+{
+    create_thread_cmd_arg_t cmd_arg;
+
+    memcpy(cmd_arg.team_uuid, client->use->team, 16);
+    memcpy(cmd_arg.channel_uuid, client->use->channel, 16);
+    memset(cmd_arg.title, 0, MAX_NAME_LENGTH);
+    memset(cmd_arg.msg, 0, MAX_BODY_LENGTH);
+    cmd_arg.transaction = transaction_create(NULL,
+    handle_create_transaction, NULL, transactions)->id;
+    memcpy(cmd_arg.title, thread_title, MAX_NAME_LENGTH);
+    memcpy(cmd_arg.msg, thread_message, MAX_BODY_LENGTH);
+    client_send_cmd(client->conn, CREATE_THREAD_ID, &cmd_arg, sizeof(cmd_arg));
+    return (SUCCESS_CMD);
+}
+
+static bool create_channel_team(client_t *client, char **av, command_id_t cmd, list_t *transactions)
+{
+    create_team_channel_cmd_arg_t cmd_arg;
+
+    memcpy(cmd_arg.team_uuid, client->use->team, 16);
+    memset(cmd_arg.name, 0, MAX_NAME_LENGTH);
+    memset(cmd_arg.desc, 0, MAX_DESCRIPTION_LENGTH);
+    cmd_arg.transaction = transaction_create(NULL,
+    handle_create_transaction, NULL, transactions)->id;
+    memcpy(cmd_arg.name, av[0], MAX_NAME_LENGTH);
+    memcpy(cmd_arg.desc, av[1], MAX_DESCRIPTION_LENGTH);
+    client_send_cmd(client->conn, cmd, &cmd_arg, sizeof(cmd_arg));
+    return (SUCCESS_CMD);
+}
+
 bool create_parser(client_t *client, int ac, char **av, list_t *transactions)
 {
-    printf("Currently in create function parser\n");
-    if (!ac)
+    if (!ac || ac > 2)
         return (ERROR_CMD);
-    UNUSED(client);
-    UNUSED(ac);
-    UNUSED(av);
-    UNUSED(transactions);
+    if (client->use->state == THREAD_USE_STATE) {
+        if (ac != 1 || strlen(av[0]) >= MAX_BODY_LENGTH)
+            return (ERROR_CMD);
+        return (create_comment(client, av[0], transactions));
+    }if (ac != 2)
+        return (ERROR_CMD);
+    if (client->use->state == CHANNEL_USE_STATE) {
+        if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >= MAX_BODY_LENGTH)
+            return (ERROR_CMD);
+        return (create_thread(client, av[0], av[1], transactions));
+    }
+    if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >= MAX_DESCRIPTION_LENGTH)
+        return (ERROR_CMD);
+    for (int i = 0; i < 2; i++)
+        if (client->use->state == (use_state_t)i)
+            return (create_channel_team(client, av, CREATE_TEAM_ID + i, transactions));
     return (SUCCESS_CMD);
 }

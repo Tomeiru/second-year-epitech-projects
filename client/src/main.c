@@ -10,7 +10,7 @@
 #include "utils.h"
 #include "cli_cmds.h"
 
-use_t *init_use()
+use_t *init_use(void)
 {
     use_t *use = safe_malloc(sizeof(use_t));
 
@@ -61,9 +61,9 @@ int start_cli(char *ip, int port)
 
     if (!client.conn)
         return (84);
-    char *name = "JEFFREY";
-    login_cli_cmd(&client, 1, &name, &transactions);
-    logout_cli_cmd(&client, 0, NULL, &transactions);
+    //char *name = "JEFFREY";
+    //login_cli_cmd(&client, 1, &name, &transactions);
+    //logout_cli_cmd(&client, 0, NULL, &transactions);
     while (1) {
         wait_for_input(&rdset, client.conn);
         if (FD_ISSET(client.conn->socket, &rdset)

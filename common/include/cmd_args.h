@@ -20,18 +20,12 @@ typedef struct logout_cmd_arg_s {
     uint64_t transaction;
 } logout_cmd_arg_t;
 
-typedef struct create_team_cmd_arg_s {
-    uint64_t transaction;
-    char name[MAX_NAME_LENGTH];
-    char desc[MAX_DESCRIPTION_LENGTH];
-} create_team_cmd_arg_t;
-
-typedef struct create_channel_cmd_arg_s {
+typedef struct create_team_channel_cmd_arg_s {
     uint64_t transaction;
     uuid_t team_uuid;
     char name[MAX_NAME_LENGTH];
     char desc[MAX_DESCRIPTION_LENGTH];
-} create_channel_cmd_arg_t;
+} create_team_channel_cmd_arg_t;
 
 typedef struct create_thread_cmd_arg_s {
     uint64_t transaction;
@@ -74,21 +68,12 @@ typedef struct list_users_cmd_arg_s {
     uint64_t transaction;
 } list_users_cmd_arg_t;
 
-typedef struct list_teams_cmd_arg_s {
+typedef struct list_cmd_arg_s {
     uint64_t transaction;
-} list_teams_cmd_arg_t;
-
-typedef struct list_channels_cmd_arg_s {
-    uint64_t transaction;
-} list_channels_cmd_arg_t;
-
-typedef struct list_threads_cmd_arg_s {
-    uint64_t transaction;
-} list_threads_cmd_arg_t;
-
-typedef struct list_comments_cmd_arg_s {
-    uint64_t transaction;
-} list_comments_cmd_arg_t;
+    uuid_t team_uuid;
+    uuid_t channel_uuid;
+    uuid_t thread_uuid;
+} list_cmd_arg_t;
 
 typedef struct list_subscribed_teams_cmd_arg_s {
     uint64_t transaction;
@@ -104,18 +89,9 @@ typedef struct info_user_cmd_arg_s {
     uuid_t user_uuid;
 } info_user_cmd_t;
 
-typedef struct info_current_user_cmd_arg_s {
+typedef struct info_cmd_arg_s {
     uint64_t transaction;
-} info_current_user_cmd_arg_t;
-
-typedef struct info_team_cmd_arg_s {
-    uint64_t transaction;
-} info_team_cmd_arg_t;
-
-typedef struct info_channel_cmd_arg_s {
-    uint64_t transaction;
-} info_channel_cmd_arg_t;
-
-typedef struct info_thread_cmd_arg_s {
-    uint64_t transaction;
-} info_thread_cmd_arg_t;
+    uuid_t team_uuid;
+    uuid_t channel_uuid;
+    uuid_t thread_uuid;
+} info_cmd_arg_t;
