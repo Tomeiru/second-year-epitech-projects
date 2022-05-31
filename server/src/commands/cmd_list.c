@@ -18,4 +18,10 @@ const command_t COMMANDS[COMMANDS_NB] = {
     {CREATE_COMMENT_ID, sizeof(create_comment_cmd_arg_t), create_comment_cmd},
     {SEND_PM_ID, sizeof(send_pm_cmd_arg_t), send_pm_cmd},
     {GET_PMS_ID, sizeof(get_pm_cmd_arg_t), get_pm_cmd},
+    {SUBSCRIBE_ID, sizeof(subscribe_cmd_arg_t), subscribe_to_team_cmd},
+    {UNSUBSCRIBE_ID, sizeof(unsubscribe_cmd_arg_t), unsubscribe_to_team_cmd},
+    {LIST_SUBSCRIBED_TEAMS_ID,
+    sizeof(list_subscribed_teams_cmd_arg_t), list_subscribed_teams_cmd},
+    {LIST_USERS_SUBSCRIBED_TO_TEAM_ID,
+    sizeof(list_users_subscribed_to_team_cmd_arg_t), list_users_subscribed_cmd},
 };

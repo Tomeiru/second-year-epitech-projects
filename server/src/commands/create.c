@@ -53,20 +53,18 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     team_t *team;
     channel_t *channel;
     thread_t *thread;
-    char channel_uuid[36];
-    char thread_uuid[36];
-    char user_uuid[36];
+    char uuid[36 * 3];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
     || !(channel = GET_CHANNEL(client, arg, team)))
         return;
     thread = thread_create(arg->title, arg->msg, client->uuid, channel);
-    uuid_unparse(channel->uuid, channel_uuid);
-    uuid_unparse(thread->uuid, thread_uuid);
-    uuid_unparse(client->uuid, user_uuid);
-    server_event_thread_created(channel_uuid,
-    thread_uuid, user_uuid, arg->title, arg->msg);
+    uuid_unparse(channel->uuid, uuid);
+    uuid_unparse(thread->uuid, uuid + 36);
+    uuid_unparse(client->uuid, uuid + 72);
+    server_event_thread_created(uuid, uuid + 36,
+    uuid + 72, arg->title, arg->msg);
     client_send_success(client, arg->transaction);
     client_send_data(client, thread->uuid, sizeof(uuid_t));
 }

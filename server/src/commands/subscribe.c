@@ -18,11 +18,11 @@ void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, srv->save)))
         return;
-    if (!does_list_contains_uuid(arg->team_uuid, team->uuid)) {
+    if (!does_list_contains_uuid(arg->team_uuid, team->subscribers)) {
         node = safe_malloc(sizeof(uuid_node_t));
         memcpy(node->uuid, client->uuid, sizeof(uuid_t));
         node->next = NULL;
-        push_node_back(&team->subscribers, node);
+        push_node_back((list_t*) &team->subscribers, (node_t*) node);
         team->subscribers_nb++;
     }
     client_send_success(client, arg->transaction);
@@ -36,14 +36,14 @@ void unsubscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, srv->save)))
         return;
-    if (does_list_contains_uuid(arg->team_uuid, team->uuid)) {
+    if (does_list_contains_uuid(arg->team_uuid, team->subscribers)) {
         delete_uuid_from_list(client->uuid, &team->subscribers);
         team->subscribers_nb--;
     }
     client_send_success(client, arg->transaction);
 }
 
-void list_subscribed_teams(client_t *client, server_t *srv, void *data)
+void list_subscribed_teams_cmd(client_t *client, server_t *srv, void *data)
 {
     list_subscribed_teams_cmd_arg_t *arg = data;
     user_t *user;
@@ -62,7 +62,7 @@ void list_subscribed_teams(client_t *client, server_t *srv, void *data)
     }
 }
 
-void list_users_subscribed(client_t *client, server_t *srv, void *data)
+void list_users_subscribed_cmd(client_t *client, server_t *srv, void *data)
 {
     list_users_subscribed_to_team_cmd_arg_t *arg = data;
     team_t *team;

@@ -40,7 +40,7 @@ typedef struct create_comment_cmd_arg_s {
     uuid_t team_uuid;
     uuid_t channel_uuid;
     uuid_t thread_uuid;
-    char comment[MAX_DESCRIPTION_LENGTH];
+    char comment[MAX_BODY_LENGTH];
 } create_comment_cmd_arg_t;
 
 typedef struct send_pm_cmd_arg_s {

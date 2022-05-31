@@ -22,25 +22,25 @@ user_t *user_create(char *name, save_t *save)
     return user;
 }
 
-discussion_t *discussion_create(user_t *usr1, user_t *usr2, save_t *save)
+discussion_t *discussion_create(uuid_t usr1, uuid_t usr2, save_t *save)
 {
     discussion_t *discussion = safe_malloc(sizeof(discussion_t));
 
     uuid_generate(discussion->uuid);
-    memcpy(&discussion->uuid[0], usr1->uuid, sizeof(user_t));
-    memcpy(&discussion->uuid[1], usr2->uuid, sizeof(user_t));
+    memcpy(&discussion->uuid[0], usr1, sizeof(uuid_t));
+    memcpy(&discussion->uuid[1], usr2, sizeof(uuid_t));
     discussion->messages = NULL;
     discussion->messages_nb = 0;
     push_back(&save->discussions, discussion);
     return discussion;
 }
 
-message_t *message_create(user_t *user, char *msg, discussion_t *discussion)
+message_t *message_create(uuid_t user, char *msg, discussion_t *discussion)
 {
     message_t *message = safe_malloc(sizeof(message_t));
 
     uuid_generate(message->uuid);
-    memcpy(message->user, user->uuid, sizeof(uuid_t));
+    memcpy(message->user, user, sizeof(uuid_t));
     strncpy(message->msg, msg, MAX_BODY_LENGTH);
     message->time = time(NULL);
     push_back(&discussion->messages, message);
