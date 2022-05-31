@@ -32,38 +32,18 @@ user_t *get_user_by_uuid(uuid_t uuid, save_t *save)
     return NULL;
 }
 
-team_t *get_team_by_uuid(uuid_t uuid, save_t *save)
+discussion_t *get_discussion_by_user_uuids(uuid_t uuid1,
+uuid_t uuid2, save_t *save)
 {
-    team_t *team;
+    discussion_t *discussion;
 
-    for (list_t list = save->users; list; list = list->next) {
-        team = (team_t*) list->data;
-        if (!uuid_compare(uuid, team->uuid))
-            return team;
-    }
-    return NULL;
-}
-
-channel_t *get_channel_by_uuid(uuid_t uuid, team_t *team)
-{
-    channel_t *channel;
-
-    for (list_t list = team->channels; list; list = list->next) {
-        channel = (channel_t*) list->data;
-        if (!uuid_compare(uuid, channel->uuid))
-            return channel;
-    }
-    return NULL;
-}
-
-thread_t *get_thread_by_uuid(uuid_t uuid, channel_t *channel)
-{
-    thread_t *thread;
-
-    for (list_t list = channel->threads; list; list = list->next) {
-        thread = (thread_t*) list->data;
-        if (!uuid_compare(uuid, thread->uuid))
-            return thread;
+    for (list_t list = save->discussions; list; list = list->next) {
+        discussion = (discussion_t*) list->data;
+        if ((!uuid_compare(discussion->users[0], uuid1)
+        && !uuid_compare(discussion->users[1], uuid2))
+        || (!uuid_compare(discussion->users[0], uuid2)
+        && !uuid_compare(discussion->users[1], uuid1)))
+            return discussion;
     }
     return NULL;
 }

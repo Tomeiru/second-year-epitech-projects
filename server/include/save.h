@@ -58,6 +58,7 @@ typedef struct comment_s {
     uuid_t uuid;
     uuid_t user;
     char msg[MAX_BODY_LENGTH];
+    time_t time;
 } comment_t;
 
 typedef struct discussion_s {
@@ -71,6 +72,7 @@ typedef struct message_s {
     uuid_t uuid;
     uuid_t user;
     char msg[MAX_BODY_LENGTH];
+    time_t time;
 } message_t;
 
 bool save_infos(save_t *save, char *path);
@@ -90,9 +92,12 @@ channel_t *channel_create(char *name, char *desc, team_t *team);
 thread_t *thread_create(char *name,
 char *msg, uuid_t sender, channel_t *channel);
 comment_t *comment_create(char *msg, uuid_t sender, thread_t *thread);
+message_t *message_create(user_t *user, char *msg, discussion_t *discussion);
 
 user_t *get_user_by_name(char *name, save_t *save);
 user_t *get_user_by_uuid(uuid_t uuid, save_t *save);
 team_t *get_team_by_uuid(uuid_t uuid, save_t *save);
 channel_t *get_channel_by_uuid(uuid_t uuid, team_t *team);
 thread_t *get_thread_by_uuid(uuid_t uuid, channel_t *channel);
+discussion_t *get_discussion_by_user_uuids(uuid_t uuid1,
+uuid_t uuid2, save_t *save);

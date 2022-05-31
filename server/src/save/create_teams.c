@@ -66,6 +66,7 @@ comment_t *comment_create(char *msg, uuid_t sender, thread_t *thread)
     memcpy(comment->user, sender, sizeof(uuid_t));
     memset(comment->msg, 0, MAX_BODY_LENGTH);
     strncpy(comment->msg, msg, MAX_BODY_LENGTH);
+    comment->time = time(NULL);
     push_back(&thread->comments, comment);
     thread->comments_nb++;
     return comment;

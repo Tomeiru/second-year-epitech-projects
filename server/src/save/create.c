@@ -34,3 +34,16 @@ discussion_t *discussion_create(user_t *usr1, user_t *usr2, save_t *save)
     push_back(&save->discussions, discussion);
     return discussion;
 }
+
+message_t *message_create(user_t *user, char *msg, discussion_t *discussion)
+{
+    message_t *message = safe_malloc(sizeof(message_t));
+
+    uuid_generate(message->uuid);
+    memcpy(message->user, user->uuid, sizeof(uuid_t));
+    strncpy(message->msg, msg, MAX_BODY_LENGTH);
+    message->time = time(NULL);
+    push_back(&discussion->messages, message);
+    discussion->messages_nb++;
+    return message;
+}
