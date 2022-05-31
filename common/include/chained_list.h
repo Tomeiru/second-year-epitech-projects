@@ -8,6 +8,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <uuid/uuid.h>
 #include <stdlib.h>
 #include "buffer_sizes.h"
 
@@ -18,7 +19,7 @@ typedef struct node_s {
 
 typedef struct uuid_node_s {
     struct node_s *next;
-    char uuid[16];
+    uuid_t uuid;
 } uuid_node_t;
 
 typedef node_t *list_t;
@@ -34,3 +35,4 @@ int node_len(list_t list);
 void delete_node(node_t **root, int index);
 void delete_node_with_data(list_t *list, void *data);
 void delete_list(list_t list);
+void delete_uuid_from_list(uuid_t uuid, uuid_list_t *list);

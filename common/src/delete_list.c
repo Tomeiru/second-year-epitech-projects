@@ -60,3 +60,18 @@ void delete_list(list_t list)
         free(cpy);
     }
 }
+
+void delete_uuid_from_list(uuid_t uuid, uuid_list_t *list)
+{
+    uuid_list_t *node = NULL;
+    int i = 0;
+
+    for (uuid_list_t cpy = *list; cpy; cpy = (uuid_list_t) cpy->next, i++) {
+        if (!uuid_compare(uuid, cpy->uuid)) {
+            node = cpy;
+            break;
+        }
+    }
+    if (node)
+        delete_node(list, i);
+}
