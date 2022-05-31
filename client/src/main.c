@@ -9,8 +9,6 @@
 #include "safe_malloc.h"
 #include "utils.h"
 #include "cli_cmds.h"
-<<<<<<< HEAD
-=======
 
 use_t *init_use()
 {
@@ -22,7 +20,6 @@ use_t *init_use()
     memset(use->thread, 0, 16);
     return (use);
 }
->>>>>>> master
 
 conn_t *init_connect(char *ip, int port)
 {
