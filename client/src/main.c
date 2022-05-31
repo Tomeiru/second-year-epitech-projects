@@ -10,7 +10,7 @@
 #include "utils.h"
 #include "cli_cmds.h"
 
-use_t *init_use()
+use_t *init_use(void)
 {
     use_t *use = safe_malloc(sizeof(use_t));
 

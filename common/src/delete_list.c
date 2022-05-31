@@ -63,7 +63,7 @@ void delete_list(list_t list)
 
 void delete_uuid_from_list(uuid_t uuid, uuid_list_t *list)
 {
-    uuid_list_t *node = NULL;
+    uuid_list_t node = NULL;
     int i = 0;
 
     for (uuid_list_t cpy = *list; cpy; cpy = (uuid_list_t) cpy->next, i++) {
@@ -73,5 +73,5 @@ void delete_uuid_from_list(uuid_t uuid, uuid_list_t *list)
         }
     }
     if (node)
-        delete_node(list, i);
+        delete_node((list_t*) list, i);
 }

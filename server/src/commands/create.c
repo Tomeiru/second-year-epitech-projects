@@ -12,7 +12,7 @@
 // TODO : check name
 void create_team_cmd(client_t *client, server_t *server, void *data)
 {
-    create_team_cmd_arg_t *arg = data;
+    create_team_channel_cmd_arg_t *arg = data;
     team_t *team;
     char team_uuid[36];
     char user_uuid[36];
@@ -30,7 +30,7 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
 // TODO : check name
 void create_channel_cmd(client_t *client, server_t *server, void *data)
 {
-    create_channel_cmd_arg_t *arg = data;
+    create_team_channel_cmd_arg_t *arg = data;
     team_t *team;
     channel_t *channel;
     char team_uuid[36];
