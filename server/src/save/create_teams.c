@@ -45,6 +45,7 @@ char *msg, uuid_t sender, channel_t *channel)
 {
     thread_t *thread = safe_malloc(sizeof(thread_t));
 
+    thread->timestamp = time(NULL);
     uuid_generate(thread->uuid);
     thread->comments = NULL;
     thread->comments_nb = 0;

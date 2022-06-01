@@ -15,4 +15,5 @@ const serv_cmd_t SERV_CMDS[SERV_CMD_NB] = {
     {EVENT_CHANNEL_CREATED_ID, event_channel_created_cmd},
     {EVENT_PM_RECEIVED_ID, event_pm_received_cmd},
     {EVENT_REPLY_CREATED_ID, event_reply_sended_cmd},
+    {EVENT_THREAD_CREATED_ID, event_thread_created_cmd},
 };
