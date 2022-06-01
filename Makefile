@@ -59,7 +59,8 @@ SRC_CLI			=	client/src/main.c							\
 					client/src/serv_cmd/server.c				\
 					client/src/serv_cmd/cmd_list.c				\
 					client/src/serv_cmd/login.c					\
-					client/src/serv_cmd/create.c
+					client/src/serv_cmd/create.c				\
+					client/src/serv_cmd/pm_reply.c
 
 INC_COMMON		=	common/include
 INC_SRV			=	server/include

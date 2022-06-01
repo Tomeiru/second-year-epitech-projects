@@ -53,6 +53,7 @@ void disconnect_clients(server_t *srv);
 
 int set_fd(fd_set *readfds, server_t *server);
 bool accept_new_clients(server_t *server);
+client_t *get_connected_client(uuid_t uuid, server_t *srv);
 
 client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list);
 void client_delete(client_t *client);

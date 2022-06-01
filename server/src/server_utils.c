@@ -37,3 +37,15 @@ int set_fd(fd_set *readfds, server_t *server)
     }
     return (max_fd);
 }
+
+client_t *get_connected_client(uuid_t uuid, server_t *srv)
+{
+    client_t *client;
+
+    for (list_t list = srv->clients; list; list = list->next) {
+        client = (client_t*) list->data;
+        if (!uuid_compare(client->uuid, uuid))
+            return client;
+    }
+    return NULL;
+}

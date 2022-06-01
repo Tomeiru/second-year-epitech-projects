@@ -8,11 +8,26 @@
 #include "teams.h"
 #include "logging_server.h"
 
+static void event_private_message_sended(client_t *sender,
+uuid_t receiver, char *msg, server_t *srv)
+{
+    client_t *client = get_connected_client(receiver, srv);
+    char uuids[36 * 2];
+
+    uuid_unparse(sender->uuid, uuids);
+    uuid_unparse(receiver, uuids + 36);
+    server_event_private_message_sended(uuids, uuids + 36, msg);
+    if (client) {
+        client_send_value(client, EVENT_PM_RECEIVED_ID, sizeof(command_id_t));
+        client_send_data(client, sender->uuid, sizeof(uuid_t));
+        client_send_data(client, msg, MAX_BODY_LENGTH);
+    }
+}
+
 void send_pm_cmd(client_t *client, server_t *srv, void *data)
 {
     send_pm_cmd_arg_t *arg = data;
     discussion_t *discussion;
-    char uuids[36 * 2];
 
     if (!check_client_logged(client, arg->transaction)
     || !get_user_or_error(client, arg->user_uuid, srv->save, arg->transaction))
@@ -21,10 +36,8 @@ void send_pm_cmd(client_t *client, server_t *srv, void *data)
     arg->user_uuid, srv->save)))
         discussion = discussion_create(client->uuid, arg->user_uuid, srv->save);
     message_create(client->uuid, arg->msg, discussion);
-    uuid_unparse(client->uuid, uuids);
-    uuid_unparse(arg->user_uuid, uuids + 36);
-    server_event_private_message_sended(uuids, uuids + 36, arg->msg);
     client_send_success(client, arg->transaction);
+    event_private_message_sended(client, arg->user_uuid, arg->msg, srv);
 }
 
 void get_pm_cmd(client_t *client, server_t *srv, void *data)

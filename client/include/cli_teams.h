@@ -37,6 +37,13 @@ typedef struct client_s {
     uuid_t uuid;
 } client_t;
 
+typedef struct message_s {
+    uuid_t uuid;
+    uuid_t user;
+    char msg[MAX_BODY_LENGTH];
+    time_t time;
+} message_t;
+
 bool handle_server_msg(client_t *client, list_t *transations);
 bool handle_user_cmd(client_t *client, list_t *transactions);
 

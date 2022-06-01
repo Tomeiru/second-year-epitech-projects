@@ -27,8 +27,8 @@ discussion_t *discussion_create(uuid_t usr1, uuid_t usr2, save_t *save)
     discussion_t *discussion = safe_malloc(sizeof(discussion_t));
 
     uuid_generate(discussion->uuid);
-    memcpy(&discussion->uuid[0], usr1, sizeof(uuid_t));
-    memcpy(&discussion->uuid[1], usr2, sizeof(uuid_t));
+    memcpy(&discussion->users[0], usr1, sizeof(uuid_t));
+    memcpy(&discussion->users[1], usr2, sizeof(uuid_t));
     discussion->messages = NULL;
     discussion->messages_nb = 0;
     push_back(&save->discussions, discussion);

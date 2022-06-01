@@ -8,12 +8,22 @@
 #include "cli_teams.h"
 #include "cli_cmds.h"
 #include "cmd_args.h"
+#include "logging_client.h"
 
 static void handle_messages_transaction(client_t *client, void *data)
 {
-    UNUSED(client);
+    size_t nb;
+    message_t msg;
+    char uuid[36];
+
     UNUSED(data);
-    puts("[INFO] Messags command transaction");
+    puts("[INFO] Messages command transaction");
+    read(client->conn->socket, &nb, sizeof(size_t));
+    for (size_t i = 0; i < nb; i++) {
+        read(client->conn->socket, &msg, sizeof(message_t));
+        uuid_unparse(msg.uuid, uuid);
+        client_private_message_print_messages(uuid, msg.time, msg.msg);
+    }
 }
 
 static bool messages_handler(client_t *client, char *user_uuid, list_t *transactions)

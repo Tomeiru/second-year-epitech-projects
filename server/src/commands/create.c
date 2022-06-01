@@ -42,8 +42,9 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     || !(team = GET_TEAM(client, arg, server->save))
     || !check_user_belongs_to_team(client, team, arg->transaction, true))
         return;
-    if ((channel = get_channel_by_name(arg->name, team)))
-        return (client_send_error(client, arg->transaction, ERROR_ALREADY_EXISTS, NULL));
+    if (get_channel_by_name(arg->name, team))
+        return (client_send_error(client, arg->transaction,
+        ERROR_ALREADY_EXISTS, NULL));
     channel = channel_create(arg->name, arg->desc, team);
     uuid_unparse(team->uuid, team_uuid);
     uuid_unparse(channel->uuid, channel_uuid);

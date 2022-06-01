@@ -11,7 +11,7 @@
 #include "cmd_ids.h"
 #include <stdbool.h>
 
-#define SERV_CMD_NB 5
+#define SERV_CMD_NB 7
 
 typedef struct client_s client_t;
 
@@ -27,5 +27,7 @@ bool event_login_serv_cmd(client_t *client, list_t *transactions);
 bool event_logout_serv_cmd(client_t *client, list_t *transactions);
 bool event_team_created_cmd(client_t *client, list_t *transactions);
 bool event_channel_created_cmd(client_t *client, list_t *transactions);
+bool event_pm_received_cmd(client_t *client, list_t *transactions);
+bool event_reply_sended_cmd(client_t *client, list_t *transactions);
 
 extern const serv_cmd_t SERV_CMDS[SERV_CMD_NB];
