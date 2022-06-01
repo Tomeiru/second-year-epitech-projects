@@ -5,62 +5,64 @@
 ## Makefile
 ##
 
-SRC_COMMON		=	common/src/adding_list.c					\
-					common/src/delete_list.c					\
-					common/src/safe_malloc.c					\
-					common/src/teams_cl_to_arr.c				\
-					common/src/utils_teams_cl_to_arr.c			\
+SRC_COMMON		=	common/src/adding_list.c							\
+					common/src/delete_list.c							\
+					common/src/safe_malloc.c							\
+					common/src/teams_cl_to_arr.c						\
+					common/src/utils_teams_cl_to_arr.c					\
 					common/src/utils.c
 
-SRC_SRV			=	server/src/main.c 							\
-					server/src/server.c 						\
-					server/src/server_utils.c 					\
-					server/src/client/client.c 					\
-					server/src/client/send.c	 				\
-					server/src/client/responses.c 				\
-					server/src/commands/cmd_list.c				\
-					server/src/commands/login.c					\
-					server/src/commands/create.c				\
-					server/src/commands/pm.c					\
-					server/src/commands/subscribe.c				\
-					server/src/commands/subscribe_list.c		\
-					server/src/commands/utils.c					\
-					server/src/commands/get_or_error.c			\
-					server/src/events/create.c					\
-					server/src/events/login.c					\
-					server/src/save/save.c	 					\
-					server/src/save/save_teams.c				\
-					server/src/save/load.c	 					\
-					server/src/save/load_teams.c				\
-					server/src/save/create.c					\
-					server/src/save/create_teams.c				\
-					server/src/save/find.c						\
-					server/src/save/find_teams.c				\
+SRC_SRV			=	server/src/main.c 									\
+					server/src/server.c 								\
+					server/src/server_utils.c 							\
+					server/src/client/client.c 							\
+					server/src/client/send.c	 						\
+					server/src/client/responses.c 						\
+					server/src/transactions/create.c					\
+					server/src/commands/cmd_list.c						\
+					server/src/commands/login.c							\
+					server/src/commands/create.c						\
+					server/src/commands/pm.c							\
+					server/src/commands/subscribe_list.c				\
+					server/src/commands/subscribe.c						\
+					server/src/commands/utils.c							\
+					server/src/commands/get_or_error.c					\
+					server/src/events/create.c							\
+					server/src/events/login.c							\
+					server/src/save/save.c	 							\
+					server/src/save/save_teams.c						\
+					server/src/save/load.c	 							\
+					server/src/save/load_teams.c						\
+					server/src/save/create.c							\
+					server/src/save/create_teams.c						\
+					server/src/save/find.c								\
+					server/src/save/find_teams.c						\
 					server/src/save/destroy.c
 
-SRC_CLI			=	client/src/main.c							\
-					client/src/transaction.c					\
-					client/src/cli_cmd/parser.c					\
-					client/src/cli_cmd/cmd_list.c				\
-					client/src/cli_cmd/utils.c					\
-					client/src/cli_cmd/cmd_func/create.c		\
-					client/src/cli_cmd/cmd_func/help.c			\
-					client/src/cli_cmd/cmd_func/info.c			\
-					client/src/cli_cmd/cmd_func/list.c			\
-					client/src/cli_cmd/cmd_func/login.c			\
-					client/src/cli_cmd/cmd_func/logout.c		\
-					client/src/cli_cmd/cmd_func/messages.c		\
-					client/src/cli_cmd/cmd_func/send.c			\
-					client/src/cli_cmd/cmd_func/subscribe.c		\
-					client/src/cli_cmd/cmd_func/unsubscribe.c	\
-					client/src/cli_cmd/cmd_func/subscribed.c	\
-					client/src/cli_cmd/cmd_func/use.c			\
-					client/src/cli_cmd/cmd_func/user.c			\
-					client/src/cli_cmd/cmd_func/users.c			\
-					client/src/serv_cmd/server.c				\
-					client/src/serv_cmd/cmd_list.c				\
-					client/src/serv_cmd/login.c					\
-					client/src/serv_cmd/create.c				\
+SRC_CLI			=	client/src/main.c									\
+					client/src/transaction.c							\
+					client/src/cli_cmd/parser.c							\
+					client/src/cli_cmd/cmd_list.c						\
+					client/src/cli_cmd/utils.c							\
+					client/src/cli_cmd/cmd_func/create_transaction.c	\
+					client/src/cli_cmd/cmd_func/create.c				\
+					client/src/cli_cmd/cmd_func/help.c					\
+					client/src/cli_cmd/cmd_func/info.c					\
+					client/src/cli_cmd/cmd_func/list.c					\
+					client/src/cli_cmd/cmd_func/login.c					\
+					client/src/cli_cmd/cmd_func/logout.c				\
+					client/src/cli_cmd/cmd_func/messages.c				\
+					client/src/cli_cmd/cmd_func/send.c					\
+					client/src/cli_cmd/cmd_func/subscribe.c				\
+					client/src/cli_cmd/cmd_func/unsubscribe.c			\
+					client/src/cli_cmd/cmd_func/subscribed.c			\
+					client/src/cli_cmd/cmd_func/use.c					\
+					client/src/cli_cmd/cmd_func/user.c					\
+					client/src/cli_cmd/cmd_func/users.c					\
+					client/src/serv_cmd/server.c						\
+					client/src/serv_cmd/cmd_list.c						\
+					client/src/serv_cmd/login.c							\
+					client/src/serv_cmd/create.c						\
 					client/src/serv_cmd/pm_reply.c
 
 INC_COMMON		=	common/include

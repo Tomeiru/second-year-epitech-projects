@@ -10,13 +10,6 @@
 #include "cmd_args.h"
 #include "logging_client.h"
 
-static void handle_create_transaction(client_t *client, void *data)
-{
-    UNUSED(client);
-    UNUSED(data);
-    puts("[INFO] Create transaction handle !");
-}
-
 static bool create_comment(client_t *client, char *comment_body, list_t *transactions)
 {
     create_comment_cmd_arg_t cmd_arg;
@@ -26,7 +19,7 @@ static bool create_comment(client_t *client, char *comment_body, list_t *transac
     memcpy(cmd_arg.thread_uuid, client->use->thread, 16);
     memset(cmd_arg.comment, 0, MAX_BODY_LENGTH);
     cmd_arg.transaction = transaction_create(NULL,
-    handle_create_transaction, NULL, transactions)->id;
+    handle_create_comment_transaction, NULL, transactions)->id;
     memcpy(cmd_arg.comment, comment_body, MAX_BODY_LENGTH);
     client_send_cmd(client->conn, CREATE_COMMENT_ID, &cmd_arg, sizeof(cmd_arg));
     return (SUCCESS_CMD);
@@ -41,7 +34,7 @@ static bool create_thread(client_t *client, char *thread_title, char *thread_mes
     memset(cmd_arg.title, 0, MAX_NAME_LENGTH);
     memset(cmd_arg.msg, 0, MAX_BODY_LENGTH);
     cmd_arg.transaction = transaction_create(NULL,
-    handle_create_transaction, NULL, transactions)->id;
+    handle_create_thread_transaction, NULL, transactions)->id;
     memcpy(cmd_arg.title, thread_title, MAX_NAME_LENGTH);
     memcpy(cmd_arg.msg, thread_message, MAX_BODY_LENGTH);
     client_send_cmd(client->conn, CREATE_THREAD_ID, &cmd_arg, sizeof(cmd_arg));
@@ -56,7 +49,8 @@ static bool create_channel_team(client_t *client, char **av, command_id_t cmd, l
     memset(cmd_arg.name, 0, MAX_NAME_LENGTH);
     memset(cmd_arg.desc, 0, MAX_DESCRIPTION_LENGTH);
     cmd_arg.transaction = transaction_create(NULL,
-    handle_create_transaction, NULL, transactions)->id;
+    cmd == CREATE_TEAM_ID ? handle_create_team_transaction :
+    handle_create_channel_transaction, NULL, transactions)->id;
     memcpy(cmd_arg.name, av[0], MAX_NAME_LENGTH);
     memcpy(cmd_arg.desc, av[1], MAX_DESCRIPTION_LENGTH);
     client_send_cmd(client->conn, cmd, &cmd_arg, sizeof(cmd_arg));
