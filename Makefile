@@ -18,7 +18,7 @@ SRC_SRV			=	server/src/main.c 									\
 					server/src/client/client.c 							\
 					server/src/client/send.c	 						\
 					server/src/client/responses.c 						\
-					server/src/commands/client_print_create.c			\
+					server/src/transactions/create.c					\
 					server/src/commands/cmd_list.c						\
 					server/src/commands/login.c							\
 					server/src/commands/create.c						\
@@ -36,7 +36,7 @@ SRC_SRV			=	server/src/main.c 									\
 					server/src/save/create_teams.c						\
 					server/src/save/find.c								\
 					server/src/save/find_teams.c						\
-					server/src/save/destroy.c		
+					server/src/save/destroy.c
 
 SRC_CLI			=	client/src/main.c									\
 					client/src/transaction.c							\
