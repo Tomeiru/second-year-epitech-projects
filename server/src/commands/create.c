@@ -63,8 +63,11 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
+    || !check_user_belongs_to_team(client, team, arg->transaction, true)
     || !(channel = GET_CHANNEL(client, arg, team)))
         return;
+    if ((thread = get_thread_by_title(arg->title, channel)))
+        return (client_send_error(client, arg->transaction, ERROR_ALREADY_EXISTS, NULL));
     thread = thread_create(arg->title, arg->msg, client->uuid, channel);
     uuid_unparse(channel->uuid, uuid);
     uuid_unparse(thread->uuid, uuid + 36);
@@ -73,6 +76,7 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     uuid + 72, arg->title, arg->msg);
     client_send_success(client, arg->transaction);
     client_send_data(client, thread->uuid, sizeof(uuid_t));
+    event_thread_created(server, team, thread);
 }
 
 // TODO : TIMESTAMP

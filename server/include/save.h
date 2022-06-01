@@ -48,6 +48,7 @@ typedef struct channel_s {
 typedef struct thread_s {
     uuid_t uuid;
     uuid_t user;
+    time_t timestamp;
     char name[MAX_NAME_LENGTH];
     char msg[MAX_BODY_LENGTH];
     list_t comments;
@@ -100,6 +101,7 @@ team_t *get_team_by_name(char *name, save_t *save);
 team_t *get_team_by_uuid(uuid_t uuid, save_t *save);
 channel_t *get_channel_by_name(char *name, team_t *team);
 channel_t *get_channel_by_uuid(uuid_t uuid, team_t *team);
+thread_t *get_thread_by_title(char *title, channel_t *channel);
 thread_t *get_thread_by_uuid(uuid_t uuid, channel_t *channel);
 discussion_t *get_discussion_by_user_uuids(uuid_t uuid1,
 uuid_t uuid2, save_t *save);

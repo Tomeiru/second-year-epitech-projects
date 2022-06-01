@@ -56,6 +56,18 @@ channel_t *get_channel_by_uuid(uuid_t uuid, team_t *team)
     return NULL;
 }
 
+thread_t *get_thread_by_title(char *title, channel_t *channel)
+{
+    thread_t *thread;
+
+    for (list_t list = channel->threads; list; list = list->next) {
+        thread = (thread_t*) list->data;
+        if (!strcmp(title, thread->name))
+            return thread;
+    }
+    return NULL;
+}
+
 thread_t *get_thread_by_uuid(uuid_t uuid, channel_t *channel)
 {
     thread_t *thread;

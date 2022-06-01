@@ -13,4 +13,5 @@ const serv_cmd_t SERV_CMDS[SERV_CMD_NB] = {
     {EVENT_USER_LOGOUT_ID, event_logout_serv_cmd},
     {EVENT_TEAM_CREATED_ID, event_team_created_cmd},
     {EVENT_CHANNEL_CREATED_ID, event_channel_created_cmd},
+    {EVENT_THREAD_CREATED_ID, event_thread_created_cmd},
 };
