@@ -8,7 +8,7 @@
 #include "cli_teams.h"
 #include "logging_client.h"
 
-void event_login_serv_cmd(client_t *client, list_t *transactions)
+bool event_login_serv_cmd(client_t *client, list_t *transactions)
 {
     uuid_t user_uuid;
     char uuid_str[36];
@@ -19,9 +19,10 @@ void event_login_serv_cmd(client_t *client, list_t *transactions)
     read(client->conn->socket, name, MAX_NAME_LENGTH);
     uuid_unparse(user_uuid, uuid_str);
     client_event_logged_in(uuid_str, name);
+    return (false);
 }
 
-void event_logout_serv_cmd(client_t *client, list_t *transactions)
+bool event_logout_serv_cmd(client_t *client, list_t *transactions)
 {
     uuid_t user_uuid;
     char uuid_str[36];
@@ -32,5 +33,6 @@ void event_logout_serv_cmd(client_t *client, list_t *transactions)
     read(client->conn->socket, name, MAX_NAME_LENGTH);
     uuid_unparse(user_uuid, uuid_str);
     client_event_logged_out(uuid_str, name);
+    return (true);
 }
 

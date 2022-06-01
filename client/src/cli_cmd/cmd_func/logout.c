@@ -23,7 +23,7 @@ static bool logout_handler(client_t *client, list_t *transactions)
     cmd_arg.transaction = transaction_create(NULL,
     handle_logout_transaction, NULL, transactions)->id;
     client_send_cmd(client->conn, LOGOUT_ID, &cmd_arg, sizeof(cmd_arg));
-    return (TEAMS_EOF);
+    return (SUCCESS_CMD);
 }
 
 bool logout_parser(client_t *client, int ac, char **av, list_t *transactions)

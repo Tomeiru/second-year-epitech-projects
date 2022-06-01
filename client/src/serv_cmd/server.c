@@ -53,7 +53,7 @@ static void handle_server_error(conn_t *conn)
     log_error(error, uuid_str);
 }
 
-void reponse_serv_cmd(client_t *client, list_t *transactions)
+bool reponse_serv_cmd(client_t *client, list_t *transactions)
 {
     uint64_t transaction;
     response_t response;
@@ -62,16 +62,17 @@ void reponse_serv_cmd(client_t *client, list_t *transactions)
     read(client->conn->socket, &transaction, sizeof(uint64_t));
     switch (response) {
         case COMMAND_OK:
-        handle_transaction_with_id(transaction, client, transactions);
-        break;
+            handle_transaction_with_id(transaction, client, transactions);
+            return (false);
         case ERROR_OCCURED:
-        handle_server_error(client->conn);
-        transaction_destroy_with_id(transaction, transactions);
-        break;
+            handle_server_error(client->conn);
+            transaction_destroy_with_id(transaction, transactions);
+            return (false);
         case UNKNOWN_COMMAND:
-        puts("[ALERT] Unknown commend has been send !");
-        break;
+            puts("[ALERT] Unknown commend has been send !");
+            return (false);
     }
+    return (false);
 }
 
 bool handle_server_msg(client_t *client, list_t *transations)
@@ -80,11 +81,8 @@ bool handle_server_msg(client_t *client, list_t *transations)
 
     if (read(client->conn->socket, &cmd, sizeof(command_id_t)) <= 0)
         return true;
-    for (int i = 0; i < SERV_CMD_NB; i++) {
-        if (SERV_CMDS[i].id == cmd) {
-            SERV_CMDS[i].fct(client, transations);
-            break;
-        }
-    }
+    for (int i = 0; i < SERV_CMD_NB; i++)
+        if (SERV_CMDS[i].id == cmd)
+            return (SERV_CMDS[i].fct(client, transations));
     return false;
 }
