@@ -25,6 +25,7 @@ SRC_SRV			=	server/src/main.c 							\
 					server/src/commands/subscribe.c				\
 					server/src/commands/utils.c					\
 					server/src/commands/get_or_error.c			\
+					server/src/events/create.c					\
 					server/src/events/login.c					\
 					server/src/save/save.c	 					\
 					server/src/save/save_teams.c				\
@@ -57,7 +58,8 @@ SRC_CLI			=	client/src/main.c							\
 					client/src/cli_cmd/cmd_func/users.c			\
 					client/src/serv_cmd/server.c				\
 					client/src/serv_cmd/cmd_list.c				\
-					client/src/serv_cmd/login.c
+					client/src/serv_cmd/login.c					\
+					client/src/serv_cmd/create.c
 
 INC_COMMON		=	common/include
 INC_SRV			=	server/include

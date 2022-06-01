@@ -96,7 +96,9 @@ message_t *message_create(uuid_t user, char *msg, discussion_t *discussion);
 
 user_t *get_user_by_name(char *name, save_t *save);
 user_t *get_user_by_uuid(uuid_t uuid, save_t *save);
+team_t *get_team_by_name(char *name, save_t *save);
 team_t *get_team_by_uuid(uuid_t uuid, save_t *save);
+channel_t *get_channel_by_name(char *name, team_t *team);
 channel_t *get_channel_by_uuid(uuid_t uuid, team_t *team);
 thread_t *get_thread_by_uuid(uuid_t uuid, channel_t *channel);
 discussion_t *get_discussion_by_user_uuids(uuid_t uuid1,

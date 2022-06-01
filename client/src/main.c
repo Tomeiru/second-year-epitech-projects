@@ -55,7 +55,7 @@ void wait_for_input(fd_set *rdset, conn_t *conn)
 int start_cli(char *ip, int port)
 {
     client_t client = {.conn = init_connect(ip, port),  .use = init_use(),
-    .connected = false};
+    .connected = false, .logout = false};
     list_t transactions = NULL;
     fd_set rdset;
 
@@ -63,8 +63,8 @@ int start_cli(char *ip, int port)
         return (84);
     while (1) {
         wait_for_input(&rdset, client.conn);
-        if (FD_ISSET(client.conn->socket, &rdset)
-        && handle_server_msg(&client, &transactions))
+        if ((FD_ISSET(client.conn->socket, &rdset)
+        && handle_server_msg(&client, &transactions)) || client.logout)
             break;
         if (FD_ISSET(0, &rdset)
         && !handle_user_cmd(&client, &transactions))

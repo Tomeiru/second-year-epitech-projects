@@ -33,6 +33,6 @@ bool event_logout_serv_cmd(client_t *client, list_t *transactions)
     read(client->conn->socket, name, MAX_NAME_LENGTH);
     uuid_unparse(user_uuid, uuid_str);
     client_event_logged_out(uuid_str, name);
-    return (true);
+    return (false);
 }
 

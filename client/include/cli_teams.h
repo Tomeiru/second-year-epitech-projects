@@ -33,6 +33,7 @@ typedef struct client_s {
     conn_t *conn;
     use_t *use;
     bool connected;
+    bool logout;
     uuid_t uuid;
 } client_t;
 

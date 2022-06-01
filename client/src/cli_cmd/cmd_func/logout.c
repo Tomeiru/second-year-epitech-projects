@@ -11,8 +11,8 @@
 
 static void handle_logout_transaction(client_t *client, void *data)
 {
-    UNUSED(client);
     UNUSED(data);
+    client->logout = true;
     puts("[INFO] Logged out !");
 }
 

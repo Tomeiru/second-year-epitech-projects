@@ -18,7 +18,7 @@ typedef struct node_s {
 } node_t;
 
 typedef struct uuid_node_s {
-    struct node_s *next;
+    struct uuid_node_s *next;
     uuid_t uuid;
 } uuid_node_t;
 

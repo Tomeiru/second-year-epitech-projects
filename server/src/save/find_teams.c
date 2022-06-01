@@ -8,14 +8,38 @@
 #include <string.h>
 #include "teams.h"
 
+team_t *get_team_by_name(char *name, save_t *save)
+{
+    team_t *team;
+
+    for (list_t list = save->teams; list; list = list->next) {
+        team = (team_t*) list->data;
+        if (!strcmp(name, team->name))
+            return team;
+    }
+    return NULL;
+}
+
 team_t *get_team_by_uuid(uuid_t uuid, save_t *save)
 {
     team_t *team;
 
-    for (list_t list = save->users; list; list = list->next) {
+    for (list_t list = save->teams; list; list = list->next) {
         team = (team_t*) list->data;
         if (!uuid_compare(uuid, team->uuid))
             return team;
+    }
+    return NULL;
+}
+
+channel_t *get_channel_by_name(char *name, team_t *team)
+{
+    channel_t *channel;
+
+    for (list_t list = team->channels; list; list = list->next) {
+        channel = (channel_t*) list->data;
+        if (!strcmp(name, team->name))
+            return channel;
     }
     return NULL;
 }

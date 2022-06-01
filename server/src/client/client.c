@@ -14,7 +14,7 @@ client_t *client_create(int fd, sockaddr_in_t *sockaddr, list_t *list)
 
     client->fd = fd;
     client->quit = false;
-    client->logged = true;
+    client->logged = false;
     memcpy(&client->sockaddr, sockaddr, sizeof(sockaddr_in_t));
     memset(client->uuid, 0, sizeof(uuid_t));
     push_back(list, client);
