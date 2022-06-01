@@ -80,24 +80,26 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     event_thread_created(server, team, thread);
 }
 
-// TODO : TIMESTAMP
 void create_comment_cmd(client_t *client, server_t *server, void *data)
 {
     create_comment_cmd_arg_t *arg = data;
     team_t *team;
     channel_t *channel;
     thread_t *thread;
+    comment_t *comment;
     char thread_uuid[36];
     char user_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
+    || !check_user_belongs_to_team(client, team, arg->transaction, true)
     || !(channel = GET_CHANNEL(client, arg, team))
     || !(thread = GET_THREAD(client, arg, channel)))
         return;
-    comment_create(arg->comment, client->uuid, thread);
+    comment = comment_create(arg->comment, client->uuid, thread);
     uuid_unparse(thread->uuid, thread_uuid);
     uuid_unparse(client->uuid, user_uuid);
     server_event_reply_created(thread_uuid, user_uuid, arg->comment);
     client_send_success(client, arg->transaction);
+    event_comment_created(server, team, thread, comment);
 }

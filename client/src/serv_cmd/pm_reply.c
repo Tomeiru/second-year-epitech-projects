@@ -21,9 +21,3 @@ bool event_pm_received_cmd(client_t *client, list_t *transactions)
     client_event_private_message_received(uuid_str, msg);
     return false;
 }
-
-bool event_reply_sended_cmd(client_t *client, list_t *transactions)
-{
-    // client_event_thread_reply_received();
-    return false;
-}

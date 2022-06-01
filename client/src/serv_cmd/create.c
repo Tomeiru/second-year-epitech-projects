@@ -61,3 +61,25 @@ bool event_thread_created_cmd(client_t *client, list_t *transactions)
     client_event_thread_created(uuid_str, user_str, timestamp, name, msg);
     return (false);
 }
+
+bool event_comment_created_cmd(client_t *client, list_t *transactions)
+{
+    uuid_t team_uuid;
+    uuid_t thread_uuid;
+    uuid_t user_uuid;
+    char uuid_str[36];
+    char thread_str[36];
+    char user_str[36];
+    char msg[MAX_BODY_LENGTH];
+
+    UNUSED(transactions);
+    read(client->conn->socket, team_uuid, sizeof(uuid_t));
+    read(client->conn->socket, thread_uuid, sizeof(uuid_t));
+    read(client->conn->socket, user_uuid, sizeof(uuid_t));
+    read(client->conn->socket, msg, MAX_BODY_LENGTH);
+    uuid_unparse(team_uuid, uuid_str);
+    uuid_unparse(thread_uuid, thread_str);
+    uuid_unparse(user_uuid, user_str);
+    client_event_thread_reply_received(uuid_str, thread_str, user_str, msg);
+    return (false);
+}
