@@ -8,6 +8,7 @@
 #include "cli_teams.h"
 #include "cli_cmds.h"
 #include "cmd_args.h"
+#include "logging_client.h"
 
 static void handle_create_transaction(client_t *client, void *data)
 {

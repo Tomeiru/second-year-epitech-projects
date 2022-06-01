@@ -23,6 +23,7 @@ SRC_SRV			=	server/src/main.c 							\
 					server/src/commands/create.c				\
 					server/src/commands/pm.c					\
 					server/src/commands/subscribe.c				\
+					server/src/commands/subscribe_list.c		\
 					server/src/commands/utils.c					\
 					server/src/commands/get_or_error.c			\
 					server/src/events/create.c					\

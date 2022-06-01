@@ -8,75 +8,74 @@
 #include "teams.h"
 #include "macros.h"
 #include "utils.h"
+#include "logging_server.h"
+
+static void subscribe_user_to_team(client_t *client,
+team_t *team, save_t *save)
+{
+    user_t *user = get_user_by_uuid(client->uuid, save);
+    uuid_node_t *node_team = safe_malloc(sizeof(uuid_node_t));
+    uuid_node_t *node_user = safe_malloc(sizeof(uuid_node_t));
+
+    memcpy(node_team->uuid, team->uuid, sizeof(uuid_t));
+    memcpy(node_user->uuid, client->uuid, sizeof(uuid_t));
+    node_team->next = NULL;
+    node_user->next = NULL;
+    push_node_back((list_t*) &user->teams, (node_t*) node_team);
+    push_node_back((list_t*) &team->subscribers, (node_t*) node_user);
+    user->teams_nb++;
+    team->subscribers_nb++;
+}
+
+static void unsubscribe_user_to_team(client_t *client,
+team_t *team, save_t *save)
+{
+    user_t *user = get_user_by_uuid(client->uuid, save);
+
+    delete_uuid_from_list(team->uuid, &user->teams);
+    delete_uuid_from_list(client->uuid, &team->subscribers);
+    user->teams_nb--;
+    team->subscribers_nb--;
+}
 
 void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
 {
     subscribe_cmd_arg_t *arg = data;
     team_t *team;
-    uuid_node_t *node;
+    char uuids[36 * 2];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, srv->save)))
         return;
-    if (!does_list_contains_uuid(arg->team_uuid, team->subscribers)) {
-        node = safe_malloc(sizeof(uuid_node_t));
-        memcpy(node->uuid, client->uuid, sizeof(uuid_t));
-        node->next = NULL;
-        push_node_back((list_t*) &team->subscribers, (node_t*) node);
-        team->subscribers_nb++;
-    }
+    if (does_list_contains_uuid(client->uuid, team->subscribers))
+        return client_send_error(client,
+        arg->transaction, ERROR_UNAUTHORIZED, NULL);
+    subscribe_user_to_team(client, team, srv->save);
     client_send_success(client, arg->transaction);
+    client_send_data(client, team->uuid, sizeof(uuid_t));
+    client_send_data(client, client->uuid, sizeof(uuid_t));
+    uuid_unparse(arg->team_uuid, uuids);
+    uuid_unparse(client->uuid, uuids + 36);
+    server_event_user_subscribed(uuids, uuids + 36);
 }
 
 void unsubscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
 {
     unsubscribe_cmd_arg_t *arg = data;
     team_t *team;
+    char uuids[36 * 2];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, srv->save)))
         return;
-    if (does_list_contains_uuid(arg->team_uuid, team->subscribers)) {
-        delete_uuid_from_list(client->uuid, &team->subscribers);
-        team->subscribers_nb--;
-    }
+    if (!does_list_contains_uuid(client->uuid, team->subscribers))
+        return client_send_error(client,
+        arg->transaction, ERROR_UNAUTHORIZED, NULL);
+    unsubscribe_user_to_team(client, team, srv->save);
     client_send_success(client, arg->transaction);
-}
-
-void list_subscribed_teams_cmd(client_t *client, server_t *srv, void *data)
-{
-    list_subscribed_teams_cmd_arg_t *arg = data;
-    user_t *user;
-    team_t *team;
-
-    if (!check_client_logged(client, arg->transaction))
-        return;
-    user = get_user_by_uuid(client->uuid, srv->save);
-    client_send_success(client, arg->transaction);
-    client_send_value(client, user->teams_nb, sizeof(uint));
-    for (uuid_list_t lst = user->teams; lst; lst = (uuid_list_t) lst->next) {
-        team = get_team_by_uuid(lst->uuid, srv->save);
-        client_send_data(client, team->uuid, sizeof(uuid_t));
-        client_send_data(client, team->name, MAX_NAME_LENGTH);
-        client_send_data(client, team->desc, MAX_BODY_LENGTH);
-    }
-}
-
-void list_users_subscribed_cmd(client_t *client, server_t *srv, void *data)
-{
-    list_users_subscribed_to_team_cmd_arg_t *arg = data;
-    team_t *team;
-    user_t *user;
-
-    if (!check_client_logged(client, arg->transaction)
-    || (team = GET_TEAM(client, arg, srv->save)))
-        return;
-    client_send_success(client, arg->transaction);
-    client_send_value(client, team->subscribers_nb, sizeof(uint));
-    for (uuid_list_t lst = team->subscribers;
-    lst; lst = (uuid_list_t) lst->next) {
-        user = get_user_by_uuid(lst->uuid, srv->save);
-        client_send_data(client, user->uuid, sizeof(uuid_t));
-        client_send_data(client, user->name, MAX_NAME_LENGTH);
-    }
+    client_send_data(client, team->uuid, sizeof(uuid_t));
+    client_send_data(client, client->uuid, sizeof(uuid_t));
+    uuid_unparse(arg->team_uuid, uuids);
+    uuid_unparse(client->uuid, uuids + 36);
+    server_event_user_unsubscribed(uuids, uuids + 36);
 }

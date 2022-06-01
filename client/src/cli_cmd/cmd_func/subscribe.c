@@ -8,12 +8,21 @@
 #include "cli_teams.h"
 #include "cli_cmds.h"
 #include "cmd_args.h"
+#include "logging_client.h"
 
 static void handle_subscribe_transaction(client_t *client, void *data)
 {
-    UNUSED(client);
+    uuid_t team_uuid;
+    uuid_t user_uuid;
+    char uuids[36 * 2];
+
     UNUSED(data);
     puts("[INFO] Subscribe command transaction");
+    read(client->conn->socket, team_uuid, sizeof(uuid_t));
+    read(client->conn->socket, user_uuid, sizeof(uuid_t));
+    uuid_unparse(team_uuid, uuids);
+    uuid_unparse(user_uuid, uuids + 36);
+    client_print_subscribed(uuids + 36, uuids);
 }
 
 static bool subscribe_handler(client_t *client, char *team_uuid, list_t *transactions)
