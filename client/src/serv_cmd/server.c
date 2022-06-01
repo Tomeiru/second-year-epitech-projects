@@ -81,6 +81,7 @@ bool handle_server_msg(client_t *client, list_t *transations)
 
     if (read(client->conn->socket, &cmd, sizeof(command_id_t)) <= 0)
         return true;
+    printf("%hhu\n", cmd);
     for (int i = 0; i < SERV_CMD_NB; i++)
         if (SERV_CMDS[i].id == cmd)
             return (SERV_CMDS[i].fct(client, transations));

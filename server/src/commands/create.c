@@ -14,8 +14,8 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
 {
     create_team_channel_cmd_arg_t *arg = data;
     team_t *team = get_team_by_name(arg->name, server->save);
-    char team_uuid[36];
-    char user_uuid[36];
+    char team_uuid[36] = {0};
+    char user_uuid[36] = {0};
 
     if (!check_client_logged(client, arg->transaction))
         return;
@@ -26,7 +26,6 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
     uuid_unparse(client->uuid, user_uuid);
     server_event_team_created(team_uuid, team->name, user_uuid);
     client_send_success(client, arg->transaction);
-    client_send_data(client, team->uuid, sizeof(uuid_t));
     event_team_created(server, team);
 }
 
@@ -50,7 +49,6 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     uuid_unparse(channel->uuid, channel_uuid);
     server_event_channel_created(team_uuid, channel_uuid, arg->name);
     client_send_success(client, arg->transaction);
-    client_send_data(client, channel->uuid, sizeof(uuid_t));
     event_channel_created(server, team, channel);
 }
 
