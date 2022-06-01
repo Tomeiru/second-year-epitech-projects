@@ -26,6 +26,7 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
     uuid_unparse(client->uuid, user_uuid);
     server_event_team_created(team_uuid, team->name, user_uuid);
     client_send_success(client, arg->transaction);
+    client_team_created(client, team);
     event_team_created(server, team);
 }
 
@@ -49,6 +50,7 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     uuid_unparse(channel->uuid, channel_uuid);
     server_event_channel_created(team_uuid, channel_uuid, arg->name);
     client_send_success(client, arg->transaction);
+    client_channel_created(client, channel);
     event_channel_created(server, team, channel);
 }
 
@@ -74,7 +76,7 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     server_event_thread_created(uuid, uuid + 36,
     uuid + 72, arg->title, arg->msg);
     client_send_success(client, arg->transaction);
-    client_send_data(client, thread->uuid, sizeof(uuid_t));
+    client_thread_created(client, thread);
     event_thread_created(server, team, thread);
 }
 
@@ -99,5 +101,6 @@ void create_comment_cmd(client_t *client, server_t *server, void *data)
     uuid_unparse(client->uuid, user_uuid);
     server_event_reply_created(thread_uuid, user_uuid, arg->comment);
     client_send_success(client, arg->transaction);
+    client_comment_created(client, team, thread, comment);
     event_comment_created(server, team, thread, comment);
 }

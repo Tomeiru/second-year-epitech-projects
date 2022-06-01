@@ -80,4 +80,9 @@ uuid_t uuid, channel_t *channel, uint64_t transaction);
 user_t *get_user_or_error(client_t *client,
 uuid_t uuid, save_t *save, uint64_t transaction);
 
+void client_team_created(client_t *client, team_t *team);
+void client_channel_created(client_t *client, channel_t *channel);
+void client_thread_created(client_t *client, thread_t *thread);
+void client_comment_created(client_t *client, team_t *team, thread_t *thread, comment_t *comment);
+
 int is_not_number(char *s);

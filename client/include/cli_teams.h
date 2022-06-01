@@ -50,3 +50,7 @@ bool handle_user_cmd(client_t *client, list_t *transactions);
 void client_send_cmd_id(conn_t *conn, command_id_t cmd);
 void client_send_data(conn_t *conn, void *data, size_t size);
 void client_send_cmd(conn_t *conn, command_id_t cmd, void *data, size_t size);
+void handle_create_team_transaction(client_t *client, void *data);
+void handle_create_channel_transaction(client_t *client, void *data);
+void handle_create_thread_transaction(client_t *client, void *data);
+void handle_create_comment_transaction(client_t *client, void *data);
