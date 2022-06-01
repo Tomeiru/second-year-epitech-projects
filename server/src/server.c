@@ -76,5 +76,25 @@ void server_update(server_t *srv, fd_set *readfds, int max)
             continue;
         client_update(client, srv);
     }
-    return;
+    disconnect_clients(srv);
+}
+
+void disconnect_clients(server_t *srv)
+{
+    list_t prev = NULL;
+    list_t next;
+    client_t *client;
+
+    for (list_t list = srv->clients; list; list = next) {
+        next = list->next;
+        client = (client_t*) list->data;
+        if (!client->quit)
+            continue;
+        client_delete(client);
+        free(list);
+        if (prev)
+            prev->next = next;
+        else
+            srv->clients = next;
+    }
 }

@@ -27,7 +27,7 @@ void event_channel_created(server_t *server, team_t *team, channel_t *channel)
 
     for (list_t list = server->clients; list; list = list->next) {
         client = (client_t *)list->data;
-        if (!check_user_belongs_to_team(client, team, NULL, false))
+        if (!check_user_belongs_to_team(client, team, 0, false))
             continue;
         client_send_value(client, EVENT_CHANNEL_CREATED_ID, sizeof(command_id_t));
         client_send_data(client, channel->uuid, sizeof(uuid_t));

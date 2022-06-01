@@ -49,6 +49,7 @@ server_t *init_server(int port);
 server_t *init_serv_struct(int port, int opt);
 int start_server(int port);
 void server_update(server_t *srv, fd_set *readfds, int max);
+void disconnect_clients(server_t *srv);
 
 int set_fd(fd_set *readfds, server_t *server);
 bool accept_new_clients(server_t *server);
