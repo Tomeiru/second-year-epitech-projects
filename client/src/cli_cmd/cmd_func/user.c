@@ -26,7 +26,8 @@ static void handle_user_transaction(client_t *client, void *data)
     client_print_user(uuid_str, name, connected);
 }
 
-static bool user_handler(client_t *client, char *user_uuid, list_t *transactions)
+static bool user_handler(client_t *client, char *user_uuid,
+list_t *transactions)
 {
     info_user_cmd_arg_t cmd_arg;
     uuid_t user;

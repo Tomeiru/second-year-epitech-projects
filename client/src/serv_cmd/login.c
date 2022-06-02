@@ -35,4 +35,3 @@ bool event_logout_serv_cmd(client_t *client, list_t *transactions)
     client_event_logged_out(uuid_str, name);
     return (false);
 }
-

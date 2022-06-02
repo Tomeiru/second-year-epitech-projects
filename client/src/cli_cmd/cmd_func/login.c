@@ -16,7 +16,8 @@ static void handle_login_transaction(client_t *client, void *data)
     puts("[INFO] Logged in !");
 }
 
-static bool login_handler(client_t *client, char *user_name, list_t *transactions)
+static bool login_handler(client_t *client, char *user_name,
+list_t *transactions)
 {
     login_cmd_arg_t cmd_arg;
 

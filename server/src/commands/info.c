@@ -16,7 +16,8 @@ void info_user_cmd(client_t *client, server_t *server, void *data)
     user_t *user;
 
     if (!check_client_logged(client, arg->transaction)
-    || !(user = get_user_or_error(client, client->uuid, server->save, arg->transaction)))
+    || !(user = get_user_or_error(client, client->uuid, server->save,
+    arg->transaction)))
         return;
     client_send_success(client, arg->transaction);
     client_send_data(client, user->uuid, sizeof(uuid_t));

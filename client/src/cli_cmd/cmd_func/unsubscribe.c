@@ -25,7 +25,8 @@ static void handle_unsubscribe_transaction(client_t *client, void *data)
     client_print_unsubscribed(uuids + 36, uuids);
 }
 
-static bool unsubscribe_handler(client_t *client, char *team_uuid, list_t *transactions)
+static bool unsubscribe_handler(client_t *client, char *team_uuid,
+list_t *transactions)
 {
     unsubscribe_cmd_arg_t cmd_arg;
     uuid_t team;
@@ -40,7 +41,8 @@ static bool unsubscribe_handler(client_t *client, char *team_uuid, list_t *trans
     return (SUCCESS_CMD);
 }
 
-bool unsubscribe_parser(client_t *client, int ac, char **av, list_t *transactions)
+bool unsubscribe_parser(client_t *client, int ac, char **av,
+list_t *transactions)
 {
     if (ac != 1)
         return (ERROR_CMD);

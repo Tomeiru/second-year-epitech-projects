@@ -16,7 +16,8 @@ static void handle_send_transaction(client_t *client, void *data)
     puts("[INFO] Send command transaction");
 }
 
-static bool send_handler(client_t *client, char *user_uuid, char *message_body, list_t *transactions)
+static bool send_handler(client_t *client, char *user_uuid, char *message_body,
+list_t *transactions)
 {
     send_pm_cmd_arg_t cmd_arg;
     uuid_t user;

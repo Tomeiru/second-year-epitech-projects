@@ -9,7 +9,8 @@
 #include "cli_cmds.h"
 #include "cmd_args.h"
 
-static bool list_handler(client_t *client, command_id_t cmd, transaction_execute_fct_t func, list_t *transactions)
+static bool list_handler(client_t *client, command_id_t cmd,
+transaction_execute_fct_t func, list_t *transactions)
 {
     list_cmd_arg_t cmd_arg;
 
@@ -34,6 +35,7 @@ bool list_parser(client_t *client, int ac, char **av, list_t *transactions)
         return (ERROR_CMD);
     for (int i = 0; i < 4; i++)
         if (client->use->state == (use_state_t)i)
-            return (list_handler(client, LIST_TEAMS_ID + i, func[i], transactions));
+            return (list_handler(client, LIST_TEAMS_ID + i,
+            func[i], transactions));
     return (ERROR_CMD);
 }

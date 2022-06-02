@@ -20,7 +20,8 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
     if (!check_client_logged(client, arg->transaction))
         return;
     if (team)
-        return (client_send_error(client, arg->transaction, ERROR_ALREADY_EXISTS, NULL));
+        return (client_send_error(client, arg->transaction,
+        ERROR_ALREADY_EXISTS, NULL));
     team = team_create(arg->name, arg->desc, server->save);
     uuid_unparse(team->uuid, team_uuid);
     uuid_unparse(client->uuid, user_uuid);
@@ -70,7 +71,8 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     || !(channel = GET_CHANNEL(client, arg, team)))
         return;
     if ((thread = get_thread_by_title(arg->title, channel)))
-        return (client_send_error(client, arg->transaction, ERROR_ALREADY_EXISTS, NULL));
+        return (client_send_error(client, arg->transaction,
+        ERROR_ALREADY_EXISTS, NULL));
     thread = thread_create(arg->title, arg->msg, client->uuid, channel);
     uuid_unparse(channel->uuid, uuid);
     uuid_unparse(thread->uuid, uuid + 36);

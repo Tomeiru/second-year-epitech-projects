@@ -31,7 +31,8 @@ void event_channel_created(server_t *server, team_t *team, channel_t *channel)
         client = (client_t *)list->data;
         if (!check_user_belongs_to_team(client, team, 0, false))
             continue;
-        client_send_value(client, EVENT_CHANNEL_CREATED_ID, sizeof(command_id_t));
+        client_send_value(client, EVENT_CHANNEL_CREATED_ID,
+        sizeof(command_id_t));
         client_send_data(client, channel->uuid, sizeof(uuid_t));
         client_send_data(client, channel->name, MAX_NAME_LENGTH);
         client_send_data(client, channel->desc, MAX_DESCRIPTION_LENGTH);
@@ -46,7 +47,8 @@ void event_thread_created(server_t *server, team_t *team, thread_t *thread)
         client = (client_t *)list->data;
         if (!check_user_belongs_to_team(client, team, 0, false))
             continue;
-        client_send_value(client, EVENT_THREAD_CREATED_ID, sizeof(command_id_t));
+        client_send_value(client, EVENT_THREAD_CREATED_ID,
+        sizeof(command_id_t));
         client_send_data(client, thread->uuid, sizeof(uuid_t));
         client_send_data(client, client->uuid, sizeof(uuid_t));
         client_send_value(client, thread->timestamp, sizeof(time_t));
@@ -55,7 +57,8 @@ void event_thread_created(server_t *server, team_t *team, thread_t *thread)
     }
 }
 
-void event_comment_created(server_t *server, team_t *team, thread_t *thread, comment_t *comment)
+void event_comment_created(server_t *server, team_t *team, thread_t *thread,
+comment_t *comment)
 {
     client_t *client;
 
@@ -63,7 +66,8 @@ void event_comment_created(server_t *server, team_t *team, thread_t *thread, com
         client = (client_t *)list->data;
         if (!check_user_belongs_to_team(client, team, 0, false))
             continue;
-        client_send_value(client, EVENT_REPLY_CREATED_ID, sizeof(command_id_t));
+        client_send_value(client, EVENT_REPLY_CREATED_ID,
+        sizeof(command_id_t));
         client_send_data(client, team->uuid, sizeof(uuid_t));
         client_send_data(client, thread->uuid, sizeof(uuid_t));
         client_send_data(client, comment->user, sizeof(uuid_t));

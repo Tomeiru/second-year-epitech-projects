@@ -26,7 +26,8 @@ static void handle_messages_transaction(client_t *client, void *data)
     }
 }
 
-static bool messages_handler(client_t *client, char *user_uuid, list_t *transactions)
+static bool messages_handler(client_t *client, char *user_uuid,
+list_t *transactions)
 {
     get_pm_cmd_arg_t cmd_arg;
     uuid_t user;

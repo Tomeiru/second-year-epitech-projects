@@ -25,7 +25,8 @@ bool check_client_logged(client_t *client, uint64_t transation)
     return true;
 }
 
-bool check_user_belongs_to_team(client_t *client, team_t *team, uint64_t transation, bool throw)
+bool check_user_belongs_to_team(client_t *client, team_t *team,
+uint64_t transation, bool throw)
 {
     uuid_t user;
 

@@ -13,7 +13,7 @@
 
 int is_not_number(char *s)
 {
-    for (int i = 0; s[i]!= '\0'; i++) {
+    for (int i = 0; s[i] != '\0'; i++) {
         if (isdigit(s[i]) == 0)
             return (1);
     }

@@ -78,7 +78,8 @@ char *team_uuid, list_t *transactions)
     return (SUCCESS_CMD);
 }
 
-bool subscribed_parser(client_t *client, int ac, char **av, list_t *transactions)
+bool subscribed_parser(client_t *client, int ac, char **av,
+list_t *transactions)
 {
     if (!ac)
         return (subscribed_teams_handler(client, transactions));

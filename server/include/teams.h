@@ -70,7 +70,8 @@ uint64_t transaction, error_t error, uuid_t *uuid);
 void client_send_unknown_cmd(client_t *client);
 
 bool check_client_logged(client_t *client, uint64_t transation);
-bool check_user_belongs_to_team(client_t *client, team_t *team, uint64_t transation, bool throw);
+bool check_user_belongs_to_team(client_t *client, team_t *team,
+uint64_t transation, bool throw);
 team_t *get_team_or_error(client_t *client,
 uuid_t uuid, save_t *save, uint64_t transaction);
 channel_t *get_channel_or_error(client_t *client,
@@ -83,6 +84,7 @@ uuid_t uuid, save_t *save, uint64_t transaction);
 void client_team_created(client_t *client, team_t *team);
 void client_channel_created(client_t *client, channel_t *channel);
 void client_thread_created(client_t *client, thread_t *thread);
-void client_comment_created(client_t *client, team_t *team, thread_t *thread, comment_t *comment);
+void client_comment_created(client_t *client, team_t *team, thread_t *thread,
+comment_t *comment);
 
 int is_not_number(char *s);

@@ -10,7 +10,8 @@
 #include "cmd_args.h"
 #include "logging_client.h"
 
-static bool create_comment(client_t *client, char *comment_body, list_t *transactions)
+static bool create_comment(client_t *client, char *comment_body,
+list_t *transactions)
 {
     create_comment_cmd_arg_t cmd_arg;
 
@@ -25,7 +26,8 @@ static bool create_comment(client_t *client, char *comment_body, list_t *transac
     return (SUCCESS_CMD);
 }
 
-static bool create_thread(client_t *client, char *thread_title, char *thread_message, list_t *transactions)
+static bool create_thread(client_t *client, char *thread_title,
+char *thread_message, list_t *transactions)
 {
     create_thread_cmd_arg_t cmd_arg;
 
@@ -41,7 +43,8 @@ static bool create_thread(client_t *client, char *thread_title, char *thread_mes
     return (SUCCESS_CMD);
 }
 
-static bool create_channel_team(client_t *client, char **av, command_id_t cmd, list_t *transactions)
+static bool create_channel_team(client_t *client, char **av, command_id_t cmd,
+list_t *transactions)
 {
     create_team_channel_cmd_arg_t cmd_arg;
 
@@ -68,14 +71,17 @@ bool create_parser(client_t *client, int ac, char **av, list_t *transactions)
     }if (ac != 2)
         return (ERROR_CMD);
     if (client->use->state == CHANNEL_USE_STATE) {
-        if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >= MAX_BODY_LENGTH)
+        if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >=
+        MAX_BODY_LENGTH)
             return (ERROR_CMD);
         return (create_thread(client, av[0], av[1], transactions));
     }
-    if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >= MAX_DESCRIPTION_LENGTH)
+    if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >=
+    MAX_DESCRIPTION_LENGTH)
         return (ERROR_CMD);
     for (int i = 0; i < 2; i++)
         if (client->use->state == (use_state_t)i)
-            return (create_channel_team(client, av, CREATE_TEAM_ID + i, transactions));
+            return (create_channel_team(client, av, CREATE_TEAM_ID + i,
+            transactions));
     return (SUCCESS_CMD);
 }

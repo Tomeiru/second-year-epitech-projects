@@ -30,7 +30,8 @@ void client_thread_created(client_t *client, thread_t *thread)
     client_send_data(client, thread->msg, MAX_BODY_LENGTH);
 }
 
-void client_comment_created(client_t *client, team_t *team, thread_t *thread, comment_t *comment)
+void client_comment_created(client_t *client, team_t *team, thread_t *thread,
+comment_t *comment)
 {
     client_send_data(client, team->uuid, sizeof(uuid_t));
     client_send_data(client, thread->uuid, sizeof(uuid_t));

@@ -25,7 +25,8 @@ static void handle_subscribe_transaction(client_t *client, void *data)
     client_print_subscribed(uuids + 36, uuids);
 }
 
-static bool subscribe_handler(client_t *client, char *team_uuid, list_t *transactions)
+static bool subscribe_handler(client_t *client, char *team_uuid,
+list_t *transactions)
 {
     subscribe_cmd_arg_t cmd_arg;
     uuid_t team;
