@@ -26,7 +26,10 @@ SRC_SRV			=	server/src/main.c 									\
 					server/src/commands/subscribe_list.c				\
 					server/src/commands/subscribe.c						\
 					server/src/commands/utils.c							\
+					server/src/commands/users.c							\
 					server/src/commands/get_or_error.c					\
+					server/src/commands/info.c							\
+					server/src/commands/list.c							\
 					server/src/events/create.c							\
 					server/src/events/login.c							\
 					server/src/save/save.c	 							\
@@ -48,6 +51,7 @@ SRC_CLI			=	client/src/main.c									\
 					client/src/cli_cmd/cmd_func/create.c				\
 					client/src/cli_cmd/cmd_func/help.c					\
 					client/src/cli_cmd/cmd_func/info.c					\
+					client/src/cli_cmd/cmd_func/info_transaction.c		\
 					client/src/cli_cmd/cmd_func/list.c					\
 					client/src/cli_cmd/cmd_func/login.c					\
 					client/src/cli_cmd/cmd_func/logout.c				\

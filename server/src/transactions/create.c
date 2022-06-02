@@ -34,6 +34,6 @@ void client_comment_created(client_t *client, team_t *team, thread_t *thread, co
 {
     client_send_data(client, team->uuid, sizeof(uuid_t));
     client_send_data(client, thread->uuid, sizeof(uuid_t));
-    client_send_data(client, comment->time, sizeof(time_t));
+    client_send_value(client, comment->time, sizeof(time_t));
     client_send_data(client, comment->msg, MAX_BODY_LENGTH);
 }

@@ -87,7 +87,7 @@ typedef struct list_users_subscribed_to_team_cmd_arg_s {
 typedef struct info_user_cmd_arg_s {
     uint64_t transaction;
     uuid_t user_uuid;
-} info_user_cmd_t;
+} info_user_cmd_arg_t;
 
 typedef struct info_cmd_arg_s {
     uint64_t transaction;

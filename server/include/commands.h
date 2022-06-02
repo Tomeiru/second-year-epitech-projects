@@ -13,7 +13,7 @@
 #include "cmd_args.h"
 #include "save.h"
 
-#define COMMANDS_NB 12
+#define COMMANDS_NB 18
 
 typedef struct client_s client_t;
 typedef struct server_s server_t;
@@ -37,8 +37,14 @@ void send_pm_cmd(client_t *client, server_t *server, void *data);
 void get_pm_cmd(client_t *client, server_t *server, void *data);
 void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data);
 void unsubscribe_to_team_cmd(client_t *client, server_t *srv, void *data);
+void users_cmd(client_t *client, server_t *server, void *data);
 void list_subscribed_teams_cmd(client_t *client, server_t *srv, void *data);
 void list_users_subscribed_cmd(client_t *client, server_t *srv, void *data);
+void user_cmd(client_t *client, server_t *server, void *data);
+void info_user_cmd(client_t *client, server_t *server, void *data);
+void info_team_cmd(client_t *client, server_t *server, void *data);
+void info_channel_cmd(client_t *client, server_t *server, void *data);
+void info_thread_cmd(client_t *client, server_t *server, void *data);
 
 const command_t *get_command_from_id(command_id_t id);
 

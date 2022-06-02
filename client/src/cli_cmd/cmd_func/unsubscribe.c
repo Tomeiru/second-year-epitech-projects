@@ -22,7 +22,7 @@ static void handle_unsubscribe_transaction(client_t *client, void *data)
     read(client->conn->socket, user_uuid, sizeof(uuid_t));
     uuid_unparse(team_uuid, uuids);
     uuid_unparse(team_uuid, uuids + 36);
-    client_print_subscribed(uuids + 36, uuids);
+    client_print_unsubscribed(uuids + 36, uuids);
 }
 
 static bool unsubscribe_handler(client_t *client, char *team_uuid, list_t *transactions)

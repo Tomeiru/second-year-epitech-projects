@@ -8,12 +8,26 @@
 #include "cli_teams.h"
 #include "cli_cmds.h"
 #include "cmd_args.h"
+#include "logging_client.h"
 
 static void handle_users_transaction(client_t *client, void *data)
 {
-    UNUSED(client);
+    size_t nb;
+    uuid_t uuid;
+    char name[MAX_NAME_LENGTH];
+    size_t connected;
+    char uuid_str[36];
+
     UNUSED(data);
     puts("[INFO] Users has successfully been called");
+    read(client->conn->socket, &nb, sizeof(size_t));
+    for (size_t i = 0; i < nb; i++) {
+        read(client->conn->socket, uuid, sizeof(uuid_t));
+        read(client->conn->socket, name, MAX_NAME_LENGTH);
+        read(client->conn->socket, &connected, sizeof(size_t));
+        uuid_unparse(uuid, uuid_str);
+        client_print_users(uuid_str, name, connected);
+    }
 }
 
 static bool users_handler(client_t *client, list_t *transactions)
