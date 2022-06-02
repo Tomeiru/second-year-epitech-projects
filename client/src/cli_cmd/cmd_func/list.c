@@ -9,14 +9,7 @@
 #include "cli_cmds.h"
 #include "cmd_args.h"
 
-static void handle_list_transaction(client_t *client, void *data)
-{
-    UNUSED(client);
-    UNUSED(data);
-    puts("[INFO] Lists has successfully been called");
-}
-
-static bool list_handler(client_t *client, command_id_t cmd, list_t *transactions)
+static bool list_handler(client_t *client, command_id_t cmd, transaction_execute_fct_t func, list_t *transactions)
 {
     list_cmd_arg_t cmd_arg;
 
@@ -24,18 +17,23 @@ static bool list_handler(client_t *client, command_id_t cmd, list_t *transaction
     memcpy(cmd_arg.channel_uuid, client->use->channel, 16);
     memcpy(cmd_arg.thread_uuid, client->use->thread, 16);
     cmd_arg.transaction = transaction_create(NULL,
-    handle_list_transaction, NULL, transactions)->id;
+    func, NULL, transactions)->id;
     client_send_cmd(client->conn, cmd, &cmd_arg, sizeof(cmd_arg));
     return (SUCCESS_CMD);
 }
 
 bool list_parser(client_t *client, int ac, char **av, list_t *transactions)
 {
+    transaction_execute_fct_t func[4] = {
+        handle_list_team_transaction, handle_list_channel_transaction,
+        handle_list_thread_transaction, handle_list_comment_transaction
+    };
+
     UNUSED(av);
     if (ac)
         return (ERROR_CMD);
     for (int i = 0; i < 4; i++)
         if (client->use->state == (use_state_t)i)
-            return (list_handler(client, LIST_TEAMS_ID + i, transactions));
+            return (list_handler(client, LIST_TEAMS_ID + i, func[i], transactions));
     return (ERROR_CMD);
 }

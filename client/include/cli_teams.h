@@ -58,3 +58,7 @@ void handle_info_user_transaction(client_t *client, void *data);
 void handle_info_team_transaction(client_t *client, void *data);
 void handle_info_channel_transaction(client_t *client, void *data);
 void handle_info_thread_transaction(client_t *client, void *data);
+void handle_list_team_transaction(client_t *client, void *data);
+void handle_list_channel_transaction(client_t *client, void *data);
+void handle_list_thread_transaction(client_t *client, void *data);
+void handle_list_comment_transaction(client_t *client, void *data);
