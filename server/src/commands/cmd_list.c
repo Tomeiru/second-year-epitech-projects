@@ -29,9 +29,4 @@ const command_t COMMANDS[COMMANDS_NB] = {
     sizeof(list_subscribed_teams_cmd_arg_t), list_subscribed_teams_cmd},
     {LIST_USERS_SUBSCRIBED_TO_TEAM_ID,
     sizeof(list_users_subscribed_to_team_cmd_arg_t), list_users_subscribed_cmd},
-    {INFO_USER_ID, sizeof(info_user_cmd_arg_t), user_cmd},
-    {INFO_CURRENT_USER_ID, sizeof(info_cmd_arg_t), info_user_cmd},
-    {INFO_TEAM_ID, sizeof(info_cmd_arg_t), info_team_cmd},
-    {INFO_CHANNEL_ID, sizeof(info_cmd_arg_t), info_channel_cmd},
-    {INFO_THREAD_ID, sizeof(info_cmd_arg_t), info_thread_cmd},
 };

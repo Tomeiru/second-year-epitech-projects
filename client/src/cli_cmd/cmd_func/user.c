@@ -14,14 +14,14 @@ static void handle_user_transaction(client_t *client, void *data)
 {
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
-    size_t connected;
+    bool connected;
     char uuid_str[36];
 
     UNUSED(data);
     puts("[INFO] User command transaction");
     read(client->conn->socket, uuid, sizeof(uuid_t));
     read(client->conn->socket, name, MAX_NAME_LENGTH);
-    read(client->conn->socket, &connected, sizeof(size_t));
+    read(client->conn->socket, &connected, sizeof(bool));
     uuid_unparse(uuid, uuid_str);
     client_print_user(uuid_str, name, connected);
 }

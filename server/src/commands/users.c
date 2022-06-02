@@ -13,7 +13,7 @@
 void users_cmd(client_t *client, server_t *server, void *data)
 {
     list_users_cmd_arg_t *arg = data;
-    size_t len = (size_t)node_len(server->save->users);
+    size_t len = (size_t) node_len(server->save->users);
     user_t *user;
 
     if (!check_client_logged(client, arg->transaction))
@@ -25,9 +25,9 @@ void users_cmd(client_t *client, server_t *server, void *data)
         client_send_data(client, user->uuid, sizeof(uuid_t));
         client_send_data(client, user->name, MAX_NAME_LENGTH);
         if (get_connected_client(user->uuid, server))
-            client_send_value(client, true, sizeof(size_t));
+            client_send_value(client, true, sizeof(bool));
         else
-            client_send_value(client, false, sizeof(size_t));
+            client_send_value(client, false, sizeof(bool));
     }
 }
 

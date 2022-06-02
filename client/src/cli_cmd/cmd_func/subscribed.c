@@ -35,7 +35,7 @@ static void handle_subscribed_users_transaction(client_t *client, void *data)
     size_t nb;
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
-    size_t connected;
+    bool connected;
     char uuid_str[36];
 
     UNUSED(data);
@@ -44,7 +44,7 @@ static void handle_subscribed_users_transaction(client_t *client, void *data)
     for (size_t i = 0; i < nb; i++) {
         read(client->conn->socket, uuid, sizeof(uuid_t));
         read(client->conn->socket, name, MAX_NAME_LENGTH);
-        read(client->conn->socket, &connected, sizeof(size_t));
+        read(client->conn->socket, &connected, sizeof(bool));
         uuid_unparse(uuid, uuid_str);
         client_print_users(uuid_str, name, connected);
     }

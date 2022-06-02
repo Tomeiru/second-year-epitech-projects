@@ -45,8 +45,8 @@ void list_users_subscribed_cmd(client_t *client, server_t *srv, void *data)
         client_send_data(client, user->uuid, sizeof(uuid_t));
         client_send_data(client, user->name, MAX_NAME_LENGTH);
         if (get_connected_client(user->uuid, srv))
-            client_send_value(client, true, sizeof(size_t));
+            client_send_value(client, true, sizeof(bool));
         else
-            client_send_value(client, false, sizeof(size_t));
+            client_send_value(client, false, sizeof(bool));
     }
 }
