@@ -14,6 +14,8 @@ void event_team_created(server_t *server, team_t *team)
 
     for (list_t list = server->clients; list; list = list->next) {
         client = (client_t *)list->data;
+        if (!client->logged)
+            continue;
         client_send_value(client, EVENT_TEAM_CREATED_ID, sizeof(command_id_t));
         client_send_data(client, team->uuid, sizeof(uuid_t));
         client_send_data(client, team->name, MAX_NAME_LENGTH);
