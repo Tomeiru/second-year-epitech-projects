@@ -22,9 +22,9 @@ void info_user_cmd(client_t *client, server_t *server, void *data)
     client_send_data(client, user->uuid, sizeof(uuid_t));
     client_send_data(client, user->name, MAX_NAME_LENGTH);
     if (get_connected_client(user->uuid, server))
-        client_send_value(client, true, sizeof(size_t));
+        client_send_value(client, (size_t)1, sizeof(size_t));
     else
-        client_send_value(client, false, sizeof(size_t));
+        client_send_value(client, (size_t)0, sizeof(size_t));
 }
 
 void info_team_cmd(client_t *client, server_t *server, void *data)

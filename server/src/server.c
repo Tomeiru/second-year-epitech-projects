@@ -41,6 +41,7 @@ server_t *init_serv_struct(int port, int opt)
         puts("bind failed");
         return (NULL);
     }
+    server->clients = NULL;
     return (server);
 }
 
