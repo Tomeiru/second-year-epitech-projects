@@ -24,7 +24,7 @@ void list_team_cmd(client_t *client, server_t *server, void *data)
         team = (team_t *)list->data;
         client_send_data(client, team->uuid, sizeof(uuid_t));
         client_send_data(client, team->name, MAX_NAME_LENGTH);
-        client_send_data(client, team->desc, MAX_BODY_LENGTH);
+        client_send_data(client, team->desc, MAX_DESCRIPTION_LENGTH);
     }
 }
 
@@ -44,7 +44,7 @@ void list_channel_cmd(client_t *client, server_t *server, void *data)
         channel = (channel_t *)list->data;
         client_send_data(client, channel->uuid, sizeof(uuid_t));
         client_send_data(client, channel->name, MAX_NAME_LENGTH);
-        client_send_data(client, channel->desc, MAX_BODY_LENGTH);
+        client_send_data(client, channel->desc, MAX_DESCRIPTION_LENGTH);
     }
 }
 

@@ -24,7 +24,7 @@ void list_subscribed_teams_cmd(client_t *client, server_t *srv, void *data)
         team = get_team_by_uuid(lst->uuid, srv->save);
         client_send_data(client, team->uuid, sizeof(uuid_t));
         client_send_data(client, team->name, MAX_NAME_LENGTH);
-        client_send_data(client, team->desc, MAX_BODY_LENGTH);
+        client_send_data(client, team->desc, MAX_DESCRIPTION_LENGTH);
     }
 }
 
