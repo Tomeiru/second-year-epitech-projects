@@ -38,6 +38,7 @@ void send_pm_cmd(client_t *client, server_t *srv, void *data)
     message_create(client->uuid, arg->msg, discussion);
     client_send_success(client, arg->transaction);
     event_private_message_sended(client, arg->user_uuid, arg->msg, srv);
+    save_infos(srv->save, SAVEFILE_PATH);
 }
 
 void get_pm_cmd(client_t *client, server_t *srv, void *data)

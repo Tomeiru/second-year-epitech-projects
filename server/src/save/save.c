@@ -32,7 +32,7 @@ static void save_discussions(list_t discussions, int fd)
     write(fd, &len, sizeof(uint));
     for (list_t list = discussions; list; list = list->next) {
         discussion = (discussion_t*) list->data;
-        write(fd, discussion, sizeof(user_t));
+        write(fd, discussion, sizeof(discussion_t));
         for (list_t msglist = discussion->messages;
         msglist; msglist = msglist->next)
             write(fd, msglist->data, sizeof(message_t));
@@ -41,7 +41,7 @@ static void save_discussions(list_t discussions, int fd)
 
 bool save_infos(save_t *save, char *path)
 {
-    int fd = open(path, O_WRONLY | O_CREAT);
+    int fd = open(path, O_WRONLY | O_CREAT, 0644);
 
     if (fd == -1)
         return true;

@@ -28,6 +28,7 @@ void create_team_cmd(client_t *client, server_t *server, void *data)
     client_send_success(client, arg->transaction);
     client_team_created(client, team);
     event_team_created(server, team);
+    save_infos(server->save, SAVEFILE_PATH);
 }
 
 void create_channel_cmd(client_t *client, server_t *server, void *data)
@@ -52,6 +53,7 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     client_send_success(client, arg->transaction);
     client_channel_created(client, channel);
     event_channel_created(server, team, channel);
+    save_infos(server->save, SAVEFILE_PATH);
 }
 
 void create_thread_cmd(client_t *client, server_t *server, void *data)
@@ -78,6 +80,7 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
     client_send_success(client, arg->transaction);
     client_thread_created(client, thread);
     event_thread_created(server, team, thread);
+    save_infos(server->save, SAVEFILE_PATH);
 }
 
 void create_comment_cmd(client_t *client, server_t *server, void *data)
@@ -103,4 +106,5 @@ void create_comment_cmd(client_t *client, server_t *server, void *data)
     client_send_success(client, arg->transaction);
     client_comment_created(client, team, thread, comment);
     event_comment_created(server, team, thread, comment);
+    save_infos(server->save, SAVEFILE_PATH);
 }

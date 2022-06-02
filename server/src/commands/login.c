@@ -19,6 +19,7 @@ void login_cmd(client_t *client, server_t *server, void *data)
         user = user_create(arg->name, server->save);
         uuid_unparse(user->uuid, uuid_str);
         server_event_user_created(uuid_str, user->name);
+        save_infos(server->save, SAVEFILE_PATH);
     }
     client_send_success(client, arg->transaction);
     client->logged = true;

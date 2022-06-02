@@ -36,9 +36,10 @@ static void load_discussions(save_t *save, int fd)
     message_t *message;
     uint nb;
 
-    read(fd, &nb, sizeof(nb));
+    read(fd, &nb, sizeof(uint));
     for (uint i = 0; i < nb; i++) {
         discussion = safe_malloc(sizeof(discussion_t));
+        read(fd, discussion, sizeof(discussion_t));
         discussion->messages = NULL;
         for (uint j = 0; j < discussion->messages_nb; j++) {
             message = safe_malloc(sizeof(message_t));

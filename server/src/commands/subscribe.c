@@ -25,6 +25,7 @@ team_t *team, save_t *save)
     push_node_back((list_t*) &team->subscribers, (node_t*) node_user);
     user->teams_nb++;
     team->subscribers_nb++;
+    save_infos(save, SAVEFILE_PATH);
 }
 
 static void unsubscribe_user_to_team(client_t *client,
@@ -36,6 +37,7 @@ team_t *team, save_t *save)
     delete_uuid_from_list(client->uuid, &team->subscribers);
     user->teams_nb--;
     team->subscribers_nb--;
+    save_infos(save, SAVEFILE_PATH);
 }
 
 void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
