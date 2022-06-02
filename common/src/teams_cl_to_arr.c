@@ -97,7 +97,7 @@ char **teams_cl_to_arr(char *str)
 
     if (str == NULL || !strlen(str) || !(malloc_str = strdup(str)))
         return (arr);
-    trim = rm_sep_aft(rm_sep_bef(str, " \t"), " \t");
+    trim = rm_sep_aft(rm_sep_bef(malloc_str, " \t"), " \t");
     if (!strlen(trim)) {
         free(malloc_str);
         return (arr);

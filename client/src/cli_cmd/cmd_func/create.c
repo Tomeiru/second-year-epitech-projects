@@ -20,7 +20,7 @@ static bool create_comment(client_t *client, char *comment_body, list_t *transac
     memset(cmd_arg.comment, 0, MAX_BODY_LENGTH);
     cmd_arg.transaction = transaction_create(NULL,
     handle_create_comment_transaction, NULL, transactions)->id;
-    memcpy(cmd_arg.comment, comment_body, MAX_BODY_LENGTH);
+    strcpy(cmd_arg.comment, comment_body);
     client_send_cmd(client->conn, CREATE_COMMENT_ID, &cmd_arg, sizeof(cmd_arg));
     return (SUCCESS_CMD);
 }
@@ -35,8 +35,8 @@ static bool create_thread(client_t *client, char *thread_title, char *thread_mes
     memset(cmd_arg.msg, 0, MAX_BODY_LENGTH);
     cmd_arg.transaction = transaction_create(NULL,
     handle_create_thread_transaction, NULL, transactions)->id;
-    memcpy(cmd_arg.title, thread_title, MAX_NAME_LENGTH);
-    memcpy(cmd_arg.msg, thread_message, MAX_BODY_LENGTH);
+    strcpy(cmd_arg.title, thread_title);
+    strcpy(cmd_arg.msg, thread_message);
     client_send_cmd(client->conn, CREATE_THREAD_ID, &cmd_arg, sizeof(cmd_arg));
     return (SUCCESS_CMD);
 }
@@ -51,8 +51,8 @@ static bool create_channel_team(client_t *client, char **av, command_id_t cmd, l
     cmd_arg.transaction = transaction_create(NULL,
     cmd == CREATE_TEAM_ID ? handle_create_team_transaction :
     handle_create_channel_transaction, NULL, transactions)->id;
-    memcpy(cmd_arg.name, av[0], MAX_NAME_LENGTH);
-    memcpy(cmd_arg.desc, av[1], MAX_DESCRIPTION_LENGTH);
+    strcpy(cmd_arg.name, av[0]);
+    strcpy(cmd_arg.desc, av[1]);
     client_send_cmd(client->conn, cmd, &cmd_arg, sizeof(cmd_arg));
     return (SUCCESS_CMD);
 }

@@ -35,6 +35,8 @@ typedef struct client_s {
     bool connected;
     bool logout;
     uuid_t uuid;
+    char *command;
+    int len_command;
 } client_t;
 
 typedef struct message_s {

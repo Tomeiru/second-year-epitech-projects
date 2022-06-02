@@ -24,7 +24,7 @@ int get_len_array(void *arr, size_t size)
 {
     int len = 0;
 
-    while(((int *)(arr))[0]) {
+    while (((int *)(arr))[0]) {
         len++;
         arr += size;
     }

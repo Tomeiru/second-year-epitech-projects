@@ -13,7 +13,7 @@ team_t *team_create(char *name, char *desc, save_t *save)
 
     uuid_generate(team->uuid);
     team->subscribers = NULL;
-    team->channels_nb = 0;
+    team->subscribers_nb = 0;
     team->channels = NULL;
     team->channels_nb = 0;
     memset(team->name, 0, MAX_NAME_LENGTH);

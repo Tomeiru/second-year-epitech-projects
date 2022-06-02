@@ -55,7 +55,7 @@ void wait_for_input(fd_set *rdset, conn_t *conn)
 int start_cli(char *ip, int port)
 {
     client_t client = {.conn = init_connect(ip, port),  .use = init_use(),
-    .connected = false, .logout = false};
+    .connected = false, .logout = false, .command = NULL, .len_command = 0};
     list_t transactions = NULL;
     fd_set rdset;
 

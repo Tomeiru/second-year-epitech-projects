@@ -21,14 +21,44 @@ static char **get_command(int *len)
     return (teams_cl_to_arr(input));
 }
 
+int read_command(client_t *client)
+{
+    char c = 0;
+    int len = 0;
+
+    len = read(0, &c, 1);
+    if (len <= 0)
+        return (0);
+    if (c == '\n') {
+        if (client->len_command)
+            client->command[client->len_command] = '\0';
+        return (1);
+    }
+    if (client->len_command) {
+        client->command = realloc(client->command, ++(client->len_command) + 1);
+        client->command[client->len_command - 1] = c;
+        return (-1);
+    }
+    client->len_command = 1;
+    client->command = malloc(sizeof(char) * 2);
+    client->command[client->len_command - 1] = c;
+    return (-1);
+}
+
 bool handle_user_cmd(client_t *client, list_t *transactions)
 {
-    int len = 0;
-    char **command = get_command(&len);
+    int done = read_command(client);
+    char **command = NULL;
     int arg_num = 0;
 
-    if (len == 0)
+    if (!done)
         return (TEAMS_EOF);
+    if (done == -1)
+        return (ERROR_CMD);
+    command = teams_cl_to_arr(client->command);
+    free(client->command);
+    client->command = NULL;
+    client->len_command = 0;
     if (command == NULL)
         return (ERROR_CMD);
     arg_num = get_len_array(command, sizeof(char *)) - 1;
