@@ -44,12 +44,13 @@ conn_t *init_connect(char *ip, int port)
     return (conn);
 }
 
-void wait_for_input(fd_set *rdset, conn_t *conn)
+void wait_for_input(fd_set *rdset, fd_set *wtset, conn_t *conn)
 {
     FD_ZERO(rdset);
     FD_SET(0, rdset);
     FD_SET(conn->socket, rdset);
-    select(conn->socket + 1, rdset, NULL, NULL, NULL);
+    FD_SET(conn->socket, wtset);
+    select(conn->socket + 1, rdset, wtset, NULL, NULL);
 }
 
 int start_cli(char *ip, int port)
@@ -58,11 +59,12 @@ int start_cli(char *ip, int port)
     .connected = false, .logout = false, .command = NULL, .len_command = 0};
     list_t transactions = NULL;
     fd_set rdset;
+    fd_set wtest;
 
     if (!client.conn)
         return (84);
     while (1) {
-        wait_for_input(&rdset, client.conn);
+        wait_for_input(&rdset, &wtest, client.conn);
         if ((FD_ISSET(client.conn->socket, &rdset)
         && handle_server_msg(&client, &transactions)) || client.logout)
             break;
