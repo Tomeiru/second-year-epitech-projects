@@ -48,8 +48,10 @@ static void handle_server_error(conn_t *conn)
     if (error == ERROR_UNKNOWN_TEAM
     || error == ERROR_UNKNOWN_CHANNEL
     || error == ERROR_UNKNOWN_THREAD
-    || error == ERROR_UNKNOWN_USER)
+    || error == ERROR_UNKNOWN_USER) {
+        read(conn->socket, uuid, sizeof(uuid_t));
         uuid_unparse(uuid, uuid_str);
+    }
     log_error(error, uuid_str);
 }
 

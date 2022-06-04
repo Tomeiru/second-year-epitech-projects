@@ -9,18 +9,6 @@
 #include "cli_cmds.h"
 #include "utils.h"
 
-static char **get_command(int *len)
-{
-    char input[1024];
-
-    memset(input, 0, 1024);
-    *len = read(0, input, 1023);
-    if (*len == 0)
-        return (NULL);
-    input[*len - 1] = '\0';
-    return (teams_cl_to_arr(input));
-}
-
 int read_command(client_t *client)
 {
     char c = 0;

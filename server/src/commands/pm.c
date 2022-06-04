@@ -12,11 +12,12 @@ static void event_private_message_sended(client_t *sender,
 uuid_t receiver, char *msg, server_t *srv)
 {
     client_t *client = get_connected_client(receiver, srv);
-    char uuids[36 * 2];
+    char sender_str[36];
+    char receiver_str[36];
 
-    uuid_unparse(sender->uuid, uuids);
-    uuid_unparse(receiver, uuids + 36);
-    server_event_private_message_sended(uuids, uuids + 36, msg);
+    uuid_unparse(sender->uuid, sender_str);
+    uuid_unparse(receiver, receiver_str);
+    server_event_private_message_sended(sender_str, receiver_str, msg);
     if (client) {
         client_send_value(client, EVENT_PM_RECEIVED_ID, sizeof(command_id_t));
         client_send_data(client, sender->uuid, sizeof(uuid_t));

@@ -72,19 +72,19 @@ static char **do_it(char *str)
     char **arr = get_and_check_command(str, &i);
     int nb_arg = 0;
 
-    if (arr == NULL || str[i] == '\0') {
+    if (arr == NULL)
+        return (NULL);
+    if (str[i] == '\0') {
         arr = realloc(arr, sizeof(char *) * 2);
         arr[1] = NULL;
         return (arr);
-    }
-    str = str + i;
+    }str = str + i;
     str = rm_sep_bef(str, " \t");
     if ((nb_arg = check_arg_format(str)) == -1) {
         free(arr[0]);
         free(arr);
         return (NULL);
-    }
-    arr = realloc(arr, sizeof(char *) * (nb_arg + 2));
+    }arr = realloc(arr, sizeof(char *) * (nb_arg + 2));
     arr = add_args_to_arr(arr, str, nb_arg);
     return (arr);
 }

@@ -20,7 +20,7 @@ void client_send_success(client_t *client, uint64_t transaction)
 }
 
 void client_send_error(client_t *client,
-uint64_t transaction, error_t error, uuid_t *uuid)
+uint64_t transaction, error_t error, unsigned char **uuid)
 {
     response_t response = ERROR_OCCURED;
 
