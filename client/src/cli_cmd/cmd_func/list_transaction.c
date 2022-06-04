@@ -59,9 +59,7 @@ void handle_list_thread_transaction(client_t *client, void *data)
     time_t timestamp;
     char name[MAX_NAME_LENGTH];
     char msg[MAX_BODY_LENGTH];
-
     UNUSED(data);
-    puts("[INFO] List threads handle");
     read(client->conn->socket, &nb, sizeof(uint));
     for (size_t i = 0; i < nb; i++) {
         read(client->conn->socket, thread_uuid, sizeof(uuid_t));

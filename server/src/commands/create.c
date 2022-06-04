@@ -39,7 +39,6 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     channel_t *channel;
     char team_uuid[36];
     char channel_uuid[36];
-
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
     || !check_user_belongs_to_team(client, team, arg->transaction, true))
@@ -57,15 +56,26 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     save_infos(server->save, SAVEFILE_PATH);
 }
 
+static void thread_event(channel_t *channel, thread_t *thread, client_t *client,
+create_thread_cmd_arg_t *arg)
+{
+    char channel_uuid[36];
+    char thread_uuid[36];
+    char user_uuid[36];
+
+    uuid_unparse(channel->uuid, channel_uuid);
+    uuid_unparse(thread->uuid, thread_uuid);
+    uuid_unparse(client->uuid, user_uuid);
+    server_event_thread_created(channel_uuid, thread_uuid,
+    user_uuid, arg->title, arg->msg);
+}
+
 void create_thread_cmd(client_t *client, server_t *server, void *data)
 {
     create_thread_cmd_arg_t *arg = data;
     team_t *team;
     channel_t *channel;
     thread_t *thread;
-    char channel_uuid[36];
-    char thread_uuid[36];
-    char user_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
@@ -76,11 +86,7 @@ void create_thread_cmd(client_t *client, server_t *server, void *data)
         return (client_send_error(client, arg->transaction,
         ERROR_ALREADY_EXISTS, NULL));
     thread = thread_create(arg->title, arg->msg, client->uuid, channel);
-    uuid_unparse(channel->uuid, channel_uuid);
-    uuid_unparse(thread->uuid, thread_uuid);
-    uuid_unparse(client->uuid, user_uuid);
-    server_event_thread_created(channel_uuid, thread_uuid,
-    user_uuid, arg->title, arg->msg);
+    thread_event(channel, thread, client, arg);
     client_send_success(client, arg->transaction);
     client_thread_created(client, thread);
     event_thread_created(server, team, thread);
@@ -96,11 +102,9 @@ void create_comment_cmd(client_t *client, server_t *server, void *data)
     comment_t *comment;
     char thread_uuid[36];
     char user_uuid[36];
-
-    if (!check_client_logged(client, arg->transaction)
-    || !(team = GET_TEAM(client, arg, server->save))
-    || !check_user_belongs_to_team(client, team, arg->transaction, true)
-    || !(channel = GET_CHANNEL(client, arg, team))
+    if (!check_client_logged(client, arg->transaction) || !(team =
+    GET_TEAM(client, arg, server->save)) || !check_user_belongs_to_team(client,
+    team, arg->transaction, true) || !(channel = GET_CHANNEL(client, arg, team))
     || !(thread = GET_THREAD(client, arg, channel)))
         return;
     comment = comment_create(arg->comment, client->uuid, thread);

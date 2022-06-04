@@ -79,7 +79,6 @@ void list_comment_cmd(client_t *client, server_t *server, void *data)
     channel_t *channel;
     thread_t *thread;
     comment_t *comment;
-
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
     || !check_user_belongs_to_team(client, team, arg->transaction, true)

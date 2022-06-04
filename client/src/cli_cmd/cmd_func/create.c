@@ -60,28 +60,26 @@ list_t *transactions)
     return (SUCCESS_CMD);
 }
 
-bool create_parser(client_t *client, int ac, char **av, list_t *transactions)
+bool create_parser(client_t *client, int ac, char **v, list_t *transactions)
 {
     if (!ac || ac > 2)
         return (ERROR_CMD);
     if (client->use->state == THREAD_USE_STATE) {
-        if (ac != 1 || strlen(av[0]) >= MAX_BODY_LENGTH)
+        if (ac != 1 || strlen(v[0]) >= MAX_BODY_LENGTH)
             return (ERROR_CMD);
-        return (create_comment(client, av[0], transactions));
+        return (create_comment(client, v[0], transactions));
     }if (ac != 2)
         return (ERROR_CMD);
     if (client->use->state == CHANNEL_USE_STATE) {
-        if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >=
-        MAX_BODY_LENGTH)
+        if (strlen(v[0]) >= MAX_NAME_LENGTH || strlen(v[1]) >= MAX_BODY_LENGTH)
             return (ERROR_CMD);
-        return (create_thread(client, av[0], av[1], transactions));
-    }
-    if (strlen(av[0]) >= MAX_NAME_LENGTH || strlen(av[1]) >=
+        return (create_thread(client, v[0], v[1], transactions));
+    }if (strlen(v[0]) >= MAX_NAME_LENGTH || strlen(v[1]) >=
     MAX_DESCRIPTION_LENGTH)
         return (ERROR_CMD);
     for (int i = 0; i < 2; i++)
         if (client->use->state == (use_state_t)i)
-            return (create_channel_team(client, av, CREATE_TEAM_ID + i,
+            return (create_channel_team(client, v, CREATE_TEAM_ID + i,
             transactions));
     return (SUCCESS_CMD);
 }
