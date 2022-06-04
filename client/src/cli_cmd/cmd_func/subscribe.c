@@ -14,15 +14,16 @@ static void handle_subscribe_transaction(client_t *client, void *data)
 {
     uuid_t team_uuid;
     uuid_t user_uuid;
-    char uuids[36 * 2];
+    char user_uuid_str[36];
+    char team_uuid_str[36];
 
     UNUSED(data);
     puts("[INFO] Subscribe command transaction");
     read(client->conn->socket, team_uuid, sizeof(uuid_t));
     read(client->conn->socket, user_uuid, sizeof(uuid_t));
-    uuid_unparse(team_uuid, uuids);
-    uuid_unparse(user_uuid, uuids + 36);
-    client_print_subscribed(uuids + 36, uuids);
+    uuid_unparse(team_uuid, team_uuid_str);
+    uuid_unparse(user_uuid, user_uuid_str);
+    client_print_subscribed(user_uuid_str, team_uuid_str);
 }
 
 static bool subscribe_handler(client_t *client, char *team_uuid,

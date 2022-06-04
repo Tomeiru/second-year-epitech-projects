@@ -44,7 +44,8 @@ void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
 {
     subscribe_cmd_arg_t *arg = data;
     team_t *team;
-    char uuids[36 * 2];
+    char user_uuid[36];
+    char team_uuid[36];
 
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, srv->save)))
@@ -56,9 +57,9 @@ void subscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
     client_send_success(client, arg->transaction);
     client_send_data(client, team->uuid, sizeof(uuid_t));
     client_send_data(client, client->uuid, sizeof(uuid_t));
-    uuid_unparse(arg->team_uuid, uuids);
-    uuid_unparse(client->uuid, uuids + 36);
-    server_event_user_subscribed(uuids, uuids + 36);
+    uuid_unparse(arg->team_uuid, team_uuid);
+    uuid_unparse(client->uuid, user_uuid);
+    server_event_user_subscribed(team_uuid, user_uuid);
 }
 
 void unsubscribe_to_team_cmd(client_t *client, server_t *srv, void *data)
