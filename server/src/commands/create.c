@@ -37,8 +37,8 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
     create_team_channel_cmd_arg_t *arg = data;
     team_t *team;
     channel_t *channel;
-    char team_uuid[36];
-    char channel_uuid[36];
+    char uuids[37 * 2] = {0};
+
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
     || !check_user_belongs_to_team(client, team, arg->transaction, true))
@@ -47,9 +47,9 @@ void create_channel_cmd(client_t *client, server_t *server, void *data)
         return (client_send_error(client, arg->transaction,
         ERROR_ALREADY_EXISTS, NULL));
     channel = channel_create(arg->name, arg->desc, team);
-    uuid_unparse(team->uuid, team_uuid);
-    uuid_unparse(channel->uuid, channel_uuid);
-    server_event_channel_created(team_uuid, channel_uuid, arg->name);
+    uuid_unparse(team->uuid, uuids);
+    uuid_unparse(channel->uuid, uuids + 37);
+    server_event_channel_created(uuids, uuids + 37, arg->name);
     client_send_success(client, arg->transaction);
     client_channel_created(client, channel);
     event_channel_created(server, team, channel);
@@ -100,17 +100,17 @@ void create_comment_cmd(client_t *client, server_t *server, void *data)
     channel_t *channel;
     thread_t *thread;
     comment_t *comment;
-    char thread_uuid[36];
-    char user_uuid[36];
+    char uuids[37 * 2] = {0};
+
     if (!check_client_logged(client, arg->transaction) || !(team =
     GET_TEAM(client, arg, server->save)) || !check_user_belongs_to_team(client,
     team, arg->transaction, true) || !(channel = GET_CHANNEL(client, arg, team))
     || !(thread = GET_THREAD(client, arg, channel)))
         return;
     comment = comment_create(arg->comment, client->uuid, thread);
-    uuid_unparse(thread->uuid, thread_uuid);
-    uuid_unparse(client->uuid, user_uuid);
-    server_event_reply_created(thread_uuid, user_uuid, arg->comment);
+    uuid_unparse(thread->uuid, uuids);
+    uuid_unparse(client->uuid, uuids + 37);
+    server_event_reply_created(uuids, uuids + 37, arg->comment);
     client_send_success(client, arg->transaction);
     client_comment_created(client, team, thread, comment);
     event_comment_created(server, team, thread, comment);

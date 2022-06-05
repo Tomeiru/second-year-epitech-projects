@@ -54,11 +54,11 @@ void handle_list_thread_transaction(client_t *client, void *data)
     uint nb;
     uuid_t thread_uuid;
     uuid_t user_uuid;
-    char uuid_str[36];
-    char user_str[36];
+    char uuids[37 * 2] = {0};
     time_t timestamp;
     char name[MAX_NAME_LENGTH];
     char msg[MAX_BODY_LENGTH];
+
     UNUSED(data);
     read(client->conn->socket, &nb, sizeof(uint));
     for (size_t i = 0; i < nb; i++) {
@@ -67,9 +67,9 @@ void handle_list_thread_transaction(client_t *client, void *data)
         read(client->conn->socket, &timestamp, sizeof(time_t));
         read(client->conn->socket, name, MAX_NAME_LENGTH);
         read(client->conn->socket, msg, MAX_BODY_LENGTH);
-        uuid_unparse(thread_uuid, uuid_str);
-        uuid_unparse(user_uuid, user_str);
-        client_channel_print_threads(uuid_str, user_str, timestamp, name, msg);
+        uuid_unparse(thread_uuid, uuids);
+        uuid_unparse(user_uuid, uuids + 37);
+        client_channel_print_threads(uuids, uuids + 37, timestamp, name, msg);
     }
 }
 

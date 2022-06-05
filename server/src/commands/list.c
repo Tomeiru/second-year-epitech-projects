@@ -72,13 +72,27 @@ void list_thread_cmd(client_t *client, server_t *server, void *data)
     }
 }
 
+static void send_comment_list(client_t *client, thread_t *thread)
+{
+    comment_t *comment;
+
+    client_send_value(client, thread->comments_nb, sizeof(uint));
+    for (list_t list = thread->comments; list; list = list->next) {
+        comment = (comment_t*) list->data;
+        client_send_data(client, comment->uuid, sizeof(uuid_t));
+        client_send_data(client, comment->user, sizeof(uuid_t));
+        client_send_value(client, comment->time, sizeof(time_t));
+        client_send_data(client, comment->msg, MAX_BODY_LENGTH);
+    }
+}
+
 void list_comment_cmd(client_t *client, server_t *server, void *data)
 {
     list_cmd_arg_t *arg = data;
     team_t *team;
     channel_t *channel;
     thread_t *thread;
-    comment_t *comment;
+
     if (!check_client_logged(client, arg->transaction)
     || !(team = GET_TEAM(client, arg, server->save))
     || !check_user_belongs_to_team(client, team, arg->transaction, true)
@@ -86,12 +100,5 @@ void list_comment_cmd(client_t *client, server_t *server, void *data)
     || !(thread = GET_THREAD(client, arg, channel)))
         return;
     client_send_success(client, arg->transaction);
-    client_send_value(client, thread->comments_nb, sizeof(uint));
-    for (list_t list = thread->comments; list; list = list->next) {
-        comment = (comment_t *)list->data;
-        client_send_data(client, comment->uuid, sizeof(uuid_t));
-        client_send_data(client, comment->user, sizeof(uuid_t));
-        client_send_value(client, comment->time, sizeof(time_t));
-        client_send_data(client, comment->msg, MAX_BODY_LENGTH);
-    }
+    send_comment_list(client, thread);
 }
