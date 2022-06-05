@@ -5,8 +5,7 @@
 ** a file containing libs functions that should be called in myteams_server
 */
 
-#ifndef LIB_MYTEAMS_LOGGING_SERVER_H
-#define LIB_MYTEAMS_LOGGING_SERVER_H
+#pragma once
 
 /*
 ** As the server never initialize an action all function here are called events
@@ -146,7 +145,3 @@ int server_event_private_message_sended(
     char const *sender_uuid,
     char const *receiver_uuid,
     char const *message_body);
-
-
-
-#endif /* LIB_MYTEAMS_LOGGING_SERVER_H */
