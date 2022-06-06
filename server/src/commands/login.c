@@ -41,7 +41,6 @@ void logout_cmd(client_t *client, server_t *server, void *data)
         client_send_error(client, arg->transaction, ERROR_UNAUTHORIZED, NULL);
         return;
     }
-    client->logged = false;
     client->quit = true;
     event_user_logged_out(server, user);
     client_send_success(client, arg->transaction);
