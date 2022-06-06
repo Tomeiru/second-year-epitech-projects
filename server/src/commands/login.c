@@ -33,6 +33,8 @@ void logout_cmd(client_t *client, server_t *server, void *data)
     user_t *user;
 
     (void) server;
+    if (!check_client_logged(client, arg->transaction))
+        return;
     user = get_user_by_uuid(client->uuid, server->save);
     if (!user) {
         puts("[ALERT] Client has an invalid UUID !");
